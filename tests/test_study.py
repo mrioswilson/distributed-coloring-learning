@@ -225,6 +225,21 @@ def test_single_node_and_empty_edges():
     assert exact_commit_labels(state.x, state.edge_index, [True], [11])[0] == 1
 
 
+def test_successful_rollout_is_json_serializable(tmp_path):
+    class Valid(torch.nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.anchor = torch.nn.Parameter(torch.zeros(()))
+        def forward(self, x, edges, hard_messages):
+            logits = torch.nn.functional.one_hot(torch.tensor([1, 2], device=x.device), 5).float() * 10
+            return x.new_full((2,), 10), logits, x.new_full((2,), 10)
+    result = run_rollout(Valid(), nx.path_graph(2), 123, 4)
+    result.pop("colors")
+    assert result["finished"] is True and result["success"] is True
+    atomic_json(tmp_path / "success.json", result)
+    assert json.loads((tmp_path / "success.json").read_text())["success"] is True
+
+
 def test_global_training_lock_and_registry(tmp_path):
     with training_lock(tmp_path):
         with pytest.raises(RuntimeError, match="Another study"):

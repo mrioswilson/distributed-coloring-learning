@@ -84,7 +84,7 @@ locales correlacionados no se presentan como observaciones binomiales independie
 ## Estado y limitaciones
 
 Los resultados nuevos deben consultarse en los archivos originales de
-`data/m6study/` y las tablas/figuras producidas por `experiments/m6study aggregate`.
+`data/m6study-release/` y las tablas/figuras producidas por `experiments/m6study aggregate`.
 Este documento no copia resultados históricos como evidencia de reproducibilidad
 del estudio nuevo. Los smoke tests comprueban ejecución, no fiabilidad científica.
 
@@ -99,3 +99,24 @@ conservan y se distinguen de éxitos.
 La conclusión científica quedará pendiente de las réplicas y del test congelado.
 Deberá separar aproximación local del profesor, fiabilidad global observada,
 estabilidad de rondas y ausencia de garantías universales.
+
+## Incidente técnico durante el piloto
+
+El primer intento Δ=3 completó la época 1 (148 actualizaciones), pero la escritura
+del historial JSON falló al serializar un resultado exitoso `numpy.bool_`. Se
+conserva en `data/m6study/`, incluido el checkpoint y traceback. Se corrigió
+la conversión a booleano nativo y se añadió un test de persistencia de una
+coloración exitosa. Las ejecuciones principales usan `data/m6study-release/`
+y comienzan desde cero con el código corregido. No se cambian etiquetas ni
+acciones de inferencia. Este intento técnico no cuenta como réplica científica.
+
+## Validación técnica de la entrega
+
+Se ejecutaron 93 tests con éxito, incluidos reanudación exacta en CPU/CUDA,
+recuperación tras interrupción, gradientes de todos los parámetros, ausencia de
+shield, separación de datos y evaluación/figuras reanudables. Los smoke tests
+CUDA de Δ=3,5,8,10 completaron tres épocas cada uno. Con los checkpoints
+históricos M4B, Own-only y Counterfactual de semilla 10001 se comprobaron
+salidas duras/blandas exactas y una trayectoria autónoma idéntica de siete
+rondas (grafo técnico de semilla 931, tape 815). Estas comprobaciones son
+validación de implementación y no resultados del nuevo test final.

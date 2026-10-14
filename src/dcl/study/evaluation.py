@@ -95,7 +95,7 @@ def run_rollout(model, graph, tape_seed, num_colors, max_rounds=256, diagnostics
             break
     bad_edges = sum(colors[u] >= 0 and colors[u] == colors[v] for u, v in graph.edges())
     finished = bool(np.all(colors >= 0))
-    return {"finished": finished, "success": finished and bad_edges == 0,
+    return {"finished": finished, "success": bool(finished and bad_edges == 0),
             "monochromatic_edges": int(bad_edges), "rounds": round_i,
             "uncolored_nodes": int((colors < 0).sum()), "inference_seconds": inference_seconds,
             "wall_seconds": time.perf_counter() - started, **dict(totals),

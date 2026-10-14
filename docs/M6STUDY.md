@@ -1,7 +1,9 @@
 # Estudio supervisado M6B (protocolo m6study-v1)
 
+La carpeta operativa de esta entrega es `data/m6study-release/`. El intento
+piloto anterior se conserva en `data/m6study/` con su traceback y checkpoint.
 El código está en `src/dcl/study/`. Los scripts históricos, sus nombres y sus
-resultados se conservan. Los resultados nuevos van a `data/m6study/`; las
+resultados se conservan. Los resultados nuevos van a `data/m6study-release/`; las
 configuraciones versionadas están en `configs/m6study/`.
 
 ## Instalación y comprobaciones
@@ -28,13 +30,13 @@ cambios de fuente, versiones, dispositivo, configuración o datos.
 
 ```bash
 experiments/m6study plan
-tmux new-session -d -s m6study 'experiments/m6study run --plan configs/m6study/phase-a.json --root data/m6study'
-experiments/m6study status --root data/m6study
+tmux new-session -d -s m6study 'experiments/m6study run --plan configs/m6study/phase-a.json --root data/m6study-release'
+experiments/m6study status --root data/m6study-release
 tmux capture-pane -pt m6study -S -30
 tmux attach -t m6study
-experiments/m6study stop --root data/m6study
+experiments/m6study stop --root data/m6study-release
 # Después de que la sesión termine, reanudar en la misma sesión nominal:
-tmux new-session -d -s m6study 'experiments/m6study run --plan configs/m6study/phase-a.json --root data/m6study --resume'
+tmux new-session -d -s m6study 'experiments/m6study run --plan configs/m6study/phase-a.json --root data/m6study-release --resume'
 ```
 
 Para salir de tmux y dejar la cola funcionando: `Ctrl-b`, después `d`.
@@ -42,7 +44,7 @@ La cola sobrevive al cierre de SSH y del chat. El contenedor y el servidor deben
 seguir encendidos. Después de reiniciar el servidor/contenedor se usa el comando
 de reanudación. No se configura un reinicio automático del servidor.
 
-`stop` crea `data/m6study/STOP`. El proceso termina después de persistir la época
+`stop` crea `data/m6study-release/STOP`. El proceso termina después de persistir la época
 en curso. También maneja SIGTERM/SIGINT de esta forma. Una interrupción abrupta
 dentro de una época hace repetir esa época desde el último estado completo.
 Una ejecución terminada se salta automáticamente. Un fallo genera un log y un
@@ -56,9 +58,9 @@ scripts históricos no adquieren este bloqueo: no ejecutarlos en paralelo.
 
 Rutas:
 
-- Registro central: `data/m6study/registry.sqlite` (SQLite con WAL).
-- Logs separados por ejecución e intento: `data/m6study/logs/`.
-- Checkpoints: `data/m6study/runs/<id>/last.pt`, `best.pt`, `epoch-020.pt`,
+- Registro central: `data/m6study-release/registry.sqlite` (SQLite con WAL).
+- Logs separados por ejecución e intento: `data/m6study-release/logs/`.
+- Checkpoints: `data/m6study-release/runs/<id>/last.pt`, `best.pt`, `epoch-020.pt`,
   `epoch-040.pt`, `epoch-060.pt`, `epoch-080.pt`, `epoch-120.pt`.
 - Configuración y datos: `config.json`, `data_manifest.json` en cada ejecución.
 - Métricas completas: `history.json`, actualizado después de cada época.
@@ -161,9 +163,9 @@ final para seleccionar checkpoints. El límite es 256 rondas.
 Solo después de completar la selección se congela el protocolo:
 
 ```bash
-experiments/m6study freeze --plan configs/m6study/phase-a.json --root data/m6study
-tmux new-session -d -s m6study 'experiments/m6study evaluate --freeze data/m6study/frozen-final-test.json --root data/m6study'
-experiments/m6study aggregate --root data/m6study
+experiments/m6study freeze --plan configs/m6study/phase-a.json --root data/m6study-release
+tmux new-session -d -s m6study 'experiments/m6study evaluate --freeze data/m6study-release/frozen-final-test.json --root data/m6study-release'
+experiments/m6study aggregate --root data/m6study-release
 ```
 
 Para incluir controles, preparar una unión deduplicada de los planes A/B antes
@@ -196,7 +198,7 @@ tiempo completo de ejecución. El coste incluye la generación inicial de datos.
 ## Tablas y figuras
 
 `aggregate` genera CSV desde datos originales y figuras PDF/PNG en
-`data/m6study/reports/`, separando validación de prueba final. Incluye pérdidas,
+`data/m6study-release/reports/`, separando validación de prueba final. Incluye pérdidas,
 accuracies, éxito por tamaño/grado/semilla/presupuesto, rondas, coste/calidad,
 comparaciones emparejadas y desglose por k. Un archivo científico `REPORT.md`
 en la raíz explica el diseño; el reporte de resultados se regenera en `reports/`.

@@ -139,7 +139,7 @@ def freeze(args):
              "counts": {"40": 100, "160": 100, "640": 100, "2560": 50, "10240": 25, "40960": 10},
              "families": ["REGULAR", "IRREGULAR"], "max_rounds": 256,
              "test_seed_namespace": 20261014, "selection_uses_final_test": False}
-    destination = Path(args.output)
+    destination = Path(args.output) if args.output else root / "frozen-final-test.json"
     if destination.exists():
         raise RuntimeError("Frozen test protocol already exists; overwrite refused")
     atomic_json(destination, value)
@@ -217,7 +217,7 @@ def main():
     f = sub.add_parser("freeze")
     f.add_argument("--plan", required=True)
     f.add_argument("--root", default="data/m6study")
-    f.add_argument("--output", default="data/m6study/frozen-final-test.json")
+    f.add_argument("--output")
     f.add_argument("--checkpoint-epochs", type=int, nargs="*", default=[])
     ev = sub.add_parser("evaluate")
     ev.add_argument("--freeze", required=True)
