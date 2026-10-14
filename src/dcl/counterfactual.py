@@ -16,9 +16,10 @@ def commit_logits_for_proposals(
 
     candidate_class:
         0 = NO_CANDIDATE
-        1..4 = colors 0..3
+        1..num_colors = colors 0..num_colors-1
     """
     n = len(x)
+    num_colors = x.shape[1] - 3
 
     if participate.shape != (n,) or candidate_class.shape != (n,):
         raise ValueError("A proposal per vertex is required")
@@ -33,8 +34,8 @@ def commit_logits_for_proposals(
         device=x.device, dtype=torch.long
     )
 
-    if bool(((candidate_class < 0) | (candidate_class > 4)).any()):
-        raise ValueError("Candidate classes must be 0..4")
+    if bool(((candidate_class < 0) | (candidate_class > num_colors)).any()):
+        raise ValueError(f"Candidate classes must be 0..{num_colors}")
 
     candidate_class = torch.where(
         uncolored,
@@ -43,7 +44,7 @@ def commit_logits_for_proposals(
     )
 
     offer = F.one_hot(
-        candidate_class, 5
+        candidate_class, num_colors + 1
     ).to(dtype=x.dtype)
 
     phase2 = torch.cat(
@@ -73,6 +74,7 @@ def exact_commit_labels(
     edges = np.asarray(edge_index)
 
     n = len(x)
+    num_colors = x.shape[1] - 3
     part = np.asarray(participate, dtype=bool)
     cand = np.asarray(candidate_class, dtype=np.int64)
 
@@ -83,13 +85,13 @@ def exact_commit_labels(
     ):
         raise ValueError("Inconsistent graph dimensions")
 
-    if np.any((cand < 0) | (cand > 4)):
-        raise ValueError("Candidate classes must be 0..4")
+    if np.any((cand < 0) | (cand > num_colors)):
+        raise ValueError(f"Candidate classes must be 0..{num_colors}")
 
     uncolored = x[:, 0] > 0.5
 
-    # Color encoding matches candidate classes 1..4.
-    fixed_class = x[:, :5].argmax(axis=1)
+    # Color encoding matches candidate classes 1..num_colors.
+    fixed_class = x[:, :num_colors + 1].argmax(axis=1)
 
     part = part & uncolored
 
@@ -138,8 +140,9 @@ def make_counterfactual_proposals(
     x = np.asarray(x)
     edges = np.asarray(edge_index)
 
+    num_colors = x.shape[1] - 3
     uncolored = x[:, 0] > 0.5
-    fixed_class = x[:, :5].argmax(axis=1)
+    fixed_class = x[:, :num_colors + 1].argmax(axis=1)
 
     part = np.asarray(
         oracle_p, dtype=bool
@@ -181,7 +184,7 @@ def make_counterfactual_proposals(
             v = int(dst[j])
 
             color_class = int(
-                rng.integers(1, 5)
+                rng.integers(1, num_colors + 1)
             )
 
             part[u] = True

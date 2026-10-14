@@ -34,7 +34,7 @@ def _intermediate_representations(
 
         candidate = F.one_hot(
             candidate_class,
-            num_classes=5,
+            num_classes=candidate_logits.shape[1],
         ).float()
 
     else:
@@ -88,12 +88,17 @@ class M4A(nn.Module):
     def __init__(
         self,
         hidden_dim: int = 64,
+        num_colors: int = 4,
     ):
         super().__init__()
+        if num_colors < 1:
+            raise ValueError("num_colors must be positive")
+        self.num_colors = num_colors
+        features = num_colors + 3
 
         # color + activation_draw
         self.participation_head = nn.Sequential(
-            nn.Linear(6, 32),
+            nn.Linear(num_colors + 2, 32),
             nn.ReLU(),
             nn.Linear(32, 1),
         )
@@ -101,18 +106,18 @@ class M4A(nn.Module):
         # own 7 + raw neighbor max 7
         self.candidate_head = nn.Sequential(
             nn.Linear(
-                2 * M4_FEATURES,
+                2 * features,
                 hidden_dim,
             ),
             nn.ReLU(),
             nn.Linear(
                 hidden_dim,
-                5,
+                num_colors + 1,
             ),
         )
 
         # x(7) + participate(1) + candidate(5)
-        phase2_dim = 13
+        phase2_dim = 2 * num_colors + 5
 
         self.commit_head = nn.Sequential(
             nn.Linear(
@@ -136,7 +141,7 @@ class M4A(nn.Module):
 
         participation_logit = (
             self.participation_head(
-                x[:, :6]
+                x[:, :self.num_colors + 2]
             )
             .squeeze(-1)
         )
@@ -229,11 +234,16 @@ class M4B(nn.Module):
         self,
         hidden_dim: int = 64,
         message_dim: int = 32,
+        num_colors: int = 4,
     ):
         super().__init__()
+        if num_colors < 1:
+            raise ValueError("num_colors must be positive")
+        self.num_colors = num_colors
+        features = num_colors + 3
 
         self.participation_head = nn.Sequential(
-            nn.Linear(6, 32),
+            nn.Linear(num_colors + 2, 32),
             nn.ReLU(),
             nn.Linear(32, 1),
         )
@@ -243,7 +253,7 @@ class M4B(nn.Module):
         # should be sent to neighbors.
         self.message1 = nn.Sequential(
             nn.Linear(
-                M4_FEATURES,
+                features,
                 message_dim,
             ),
             nn.ReLU(),
@@ -256,18 +266,18 @@ class M4B(nn.Module):
 
         self.candidate_head = nn.Sequential(
             nn.Linear(
-                M4_FEATURES
+                features
                 + message_dim,
                 hidden_dim,
             ),
             nn.ReLU(),
             nn.Linear(
                 hidden_dim,
-                5,
+                num_colors + 1,
             ),
         )
 
-        phase2_dim = 13
+        phase2_dim = 2 * num_colors + 5
 
         # Second communication:
         # learn how participation and candidate
@@ -308,7 +318,7 @@ class M4B(nn.Module):
 
         participation_logit = (
             self.participation_head(
-                x[:, :6]
+                x[:, :self.num_colors + 2]
             )
             .squeeze(-1)
         )
@@ -394,17 +404,20 @@ def make_m4_model(
     arch: str,
     hidden_dim: int = 64,
     message_dim: int = 32,
+    num_colors: int = 4,
 ):
     arch = arch.upper()
 
     if arch == "A":
         return M4A(
             hidden_dim=hidden_dim,
+            num_colors=num_colors,
         )
 
     if arch == "B":
         return M4B(
             hidden_dim=hidden_dim,
+            num_colors=num_colors,
             message_dim=message_dim,
         )
 

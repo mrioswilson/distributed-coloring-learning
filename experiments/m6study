@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+study_repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+cd -- "$study_repo_dir"
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
+export PYTHONUNBUFFERED=1
+exec "$study_repo_dir/.venv/bin/python" -m dcl.study.cli "$@"

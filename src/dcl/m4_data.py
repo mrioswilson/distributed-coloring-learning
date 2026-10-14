@@ -53,7 +53,7 @@ def _edge_index(
     return np.asarray(
         edges,
         dtype=np.int64,
-    ).T
+    ).reshape(-1, 2).T
 
 
 def encode_m4_state(
@@ -61,6 +61,7 @@ def encode_m4_state(
     colors: np.ndarray,
     activation_draw: np.ndarray,
     candidate_draw: np.ndarray,
+    num_colors: int = 4,
 ) -> EncodedState:
     """
     The model sees only:
@@ -77,9 +78,11 @@ def encode_m4_state(
     """
 
     n = G.number_of_nodes()
+    if num_colors < 1 or np.any((colors < -1) | (colors >= num_colors)):
+        raise ValueError("Invalid palette or current colors")
 
     x = np.zeros(
-        (n, M4_FEATURES),
+        (n, num_colors + 3),
         dtype=np.float32,
     )
 
@@ -90,11 +93,11 @@ def encode_m4_state(
 
         x[v, color_idx] = 1.0
 
-        x[v, 5] = float(
+        x[v, num_colors + 1] = float(
             activation_draw[v]
         )
 
-        x[v, 6] = float(
+        x[v, num_colors + 2] = float(
             candidate_draw[v]
         )
 
@@ -107,6 +110,7 @@ def encode_m4_state(
 def encode_m4_round(
     G: nx.Graph,
     trace: RoundTrace,
+    num_colors: int = 4,
 ) -> M4Example:
     if (
         trace.activation_draw is None
@@ -124,6 +128,7 @@ def encode_m4_round(
         colors=trace.colors_before,
         activation_draw=trace.activation_draw,
         candidate_draw=trace.candidate_draw,
+        num_colors=num_colors,
     )
 
     candidate_offer = np.asarray(
