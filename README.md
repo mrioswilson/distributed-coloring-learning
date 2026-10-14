@@ -610,3 +610,10 @@ Una política aprendida puede diferir del oracle y aun así ser perfectamente v�
 4. mantiene una buena complejidad en rondas.
 
 En última instancia, nos interesa entender **qué hace que una regla neuronal pueda comportarse como un algoritmo distribuido**.
+
+
+## Estudio supervisado sistemático M6B
+
+La infraestructura nueva, sus comandos y el diseño experimental están en
+[docs/M6STUDY.md](docs/M6STUDY.md), con validación y entrega en
+[docs/M6DELIVERY.md](docs/M6DELIVERY.md) y base científica en [REPORT.md](REPORT.md).
