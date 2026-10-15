@@ -120,3 +120,22 @@ históricos M4B, Own-only y Counterfactual de semilla 10001 se comprobaron
 salidas duras/blandas exactas y una trayectoria autónoma idéntica de siete
 rondas (grafo técnico de semilla 931, tape 815). Estas comprobaciones son
 validación de implementación y no resultados del nuevo test final.
+
+## Cierre de A y del bloque inicial B
+
+Terminaron las 80 réplicas Counterfactual y los 20 controles Own-only de Δ=3,
+todos con 120 épocas y checkpoints completos. Los checkpoints seleccionados
+obtuvieron cada uno 16/16 éxitos y cero commits inseguros en validación. Esta
+validación se empleó para seleccionar checkpoints, por lo que no se interpreta
+como estimación independiente de fiabilidad final.
+
+En los 20 pares de Δ=3 se verificó igualdad exacta, a época 120, de datos,
+inicialización, actualizaciones, exposición y pesos de PARTICIPATE/CANDIDATE/
+message1; los pesos de message2/COMMIT difieren en todos los pares. La igualdad
+de resultados de validación no distingue aún los métodos. El registro por par
+está en `data/m6study-release/reports/phase-b-initial-pairing-verification.json`.
+
+La continuación de los planes de B, referencias, C y D está descrita en
+[docs/M6CONTINUATION.md](docs/M6CONTINUATION.md). Antes del test final se revisarán
+las ampliaciones de presupuesto y se fijarán las vistas de checkpoints, incluida
+la comparación a igual época para preservar el emparejamiento de P/C/message1.

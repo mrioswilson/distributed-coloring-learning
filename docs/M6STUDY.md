@@ -1,5 +1,9 @@
 # Estudio supervisado M6B (protocolo m6study-v1)
 
+La continuación automática de B, las referencias y C/D está documentada en
+[M6CONTINUATION.md](M6CONTINUATION.md). Conserva los planes originales y se detiene
+antes de la revisión y congelación del test final.
+
 La carpeta operativa de esta entrega es `data/m6study-release/`. El intento
 piloto anterior se conserva en `data/m6study/` con su traceback y checkpoint.
 El código está en `src/dcl/study/`. Los scripts históricos, sus nombres y sus
