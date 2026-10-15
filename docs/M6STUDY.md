@@ -2,7 +2,9 @@
 
 La continuación automática de B, las referencias y C/D está documentada en
 [M6CONTINUATION.md](M6CONTINUATION.md). Conserva los planes originales y se detiene
-antes de la revisión y congelación del test final.
+antes de la revisión y congelación del test final. Ese bloque de 340 entrenamientos
+ya terminó. La revisión, ampliación de C y nueva continuación automática hasta E
+están en [M6VALIDATION.md](M6VALIDATION.md).
 
 La carpeta operativa de esta entrega es `data/m6study-release/`. El intento
 piloto anterior se conserva en `data/m6study/` con su traceback y checkpoint.

@@ -1,5 +1,9 @@
 # Continuación de las fases de entrenamiento
 
+El bloque descrito aquí terminó sus 340 entrenamientos el 15 de octubre de 2026.
+La revisión de validación, ampliación a 20 semillas y continuación automática
+hasta el test final se documentan en [M6VALIDATION.md](M6VALIDATION.md).
+
 La Fase A terminó sus 80 réplicas y el bloque inicial B terminó sus 20 controles
 Own-only de Δ=3. Todos completaron 120 épocas y conservan los checkpoints previstos.
 Los checkpoints seleccionados obtuvieron 16/16 éxitos y cero commits inseguros

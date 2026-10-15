@@ -139,3 +139,19 @@ La continuación de los planes de B, referencias, C y D está descrita en
 [docs/M6CONTINUATION.md](docs/M6CONTINUATION.md). Antes del test final se revisarán
 las ampliaciones de presupuesto y se fijarán las vistas de checkpoints, incluida
 la comparación a igual época para preservar el emparejamiento de P/C/message1.
+
+## Revisión de los 340 entrenamientos y ampliación de C
+
+El bloque inicial A/B/referencias/C/D terminó el 15 de octubre de 2026 a las
+14:15, hora de Santiago. La auditoría de los 80 pares a época 120 conserva la
+igualdad de datos, inicialización, actualizaciones, exposición y P/C/message1.
+La validación seleccionada comienza a distinguir Own-only de Counterfactual en
+Δ=8/10, pero sigue siendo pequeña y utilizada para seleccionar épocas.
+
+La revisión reproducible, las limitaciones y la selección de tres presupuestos
+para ampliar a 20 semillas en cuatro grados están en
+[docs/M6VALIDATION.md](docs/M6VALIDATION.md). Se agregan 225 réplicas a las 340
+iniciales, como ampliación prevista en el protocolo, sin usar el test final.
+El coordinador `experiments/finish_m6study.py` encadena esa ampliación, auditoría,
+congelación, evaluación final e informes. No modifica el algoritmo ni las
+probabilidades contrafactuales. La interpretación final queda pendiente de E.

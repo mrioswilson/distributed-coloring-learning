@@ -617,3 +617,5 @@ En última instancia, nos interesa entender **qué hace que una regla neuronal p
 La infraestructura nueva, sus comandos y el diseño experimental están en
 [docs/M6STUDY.md](docs/M6STUDY.md), con validación y entrega en
 [docs/M6DELIVERY.md](docs/M6DELIVERY.md) y base científica en [REPORT.md](REPORT.md).
+La revisión de los 340 entrenamientos iniciales y la continuación hasta la
+evaluación final están en [docs/M6VALIDATION.md](docs/M6VALIDATION.md).
