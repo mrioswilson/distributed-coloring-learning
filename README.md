@@ -1,8 +1,14 @@
 # Learning Distributed Graph-Coloring Algorithms
 
+**Estudio M6B — corte del 16 de octubre de 2026:** 565 entrenamientos terminados;
+la evaluación final independiente sigue en curso. Están disponibles los
+[resultados parciales, tablas y figura](results/m6study/2026-10-16/README.md),
+incluida la comparación emparejada Counterfactual / Own-only. El diseño y la
+continuación del estudio están en [docs/M6VALIDATION.md](docs/M6VALIDATION.md).
+
 Este repositorio contiene experimentos para estudiar hasta qué punto una red neuronal puede **aprender, ejecutar y extrapolar algoritmos distribuidos locales**.
 
-El problema utilizado como caso de estudio es una variante aleatorizada de \((\Delta+1)\)-coloring. En los experimentos actuales trabajamos principalmente con grafos cúbicos (\(\Delta=3\)) y cuatro colores.
+El problema utilizado como caso de estudio es una variante aleatorizada de \((\Delta+1)\)-coloring. Los experimentos históricos descritos debajo trabajan principalmente con grafos cúbicos (\(\Delta=3\)) y cuatro colores; el estudio sistemático M6B admite \(\Delta=3,5,8,10\).
 
 La idea general es separar progresivamente los distintos componentes de un algoritmo distribuido y estudiar cuáles pueden ser aprendidos a partir de ejecuciones de un algoritmo maestro (*oracle*).
 
