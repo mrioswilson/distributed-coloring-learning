@@ -1,627 +1,178 @@
-# Learning Distributed Graph-Coloring Algorithms
+# Aprender algoritmos distribuidos de coloración
 
-**Estudio M6B — corte del 16 de octubre de 2026:** 565 entrenamientos terminados;
-la evaluación final independiente sigue en curso. Están disponibles los
-[resultados parciales, tablas y figura](results/m6study/2026-10-16/README.md),
-incluida la comparación emparejada Counterfactual / Own-only. El diseño y la
-continuación del estudio están en [docs/M6VALIDATION.md](docs/M6VALIDATION.md).
+Estudiamos si una red neuronal pequeña puede aprender una regla local de coloración y ejecutarla de forma autónoma en grafos mucho mayores que los usados para entrenar. **Entrenamos con 40 nodos y evaluamos hasta 40.960: un aumento de 1.024 veces.**
 
-Este repositorio contiene experimentos para estudiar hasta qué punto una red neuronal puede **aprender, ejecutar y extrapolar algoritmos distribuidos locales**.
+La pregunta central es si imitar decisiones locales alcanza para producir una coloración global correcta. Una precisión local muy alta puede esconder errores poco frecuentes que invalidan grafos grandes.
 
-El problema utilizado como caso de estudio es una variante aleatorizada de \((\Delta+1)\)-coloring. Los experimentos históricos descritos debajo trabajan principalmente con grafos cúbicos (\(\Delta=3\)) y cuatro colores; el estudio sistemático M6B admite \(\Delta=3,5,8,10\).
+**Estado publicado — 16 de octubre de 2026, 18:36 UTC:** los 565 entrenamientos del estudio M6B están terminados. La evaluación final sigue en curso; el [corte de resultados parciales](results/m6study/2026-10-16/README.md) contiene 298 de las 1.210 versiones de modelos previstas. Las cifras de este README corresponden a ese corte.
 
-La idea general es separar progresivamente los distintos componentes de un algoritmo distribuido y estudiar cuáles pueden ser aprendidos a partir de ejecuciones de un algoritmo maestro (*oracle*).
+## El problema y el algoritmo profesor
 
----
+Queremos asignar un color a cada nodo de un grafo, de modo que **dos nodos unidos por una arista tengan colores distintos**. Si el máximo número de vecinos de un nodo es Δ, usamos una paleta de Δ+1 colores: por ejemplo, cuatro colores para Δ=3.
 
-## 1. Problema
+El profesor, también llamado *oracle*, implementa una regla aleatorizada de tipo Luby. Todos los nodos comienzan sin color. En cada ronda síncrona, cada nodo aún sin colorear:
 
-Cada nodo debe terminar con un color en
+1. Decide si participa, con probabilidad 0,5.
+2. Descarta los colores ya fijados en sus vecinos.
+3. Propone uno de los colores disponibles, elegido uniformemente.
+4. Intercambia propuestas con sus vecinos. Si dos participantes vecinos proponen el mismo color, ambos esperan.
+5. Confirma su propuesta (`COMMIT`) si es válida; en caso contrario espera (`WAIT`).
 
-\[
-\{0,1,2,3\}
-\]
+Un color confirmado es permanente. Cada nodo usa dos números aleatorios independientes por ronda: uno para participar y otro para elegir el candidato. Una *random tape* es la secuencia de esos números; distintas tapes producen distintas ejecuciones sobre un mismo grafo.
 
-de forma que para toda arista \(\{u,v\}\),
+## Qué aprende la red
 
-\[
-c_u \neq c_v.
-\]
+Usamos **M4B**, una red neuronal de grafos (*GNN*) con tres salidas o «cabezas»:
 
-Los nodos inicialmente están sin colorear.
+| Cabeza | Decisión que aprende |
+|---|---|
+| `PARTICIPATE` | ¿Participo en esta ronda? |
+| `CANDIDATE` | ¿Qué color propongo? |
+| `COMMIT` | ¿Confirmo esa propuesta o espero? |
 
-El algoritmo maestro opera sincrónicamente en rondas y utiliza una **random tape local** independiente para cada nodo.
+Cada nodo aplica la misma red y los mismos pesos. `PARTICIPATE` usa su estado local y su sorteo de participación. Para proponer un color, recibe mensajes aprendidos de sus vecinos; después hay un segundo intercambio que comunica las propuestas para decidir `COMMIT`. En ambos intercambios, los mensajes se resumen mediante un máximo por componente (`MAX`).
 
-En cada ronda, un nodo no coloreado:
+La red recibe estados de color y números aleatorios. Debe aprender a interpretar los mensajes: durante la ejecución no recibe una lista de colores disponibles ni decisiones del profesor. Las decisiones de todos los nodos se aplican simultáneamente al terminar cada ronda.
 
-1. decide aleatoriamente si participa;
-2. calcula qué colores siguen disponibles según sus vecinos ya coloreados;
-3. elige aleatoriamente un candidato entre esos colores;
-4. intercambia candidatos con sus vecinos;
-5. hace `COMMIT` si su candidato no entra en conflicto;
-6. de lo contrario hace `WAIT` y vuelve a intentarlo en una ronda posterior.
+**M4B nombra la arquitectura; M6B-Counterfactual nombra el método de entrenamiento que estudiamos.** Se entrena un modelo distinto por grado y réplica; no estamos transfiriendo un único modelo entre grados. Las dimensiones internas se mantienen fijas:
 
-Los colores aceptados mediante `COMMIT` son permanentes.
+| Grado máximo Δ | Colores | Parámetros entrenables |
+|---|---:|---:|
+| 3 | 4 | 8.967 |
+| 5 | 6 | 9.737 |
+| 8 | 9 | 10.892 |
+| 10 | 11 | 11.662 |
 
----
+La regla usa solo información local y comunicación entre vecinos. La implementación simula esas rondas en un proceso con GPU; los nodos del grafo son los participantes del algoritmo simulado.
 
-## 2. Objetivo del proyecto
+## Por qué usamos entrenamiento contrafactual
 
-Queremos distinguir entre varias preguntas:
+Entrenamos desde cero con estados extraídos de trayectorias del profesor. El aprendizaje es supervisado: el profesor proporciona ejemplos y etiquetas de decisiones correctas.
 
-- ¿Puede una red neuronal imitar una regla local distribuida?
-- ¿Puede ejecutar esa regla de forma iterada sin acumular errores?
-- ¿Puede extrapolar desde grafos pequeños hacia grafos mucho mayores?
-- ¿Qué arquitecturas permiten representar correctamente las relaciones entre mensajes vecinos?
-- ¿Qué tipos de errores locales son realmente importantes para la corrección global?
-- Eventualmente: ¿puede una política aprendida descubrir una regla mejor que el algoritmo maestro?
+El problema delicado está en `COMMIT`: **su etiqueta debe corresponder a la propuesta que realmente está evaluando**. Por ejemplo, si un vecino ya tiene rojo, el profesor puede proponer azul y confirmar. Si la red propone rojo en ese mismo estado, su etiqueta correcta es esperar. Copiar la confirmación del profesor enseñaría una decisión peligrosa.
 
-Actualmente entrenamos en grafos cúbicos aleatorios de tamaño
+Durante las primeras diez épocas (*warmup*), `COMMIT` aprende con propuestas del profesor y sus etiquetas correspondientes. Después, M6B-Counterfactual combina dos clases de ejemplos:
 
-\[
-N=40
-\]
+- **Propuestas propias:** las que producen las cabezas de la red, con etiquetas recalculadas para esas propuestas.
+- **Propuestas contrafactuales:** propuestas modificadas deliberadamente para exponer conflictos con colores permanentes o con propuestas simultáneas. Así se enseña a rechazar errores que aparecen poco en las trayectorias correctas del profesor.
 
-y evaluamos extrapolación hasta
+La pérdida conjunta es `L_PARTICIPATE + L_CANDIDATE + 0,5 L_COMMIT_propio + 0,5 L_COMMIT_contrafactual`. Todos los módulos se entrenan desde cero; las decisiones discretas intermedias separan el gradiente de `COMMIT` del de las otras dos cabezas.
 
-\[
-N=10240.
-\]
+Comparamos cuatro métodos para separar los efectos de cada componente:
 
----
+| Método | Qué supervisión recibe `COMMIT` |
+|---|---|
+| **COUNTERFACTUAL** | Propuestas propias y propuestas modificadas, siempre con etiquetas concordantes. Es el tratamiento principal. |
+| **OWN_ONLY** | Solo propuestas propias después del warmup; repite su evaluación para mantener la ponderación y el presupuesto del tratamiento. Aísla el aporte de los contrafactuales. |
+| **ORACLE_MATCHED** | Propuestas del profesor con etiquetas concordantes durante todo el entrenamiento. |
+| **TRADITIONAL** | Reproduce la política histórica, incluida la aplicación de etiquetas del profesor a propuestas de la red después del warmup. Es una referencia histórica con esa discrepancia explícita. |
 
-## 3. Oracle
+La comparación principal Counterfactual / Own-only comparte datos, inicialización, orden y número de actualizaciones. A la época 120 se verificó que los pesos de `PARTICIPATE`, `CANDIDATE` y del primer módulo de mensajes son exactamente iguales en los 80 pares. Las diferencias quedan en el segundo módulo de mensajes y `COMMIT`.
 
-El oracle implementa un algoritmo aleatorizado de \(4\)-coloring para grafos de grado máximo \(3\).
+## Cómo está organizado el estudio
 
-Para cada nodo no coloreado \(v\), en cada ronda se generan dos números aleatorios:
+La configuración principal usa **800 grafos de 40 nodos, tres tapes por grafo y 120 épocas**, con 20 réplicas por grado. Una réplica usa una semilla que determina su inicialización, grafos y tapes; los controles emparejados reutilizan esos mismos datos y condiciones.
 
-```text
-activation_draw[v]
-candidate_draw[v]
-```
+Las familias de grafos son:
 
-La participación se decide mediante:
+- **REGULAR:** grafos conexos donde todos los nodos tienen grado Δ. Es el entrenamiento principal.
+- **IRREGULAR:** grafos conexos obtenidos eliminando aristas, con grados variables y máximo Δ.
+- **MIXED:** entrenamiento con mitad REGULAR y mitad IRREGULAR, para estudiar generalización estructural. En la prueba se informan ambas familias por separado.
 
-```text
-activation_draw[v] < 0.5
-```
+| Fase | Pregunta | Entrenamientos únicos |
+|---|---|---:|
+| **A — Tratamiento principal** | ¿Se reproduce Counterfactual en 20 semillas y cuatro grados? | 80 |
+| **B — Controles emparejados** | ¿Qué cambia al quitar las propuestas contrafactuales? | 80 |
+| **Referencias** | ¿Cómo se compara con supervisión del profesor y entrenamiento histórico? | 15 |
+| **C — Presupuestos** | ¿Importa más variar grafos, tapes o actualizaciones? Incluye la ampliación seleccionada con validación. | 310 adicionales |
+| **D — Estructura** | ¿Qué aporta entrenar en MIXED? | 80 |
+| **Total entrenado** | | **565** |
+| **E — Prueba final** | ¿Funcionan los modelos congelados en grafos independientes y mucho mayores? | Sin nuevos entrenamientos |
 
-La paleta disponible es:
+C comienza con cinco semillas en Δ=3 y amplía tres presupuestos seleccionados mediante validación a 20 semillas y cuatro grados. Se reutilizan configuraciones ya entrenadas, por eso la tabla cuenta entrenamientos únicos. El detalle está en el [protocolo y la ampliación de presupuestos](docs/M6VALIDATION.md).
 
-\[
-A_v =
-\{0,1,2,3\}
-\setminus
-\{\text{colores fijados en vecinos de }v\}.
-\]
+## Qué mide la evaluación final
 
-El candidato se escoge mediante:
+Ejecutamos la red ronda tras ronda sobre sus propios estados, sin que el profesor corrija o filtre sus acciones. Las reglas exactas se consultan para registrar diagnósticos después de decidir; no intervienen en la evolución del grafo.
 
-\[
-j =
-\lfloor
-r_v^{(c)} |A_v|
-\rfloor.
-\]
+Distinguimos tres resultados:
 
-Dos participantes vecinos que proponen el mismo color hacen ambos `WAIT`.
+- **Imitación local:** cuánto coinciden las decisiones con la regla del profesor.
+- **Éxito global:** todos los nodos terminan coloreados y ninguna arista une nodos del mismo color, dentro del límite de 256 rondas.
+- **Rondas:** cuánto tarda el proceso en terminar.
 
----
+Una decisión distinta de la del profesor puede seguir produciendo una coloración válida; por eso estas métricas se informan por separado.
 
-## 4. Experimentos M1–M4
+También contamos confirmaciones inseguras, conflictos y errores según **k**, la cantidad de colores aún disponibles para un nodo. Tener k=1 es un caso delicado, pero no suponemos que todos los fallos se concentren allí.
 
-La progresión experimental elimina gradualmente información proporcionada directamente por el oracle.
+La prueba final usa grafos y tapes independientes del entrenamiento y la validación, compartidos entre los modelos de un mismo grado para permitir comparaciones emparejadas:
 
-### M1 — aprender `COMMIT`
+| Nodos | Grafos REGULAR | Grafos IRREGULAR |
+|---|---:|---:|
+| 40 | 100 | 100 |
+| 160 | 100 | 100 |
+| 640 | 100 | 100 |
+| 2.560 | 50 | 50 |
+| 10.240 | 25 | 25 |
+| 40.960 | 10 | 10 |
 
-La red recibe:
+Antes de abrir esa prueba se fijaron dos formas de tomar los pesos de cada modelo (*checkpoints*): **`best`**, la época elegida exclusivamente por validación, y **`epoch-120`**, la última época común. Esta última conserva el emparejamiento de las cabezas entre Counterfactual y Own-only; `best` puede escoger épocas distintas.
 
-- estado de color;
-- participación;
-- candidato.
+Se evalúan ambas versiones de los 565 modelos y cuatro épocas intermedias de las 20 réplicas principales Counterfactual Δ=3: **1.210 versiones y 931.700 ejecuciones modelo–grafo previstas**. Son observaciones correlacionadas por compartir grafos o pesos. Los resultados del test no se usan para cambiar el entrenamiento ni la selección.
 
-Debe aprender solamente:
+## Resultados parciales publicados
 
-```text
-COMMIT / WAIT
-```
+El corte del **16 de octubre de 2026, 18:36 UTC** contiene **229.460 ejecuciones modelo–grafo** correspondientes a 298 versiones completamente evaluadas. Los checkpoints evaluados solo en parte quedan fuera de ese corte.
 
-Resultado principal:
+Para los modelos principales a **época 120**, entrenados en REGULAR con 40 nodos, estas cohortes ya están completas en **40.960 nodos**:
 
-- imitación exacta de la regla local;
-- 0 errores observados hasta \(N=10240\);
-- ejecución closed-loop idéntica al oracle.
+| Método | Δ | Réplicas evaluadas | Coloraciones correctas | Confirmaciones inseguras |
+|---|---:|---:|---:|---:|
+| Counterfactual | 3 | 20/20 | 400/400 | 0 |
+| Counterfactual | 5 | 20/20 | 400/400 | 0 |
+| Counterfactual | 8 | 20/20 | 400/400 | 0 |
+| Counterfactual | 10 | 20/20 | 400/400 | 0 |
+| Own-only | 3 | 20/20 | 390/400 | 10 |
 
----
+Cada fila combina **20 modelos × los mismos 20 grafos grandes**: diez REGULAR y diez IRREGULAR. Las 400 ejecuciones no son 400 grafos independientes. Los demás controles y presupuestos siguen incompletos en este corte.
 
-### M2 — aprender `PARTICIPATE + COMMIT`
+En Δ=3, ambos métodos usan en promedio aproximadamente 18,2 rondas en esos grafos grandes. La diferencia observada está en la corrección, sin aumento del promedio de rondas en esa comparación. Los intervalos y la variación entre semillas están en las tablas enlazadas; los resultados finitos no establecen corrección universal.
 
-La red recibe:
+**La elección del checkpoint también importa.** Con la política `best`, Counterfactual Δ=3 presenta 108 fallos de 770 pruebas en la réplica de semilla 17, cuya época seleccionada fue la 10, durante el warmup. Counterfactual Δ=8 presenta un fallo de 770 pruebas en la semilla 18, seleccionada en la época 30. Estos denominadores reúnen todos los tamaños de esa réplica. Los fallos se conservan en los resultados; las dos políticas de selección estaban fijadas antes del test.
 
-- estado de color;
-- `activation_draw`;
-- `candidate_offer`.
+![Generalización de Counterfactual y Own-only en grado 3](results/m6study/2026-10-16/degree3-generalization.png)
 
-Debe aprender:
+Consultar el [informe del corte](results/m6study/2026-10-16/README.md), el [resumen entre semillas](results/m6study/2026-10-16/success-summary.csv), las [comparaciones emparejadas](results/m6study/2026-10-16/paired-by-seed.csv) y los [fallos individuales](results/m6study/2026-10-16/errors.csv). El [manifiesto del corte](results/m6study/2026-10-16/snapshot.json) identifica el protocolo, denominadores y hashes de modelos incluidos.
 
-```text
-PARTICIPATE
-COMMIT / WAIT
-```
+## Dónde seguir leyendo y colaborar
 
-Se comparan dos arquitecturas.
+| Archivo o carpeta | Para qué sirve |
+|---|---|
+| [REPORT.md](REPORT.md) | Preguntas científicas, auditoría histórica y decisiones del diseño. |
+| [docs/M6STUDY.md](docs/M6STUDY.md) | Protocolo base, instalación CUDA, entrenamiento, reanudación y métricas. |
+| [docs/M6VALIDATION.md](docs/M6VALIDATION.md) | Revisión de validación, ampliación de C y protocolo final de E. |
+| [configs/m6study/](configs/m6study/) | Planes concretos de cada fase. |
+| [src/dcl/oracle.py](src/dcl/oracle.py) | Algoritmo profesor. |
+| [src/dcl/m4_models.py](src/dcl/m4_models.py) | Arquitectura M4B y sus tres cabezas. |
+| [src/dcl/counterfactual.py](src/dcl/counterfactual.py) | Propuestas modificadas y etiquetas exactas para `COMMIT`. |
+| [src/dcl/study/](src/dcl/study/) | Datos, entrenamiento, evaluación, persistencia e informes del estudio actual. |
+| [tests/](tests/) | Comprobaciones de reglas, emparejamiento, reanudación y evaluación. |
+| [docs/HISTORIA_M1_M4.md](docs/HISTORIA_M1_M4.md) | README histórico: cómo llegamos desde aprender componentes aislados hasta la red completa. |
 
-#### M2A
+Para una primera revisión, seguir este recorrido: **este README → resultados del corte → protocolo final → código de entrenamiento y contrafactuales**. Al proponer nuevos experimentos, separar las hipótesis nuevas del protocolo congelado que está siendo evaluado.
 
-Agregación directa:
+## Preparar una copia local
 
-```text
-features de vecinos
-        ↓
-componentwise MAX
-```
-
-Esta arquitectura pierde ciertas asociaciones entre propiedades del mismo vecino.
-
-Por ejemplo, puede saber que:
-
-```text
-algún vecino participa
-```
-
-y que:
-
-```text
-algún vecino propone color 2
-```
-
-sin poder representar adecuadamente que:
-
-```text
-el mismo vecino participa Y propone color 2
-```
-
-El rendimiento global se degrada rápidamente.
-
-#### M2B
-
-Antes del `MAX`, cada nodo transforma su información mediante un MLP:
-
-```text
-features
-   ↓
-  MLP
-   ↓
-mensaje aprendido
-   ↓
-  MAX
-```
-
-Esto permite construir representaciones del tipo:
-
-```text
-"soy un vecino activo y propongo color 2"
-```
-
-M2B mantiene 100% de éxito de coloring hasta \(N=10240\) en la evaluación realizada.
-
----
-
-### M3 — aprender `CANDIDATE + COMMIT`
-
-La red recibe:
-
-- estado de color;
-- participación;
-- `candidate_draw`.
-
-Debe aprender:
-
-```text
-CANDIDATE
-COMMIT / WAIT
-```
-
-Aquí aparece una dificultad interesante.
-
-La selección del candidato depende de fronteras exactas como:
-
-\[
-1/4,\ 1/3,\ 1/2,\ 2/3,\ 3/4.
-\]
-
-Las redes aprenden aproximaciones muy buenas de estas fronteras, pero pequeños desplazamientos producen errores cerca de los umbrales.
-
-En los experimentos:
-
-- prácticamente todos los errores de candidato ocurren cerca de estas fronteras;
-- lejos de ellas, la selección aprendida es esencialmente exacta;
-- una pequeña tasa de error local puede convertirse en muchos errores al ejecutar millones de decisiones.
-
----
-
-### M4 — aprender el algoritmo completo
-
-La red recibe solamente:
-
-```text
-estado de color
-activation_draw
-candidate_draw
-```
-
-y debe aprender internamente:
-
-```text
-PARTICIPATE
-    ↓
-CANDIDATE
-    ↓
-COMMIT / WAIT
-```
-
-Se comparan nuevamente dos arquitecturas.
-
-#### M4A
-
-Usa agregación `MAX` directa.
-
-Su éxito cae rápidamente al aumentar \(N\).
-
-#### M4B
-
-Usa MLPs para aprender mensajes antes de agregarlos.
-
-Entrenando únicamente en \(N=40\), M4B mantiene buena capacidad de extrapolación hasta \(N=10240\).
-
-En 10 seeds de entrenamiento independientes, para \(N=10240\):
-
-```text
-mean success ≈ 0.768
-std          ≈ 0.150
-min          = 0.56
-max          = 0.96
-```
-
-El número de rondas aprendido permanece muy cercano al del oracle.
-
----
-
-## 5. Una observación importante sobre las métricas
-
-Una alta accuracy local **no implica necesariamente un buen algoritmo distribuido**.
-
-Por ejemplo, distintas seeds de M4B tienen accuracies locales muy similares, pero tasas de éxito global muy diferentes.
-
-Por eso distinguimos entre:
-
-```text
-action_accuracy
-```
-
-e
-
-```text
-success_rate
-```
-
-La acción local se interpreta como una de:
-
-```text
-WAIT
-COMMIT-0
-COMMIT-1
-COMMIT-2
-COMMIT-3
-```
-
-La métrica principal de ejecución es:
-
-```text
-success = finished AND proper_coloring
-```
-
----
-
-## 6. Errores seguros versus errores peligrosos
-
-Un diagnóstico posterior de M4B mostró algo especialmente importante.
-
-La red puede diferir muchas veces del oracle sin que eso sea necesariamente malo.
-
-En cambio, los fracasos observados ocurren cuando aparece un **unsafe commit**:
-
-```text
-un nodo hace COMMIT con un color
-que ya tiene uno de sus vecinos
-```
-
-En una muestra de 250 ejecuciones en \(N=10240\):
-
-```text
-sin unsafe commit  -> 166 éxitos, 0 fracasos
-con unsafe commit  ->   0 éxitos, 84 fracasos
-```
-
-Es decir, en esa muestra:
-
-\[
-\text{success}
-\iff
-\text{no unsafe commit}.
-\]
-
-Esto sugiere que para aprendizaje de algoritmos distribuidos puede ser más importante estudiar la preservación de **invariantes locales de seguridad** que la simple imitación exacta del oracle.
-
----
-
-## 7. Open-loop y closed-loop
-
-### Open-loop
-
-El oracle genera toda la trayectoria.
-
-La red solamente predice qué habría hecho.
-
-Un error de la red no modifica el siguiente estado.
-
-Esto mide principalmente:
-
-```text
-calidad de imitación local
-```
-
-### Closed-loop
-
-Las decisiones de la red se aplican realmente.
-
-Por tanto:
-
-```text
-estado siguiente = consecuencia de decisiones aprendidas
-```
-
-Esto mide:
-
-```text
-ejecución real del algoritmo aprendido
-```
-
-Closed-loop es la evaluación principal.
-
----
-
-## 8. Instalación
-
-Clonar el repositorio:
+Requiere Python 3.11 o posterior:
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/mrioswilson/distributed-coloring-learning.git
 cd distributed-coloring-learning
-```
-
-Crear el entorno:
-
-```bash
 python -m venv .venv
 source .venv/bin/activate
+python -m pip install -e '.[dev,study]'
 ```
 
-Instalar:
+Para reproducir el entorno GPU usado en el estudio, seguir las [instrucciones de instalación CUDA](docs/M6STUDY.md#instalación-y-comprobaciones) y el [registro de versiones](requirements-m6study.lock). En una copia de trabajo sin otra cola GPU activa, las comprobaciones se ejecutan con `python -m pytest -q`.
 
-```bash
-pip install -e .
-```
-
-Ejecutar tests:
-
-```bash
-pytest -v
-```
-
-Actualmente deberían pasar:
-
-```text
-19 tests
-```
-
----
-
-## 9. Estructura del repositorio
-
-```text
-src/dcl/
-    graphs.py
-    oracle.py
-    dataset.py
-    model.py
-
-    staged_data.py
-    staged_models.py
-
-    m4_data.py
-    m4_models.py
-
-tests/
-    test_graphs.py
-    test_oracle.py
-    test_dataset.py
-    test_model.py
-    test_staged.py
-    test_m4.py
-
-experiments/
-    benchmark_oracle.py
-
-    train_m1.py
-    evaluate_m1_extrapolation.py
-    evaluate_m1_closed_loop.py
-
-    train_staged.py
-    evaluate_staged.py
-    evaluate_action_accuracy.py
-    diagnose_m3_thresholds.py
-
-    train_m4.py
-    evaluate_m4.py
-
-    train_m4_seed.py
-    evaluate_m4_seed.py
-    summarize_m4b_seeds.py
-    analyze_m4b_failure_modes.py
-```
-
-Los resultados generados y checkpoints no se incluyen en Git por defecto.
-
----
-
-## 10. Ejemplos de ejecución
-
-### M1
-
-```bash
-python experiments/train_m1.py
-python experiments/evaluate_m1_extrapolation.py
-python experiments/evaluate_m1_closed_loop.py
-```
-
-### M2
-
-```bash
-python experiments/train_staged.py --task m2 --arch A
-python experiments/train_staged.py --task m2 --arch B
-```
-
-### M3
-
-```bash
-python experiments/train_staged.py --task m3 --arch A
-python experiments/train_staged.py --task m3 --arch B
-```
-
-Diagnóstico de fronteras:
-
-```bash
-python experiments/diagnose_m3_thresholds.py --arch A
-python experiments/diagnose_m3_thresholds.py --arch B
-```
-
-### M4
-
-```bash
-python experiments/train_m4.py --arch A
-python experiments/train_m4.py --arch B
-```
-
-Evaluación:
-
-```bash
-python experiments/evaluate_m4.py --arch A
-python experiments/evaluate_m4.py --arch B
-```
-
----
-
-## 11. Próximos experimentos
-
-Algunas direcciones abiertas:
-
-### Replicación entre seeds
-
-Ya iniciada para M4B.
-
-Objetivo:
-
-- separar propiedades robustas de la arquitectura de efectos de inicialización.
-
-### Topology-OOD
-
-Hasta ahora la extrapolación principal es:
-
-```text
-random cubic N=40
-        ↓
-random cubic N >> 40
-```
-
-Esto es extrapolación en tamaño.
-
-Topology-OOD significa mantener aproximadamente las mismas restricciones locales pero probar familias estructuralmente distintas de grafos.
-
-La pregunta es:
-
-> ¿La red aprendió una regla distribuida general o una regularidad particular de los random cubic graphs?
-
-### Composición modular
-
-Idea para una etapa posterior:
-
-```text
-ParticipationModule
-        ↓
-CandidateModule
-        ↓
-CommitModule
-```
-
-Comparar:
-
-```text
-módulos aprendidos separadamente y luego ensamblados
-```
-
-contra:
-
-```text
-entrenamiento conjunto end-to-end
-```
-
-### Reinforcement Learning
-
-Una vez caracterizada la capacidad de imitar el algoritmo:
-
-- eliminar progresivamente la supervisión del oracle;
-- usar recompensa por coloring correcto;
-- penalizar número de rondas;
-- permitir que la red encuentre estrategias diferentes.
-
-La pregunta final sería:
-
-> ¿Puede una red descubrir un algoritmo distribuido correcto y eventualmente mejor que el algoritmo utilizado como maestro?
-
----
-
-## 12. Criterio general
-
-El objetivo del proyecto no es simplemente lograr alta accuracy sobre los datos del oracle.
-
-Queremos distinguir entre:
-
-\[
-\text{imitation learning}
-\]
-
-y
-
-\[
-\text{algorithm learning}.
-\]
-
-Una política aprendida puede diferir del oracle y aun así ser perfectamente válida si:
-
-1. siempre produce una coloración correcta;
-2. respeta las restricciones de comunicación distribuida;
-3. extrapola a tamaños y topologías no observados;
-4. mantiene una buena complejidad en rondas.
-
-En última instancia, nos interesa entender **qué hace que una regla neuronal pueda comportarse como un algoritmo distribuido**.
-
-
-## Estudio supervisado sistemático M6B
-
-La infraestructura nueva, sus comandos y el diseño experimental están en
-[docs/M6STUDY.md](docs/M6STUDY.md), con validación y entrega en
-[docs/M6DELIVERY.md](docs/M6DELIVERY.md) y base científica en [REPORT.md](REPORT.md).
-La revisión de los 340 entrenamientos iniciales y la continuación hasta la
-evaluación final están en [docs/M6VALIDATION.md](docs/M6VALIDATION.md).
+GitHub incluye código, planes, tablas, figuras y hashes. Los checkpoints y los resultados originales por grafo permanecen en el servidor, fuera de Git por su volumen. Reanudar la evaluación o regenerar el corte con [el exportador](experiments/export_m6study_results.py) requiere esos archivos originales; las tablas publicadas pueden consultarse directamente.
