@@ -1,5 +1,13 @@
 # Revisión de validación y continuación hasta E
 
+**Cierre: 17 de octubre de 2026, hora de Chile.** Terminaron los 565 entrenamientos,
+las 931.700 evaluaciones de 1.210 vistas y los 64 grupos de informes. La prueba
+final cerró a las 22:43; el coordinador completó los informes a las 22:55. El
+[análisis final](../results/m6study/2026-10-17-final/ANALISIS.md) y el
+[manifiesto de cierre](../results/m6study/2026-10-17-final/final-report-state.json)
+conservan los resultados y la identidad del protocolo congelado. El texto
+siguiente documenta las decisiones anteriores a esa prueba.
+
 El 15 de octubre de 2026 a las 14:15:32, hora de Santiago, terminaron los 340
 entrenamientos únicos del bloque inicial A/B/referencias/C/D. No hubo fallos en
 `data/m6study-release/`. El intento técnico antiguo permanece preservado en

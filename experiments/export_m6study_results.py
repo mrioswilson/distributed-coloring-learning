@@ -151,7 +151,8 @@ def export(root, output):
     write_csv(output / "errors.csv", failures)
     write_csv(output / "k-by-seed.csv", local)
     write_csv(output / "training.csv", training)
-    metadata = {"status": "partial", "captured_utc": captured, "protocol": frozen["protocol"],
+    status = "complete" if len(complete) == len(frozen["models"]) else "partial"
+    metadata = {"status": status, "captured_utc": captured, "protocol": frozen["protocol"],
                 "frozen_protocol_sha256": frozen_hash, "evaluation_id": evaluation_id,
                 "export_script_sha256": file_hash(Path(__file__)), "selection_uses_final_test": False,
                 "training_runs": len(training), "complete_checkpoint_views_exported": len(complete),
@@ -162,12 +163,12 @@ def export(root, output):
     if file_hash(frozen_path) != frozen_hash:
         raise RuntimeError("The frozen protocol changed during export")
     (output / "snapshot.json").write_text(json.dumps(metadata, sort_keys=True, indent=2) + "\n")
-    make_figures(output, summary, seeds)
+    make_figures(output, summary, seeds, status)
     write_readme(output, metadata, summary, failures)
     print(json.dumps({key: value for key, value in metadata.items() if key != "published_checkpoints"}, indent=2))
 
 
-def make_figures(output, summary, seeds):
+def make_figures(output, summary, seeds, status="partial"):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -183,7 +184,8 @@ def make_figures(output, summary, seeds):
     ax.set_xscale("log", base=2)
     ax.set_xlabel("Graph nodes")
     ax.set_ylabel("Mean success across seeds (%)")
-    ax.set_title("Partial independent test: degree 3, epoch 120, no shield")
+    label = "Independent test" if status == "complete" else "Partial independent test"
+    ax.set_title(f"{label}: degree 3, epoch 120, no shield")
     ax.set_ylim(0, 102)
     ax.grid(alpha=.2)
     ax.legend(fontsize=7)
@@ -194,10 +196,14 @@ def make_figures(output, summary, seeds):
 
 
 def write_readme(output, metadata, summary, failures):
-    lines = ["# M6B: resultados parciales independientes", "", f"Corte UTC: {metadata['captured_utc']}.", "",
-             f"Estado: **evaluación final en curso**. {metadata['training_runs']} entrenamientos terminados; "
+    complete = metadata["status"] == "complete"
+    title = "resultados finales de la prueba independiente" if complete else "resultados parciales independientes"
+    state = "evaluación final completada" if complete else "evaluación final en curso"
+    coverage = "Se incluyen todas las vistas previstas." if complete else "Se excluyen las vistas incompletas."
+    lines = [f"# M6B: {title}", "", f"Corte UTC: {metadata['captured_utc']}.", "",
+             f"Estado: **{state}**. {metadata['training_runs']} entrenamientos terminados; "
              f"{metadata['complete_checkpoint_views_exported']}/{metadata['planned_checkpoint_views']} vistas de checkpoints completas publicadas, "
-             f"con {metadata['graph_evaluations_exported']:,} evaluaciones por grafo. Se excluyen las vistas incompletas.", "",
+             f"con {metadata['graph_evaluations_exported']:,} evaluaciones por grafo. {coverage}", "",
              "Los modelos de referencia se entrenaron en 800 grafos regulares de 40 nodos, tres tapes y 120 épocas. "
              "La inferencia es autónoma, sin shield ni correcciones externas. La vista de época 120 y la selección best "
              "por validación se fijaron antes de abrir la prueba final.", "", "## Pruebas de 40.960 nodos, época 120", "",
@@ -223,7 +229,8 @@ def write_readme(output, metadata, summary, failures):
               "- Los intervalos Wilson y Clopper–Pearson son por modelo/familia/tamaño. No se trata el total de "
               "evaluaciones de modelos distintos como ensayos binomiales independientes. McNemar es por par de modelos "
               "sobre los mismos grafos/tapes, exploratorio y sin corrección por multiplicidad.",
-              "- Estos resultados no establecen corrección universal. Faltan partes de los controles, MIXED y presupuestos. "
+              "- Estos resultados no establecen corrección universal. "
+              + ("" if complete else "Faltan partes de los controles, MIXED y presupuestos. ") +
               "No se modifica el protocolo ni el entrenamiento a partir del test."]
     negative = Counter((r["degree"], r["seed"], r["checkpoint_epoch"]) for r in failures
                        if r["method"] == "COUNTERFACTUAL" and r["training_family"] == "REGULAR"

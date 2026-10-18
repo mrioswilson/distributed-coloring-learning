@@ -54,6 +54,9 @@ def test_public_snapshot_exports_completed_views_and_preserves_protocol(tmp_path
     output = tmp_path / "published"
     public_export.export(root, output)
     metadata = json.loads((output / "snapshot.json").read_text())
+    assert metadata["status"] == "complete"
+    assert "**evaluación final completada**" in (output / "README.md").read_text()
+    assert "Faltan partes" not in (output / "README.md").read_text()
     assert metadata["complete_checkpoint_views_exported"] == 2
     assert metadata["graph_evaluations_exported"] == 4
     assert len(pd.read_csv(output / "paired-by-seed.csv")) == 2
@@ -66,6 +69,8 @@ def test_public_snapshot_exports_completed_views_and_preserves_protocol(tmp_path
     partial = tmp_path / "partial-published"
     public_export.export(root, partial)
     metadata = json.loads((partial / "snapshot.json").read_text())
+    assert metadata["status"] == "partial"
+    assert "**evaluación final en curso**" in (partial / "README.md").read_text()
     assert metadata["complete_checkpoint_views_exported"] == 1
     assert metadata["graph_evaluations_exported"] == 2
     assert metadata["graph_evaluations_stored_at_capture"] == 3

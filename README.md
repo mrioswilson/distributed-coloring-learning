@@ -4,7 +4,7 @@ Estudiamos si una red neuronal pequeña puede aprender una regla local de colora
 
 La pregunta central es si imitar decisiones locales alcanza para producir una coloración global correcta. Una precisión local muy alta puede esconder errores poco frecuentes que invalidan grafos grandes.
 
-**Estado publicado — 16 de octubre de 2026, 18:36 UTC:** los 565 entrenamientos del estudio M6B están terminados. La evaluación final sigue en curso; el [corte de resultados parciales](results/m6study/2026-10-16/README.md) contiene 298 de las 1.210 versiones de modelos previstas. Las cifras de este README corresponden a ese corte.
+**Evaluación final completada — 17 de octubre de 2026, hora de Chile:** terminaron los 565 entrenamientos y las 931.700 evaluaciones de las 1.210 versiones de modelos. Los [resultados completos](results/m6study/2026-10-17-final/README.md) conservan todas las semillas, controles, presupuestos y fallos observados.
 
 ## El problema y el algoritmo profesor
 
@@ -118,13 +118,13 @@ La prueba final usa grafos y tapes independientes del entrenamiento y la validac
 
 Antes de abrir esa prueba se fijaron dos formas de tomar los pesos de cada modelo (*checkpoints*): **`best`**, la época elegida exclusivamente por validación, y **`epoch-120`**, la última época común. Esta última conserva el emparejamiento de las cabezas entre Counterfactual y Own-only; `best` puede escoger épocas distintas.
 
-Se evalúan ambas versiones de los 565 modelos y cuatro épocas intermedias de las 20 réplicas principales Counterfactual Δ=3: **1.210 versiones y 931.700 ejecuciones modelo–grafo previstas**. Son observaciones correlacionadas por compartir grafos o pesos. Los resultados del test no se usan para cambiar el entrenamiento ni la selección.
+Se evaluaron ambas versiones de los 565 modelos y cuatro épocas intermedias de las 20 réplicas principales Counterfactual Δ=3: **1.210 versiones y 931.700 ejecuciones modelo–grafo**. Son observaciones correlacionadas por compartir grafos o pesos. Los resultados del test no se usan para cambiar el entrenamiento ni la selección.
 
-## Resultados parciales publicados
+## Resultados finales publicados
 
-El corte del **16 de octubre de 2026, 18:36 UTC** contiene **229.460 ejecuciones modelo–grafo** correspondientes a 298 versiones completamente evaluadas. Los checkpoints evaluados solo en parte quedan fuera de ese corte.
+La prueba final terminó el **17 de octubre de 2026 a las 22:43, hora de Chile**. La entrega contiene las **931.700 ejecuciones modelo–grafo** de las 1.210 versiones previstas.
 
-Para los modelos principales a **época 120**, entrenados en REGULAR con 40 nodos, estas cohortes ya están completas en **40.960 nodos**:
+Para los modelos principales a **época 120**, entrenados en REGULAR con 40 nodos, los resultados en **40.960 nodos** son:
 
 | Método | Δ | Réplicas evaluadas | Coloraciones correctas | Confirmaciones inseguras |
 |---|---:|---:|---:|---:|
@@ -133,21 +133,27 @@ Para los modelos principales a **época 120**, entrenados en REGULAR con 40 nodo
 | Counterfactual | 8 | 20/20 | 400/400 | 0 |
 | Counterfactual | 10 | 20/20 | 400/400 | 0 |
 | Own-only | 3 | 20/20 | 390/400 | 10 |
+| Own-only | 5 | 20/20 | 330/400 | 367 |
+| Own-only | 8 | 20/20 | 172/400 | 1.016 |
+| Own-only | 10 | 20/20 | 98/400 | 96.781 |
 
-Cada fila combina **20 modelos × los mismos 20 grafos grandes**: diez REGULAR y diez IRREGULAR. Las 400 ejecuciones no son 400 grafos independientes. Los demás controles y presupuestos siguen incompletos en este corte.
+Cada fila combina **20 modelos × los mismos 20 grafos grandes**: diez REGULAR y diez IRREGULAR. Las 400 ejecuciones no son 400 grafos independientes. Las tablas completas incluyen también las referencias, MIXED y los distintos presupuestos.
+
+En los seis tamaños de prueba, Counterfactual principal a época 120 obtiene **61.600/61.600 coloraciones correctas**. El presupuesto sí importa: al reducir a 200 grafos de entrenamiento con tres tapes, baja a 345/400 en Δ=8 y 164/400 en Δ=10 para los grafos de 40.960 nodos.
 
 En Δ=3, ambos métodos usan en promedio aproximadamente 18,2 rondas en esos grafos grandes. La diferencia observada está en la corrección, sin aumento del promedio de rondas en esa comparación. Los intervalos y la variación entre semillas están en las tablas enlazadas; los resultados finitos no establecen corrección universal.
 
 **La elección del checkpoint también importa.** Con la política `best`, Counterfactual Δ=3 presenta 108 fallos de 770 pruebas en la réplica de semilla 17, cuya época seleccionada fue la 10, durante el warmup. Counterfactual Δ=8 presenta un fallo de 770 pruebas en la semilla 18, seleccionada en la época 30. Estos denominadores reúnen todos los tamaños de esa réplica. Los fallos se conservan en los resultados; las dos políticas de selección estaban fijadas antes del test.
 
-![Generalización de Counterfactual y Own-only en grado 3](results/m6study/2026-10-16/degree3-generalization.png)
+![Comparación final de Counterfactual y Own-only](results/m6study/2026-10-17-final/main-comparison.png)
 
-Consultar el [informe del corte](results/m6study/2026-10-16/README.md), el [resumen entre semillas](results/m6study/2026-10-16/success-summary.csv), las [comparaciones emparejadas](results/m6study/2026-10-16/paired-by-seed.csv) y los [fallos individuales](results/m6study/2026-10-16/errors.csv). El [manifiesto del corte](results/m6study/2026-10-16/snapshot.json) identifica el protocolo, denominadores y hashes de modelos incluidos.
+Consultar el [análisis final](results/m6study/2026-10-17-final/ANALISIS.md), el [resumen por familia y tamaño](results/m6study/2026-10-17-final/success-summary.csv), las [comparaciones emparejadas](results/m6study/2026-10-17-final/paired-by-seed.csv) y los [fallos individuales](results/m6study/2026-10-17-final/errors.csv). El [manifiesto final](results/m6study/2026-10-17-final/snapshot.json) identifica el protocolo, denominadores y hashes de todos los modelos. Se conserva el [corte parcial del 16 de octubre](results/m6study/2026-10-16/README.md) como registro histórico.
 
 ## Dónde seguir leyendo y colaborar
 
 | Archivo o carpeta | Para qué sirve |
 |---|---|
+| [Análisis final](results/m6study/2026-10-17-final/ANALISIS.md) | Resultados, incertidumbre, controles, presupuestos y conclusiones del estudio completo. |
 | [REPORT.md](REPORT.md) | Preguntas científicas, auditoría histórica y decisiones del diseño. |
 | [docs/M6STUDY.md](docs/M6STUDY.md) | Protocolo base, instalación CUDA, entrenamiento, reanudación y métricas. |
 | [docs/M6VALIDATION.md](docs/M6VALIDATION.md) | Revisión de validación, ampliación de C y protocolo final de E. |
@@ -159,7 +165,7 @@ Consultar el [informe del corte](results/m6study/2026-10-16/README.md), el [resu
 | [tests/](tests/) | Comprobaciones de reglas, emparejamiento, reanudación y evaluación. |
 | [docs/HISTORIA_M1_M4.md](docs/HISTORIA_M1_M4.md) | README histórico: cómo llegamos desde aprender componentes aislados hasta la red completa. |
 
-Para una primera revisión, seguir este recorrido: **este README → resultados del corte → protocolo final → código de entrenamiento y contrafactuales**. Al proponer nuevos experimentos, separar las hipótesis nuevas del protocolo congelado que está siendo evaluado.
+Para una primera revisión, seguir este recorrido: **este README → análisis final → protocolo → código de entrenamiento y contrafactuales**. Al proponer nuevos experimentos, separar las hipótesis nuevas del protocolo congelado que se evaluó.
 
 ## Preparar una copia local
 

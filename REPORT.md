@@ -1,5 +1,12 @@
 # Estudio sistemático del aprendizaje supervisado de coloración distribuida Δ+1
 
+**Estudio completado el 17 de octubre de 2026, hora de Chile.** El
+[informe final](results/m6study/2026-10-17-final/ANALISIS.md) presenta las conclusiones,
+incertidumbre y resultados negativos de 565 entrenamientos y 931.700 evaluaciones.
+Counterfactual principal a época 120 obtuvo 61.600/61.600 coloraciones correctas;
+los controles, presupuestos y políticas de checkpoint se informan por separado.
+Las secciones siguientes conservan el diseño y la bitácora de implementación.
+
 ## Preguntas y alcance
 
 Se estudia si una GNN pequeña aprende de manera reproducible un protocolo
