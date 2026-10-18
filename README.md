@@ -6,6 +6,8 @@ La pregunta central es si imitar decisiones locales alcanza para producir una co
 
 **Evaluación final completada — 17 de octubre de 2026, hora de Chile:** terminaron los 565 entrenamientos y las 931.700 evaluaciones de las 1.210 versiones de modelos. Los [resultados completos](results/m6study/2026-10-17-final/README.md) conservan todas las semillas, controles, presupuestos y fallos observados.
 
+**Para compartir:** [informe ejecutivo en PDF, con gráficos y referencias](docs/informes/M6B_informe_ejecutivo.pdf) — cinco páginas, con un resumen autónomo en la primera.
+
 ## El problema y el algoritmo profesor
 
 Queremos asignar un color a cada nodo de un grafo, de modo que **dos nodos unidos por una arista tengan colores distintos**. Si el máximo número de vecinos de un nodo es Δ, usamos una paleta de Δ+1 colores: por ejemplo, cuatro colores para Δ=3.
