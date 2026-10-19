@@ -21,7 +21,11 @@ from .rules import available_matrix, conflict_flags, exact_commit_labels, teache
 
 BY_K_KEYS = ("states", "participation_correct", "candidate_correct", "forbidden", "offers", "executed",
              "unsafe", "valid", "unnecessary_wait", "commit_correct", "action_agree", "fixed_conflict_executed",
-             "simultaneous_conflict_executed", "availability_slot_errors", "availability_slots")
+             "simultaneous_conflict_executed", "availability_slot_errors", "availability_slots",
+             "interval_deviation_sum", "interval_deviation_nodes")
+
+# A node's learned partition of [0,1) deviates if some endpoint is off by more than this.
+INTERVAL_TOLERANCE = 0.02
 
 
 def auto_edge_chunk(num_edges, palette, message_dim=32, budget_bytes=192 * 2**20):
@@ -45,8 +49,14 @@ def teacher_rollout(n, edge_index, palette, tape_seed, max_rounds=1000):
     return colors, max_rounds
 
 
-def observe(colors, edge_index, palette, rp, rc, p, c, commit, alpha):
-    """Read-only diagnostics of one learned round, against the exact rules."""
+def observe(colors, edge_index, palette, rp, rc, p, c, commit, alpha, lo, hi):
+    """Read-only diagnostics of one learned round, against the exact rules.
+
+    alpha only matters up to a per-node scale (lo/hi are normalized by k_hat),
+    so learned availability is alpha >= 0.5 * max_c alpha. The interval
+    deviation compares the learned [lo, hi) with the teacher's exact
+    [P_<(c)/k, P_<=(c)/k) over the palette.
+    """
     n = len(colors)
     uncolored = colors < 0
     available = available_matrix(colors, edge_index, palette)
@@ -58,7 +68,12 @@ def observe(colors, edge_index, palette, rp, rc, p, c, commit, alpha):
     action = np.where(executed, c, -1)
     fixed, simultaneous = conflict_flags(colors, edge_index, p, c)
     forbidden = (c >= 0) & ~available[np.arange(n), np.maximum(c, 0)]
-    slot_errors = ((alpha > 0.5) != available) & uncolored[:, None]
+    relative = alpha / np.maximum(alpha.max(1, keepdims=True), 1e-12)
+    slot_errors = ((relative >= 0.5) != available) & uncolored[:, None]
+    prefix = available.cumsum(1) - available
+    k_safe = np.maximum(k, 1)[:, None]
+    deviation = np.maximum(np.abs(lo - prefix / k_safe), np.abs(hi - (prefix + available) / k_safe)).max(1)
+    deviation = np.where(uncolored, deviation, 0.0)
     flags = {
         "states": uncolored, "participation_correct": uncolored & (p == part_t),
         "candidate_correct": uncolored & (c == offer_t), "forbidden": uncolored & forbidden,
@@ -73,6 +88,8 @@ def observe(colors, edge_index, palette, rp, rc, p, c, commit, alpha):
         row = {key: int((flag & mask).sum()) for key, flag in flags.items()}
         row["availability_slot_errors"] = int(slot_errors[mask].sum())
         row["availability_slots"] = int(mask.sum() * available.shape[1])
+        row["interval_deviation_sum"] = float(deviation[mask].sum())
+        row["interval_deviation_nodes"] = int((mask & (deviation > INTERVAL_TOLERANCE)).sum())
         by_k[str(int(value))] = row
     totals = {
         "states": int(uncolored.sum()), "participation_correct": int(flags["participation_correct"].sum()),
@@ -82,6 +99,8 @@ def observe(colors, edge_index, palette, rp, rc, p, c, commit, alpha):
         "simultaneous_conflicts": int(flags["simultaneous_conflict_executed"].sum()),
         "valid_commits_rejected": int(flags["unnecessary_wait"].sum()),
         "availability_slot_errors": int(slot_errors.sum()), "availability_slots": int(uncolored.sum() * available.shape[1]),
+        "interval_deviation_sum": float(deviation.sum()),
+        "interval_deviation_nodes": int((deviation > INTERVAL_TOLERANCE).sum()),
     }
     return totals, by_k
 
@@ -126,7 +145,8 @@ def run_rollout(model, n, edge_index, palette, tape_seed, max_rounds=256, diagno
         next_colors[executed] = c[executed]
         inference_seconds += time.perf_counter() - tick
         if diagnostics:
-            observed, observed_k = observe(colors, edge_index, palette, rp, rc, p, c, commit, out.availability.cpu().numpy())
+            observed, observed_k = observe(colors, edge_index, palette, rp, rc, p, c, commit, out.availability.cpu().numpy(),
+                                           out.lo.cpu().numpy(), out.hi.cpu().numpy())
             for key, value in observed.items():
                 totals[key] += value
             for value, row in observed_k.items():

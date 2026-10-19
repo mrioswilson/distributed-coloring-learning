@@ -86,3 +86,17 @@ por modelo/familia/tamaño. Las ejecuciones de distintos modelos sobre los mismo
 grafos no son ensayos independientes. Las comparaciones con especialistas son
 sobre los mismos grafos/tapes. Con una réplica no se estima variabilidad entre
 inicializaciones. Un número finito de éxitos no demuestra corrección universal.
+
+## Bitácora de congelación
+
+- `65641dc`: arquitectura, entrenamiento y protocolo. Durante los tests se eliminó
+  el sesgo de salida del puntuador de colores (una constante común a todos los
+  colores se anula en la softmax y recibía gradiente exactamente cero).
+- Piloto P0 (Δ=3, 20 épocas): datos de entrenamiento y validación idénticos a los
+  del especialista M6B Δ=3 réplica 0 (semillas, huellas y hashes de tapes).
+  Evaluación corta Δ=3 en la cohorte piloto: 100/100 éxitos.
+- Corrección de diagnóstico (sólo evaluación): `α` importa salvo escala por nodo,
+  porque `lo/hi` se normalizan por `k̂`. El diagnóstico `α>0,5` era inadecuado
+  (≈80% de "errores" en el piloto con éxito total); se sustituye por `α ≥ 0,5·max α`
+  y por la desviación de los extremos `[lo,hi)` respecto de la partición exacta.
+  **La arquitectura queda congelada en este punto, antes de evaluar Δ=5.**

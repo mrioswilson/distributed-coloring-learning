@@ -460,3 +460,18 @@ def test_availability_matrix_and_palette_mask():
     model = UniversalColorGNN()
     out = model(*torch_inputs(np.array([-1, 0, 2, -1]), np.zeros(4), np.zeros(4), _edge_index(star), 4))
     assert bool((out.availability <= 1).all()) and out.availability.shape == (4, 4)
+
+
+def test_interval_diagnostic_is_zero_for_exact_partition():
+    from dcl.universal.evaluation import observe
+    star = nx.star_graph(3)
+    colors = np.array([-1, 0, 2, -1])
+    edges = _edge_index(star)
+    available = available_matrix(colors, edges, 4).astype(float)
+    k = available.sum(1, keepdims=True)
+    prefix = available.cumsum(1) - available
+    alpha = 0.3 * available + 1e-9          # arbitrary scale: only proportions matter
+    totals, _ = observe(colors, edges, 4, np.zeros(4), np.zeros(4), np.zeros(4, bool), np.full(4, -1),
+                        np.zeros(4, bool), alpha, prefix / k, (prefix + available) / k)
+    assert totals["availability_slot_errors"] == 0
+    assert totals["interval_deviation_nodes"] == 0 and totals["interval_deviation_sum"] < 1e-12
