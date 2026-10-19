@@ -169,6 +169,108 @@ def evaluate(args):
                       f"unsafe={result['unsafe_commits']} t={result['inference_seconds']:.2f}s", flush=True)
 
 
+def benchmark(args):
+    """Measured cost of one forward pass by N and palette, UCGNN vs M4B specialist."""
+    import statistics
+    import numpy as np
+    import torch
+    from dcl.m4_data import _edge_index, encode_m4_state
+    from dcl.m4_models import M4B
+    from dcl.study.graphs import generate_graph
+    from .evaluation import auto_edge_chunk, teacher_rollout
+    from .model import UniversalColorGNN, count_parameters
+    from .train import load_model
+    device = torch.device(args.device)
+    model = load_model(args.checkpoint, device)[0] if args.checkpoint else UniversalColorGNN().to(device).eval()
+    rows = []
+
+    def measure(call):
+        for _ in range(2):
+            call()
+        times = []
+        for _ in range(args.repeats):
+            if device.type == "cuda":
+                torch.cuda.synchronize()
+            tick = time.perf_counter()
+            call()
+            if device.type == "cuda":
+                torch.cuda.synchronize()
+            times.append(time.perf_counter() - tick)
+        peak = 0
+        if device.type == "cuda":
+            torch.cuda.reset_peak_memory_stats()
+            before = torch.cuda.memory_allocated()
+            call()
+            peak = torch.cuda.max_memory_allocated() - before
+        return statistics.median(times), peak
+
+    with training_lock(Path(args.root).resolve()), torch.inference_mode():
+        for degree in args.degrees:
+            for n in args.sizes:
+                if n <= degree or n * degree % 2:
+                    continue
+                graph = generate_graph(n, degree, "REGULAR", 4242 + degree)
+                edges = _edge_index(graph)
+                palette = degree + 1
+                colors, _ = teacher_rollout(n, edges, palette, 99, max_rounds=2)
+                rng = np.random.default_rng(1)
+                rp, rc = rng.random(n), rng.random(n)
+                tensors = (torch.from_numpy(colors).to(device), torch.from_numpy(rp.astype(np.float32)).to(device),
+                           torch.from_numpy(rc.astype(np.float32)).to(device), torch.from_numpy(edges).to(device),
+                           torch.full((n,), palette, dtype=torch.long, device=device))
+                chunk = auto_edge_chunk(edges.shape[1], palette, model.message1[0].out_features)
+                seconds, peak = measure(lambda: model(*tensors, edge_chunk=chunk))
+                specialist = M4B(num_colors=palette).to(device).eval()
+                x = torch.from_numpy(encode_m4_state(graph, colors, rp, rc, palette).x).to(device)
+                e = torch.from_numpy(edges).to(device)
+                m4_seconds, m4_peak = measure(lambda: specialist(x, e, hard_messages=True))
+                d = model.message1[0].out_features
+                bits = int(np.ceil(np.log2(palette + 1)))
+                row = {"degree": degree, "palette": palette, "n": n, "directed_edges": int(edges.shape[1]),
+                       "node_color_slots": n * palette, "ucgnn_parameters": count_parameters(model),
+                       "m4b_parameters": count_parameters(specialist), "ucgnn_message_floats_per_edge_stage": palette * d,
+                       "m4b_message_floats_per_edge_stage": 32, "minimal_bits_stage1": bits, "minimal_bits_stage2": 2 * bits + 1,
+                       "edge_chunk": chunk or 0, "ucgnn_forward_seconds": seconds, "ucgnn_forward_peak_mb": peak / 2**20,
+                       "m4b_forward_seconds": m4_seconds, "m4b_forward_peak_mb": m4_peak / 2**20, "device": str(device)}
+                rows.append(row)
+                print(json.dumps(row), flush=True)
+    output = Path(args.output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    import pandas as pd
+    pd.DataFrame(rows).to_csv(output, index=False)
+
+
+def permutation_check(args):
+    """Closed-loop consistency under node relabelling on cohort graphs."""
+    import numpy as np
+    from .evaluation import build_case, cohort_cases, run_rollout
+    from .train import load_model
+    model, saved = load_model(args.checkpoint, args.device)
+    rows = []
+    with training_lock(Path(args.root).resolve()):
+        for degree in args.degrees:
+            for metadata in cohort_cases(degree, (args.n,), {args.n: args.count}):
+                edges, _ = build_case(metadata, Path(args.root) / "cohort-cache")
+                perm = np.random.default_rng(metadata["graph_seed"] % 2**32).permutation(metadata["n"])
+                a, colors = run_rollout(model, metadata["n"], edges, degree + 1, metadata["tape_seed"], 256, diagnostics=False)
+                b, colors_p = run_rollout(model, metadata["n"], perm[edges], degree + 1, metadata["tape_seed"], 256,
+                                          diagnostics=False, permutation=perm)
+                rows.append({"graph_id": metadata["graph_id"], "degree": degree, "rounds": a["rounds"], "rounds_permuted": b["rounds"],
+                             "identical": bool(np.array_equal(colors_p[perm], colors) and a["rounds"] == b["rounds"]),
+                             "success": a["success"], "success_permuted": b["success"]})
+    summary = {"checkpoint": str(args.checkpoint), "epoch": saved["epoch"], "graphs": len(rows),
+               "identical": sum(r["identical"] for r in rows), "rows": rows}
+    atomic_json(Path(args.output), summary)
+    print(f"identical {summary['identical']}/{summary['graphs']}")
+
+
+def report(args):
+    from .report import write_tables
+    for split in args.splits:
+        write_tables(args.root, split, args.output, args.m6_results)
+        print(f"wrote tables for {split} to {args.output}")
+
+
 def smoke(args):
     """Same model object on Delta=3 and Delta=10, identical parameters, tiny training."""
     import torch
@@ -221,6 +323,27 @@ def main():
     sm = sub.add_parser("smoke")
     sm.add_argument("--root", default="data/ucgnn-smoke")
     sm.add_argument("--device", choices=("cuda", "cpu"), default="cuda")
+    bench = sub.add_parser("benchmark")
+    bench.add_argument("--checkpoint")
+    bench.add_argument("--root", default="data/ucgnn")
+    bench.add_argument("--device", choices=("cuda", "cpu"), default="cuda")
+    bench.add_argument("--degrees", type=int, nargs="+", default=[3, 5, 8, 10, 15, 20])
+    bench.add_argument("--sizes", type=int, nargs="+", default=[640, 10240, 40960])
+    bench.add_argument("--repeats", type=int, default=10)
+    bench.add_argument("--output", required=True)
+    perm = sub.add_parser("permcheck")
+    perm.add_argument("--checkpoint", required=True)
+    perm.add_argument("--root", default="data/ucgnn")
+    perm.add_argument("--device", choices=("cuda", "cpu"), default="cuda")
+    perm.add_argument("--degrees", type=int, nargs="+", default=[3, 5, 8, 10])
+    perm.add_argument("--n", type=int, default=160)
+    perm.add_argument("--count", type=int, default=10)
+    perm.add_argument("--output", required=True)
+    rep = sub.add_parser("report")
+    rep.add_argument("--root", default="data/ucgnn")
+    rep.add_argument("--splits", nargs="+", default=["final_test"])
+    rep.add_argument("--output", required=True)
+    rep.add_argument("--m6-results", default="results/m6study/2026-10-17-final")
     for command in ("stop",):
         p = sub.add_parser(command)
         p.add_argument("--root", default="data/ucgnn")
@@ -233,6 +356,12 @@ def main():
         evaluate(args)
     elif args.command == "smoke":
         smoke(args)
+    elif args.command == "benchmark":
+        benchmark(args)
+    elif args.command == "permcheck":
+        permutation_check(args)
+    elif args.command == "report":
+        report(args)
     elif args.command == "stop":
         Path(args.root).mkdir(parents=True, exist_ok=True)
         (Path(args.root) / "STOP").touch()
