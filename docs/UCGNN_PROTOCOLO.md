@@ -100,3 +100,11 @@ inicializaciones. Un número finito de éxitos no demuestra corrección universa
   (≈80% de "errores" en el piloto con éxito total); se sustituye por `α ≥ 0,5·max α`
   y por la desviación de los extremos `[lo,hi)` respecto de la partición exacta.
   **La arquitectura queda congelada en este punto, antes de evaluar Δ=5.**
+- Control suplementario declarado antes de ejecutarlo (tras ver E1, A1 y los pilotos
+  P2/P3, y antes de ver E2/E3): **C1 = E1 con supervisión Own-only de COMMIT**
+  (mismos datos, inicialización y presupuesto; sin propuestas contrafactuales). Mide
+  si el entrenamiento contrafactual es el que hace transferible la regla de COMMIT.
+  Se evalúa igual que E1 (época 120, cohorte congelada y grados adicionales).
+- Diagnósticos post hoc, sin uso para seleccionar: barrido de `r_c` sobre estados del
+  profesor (umbrales aprendidos frente a `j/k`) y evaluación de las épocas intermedias
+  de E1 en la cohorte congelada.

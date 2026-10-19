@@ -43,6 +43,7 @@ def plans():
                          replace(e3, name="P3", epochs=20, checkpoint_epochs=(10, 20))],
         "e1": [e1], "e2": [e2], "e3": [e3],
         "a1-raw-prefix": [UConfig(name="A1", variant="RAW_PREFIX")],
+        "c1-own-only": [replace(e1, name="C1", method="OWN_ONLY")],
         "secondary-full-budget": [replace(e2, name="E2F", graphs_per_degree=(800, 800)),
                                   replace(e3, name="E3F", graphs_per_degree=(800,) * 4)],
         "replication": [replace(c, seed=s) for s in range(1, 5) for c in (e1, e2, e3)],
