@@ -198,7 +198,7 @@ def test_oom_is_technical_and_has_no_coloring_outcome(tmp_path,monkeypatch):
     from dcl.extreme import worker
     from dcl.extreme.common import atomic_json
     import sys
-    task=dict(task_id="oom-test",stage="test",graph=dict(degree=3,n=40,family="REGULAR"),model={})
+    task=dict(task_id="oom-test",stage="test",graph=dict(namespace=80,degree=3,palette=4,n=40,family="REGULAR",graph_index=0),model={})
     atomic_json(tmp_path/"task.json",task)
     atomic_json(tmp_path/"config.json",{})
     def fail(*args): raise torch.cuda.OutOfMemoryError("synthetic test; no GPU allocation")
@@ -208,3 +208,44 @@ def test_oom_is_technical_and_has_no_coloring_outcome(tmp_path,monkeypatch):
     worker.main()
     r=json.loads((tmp_path/"result.json").read_text())
     assert r["status"]=="oom" and r["success"] is None
+    assert r["graph"]["graph_seed"] and r["graph"]["tape_seed"]
+    assert not r["graph"]["graph_generated"]
+
+
+def test_gpu_lock_survives_abrupt_coordinator_exit(tmp_path):
+    import fcntl
+    import os
+    import signal
+    import subprocess
+    import sys
+    import time
+    marker=tmp_path/"child.pid"
+    lock_path=tmp_path/"gpu.lock"
+    child_code=f"import os,time; from pathlib import Path; Path({str(marker)!r}).write_text(str(os.getpid())); time.sleep(30)"
+    supervisor_code=f"""from pathlib import Path
+import fcntl,sys
+from dcl.extreme.coordinator import run_bounded
+with open({str(lock_path)!r}, 'a+') as lock:
+    fcntl.flock(lock, fcntl.LOCK_EX)
+    run_bounded([sys.executable, '-c', {child_code!r}],Path({str(tmp_path/'worker.log')!r}),60,(lock.fileno(),))
+"""
+    process=subprocess.Popen([sys.executable,"-c",supervisor_code],
+                             env={**os.environ,"PYTHONPATH":str(Path(__file__).resolve().parents[1]/"src")})
+    child_pid=None
+    try:
+        deadline=time.monotonic()+10
+        while time.monotonic()<deadline:
+            if marker.exists() and marker.read_text().strip():
+                child_pid=int(marker.read_text());break
+            if process.poll() is not None: break
+            time.sleep(.02)
+        assert child_pid is not None
+        process.kill();process.wait(timeout=5)
+        with lock_path.open("a+") as other:
+            with pytest.raises(BlockingIOError):
+                fcntl.flock(other,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    finally:
+        if process.poll() is None: process.kill();process.wait()
+        if child_pid is not None:
+            try: os.kill(child_pid,signal.SIGTERM)
+            except ProcessLookupError: pass

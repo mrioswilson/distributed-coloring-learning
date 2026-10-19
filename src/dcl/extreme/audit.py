@@ -17,6 +17,28 @@ from dcl.universal.evaluation import build_case, run_rollout
 from dcl.universal.train import load_model
 
 
+def ablation_and_epochs(historical,output):
+    from .diagnostics import commit_presence_table
+    base=Path(historical)/"runs"
+    e1=list(base.glob("e1-*-s00-*"))
+    c1=list(base.glob("c1-*-s00-*"))
+    if len(e1)!=1 or len(c1)!=1: return
+    model,a=load_model(e1[0]/"epoch-120.pt","cpu")
+    own,b=load_model(c1[0]/"epoch-120.pt","cpu")
+    equal={name:bool(torch.equal(value,own.state_dict()[name])) for name,value in model.state_dict().items()}
+    checks=[]
+    for name in ("best.pt","epoch-010.pt","epoch-020.pt","epoch-120.pt"):
+        model,saved=load_model(e1[0]/name,"cpu")
+        rows=commit_presence_table(model)
+        checks.append({"checkpoint":name,"epoch":saved["epoch"],"cases":len(rows),
+                       "correct":sum(r["correct"] for r in rows),"unsafe":sum(r["unsafe_commit"] for r in rows),
+                       "weights_sha256":weights_hash(model)})
+    value={"E1_C1_equal_parameters":equal,"E1_C1_same_initial_hash":a["initial_state_hash"]==b["initial_state_hash"],
+           "E1_C1_same_training_data":a["data_hash"]==b["data_hash"],"E1_commit_checkpoints":checks}
+    atomic_json(Path(output)/"ablation-and-epochs.json",value)
+    return value
+
+
 def extend_exclusions(historical, output):
     """Include every saved M6/UCGNN training and validation graph, read-only."""
     historical,output=Path(historical),Path(output)
@@ -57,6 +79,7 @@ def extend_exclusions(historical, output):
 
 def inventory(historical, output):
     historical, output = Path(historical), Path(output)
+    torch.set_num_threads(1)
     runs = []
     forbidden = set()
     for directory in sorted((historical / "runs").iterdir()):
@@ -118,6 +141,7 @@ def inventory(historical, output):
     atomic_json(output / "inventory.json", census)
     atomic_json(output / "historical-exclusions.json", {"fingerprints": sorted(forbidden), "graph_seeds": sorted(graph_seeds)})
     print(json.dumps(census["preliminary"]), flush=True)
+    ablation_and_epochs(historical,output)
     return census, seed0
 
 

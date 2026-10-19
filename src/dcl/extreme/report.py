@@ -179,6 +179,10 @@ def build(root):
               "Además se evalúan los 64 conjuntos de los seis tipos de mensajes vecinos posibles en el slot propuesto. "
               "Max ignora multiplicidades; esta reducción caracteriza sólo el camino de COMMIT para un nodo no coloreado que participa. "
               "No demuestra corrección universal de la política completa.",
+              "\nLa auditoría adicional de épocas encuentra que `best.pt` de E1-0 corresponde a la época 1: acierta 48/64 estados de COMMIT y acepta 16 inseguros. "
+              "Época 10 también da 48/64; épocas 20 y 120 dan 64/64. La batería usa la época 120 predefinida, no `best.pt`. "
+              "E1 y C1 tienen exactamente los mismos pesos de participación y candidato, y distintos pesos de COMMIT; comparten datos e inicialización. "
+              "Esto concuerda con la separación de parámetros y las decisiones duras sin gradiente entre etapas. Ver `../audit/ablation-and-epochs.json`.",
               "\n## Recursos y diseño pendiente",
               "\nLa implementación original materializa N×K×32 y temporalmente E_chunk×K×32. "
               "El evaluador por fragmentos conserva los parámetros y las operaciones, recalcula la primera etapa y mantiene bloques N×min(K,8)×32. "

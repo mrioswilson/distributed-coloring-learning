@@ -187,6 +187,20 @@ Las cinco réplicas E1 aciertan 64/64 en la evaluación CPU; C1 acierta 48/64.
 Esta reducción se refiere exclusivamente al camino de COMMIT; no prueba
 terminación ni corrección universal del algoritmo completo.
 
+La auditoría de épocas también detecta que `best.pt` de E1-0 es **época 1**:
+acierta 48/64 estados y acepta 16 commits inseguros. Época 10 da 48/64;
+épocas 20 y 120 dan 64/64. La selección por validación ordinaria no garantiza
+seguridad contrafactual. Se mantiene la época 120 predefinida para este
+estudio. Ver `audit/ablation-and-epochs.json`, reproducible mediante
+`dcl.extreme.audit.ablation_and_epochs` y la ejecución completa de `audit`.
+
+E1-0 y C1-0 comparten exactamente datos e inicialización. Sus pesos de
+participación y candidato son idénticos bit a bit en época 120; sólo cambian
+los componentes de COMMIT. La pérdida contrafactual no propaga gradiente a
+participación/candidato porque usa propuestas duras y parámetros separados.
+Por tanto, la coincidencia de sus curvas de selección es esperable; no es
+una réplica independiente de ese aprendizaje.
+
 Los intervalos de éxito son Clopper–Pearson bilaterales del 95 %, por modelo,
 grado, N y familia. Los grafos se comparten entre modelos: cinco modelos
 por 20 grafos dan 100 ejecuciones sobre **20 grafos**, no 100 grafos

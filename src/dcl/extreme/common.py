@@ -22,6 +22,11 @@ def atomic_json(path, value):
         f.flush()
         os.fsync(f.fileno())
     temporary.replace(path)
+    descriptor=os.open(path.parent,os.O_RDONLY|os.O_DIRECTORY)
+    try:
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
 
 
 def digest(value):

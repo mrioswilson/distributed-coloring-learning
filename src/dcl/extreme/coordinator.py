@@ -15,6 +15,7 @@ import time
 
 from .common import atomic_json, digest, file_hash, now, provenance
 from .plan import tasks
+from .graphs import realized_or_planned_metadata
 
 
 def foreign_jobs():
@@ -45,9 +46,11 @@ def completed(path, task):
     return r.get("status") not in ("resource_unavailable","cuda_unavailable")
 
 
-def run_bounded(command,log_path,timeout):
+def run_bounded(command,log_path,timeout,inherited_fds=()):
     with log_path.open("a") as log:
-        process=subprocess.Popen(command,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+        # Keep the GPU lock alive in the worker even if its coordinator is
+        # killed abruptly; a replacement coordinator must wait for it.
+        process=subprocess.Popen(command,stdout=log,stderr=subprocess.STDOUT,start_new_session=True,pass_fds=inherited_fds)
         try:
             return process.wait(timeout=timeout),False
         except subprocess.TimeoutExpired:
@@ -132,7 +135,7 @@ def main():
             if not eq_path.exists():
                 cmd=[sys.executable,"-u","-m","dcl.extreme.validation","--root",str(root),"--config",str(config_path),"--device","cuda"]
                 state("validating_cuda_streaming")
-                code,timeout=run_bounded(cmd,root/"logs/equivalence-cuda.log",300)
+                code,timeout=run_bounded(cmd,root/"logs/equivalence-cuda.log",300,(gpu_lock.fileno(),))
                 if code or timeout or not eq_path.exists():
                     state("blocked_cuda_equivalence",exit_code=code,timeout=timeout)
                     return
@@ -152,7 +155,7 @@ def main():
                     state("mechanism_diagnostics")
                     cmd=[sys.executable,"-u","-m","dcl.extreme.diagnostics","--root",str(root),"--device","cuda"]
                     tick=time.monotonic()
-                    code,timeout=run_bounded(cmd,root/"logs/diagnostics-cuda.log",3600)
+                    code,timeout=run_bounded(cmd,root/"logs/diagnostics-cuda.log",3600,(gpu_lock.fileno(),))
                     budget["active_seconds"]+=time.monotonic()-tick
                     atomic_json(budget_path,budget)
                     if code or timeout:
@@ -165,11 +168,14 @@ def main():
                     pilot=[json.loads(p.read_text()) for p in (root/"results").glob("*.json")]
                     pilot=[r for r in pilot if r.get("stage")=="A-functional" and r.get("success") is not None]
                     if not pilot or sum(r["success"] for r in pilot)/len(pilot)<config["exploratory_min_pilot_success_fraction"]:
-                        atomic_json(result_path,{"task_id":task["task_id"],"stage":task["stage"],"graph":task["graph"],
+                        atomic_json(result_path,{"task_id":task["task_id"],"stage":task["stage"],
+                                                 "graph":realized_or_planned_metadata(root,task["graph"]),
+                                                 "model":task["model"],"provenance":meta,"cost":task["cost"],
                                                  "status":"exploratory_criterion_not_met","success":None,"device":"cuda"})
                         continue
                 if task["cost"]["estimated_gpu_bytes"]>config["gpu_budget_bytes"]:
-                    atomic_json(result_path,{"task_id":task["task_id"],"stage":task["stage"],"graph":task["graph"],
+                    atomic_json(result_path,{"task_id":task["task_id"],"stage":task["stage"],"graph":realized_or_planned_metadata(root,task["graph"]),
+                                             "model":task["model"],"provenance":meta,
                                              "cost":task["cost"],"status":"estimated_memory_limit","success":None,"device":"cuda"})
                     continue
                 while not stopping():
@@ -184,12 +190,14 @@ def main():
                 cmd=[sys.executable,"-u","-m","dcl.extreme.worker","--root",str(root),"--config",str(config_path),
                      "--task",str(task_path),"--output",str(result_path),"--device","cuda"]
                 tick=time.monotonic()
-                code,timeout=run_bounded(cmd,root/"logs/graphs.log",task["timeout_seconds"])
+                code,timeout=run_bounded(cmd,root/"logs/graphs.log",task["timeout_seconds"],(gpu_lock.fileno(),))
                 budget["active_seconds"]+=time.monotonic()-tick
                 atomic_json(budget_path,budget)
                 if timeout or not result_path.exists():
-                    atomic_json(result_path,{"task_id":task["task_id"],"stage":task["stage"],"graph":task["graph"],
+                    atomic_json(result_path,{"task_id":task["task_id"],"stage":task["stage"],
+                                             "graph":realized_or_planned_metadata(root,task["graph"]),
                                              "model":task["model"],"status":"timeout" if timeout else "worker_crash",
+                                             "provenance":meta,"cost":task["cost"],
                                              "success":None,"device":"cuda","exit_code":code,"completed_utc":now()})
                 record=json.loads(result_path.read_text())
                 if record["status"] in ("resource_unavailable","cuda_unavailable"):
@@ -207,7 +215,9 @@ def main():
                     last_report=time.monotonic()
             pending=[p for p in (root/"results").glob("*.json")
                      if json.loads(p.read_text()).get("status") in ("resource_unavailable","cuda_unavailable")]
-            state("resource_limited_incomplete" if pending else "complete",pending_resource_cases=len(pending))
+            diag_incomplete=not (root/"diagnostics/cuda/queue-done.json").exists()
+            final_status="resource_limited_incomplete" if pending else ("diagnostic_incomplete" if diag_incomplete else "complete")
+            state(final_status,pending_resource_cases=len(pending),diagnostics_incomplete=diag_incomplete)
             subprocess.run([sys.executable,"-m","dcl.extreme.report","--root",str(root)],check=True)
 
 

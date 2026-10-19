@@ -11,7 +11,7 @@ import numpy as np
 import torch
 
 from .common import atomic_json, file_hash, now, provenance, weights_hash
-from .graphs import prepare
+from .graphs import prepare,realized_or_planned_metadata
 from .runtime import ChunkedPolicy
 from dcl.universal.evaluation import run_rollout, teacher_rollout
 from dcl.universal.train import load_model
@@ -96,11 +96,11 @@ def main():
     try:
         record = evaluate(task,config,args.root,args.device)
     except torch.cuda.OutOfMemoryError:
-        record = {"task_id":task["task_id"],"stage":task["stage"],"graph":task["graph"],"model":task["model"],
+        record = {"task_id":task["task_id"],"stage":task["stage"],"graph":realized_or_planned_metadata(args.root,task["graph"]),"model":task["model"],
                   "device":args.device,"status":"oom","success":None,"completed_utc":now(),"traceback":traceback.format_exc(),
                   "provenance":provenance()}
     except Exception:
-        record = {"task_id":task["task_id"],"stage":task["stage"],"graph":task["graph"],"model":task["model"],
+        record = {"task_id":task["task_id"],"stage":task["stage"],"graph":realized_or_planned_metadata(args.root,task["graph"]),"model":task["model"],
                   "device":args.device,"status":"technical_error","success":None,"completed_utc":now(),
                   "traceback":traceback.format_exc(),"provenance":provenance()}
     atomic_json(args.output,record)

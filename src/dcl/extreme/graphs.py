@@ -18,6 +18,20 @@ def seeds(namespace, degree, n, family, index, attempt=0):
     return int(digest(base+["graph"])[:16],16), int(digest(base+["tape"])[:16],16)
 
 
+def graph_identity(meta):
+    return digest({k:meta[k] for k in ("namespace","degree","n","family","graph_index")})[:24]
+
+
+def realized_or_planned_metadata(root,meta):
+    """Seed provenance even when generation/inference fails or times out."""
+    path=Path(root)/"graphs"/f"{graph_identity(meta)}.json"
+    if path.exists():
+        return {**json.loads(path.read_text()),"graph_generated":True}
+    graph_seed,tape_seed=seeds(meta["namespace"],meta["degree"],meta["n"],meta["family"],meta["graph_index"])
+    return {**meta,"graph_id":graph_identity(meta),"graph_seed":graph_seed,"tape_seed":tape_seed,
+            "graph_generated":False,"seed_status":"initial_attempt_planned_not_confirmed"}
+
+
 def generate(n, degree, family, seed):
     if n <= degree or n*degree % 2:
         raise ValueError("Require N>Delta and even N*Delta")
@@ -74,7 +88,7 @@ def generate(n, degree, family, seed):
 
 def prepare(root, meta, historical_fingerprints, historical_seeds):
     root = Path(root)
-    identity = digest({k:meta[k] for k in ("namespace","degree","n","family","graph_index")})[:24]
+    identity = graph_identity(meta)
     info_path = root / "graphs" / f"{identity}.json"
     edges_path = info_path.with_suffix(".npz")
     if info_path.exists():
