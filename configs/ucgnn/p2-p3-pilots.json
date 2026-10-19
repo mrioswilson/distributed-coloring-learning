@@ -1,0 +1,90 @@
+{
+  "experiments": [
+    {
+      "batch_size": 128,
+      "checkpoint_epochs": [
+        10,
+        20
+      ],
+      "degrees": [
+        3,
+        10
+      ],
+      "epochs": 20,
+      "family": "REGULAR",
+      "fixed_neighbor_probability": 0.17,
+      "graphs_per_degree": [
+        400,
+        400
+      ],
+      "hidden_dim": 64,
+      "lr": 0.001,
+      "max_rounds": 256,
+      "message_dim": 32,
+      "method": "COUNTERFACTUAL",
+      "n": 40,
+      "name": "P2",
+      "protocol": "ucgnn-v1",
+      "seed": 0,
+      "simultaneous_probability": 0.04,
+      "tapes": 3,
+      "val_every": 10,
+      "val_graphs_per_degree": 100,
+      "val_rollouts": 4,
+      "val_sizes": [
+        40,
+        160
+      ],
+      "variant": "NORMALIZED",
+      "warmup": 10
+    },
+    {
+      "batch_size": 128,
+      "checkpoint_epochs": [
+        10,
+        20
+      ],
+      "degrees": [
+        3,
+        5,
+        8,
+        10
+      ],
+      "epochs": 20,
+      "family": "REGULAR",
+      "fixed_neighbor_probability": 0.17,
+      "graphs_per_degree": [
+        200,
+        200,
+        200,
+        200
+      ],
+      "hidden_dim": 64,
+      "lr": 0.001,
+      "max_rounds": 256,
+      "message_dim": 32,
+      "method": "COUNTERFACTUAL",
+      "n": 40,
+      "name": "P3",
+      "protocol": "ucgnn-v1",
+      "seed": 0,
+      "simultaneous_probability": 0.04,
+      "tapes": 3,
+      "val_every": 10,
+      "val_graphs_per_degree": 50,
+      "val_rollouts": 4,
+      "val_sizes": [
+        40,
+        160
+      ],
+      "variant": "NORMALIZED",
+      "warmup": 10
+    }
+  ],
+  "ids": [
+    "p2-normalized-counterfactual-s00-40b592f16cd6",
+    "p3-normalized-counterfactual-s00-ef3180b70b35"
+  ],
+  "name": "p2-p3-pilots",
+  "protocol": "ucgnn-v1"
+}
