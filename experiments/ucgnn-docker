@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Host-side wrapper: the validated Python 3.11/CUDA environment lives in the
+# codex-disco container, which mounts /srv/projects at /workspaces.
+set -euo pipefail
+exec docker exec -u 1000:1000 -w /workspaces/AlgoLearning/distributed-coloring-learning \
+    codex-disco experiments/ucgnn "$@"
