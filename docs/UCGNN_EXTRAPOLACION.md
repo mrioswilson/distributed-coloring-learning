@@ -285,6 +285,18 @@ Archivos principales:
 Los checkpoints siguen bajo
 `/workspaces/AlgoLearning/distributed-coloring-learning/data/ucgnn/runs/`.
 
+Actualización del inventario original a 22:44 UTC: las cinco réplicas E1 de
+época 120 ya tienen 4.880/4.880 éxitos cada una. Son **24.400 ejecuciones
+sobre los mismos 4.880 grafos**, hasta Δ=15 según los límites de N anteriores.
+También completaron las cinco E2 y las cinco E3. El inventario vivo guarda
+los recuentos por vista en `audit/claude-evaluation-status.json`; no sustituye
+el inventario inicial que congela los checkpoints de la nueva cola.
+
+La entrega estática de auditoría se genera con
+`PYTHONPATH=src python experiments/ucgnn_extreme_snapshot.py --output RUTA_NUEVA`.
+Incluye PDF, CSV, hashes y referencia a los registros originales. El informe
+vivo se actualiza con `experiments/ucgnn-extreme report`.
+
 ## Tests
 
 ```bash
