@@ -475,3 +475,27 @@ def test_interval_diagnostic_is_zero_for_exact_partition():
                         np.zeros(4, bool), alpha, prefix / k, (prefix + available) / k)
     assert totals["availability_slot_errors"] == 0
     assert totals["interval_deviation_nodes"] == 0 and totals["interval_deviation_sum"] < 1e-12
+
+
+def test_report_regimes_and_exact_intervals():
+    from dcl.universal.report import clopper_pearson, regime
+    assert regime({"training_degrees": "3", "degree": 3}) == "seen"
+    assert regime({"training_degrees": "3", "degree": 10}) == "extrapolation"
+    assert regime({"training_degrees": "3+10", "degree": 5}) == "interpolation"
+    assert regime({"training_degrees": "3+5+8+10", "degree": 15}) == "extrapolation"
+    low, high = clopper_pearson(10, 10)
+    assert high == 1.0 and abs(low - 0.6915) < 1e-3
+    assert clopper_pearson(0, 5)[0] == 0.0
+
+
+def test_partition_sweep_exact_for_teacher_rule():
+    from dcl.universal.diagnostics import node_partition_errors
+    grid = (np.arange(1001) + 0.5) / 1001
+    available = np.array([[True, False, True, True], [False, False, True, False]])
+    choices = []
+    for row in available:
+        colors = np.flatnonzero(row)
+        choices.append(colors[np.floor(grid * len(colors)).astype(int)])
+    rows = node_partition_errors(np.array(choices), available, grid)
+    assert [r["misassigned"] for r in rows] == [0.0, 0.0]
+    assert all(r["monotone_partition"] and r["max_threshold_error"] < 1e-3 for r in rows)
