@@ -278,6 +278,22 @@ def permutation_check(args):
     print(f"identical {summary['identical']}/{summary['graphs']}")
 
 
+def sweep(args):
+    from .diagnostics import candidate_sweep, summarize_sweep
+    from .train import load_model
+    model, saved = load_model(args.checkpoint, "cpu")
+    frame = candidate_sweep(model, args.degrees, graphs=args.graphs, max_states=args.max_states)
+    grouped, overall = summarize_sweep(frame)
+    output = Path(args.output)
+    output.mkdir(parents=True, exist_ok=True)
+    grouped.insert(0, "view", args.view)
+    overall.insert(0, "view", args.view)
+    grouped.to_csv(output / f"{args.view}-sweep-by-k.csv", index=False)
+    overall.to_csv(output / f"{args.view}-sweep.csv", index=False)
+    print(overall.to_string(index=False))
+    print(grouped.to_string(index=False))
+
+
 def report(args):
     from .report import write_tables
     for split in args.splits:
@@ -354,6 +370,13 @@ def main():
     perm.add_argument("--n", type=int, default=160)
     perm.add_argument("--count", type=int, default=10)
     perm.add_argument("--output", required=True)
+    sw = sub.add_parser("sweep")
+    sw.add_argument("--checkpoint", required=True)
+    sw.add_argument("--view", required=True)
+    sw.add_argument("--degrees", type=int, nargs="+", default=[3, 5, 8, 10, 15])
+    sw.add_argument("--graphs", type=int, default=10)
+    sw.add_argument("--max-states", type=int)
+    sw.add_argument("--output", required=True)
     rep = sub.add_parser("report")
     rep.add_argument("--root", default="data/ucgnn")
     rep.add_argument("--splits", nargs="+", default=["final_test"])
@@ -375,6 +398,8 @@ def main():
         benchmark(args)
     elif args.command == "permcheck":
         permutation_check(args)
+    elif args.command == "sweep":
+        sweep(args)
     elif args.command == "report":
         report(args)
     elif args.command == "stop":
