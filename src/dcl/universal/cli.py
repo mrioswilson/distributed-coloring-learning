@@ -39,6 +39,8 @@ def plans():
     e3 = UConfig(name="E3", degrees=(3, 5, 8, 10), graphs_per_degree=(200,) * 4, val_graphs_per_degree=50)
     return {
         "p0-pilot": [UConfig(name="P0", epochs=20, checkpoint_epochs=(10, 20))],
+        "p2-p3-pilots": [replace(e2, name="P2", epochs=20, checkpoint_epochs=(10, 20)),
+                         replace(e3, name="P3", epochs=20, checkpoint_epochs=(10, 20))],
         "e1": [e1], "e2": [e2], "e3": [e3],
         "a1-raw-prefix": [UConfig(name="A1", variant="RAW_PREFIX")],
         "secondary-full-budget": [replace(e2, name="E2F", graphs_per_degree=(800, 800)),
@@ -127,15 +129,27 @@ def evaluate(args):
     manifest = json.loads((run_dir / "data_manifest.json").read_text())
     forbidden = {r["fingerprint"] for split in ("train", "validation") for r in manifest[split]}
     sizes = tuple(args.sizes)
-    counts = {n: (args.count if args.count else DEFAULT_COUNTS[n]) for n in sizes}
+    if args.counts:
+        if len(args.counts) != len(sizes):
+            raise ValueError("--counts needs one value per size")
+        counts = dict(zip(sizes, args.counts))
+    else:
+        counts = {n: (args.count if args.count else DEFAULT_COUNTS[n]) for n in sizes}
     view = args.view or f"{config.id}-epoch-{saved['epoch']:03d}"
     out_dir = root / "evaluations" / args.split / view
     out_dir.mkdir(parents=True, exist_ok=True)
-    atomic_json(out_dir / "view.json", {"checkpoint": str(checkpoint), "checkpoint_sha256": checkpoint_hash,
-                                        "epoch": saved["epoch"], "config": config.to_dict(), "split": args.split,
-                                        "namespace": args.namespace, "degrees": args.degrees, "sizes": list(sizes),
-                                        "counts": {str(k): v for k, v in counts.items()}, "created_utc": now(),
-                                        "evaluation_provenance": provenance()})
+    stage = {"degrees": args.degrees, "sizes": list(sizes), "counts": {str(k): v for k, v in counts.items()},
+             "namespace": args.namespace, "started_utc": now(), "evaluation_provenance": provenance()}
+    view_path = out_dir / "view.json"
+    if view_path.exists():
+        value = json.loads(view_path.read_text())
+        if value["checkpoint_sha256"] != checkpoint_hash:
+            raise RuntimeError("View name already used for a different checkpoint")
+        value.setdefault("stages", []).append(stage)
+    else:
+        value = {"checkpoint": str(checkpoint), "checkpoint_sha256": checkpoint_hash, "epoch": saved["epoch"],
+                 "config": config.to_dict(), "split": args.split, "stages": [stage]}
+    atomic_json(view_path, value)
     state = stop_handler()
     cache = root / "cohort-cache"
     with training_lock(root):
@@ -316,6 +330,7 @@ def main():
     ev.add_argument("--degrees", type=int, nargs="+", required=True)
     ev.add_argument("--sizes", type=int, nargs="+", default=list(DEFAULT_COUNTS))
     ev.add_argument("--count", type=int, help="graphs per family and size (default: frozen M6B counts)")
+    ev.add_argument("--counts", type=int, nargs="+", help="graphs per family, one value per size")
     ev.add_argument("--split", default="final_test")
     ev.add_argument("--namespace", type=int, default=20261014)
     ev.add_argument("--max-rounds", type=int, default=256)
