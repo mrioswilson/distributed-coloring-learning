@@ -1,0 +1,124 @@
+import numpy as np
+import pytest
+import torch
+
+from dcl.localpalettes.adapter import LocalPaletteAdapter, converted_uniform
+from dcl.localpalettes.cohort import edge_array, make_graph, palette_for, state_specs
+from dcl.localpalettes.statistics import binary_product_tv, law_metrics, likelihood_curve, product_bounds
+from dcl.paperstudy.models import PRIMARY, make_model
+from dcl.universal.rules import teacher_offer, exact_commit_labels
+
+torch.set_num_threads(1)
+
+
+@pytest.mark.parametrize('treatment',PRIMARY)
+@pytest.mark.parametrize('mixed',[False,True])
+def test_historical_equivalence(treatment,mixed):
+    torch.manual_seed(123)
+    model=make_model(treatment).eval()
+    colors=torch.tensor([-1,5,-1,0,-1,1,-1])
+    palettes=torch.tensor([3,6,2,4,7,2,1]) if mixed else torch.full((7,),7)
+    edges=torch.tensor([[0,1,1,2,3,4,4,5],[1,0,2,1,4,3,5,4]])
+    rp,rc=torch.rand(7),torch.rand(7)
+    with torch.inference_mode():
+        old=model(colors,rp,rc,edges,palettes)
+        new=LocalPaletteAdapter(model)(colors,rp,rc,edges,palettes)
+    for field in ('participation_logit','candidate_logits','availability','k_hat','lo','hi','commit_logit'):
+        x,y=getattr(old,field),getattr(new,field)
+        if field in ('lo','hi'):
+            valid=torch.arange(x.shape[1])[None,:]<palettes[:,None]
+            x,y=x[valid],y[valid]  # nonexistent diagnostic endpoints have no action path
+        torch.testing.assert_close(x,y,atol=3e-5,rtol=3e-5)
+    assert torch.equal(old.candidate,new.candidate)
+    assert torch.equal(old.participate,new.participate)
+
+
+@pytest.mark.parametrize('treatment',PRIMARY)
+def test_padding_permutation_batch_and_randomness(treatment):
+    torch.manual_seed(156)
+    model=make_model(treatment).eval()
+    adapter=LocalPaletteAdapter(model)
+    colors=torch.tensor([-1,5,-1,0,-1,1,-1])
+    palettes=torch.tensor([3,6,2,4,7,2,1])
+    edges=torch.tensor([[0,1,1,2,3,4,4,5],[1,0,2,1,4,3,5,4]])
+    rp,rc=torch.rand(7),torch.rand(7)
+    base=adapter(colors,rp,rc,edges,palettes)
+    padded=adapter(colors,rp,rc,edges,palettes,output_width=51)
+    torch.testing.assert_close(base.candidate_logits,padded.candidate_logits[:,:7],rtol=0,atol=0)
+    assert torch.all(padded.candidate_logits[:,7:]==-1e9)
+    order=torch.randperm(7);inverse=order.argsort()
+    perm=adapter(colors[order],rp[order],rc[order],inverse[edges],palettes[order])
+    torch.testing.assert_close(base.candidate_logits,perm.candidate_logits[inverse],atol=3e-5,rtol=3e-5)
+    joint=adapter(torch.cat((colors,torch.tensor([-1]))),torch.cat((rp,torch.tensor([.3]))),
+                  torch.cat((rc,torch.tensor([.8]))),edges,torch.cat((palettes,torch.tensor([201]))))
+    torch.testing.assert_close(base.candidate_logits,joint.candidate_logits[:7,:7],atol=3e-5,rtol=3e-5)
+    assert torch.equal(base.candidate,joint.candidate[:7])
+    swapped=adapter(colors,1-rp,rc,edges,palettes)
+    assert torch.equal(base.candidate_logits,swapped.candidate_logits)
+    swapped=adapter(colors,rp,1-rc,edges,palettes)
+    assert torch.equal(base.participation_logit,swapped.participation_logit)
+    # A fixed color outside the receiver's list is legal at the sender.
+    assert int(colors[1])>=int(palettes[0]) and int(colors[1])<int(palettes[1])
+    assert int(base.candidate[6])==0  # isolated singleton palette
+
+
+def test_invalid_lists_and_converted_endpoints():
+    model=LocalPaletteAdapter(make_model('normalized').eval())
+    with pytest.raises(ValueError):model(torch.tensor([3]),torch.tensor([.2]),torch.tensor([.2]),torch.empty((2,0),dtype=torch.long),torch.tensor([3]))
+    assert converted_uniform([np.nextafter(1.,0.)])[0]<1
+
+
+def test_local_teacher_safety_and_availability():
+    g,_=make_graph('HETEROGENEOUS',15,0,pilot=True)
+    edges=edge_array(g);degrees=np.array([g.degree(i) for i in g])
+    palette=palette_for('LOCAL',degrees);colors=np.full(len(g),-1)
+    rng=np.random.default_rng(85)
+    for _ in range(100):
+        from dcl.universal.rules import available_matrix
+        available=available_matrix(colors,edges,palette)
+        pending=np.zeros(len(g),dtype=int)
+        np.add.at(pending,edges[1],(colors[edges[0]]<0).astype(int))
+        assert np.all(available.sum(1)[colors<0]>=pending[colors<0]+1)
+        c,_=teacher_offer(colors,rng.random(len(g)),edges,palette)
+        p=(rng.random(len(g))<.5)&(colors<0)
+        commits=exact_commit_labels(colors,edges,p,c)
+        old=colors.copy();colors[commits]=c[commits]
+        assert np.all(colors[old>=0]==old[old>=0])
+        assert not np.any((colors[edges[0]]>=0)&(colors[edges[0]]==colors[edges[1]]))
+        assert np.all(colors<palette)
+        if np.all(colors>=0):break
+    assert np.all(colors>=0)
+
+
+def test_state_realizability_witness():
+    import networkx as nx
+    for s in state_specs():
+        assert len(s['colors'])==s['k']
+        assert np.all(np.array(s['colors'])<np.array(s['palettes']))
+        if s['k']!=11:continue
+        g=nx.star_graph(s['k']-1)
+        q=s['colors'].copy()
+        for neighbor,extra in enumerate(s['witness_private_pending_leaves'],1):
+            for _ in range(extra):
+                g.add_edge(neighbor,len(q));q.append(-1)
+        assert all(c<g.degree(v)+1 for v,c in enumerate(q))
+        assert all(q[a]<0 or q[b]<0 or q[a]!=q[b] for a,b in g.edges())
+
+
+def test_distribution_controls_and_lrt():
+    from scipy.stats import binom
+    assert binary_product_tv(.5,.5,2000)<1e-12
+    assert binary_product_tv(.5,.8,100)>.99
+    stats=law_metrics([100,100,100,100],np.arange(4))
+    assert stats['tv']==0 and stats['effective_collision']==4
+    assert product_bounds(0,1,100)==dict(lower=0,upper=0)
+    rng=np.random.default_rng(857)
+    qmodel=rng.choice(2,size=(256,2000),p=[.1,.9])
+    qteacher=rng.integers(0,2,size=(256,2000))
+    rows=likelihood_curve([1000,9000],np.arange(2),qmodel,qteacher,rng,256)
+    assert rows[-1]['balanced_accuracy']>.99
+    # A permuted quantile has zero shared-r fidelity and exactly equal law.
+    r=(np.arange(400)+.5)/400
+    teacher=(4*r).astype(int);shift=(teacher+1)%4
+    assert np.mean(shift==teacher)==0
+    assert np.array_equal(np.bincount(shift),np.bincount(teacher))
