@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /workspaces/AlgoLearning/ucgnn-paper-study
+export PYTHONPATH=src
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
+case "${1:-resume}" in
+  resume|start)
+    if tmux has-session -t ucgnn-paper-study 2>/dev/null; then
+      tmux display-message -p -t ucgnn-paper-study '#{pane_current_command}'
+      exit 0
+    fi
+    mkdir -p data/ucgnn-paper-study/logs
+    tmux new-session -d -s ucgnn-paper-study -c "$PWD" \
+      '/workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python -u -m dcl.paperstudy.coordinator 2>&1 | tee -a data/ucgnn-paper-study/logs/coordinator.txt'
+    ;;
+  status)
+    /workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python -m json.tool data/ucgnn-paper-study/manifest.json
+    ;;
+  *) echo 'Usage: bash experiments/ucgnn-paper-study {start|resume|status}' >&2; exit 2 ;;
+esac
