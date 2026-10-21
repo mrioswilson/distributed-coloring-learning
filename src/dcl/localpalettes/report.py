@@ -119,7 +119,7 @@ def figures(frame,laws,b3):
 def report():
     cases,laws,b3=collect()
     write_csv(RESULTS/'graph-cases.csv',cases);write_csv(RESULTS/'candidate-laws.csv',laws);write_csv(RESULTS/'distinguishability.csv',b3)
-    frame=pd.DataFrame(cases)
+    frame=pd.read_csv(RESULTS/'graph-cases.csv') if cases else pd.DataFrame()
     if not frame.empty:
         frame['success']=(frame.status=='success').astype(int)
         matrix=frame.groupby(['treatment','network_seed','family','degree','n','regime'],dropna=False).agg(
@@ -139,7 +139,9 @@ def report():
                 out.write(f'{name} & {r.regime} & {r.successes}/{r.cases} & {r.mean_rounds:.2f}\\\\\n')
             out.write('\\bottomrule\\end{tabular}\n')
     else:summary='No graph results yet.'
-    figures(frame,laws,b3)
+    figure_laws=pd.read_csv(RESULTS/'candidate-laws.csv').to_dict('records') if laws else []
+    figure_b3=pd.read_csv(RESULTS/'distinguishability.csv').to_dict('records') if b3 else []
+    figures(frame,figure_laws,figure_b3)
     queue=json.loads((ROOT/'queue.json').read_text()) if (ROOT/'queue.json').exists() else {}
     counts={s:sum(t['status']==s for t in queue.get('tasks',[])) for s in ('complete','running','pending','technical_failure')}
     text=f'''# Local palettes and distinguishability — generated report

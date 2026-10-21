@@ -120,6 +120,12 @@ def prose(frame,law,summary,b3):
                      f'{int(part.unsafe_commits.sum()):,} exact-rule-violating authorizations. ')
     lines.append('These are finite-cohort outcomes; shared graphs and five networks do not create independent graph samples. ')
     (directory/'local-results-prose.tex').write_text(''.join(lines)+'\n')
+    abstract=[]
+    for treatment in ('normalized','deepsets','transformer'):
+        part=local[local.treatment==treatment]
+        abstract.append(f'{treatment} {int(part.success.sum())}/{len(part)}')
+    (directory/'local-abstract.tex').write_text('A separate frozen-weight extension using only local-degree palettes recorded '+
+        ', '.join(abstract)+' proper completions. Conditional-law tests distinguish pointwise fidelity from candidate-distribution similarity.\n')
     lines=[]
     for treatment in ('normalized','deepsets','transformer','e1-original'):
         part=summary[(summary.treatment==treatment)&(summary.k==201)&(summary.pattern=='ALL_FREE')]
@@ -146,11 +152,115 @@ def prose(frame,law,summary,b3):
         (directory/'progress-results-prose.tex').write_text(''.join(lines)+'\n')
 
 
+def executive(frame,law,summary,b3):
+    queue=json.loads((ROOT/'queue.json').read_text())
+    statuses=frame.status.value_counts().to_dict()
+    complete=len(frame)==18848 and all(t['status']=='complete' for t in queue['tasks'])
+    local=frame[frame.regime=='LOCAL'];global_=frame[frame.regime=='GLOBAL']
+    outcome=frame.groupby(['treatment','regime']).agg(successes=('success','sum'),cases=('success','size'),rounds=('rounds','mean'),
+                                                   unsafe=('unsafe_commits','sum'),conflicts=('conflicts','sum')).reset_index()
+    blocks=[]
+    for treatment in ('normalized','raw_endpoints','sum','mean','deepsets','transformer','teacher'):
+        a=local[local.treatment==treatment];g=global_[global_.treatment==treatment]
+        if len(a):blocks.append(f'- {treatment}: LOCAL {int(a.success.sum())}/{len(a)}, GLOBAL {int(g.success.sum())}/{len(g)}; '
+                               f'rondas medias {a["rounds"].mean():.2f} vs {g["rounds"].mean():.2f}; autorizaciones inseguras LOCAL {int(a.unsafe_commits.sum())}.')
+    focused=summary[(summary.k.isin([4,51,201]))&(summary.pattern=='ALL_FREE')&summary.treatment.isin(['normalized','deepsets','transformer','e1-original'])]
+    text=f'''# Informe final: paletas locales e identificabilidad
+
+Estado: {'COHORTE COMPLETA' if complete else 'PARCIAL: consultar tareas pendientes/fallidas'}.
+{len(frame):,}/18.848 evaluaciones de grafos; {frame.graph_cluster.nunique()} estructuras
+distintas en 76 especificaciones; {len(law):,} leyes condicionales estimadas;
+{len(b3):,} celdas de clasificación. GPU-proceso acumulada: {queue['gpu_seconds']/3600:.4f} h / 12 h.
+Estados de ejecución: {statuses}. No entrenamiento nuevo; no push remoto.
+
+1. **Paletas locales sin Δ.** Los resultados medidos por tratamiento son:
+
+{chr(10).join(blocks)}
+
+2. **Cambio frente a GLOBAL.** Las líneas anteriores comparan la misma matriz de
+grafos/cintas. `regime-summary.csv` añade sobredimensionamiento 1.5 y 2;
+`paired-comparisons.csv` contiene contrastes emparejados y bootstrap por estructura
+real. Las rondas incluyen el corte 256. No se interpreta el cutoff como timeout.
+
+3. **Mecanismos.** El código usa representaciones compartidas por color y consulta
+el estado de cada vecino en los colores válidos del receptor. DeepSets y Transformer
+reciben c/(K_v−1) e inversa de su propio K: sí tienen información de orden. MAX
+conserva el conjunto finito de tipos de COMMIT cuando cambian las listas;
+SUM/MEAN conservan multiplicidades y no heredan esa reducción. Estos hechos
+arquitectónicos y los certificados de signos se distinguen de explicaciones
+causales no identificadas por comparar sólo tasas de éxito.
+
+4. **Distancia a Luby en los mismos estados.** Esta tabla resume primero por red
+y estado, después sobre cinco réplicas. Las E1 originales son un grupo separado.
+
+```text
+{focused[['treatment','k','networks','tv','fidelity','effective_colors','max_mass','forbidden_mass']].to_string(index=False)}
+```
+
+5. **Fidelidad frente a ley.** La tabla diferencia F con r compartido de TV sin
+observar r. El control analítico de cuantil desplazado tiene F=0 y TV=0: ninguna
+muestra de candidatos puede distinguir esas leyes idénticas. Una baja fidelidad
+del modelo no determina por sí sola su distancia distribucional.
+
+6. **Número de candidatos observados.** `sample-requirements.csv` da, por red y
+estado, el primer m de {{1,5,20,100,500,2000}} con potencia observada ≥.8 y FPR
+observado ≤.05. No alcanzarlo se registra como pendiente de potencia, no igualdad.
+`distinguishability.csv` contiene exactitud balanceada, potencia, FPR e intervalos;
+son pruebas plug-in con estimación/calibración/test disjuntos, no reglas Bayes
+exactas de una ley desconocida. Los puntos de cada curva usan prefijos anidados.
+
+7. **Paleta y disponibilidad.** `law-summary.csv` y los CSV por estado separan
+ALL_FREE, SINGLE, bloques, alternados, dispersos y estados autónomos. No existe
+un m universal para todos esos contextos. Los límites conservadores de TV se
+ensanchan con K y pueden impedir declarar equivalencia a tolerancia .05 incluso
+cuando la estimación puntual es pequeña. No se confunde esto con desigualdad
+probada ni con falta de éxito de coloración.
+
+8. **Distancia y velocidad.** No hay una ordenación necesaria: se demuestra un
+contraejemplo de leyes deterministas con el mismo TV/entropía y probabilidades
+de confirmar 2^(-K) o 1/2 según solapamientos. `clique-progress.csv` compara
+uniforme, ley aprendida estimada y mezcla 50:50 en el mismo estado. Los experimentos
+de estados heterogéneos comparan la fórmula con 256 rondas independientes y
+COMMIT exacto/aprendido. Las correlaciones de rollouts no establecen causalidad.
+
+9. **Qué está demostrado.** Disponibilidad k_v≥t_v+1; seguridad del profesor exacto;
+confirmación ≥1/4 y cola n(3/4)^t; fidelidad distinta de igualdad de ley; equivalencia
+de kernels bajo igualdad conjunta de acciones; relación Bayes–TV, cotas producto
+y límites de incertidumbre; transferencia condicional de un certificado MAX a
+listas heterogéneas. Para los 20 modelos MAX primarios, hashes y certificados
+previos se verificaron, con 1.280 testigos locales adicionales. Las afirmaciones
+float32 conservan sus hipótesis explícitas de redondeo y ausencia de TF32/overflow.
+No hay demostración universal de progreso neuronal.
+
+10. **Tesis del paper.** El experimento separa conocimiento global del grado,
+política candidata y regla de seguridad. Una política útil puede diferir del
+profesor punto a punto y en distribución. La evidencia nueva debe presentarse
+con sus denominadores y dominios finitos; los negativos no se reoptimizan.
+
+Limitaciones: cinco redes por tratamiento; 76 especificaciones con familias
+deterministas, estructuras repetidas y cinco controles previamente examinados;
+matriz de grados finita; sondas K=501 locales, no grandes rollouts de grado 500;
+incertidumbre MC y LRT estimada; estados autónomos seleccionados por regla fija
+pero no muestreo uniforme del espacio de estados. Las trazas autónomas guardan
+resúmenes de diversidad/colisiones, y los estados controlados histogramas completos.
+Los casos no ejecutados y fallos técnicos permanecen en execution-manifest.json.
+
+Reproducción: [entrada y comandos](../../LOCAL_PALETTES.md),
+[protocolo](../../docs/LOCAL_PALETTES_STATISTICAL_PROTOCOL.md),
+[teoría y pruebas](../../docs/LOCAL_PALETTES_AND_DISTRIBUTIONS_THEORY.md),
+[paper fuente](../../paper/ucgnn/main.tex). Los CSV, figuras y tablas se generan
+con `python -m dcl.localpalettes.finalize`; no se copiaron cifras manualmente.
+'''
+    (RESULTS/'FINAL_REPORT.md').write_text(text)
+
+
 def finalize():
     report()
-    cases,laws,b3=collect();frame=pd.DataFrame(cases);frame['success']=(frame.status=='success').astype(int)
+    frame=pd.read_csv(RESULTS/'graph-cases.csv');frame['success']=(frame.status=='success').astype(int)
+    laws=pd.read_csv(RESULTS/'candidate-laws.csv').to_dict('records')
+    b3=pd.read_csv(RESULTS/'distinguishability.csv').to_dict('records')
     law,summary=aggregate_laws(laws,b3)
-    cluster_uncertainty(frame);extra_figures();prose(frame,law,summary,b3);archive()
+    cluster_uncertainty(frame);extra_figures();prose(frame,law,summary,b3);archive();executive(frame,law,summary,b3)
     rows=[]
     for _,r in frame[frame.status!='success'].groupby(['model','regime']).head(1).iterrows():
         p=Path(r.output);target=RESULTS/'counterexamples'/p.parent.parent.name/p.parent.name/p.name
@@ -158,7 +268,7 @@ def finalize():
         if p.with_suffix('.npz').exists():shutil.copy2(p.with_suffix('.npz'),target.with_suffix('.npz'))
         rows.append(dict(model=r.model,regime=r.regime,graph=r.graph_id,status=r.status,result=str(target)))
     write_csv(RESULTS/'counterexample-index.csv',rows)
-    print(f'Final tables, figures, independent-state summaries and compressed archive generated for {len(cases)} graph evaluations.')
+    print(f'Final tables, figures, independent-state summaries and compressed archive generated for {len(frame)} graph evaluations.')
 
 
 if __name__=='__main__':finalize()

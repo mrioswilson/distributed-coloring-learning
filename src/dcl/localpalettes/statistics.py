@@ -34,7 +34,7 @@ def law_metrics(counts, available):
                 tv_radius=float(radius), equivalent_tv_005=bool(tv+radius <= .05),
                 js=float(.5*(rel_entr(q,middle).sum()+rel_entr(target,middle).sum())),
                 hellinger=float(np.sqrt(.5*np.sum((np.sqrt(q)-np.sqrt(target))**2))),
-                affinity=float(np.sqrt(q*target).sum()), entropy=float(entropy),
+                affinity=float(np.clip(np.sqrt(q*target).sum(),0,1)), entropy=float(entropy),
                 effective_entropy=float(np.exp(entropy)), effective_collision=float(1/(q*q).sum()),
                 collision=float((q*q).sum()), max_mass=float(q.max()), forbidden_mass=float(forbidden/n),
                 forbidden_interval=wilson(forbidden,n),
@@ -48,8 +48,9 @@ def log_weights(counts, available):
     return weights
 
 
-def likelihood_curve(counts, available, model_test, teacher_test, rng, calibration_trials=1024):
+def likelihood_curve(counts, available, model_test, teacher_test, rng, calibration_trials=1024, tie_rng=None):
     weights = log_weights(counts, available)
+    tie_rng = rng if tie_rng is None else tie_rng
     rows = []
     for m in (1,5,20,100,500,2000):
         null = weights[teacher_test[:, :m]].sum(1)
@@ -57,7 +58,7 @@ def likelihood_curve(counts, available, model_test, teacher_test, rng, calibrati
         # Calibration draws only from the known teacher, separate from test.
         calibration = weights[rng.choice(available, size=(calibration_trials,m))].sum(1)
         threshold = float(np.quantile(calibration,.95,method='higher'))
-        ties0, ties1 = rng.integers(0,2,len(null)), rng.integers(0,2,len(alt))
+        ties0, ties1 = tie_rng.integers(0,2,len(null)), tie_rng.integers(0,2,len(alt))
         correct0 = int(np.sum((null < 0) | ((null == 0) & (ties0 == 0))))
         correct1 = int(np.sum((alt > 0) | ((alt == 0) & (ties1 == 1))))
         fpr, power = int(np.sum(null > threshold)), int(np.sum(alt > threshold))

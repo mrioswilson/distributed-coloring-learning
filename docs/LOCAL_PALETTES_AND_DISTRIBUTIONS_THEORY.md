@@ -262,3 +262,17 @@ law is induced by a float64 draw followed by the documented conversion. The
 mathematical reference teacher is exactly uniform over A. Boundary probes and
 separate teacher-precision disagreement record the distinction. Statements
 about mathematical real-valued neural evaluation are not float32 certificates.
+
+The clipped conversion has |r32−r|≤2^(−24) on [0,1). The sorted uniform teacher
+can change its rank only within that distance of one of its k−1 internal
+boundaries. For continuous uniform r, a union bound therefore gives teacher
+coupling disagreement at most min(1,2(k−1)2^(−24)), and the same upper bound on
+the TV between the two numerical teacher laws. At k=501 this is less than
+0.000060. This bound concerns conversion of the teacher input, not perturbations
+of neural decision boundaries.
+
+For the uncertain product-law calculation, TV(Q,Qhat)≤r implies H(Q,Qhat)≤sqrt(r).
+The Hellinger triangle inequality bounds H(P,Q) by H(P,Qhat)±sqrt(r), clipped
+to [0,1]. Converting back to affinity bounds and inserting their proper endpoints
+in Proposition 8 gives valid (often broad) product-TV/Bayes-accuracy intervals
+on that same pointwise confidence event.

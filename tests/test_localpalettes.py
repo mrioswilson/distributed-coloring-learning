@@ -183,3 +183,17 @@ def test_adapter_never_calls_oracle(monkeypatch):
         model=LocalPaletteAdapter(make_model(treatment).eval())
         model(torch.tensor([-1,-1]),torch.tensor([.2,.8]),torch.tensor([.7,.3]),
               torch.tensor([[0,1],[1,0]]),torch.tensor([2,3]))
+
+
+def test_worker_inherits_gpu_lock(tmp_path,monkeypatch):
+    import subprocess,sys
+    from pathlib import Path
+    from dcl.localpalettes.runner import persistent_gpu_lock
+    monkeypatch.setattr(Path,'home',classmethod(lambda cls:tmp_path))
+    with persistent_gpu_lock() as fd:
+        child=subprocess.Popen([sys.executable,'-c','import time; time.sleep(2)'],pass_fds=(fd,))
+    try:
+        with pytest.raises(RuntimeError):
+            with persistent_gpu_lock():pass
+    finally:child.terminate();child.wait()
+    with persistent_gpu_lock():pass

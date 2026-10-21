@@ -96,7 +96,7 @@ def evaluate_law(model,model_label,state,directory):
     """All splits have distinct named RNG streams, retained with sample counts."""
     k=int(state['k']);available=np.array(state['available'])
     state_id=state['id'];cache=center_cache(model,state)
-    seeds={name:seed('candidate',model_label,state_id,name) for name in ('estimation','test','b3-model','b3-teacher','calibration')}
+    seeds={name:seed('candidate',model_label,state_id,name) for name in ('estimation','test','b3-model','b3-teacher','calibration','ties')}
     est_rc=np.random.default_rng(seeds['estimation']).random(32768)
     test_rc=np.random.default_rng(seeds['test']).random(8192)
     est=choices(model,cache,converted_uniform(est_rc))
@@ -134,7 +134,7 @@ def evaluate_law(model,model_label,state,directory):
         rc=rng.random((256,2000))
         model_test=choices(model,cache,converted_uniform(rc.reshape(-1))).reshape(256,2000)
         teacher_test=np.random.default_rng(seeds['b3-teacher']).choice(available,size=(256,2000))
-        b3=likelihood_curve(counts,available,model_test,teacher_test,np.random.default_rng(seeds['calibration']))
+        b3=likelihood_curve(counts,available,model_test,teacher_test,np.random.default_rng(seeds['calibration']),tie_rng=np.random.default_rng(seeds['ties']))
         for row in b3:
             row.update(model=model_label,state=state_id,k=k,pattern=state['pattern'],
                        estimated_law_product_bounds=product_bounds(metric['tv'],metric['affinity'],row['m']),
