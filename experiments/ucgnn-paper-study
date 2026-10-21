@@ -11,7 +11,7 @@ case "${1:-resume}" in
     fi
     mkdir -p data/ucgnn-paper-study/logs
     tmux new-session -d -s ucgnn-paper-study -c "$PWD" \
-      '/workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python -u -m dcl.paperstudy.coordinator 2>&1 | tee -a data/ucgnn-paper-study/logs/coordinator.txt'
+      'cd /workspaces/AlgoLearning/ucgnn-paper-study && env PYTHONPATH=/workspaces/AlgoLearning/ucgnn-paper-study/src CUBLAS_WORKSPACE_CONFIG=:4096:8 /workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python -u -m dcl.paperstudy.coordinator 2>&1 | tee -a data/ucgnn-paper-study/logs/coordinator.txt'
     ;;
   status)
     /workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python -m json.tool data/ucgnn-paper-study/manifest.json
