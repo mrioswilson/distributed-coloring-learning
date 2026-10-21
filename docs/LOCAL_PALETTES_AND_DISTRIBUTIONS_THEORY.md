@@ -21,6 +21,17 @@ The same counting argument applies to any lists with |L_v|≥d_v+1, not just
 prefix lists. The neural representation here supports prefix lists only;
 arbitrary list masks would be a separate implementation experiment.
 
+The synthetic candidate-law states have a concrete local-list witness: the
+center has K−1 neighbors, one fixed neighbor of each unavailable color and
+|A|−1 pending neighbors. A fixed neighbor colored c gets max(0,c−1) private
+pending leaves; its degree is max(1,c), making c legal. All fixed neighbors
+are mutually nonadjacent. This partial state is reachable with positive
+probability from empty under the exact teacher: only the desired fixed
+neighbors participate in round 1 and each draws its prescribed color; everyone
+else waits. For COMMIT type probes, states remain proper and lists legal,
+but unsafe center proposals against a fixed-same neighbor are explicitly
+counterfactual interventions, not teacher-generated candidates.
+
 ## 2. Exact simultaneous protocol and safety
 
 At each round pending v independently samples participation B_v~Bernoulli(p_v)

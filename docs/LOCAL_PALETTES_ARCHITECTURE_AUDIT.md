@@ -75,6 +75,9 @@ The pending/participating bits must **not** disappear. Those are legal neutral
 message types at the queried receiver color, not proposals in nonexistent slots.
 Multiplying all sender messages by 1[c<K_sender] would erase them and change the
 historical policy. Only receiver colors are scored, normalized or attended.
+Neither communication message contains position or K: functional positions enter
+only the local palette scorer. Different local positional coordinates therefore
+do not require aligning or transforming neighbors' embeddings.
 
 The extension adapter groups **receivers by their own K**, evaluates first-stage
 messages on those receiver colors, and scores each group at exactly that K.
@@ -93,6 +96,11 @@ individual/grouped execution, and original homogeneous/heterogeneous forwards.
 Float32 comparisons use 3e-5 absolute/relative tolerance and exact hard actions
 away from ties; explicit boundary probes report discrepancies rather than hiding
 them. A failure of action equivalence is retained with logits/margins.
+Invalid diagnostic endpoints are not compared: the original rectangular code
+can leave L=U=1 outside the list whereas the adapter returns zero there. Neither
+has a candidate path. Candidate argmax is restricted to valid colors, independently
+of the finite negative sentinel used for padded output storage. This hardening
+has identical decisions whenever the original argmax is in its declared list.
 
 ## Randomness and numerical reference
 
