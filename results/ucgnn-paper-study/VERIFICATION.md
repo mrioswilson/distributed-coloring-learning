@@ -33,3 +33,10 @@ battery one timeout. This is task scheduling, not architecture selection.
 Source files listed by the historical snapshot were rehashed and remained
 unchanged. Some source CSVs have CRLF endings; the worktree's attributes preserve
 their byte hashes instead of silently normalizing those snapshots on checkout.
+
+At handoff, all **48 tests** in the three new paper-study modules passed in
+3.77 seconds with CUDA hidden while the separate GPU queue kept running.
+See `tests-closeout.txt`. The report/PDF finalizer was exercised with `--once`;
+its exit code, queue snapshot hash and PDF hash are persisted in
+`data/ucgnn-paper-study/finalization.json`. A live independent CPU watcher in
+the `finalizer` tmux window will repeat this at completion or budget stop.

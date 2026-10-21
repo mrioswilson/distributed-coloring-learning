@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import shutil
 
 import numpy as np
 import pandas as pd
@@ -159,6 +160,61 @@ def bootstrap_contrasts(cases,draws=2000):
     return csv(OUTPUT/"paired-contrasts.csv",rows)
 
 
+def candidate_summary():
+    path=OUTPUT/"candidate-diagnostics.csv"
+    if not path.exists():return
+    data=pd.read_csv(path)
+    if data.empty:return
+    held=data[data.label=="historical-e1-s0-epoch120"]
+    methods={"primary_empirical":"mean_prediction_rank_error_conditional_allowed",
+             "secondary_global":"analytic_global_mean_prediction_rank_error_conditional_allowed",
+             "secondary_context":"analytic_context_mean_prediction_rank_error_conditional_allowed"}
+    rows=[]
+    for palette,g in held.groupby("palette"):
+        for name,column in methods.items():
+            if column not in g:continue
+            rows.append({"palette":int(palette),"predictor":name,"configured_states":len(g),
+                         "mean_state_rank_error":g[column].mean(),"worst_state_mean_rank_error":g[column].max(),
+                         "states_over_two":int((g[column]>2).sum()),"max_forbidden_grid_rate":g.forbidden_rate.max()})
+    frame=csv(OUTPUT/"candidate-prediction-summary.csv",rows)
+    if len(frame):
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        fig,ax=plt.subplots(figsize=(6.5,3.2))
+        for name,g in frame.groupby("predictor"):
+            line=ax.plot(g.palette,g.mean_state_rank_error,marker="o",label=name.replace("_"," "))[0]
+            ax.plot(g.palette,g.worst_state_mean_rank_error,linestyle=":",color=line.get_color())
+        ax.axhline(2,color="gray",lw=.8)
+        ax.set(xscale="log",xlabel="Palette size K",ylabel="Candidate rank error",xticks=[17,63,251,997],xticklabels=[17,63,251,997])
+        ax.legend(fontsize=8)
+        fig.tight_layout()
+        fig.savefig(PAPER/"figures/candidate-predictions.pdf")
+        fig.savefig(PAPER/"figures/candidate-predictions.png",dpi=180)
+        plt.close(fig)
+    frozen=OUTPUT/"frozen-prediction"
+    frozen.mkdir(exist_ok=True)
+    for name in ("frozen-quantile-calibration.json","frozen-analytic-quantiles.json",
+                 "cpu-prediction-registration.json","cpu-prediction-complete.json"):
+        source=ROOT/"mechanisms"/name
+        if source.exists():shutil.copyfile(source,frozen/name)
+
+
+def certificate_summary():
+    rows=[]
+    for path in sorted((OUTPUT/"certificates").glob("*.json")):
+        value=json.loads(path.read_text())
+        for arithmetic in ("real","float32_model"):
+            c=value[arithmetic]
+            rows.append({"checkpoint":path.stem,"arithmetic":arithmetic,"applicable":c.get("applicable",False),
+                         "exact_rule_certified":c.get("certified_exact_rule"),
+                         "no_false_accept_certified":c.get("certified_no_false_accept"),
+                         "certified_unsafe_masks":len(c.get("certified_unsafe_masks",[])),
+                         "min_signed_margin_lower":c.get("min_signed_margin_lower"),
+                         "checkpoint_sha256":value.get("checkpoint_sha256")})
+    return csv(OUTPUT/"certificate-summary.csv",rows)
+
+
 def figures(cells):
     import matplotlib
     matplotlib.use("Agg")
@@ -215,16 +271,33 @@ def build():
     cells=cell_summary(cases)
     contrasts=bootstrap_contrasts(cases)
     figures(cells)
+    candidate_summary()
+    certificate_summary()
     rows=["# UCGNN paper study: measured results and limits","",f"Generated UTC: {now()}","",
           "Protocol: commit 023deaf; primary checkpoint epoch 120. Historical results remain separate.","",
           f"Training runs present: {len(training)}; completed: {int(training.complete.sum()) if len(training) else 0}.",
           f"Evaluation cases recorded: {len(cases)}.",""]
+    manifest=ROOT/"manifest.json"
+    if manifest.exists():
+        queue=json.loads(manifest.read_text())
+        rows += [f"Queue state at report generation: {queue['status']}; accumulated active GPU-process hours: {queue['active_seconds']/3600:.3f} / 36.","",
+                 "This report describes recorded coverage, including partial or unexecuted work. The handoff snapshot and exact recovery commands are in `CLOSEOUT.md`.",""]
     if len(training):
         rows += ["## Training","",training[["treatment","seed","epoch","parameters","updates","validation_candidate","validation_commit"]].to_csv(index=False),""]
     if len(cases):
         summary=cases.groupby(["kind","treatment","selection"]).agg(executions=("case_id","count"),networks=("label","nunique"),
                        successes=("success","sum"),unsafe=("unsafe_commits","sum"),pending=("uncolored_nodes","sum"))
         rows += ["## Evaluation inventory (descriptive totals, no pooled binomial inference)","",summary.to_csv(),""]
+    candidate_path=OUTPUT/"candidate-prediction-summary.csv"
+    if candidate_path.exists():
+        rows += ["## Frozen E1 candidate prediction","",
+                 "CPU float32 grid measurements, with the primary empirical prediction and the two prospective secondary analytic predictions retained separately. Equivalent configured availability patterns are not independent observations.","",
+                 "```csv",candidate_path.read_text().rstrip(),"```", "",
+                 "Per-state availability, entropy, effective support, collision and forbidden-proposal measurements are in `candidate-diagnostics.csv`. Calibrations and preregistration hashes are in `frozen-prediction/`.",""]
+    certificates=OUTPUT/"certificate-summary.csv"
+    if certificates.exists():
+        rows += ["## Conditional local COMMIT certificates","",
+                 "The interval results are checkpoint-specific and depend on the explicit architectural and arithmetic assumptions. A certificate that is inapplicable is not an observed safety failure. Full results: `certificate-summary.csv` and `certificates/`.",""]
     rows += ["## Scope of mathematical claims","",
              "Proved: a finite-type MAX reduction and a sufficient conditional progress bound, with complete proofs in `docs/UCGNN_MATHEMATICAL_ANALYSIS.md`.",
              "Verified interval certificates, where present, concern fixed checkpoints and stated arithmetic assumptions; they do not certify candidate diversity or termination.",
@@ -239,7 +312,8 @@ def build():
              ".tools/tectonic -X compile paper/ucgnn/main.tex","```", "",
              "The tmux process survives a client disconnect. A container restart requires the explicit resume command."]
     (OUTPUT/"REPORT.md").write_text("\n".join(rows)+"\n")
-    paths=sorted([*OUTPUT.glob("*.csv"),*PAPER.glob("tables/*.tex"),*PAPER.glob("figures/*")])
+    paths=sorted([*OUTPUT.glob("*.csv"),*OUTPUT.glob("certificates/*.json"),*OUTPUT.glob("frozen-prediction/*.json"),
+                  *PAPER.glob("tables/*.tex"),*PAPER.glob("figures/*")])
     atomic_json(OUTPUT/"artifact-manifest.json",{"created_utc":now(),"protocol_sha256":protocol_hash(),
                 "files":{str(p):file_hash(p) for p in paths}})
     print(f"Report built: {len(training)} runs, {len(cases)} cases, {len(cells)} cells",flush=True)

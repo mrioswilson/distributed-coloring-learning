@@ -246,7 +246,16 @@ prefixes. Its parameter count is 16,995. The DeepSets control uses a shared
 16-dimensional mean-pooled palette context \citep{zaheer2017sets}, functional
 positions and 17,907 parameters. Attention can have quadratic palette cost;
 a technical resource limit must not be called a coloring failure.
-\todo{Awaiting Transformer/DeepSets transfer, resource and candidate-law results.}
+All six seed-41000 pilots reached epoch 120 and passed the prespecified local
+learning gate. Candidate validation fidelity was 0.9971 for NORMALIZED,
+0.9850 for raw endpoints, 0.9983 for SUM and MEAN, 0.9948 for DeepSets and
+0.9957 for the Transformer; own-proposal COMMIT fidelity was 1.0 for each.
+These are in-degree validation measurements, not degree-transfer results.
+In a separate inference-only resource check, all six models fit at
+$N=640$, $\Delta=200$ and $K=201$. The Transformer used approximately
+532\,MiB of peak allocated CUDA memory for one round; this establishes
+technical feasibility for this configuration only.
+\todo{Awaiting Transformer/DeepSets degree-transfer and candidate-law results.}
 These are architectural controls, not a claim that the only possible
 prefix-free model has been tested. Without positions or another symmetry
 breaker, identical available slots receive identical scores under an invariant
@@ -260,7 +269,27 @@ scattered, alternating and extreme availability patterns. It reports rank
 errors, forbidden proposals, total variation from uniform, entropy, effective
 colors, maximum mass and pair collisions. Boundary-neighbor float32 probes
 are separate from the midpoint grid used for distribution estimates.
-\todo{Awaiting frozen-calibration held-out predictions.}
+The CPU float32 diagnostic, prospectively authorized in addendum
+\texttt{8c69168}, evaluated 120 configured states with 2,049 midpoint draws
+each. Equivalent all-free configurations occur under multiple pattern names;
+these are not 120 independent random states. No forbidden candidate was
+observed on these grids. The frozen empirical predictor's mean per-state rank
+error was 0.569; 10 configurations at $K=997$ exceeded two, with a worst
+per-state mean of 4.761. Thus its approximation deteriorates at the largest
+palette despite a small pooled mean. We retain these negative cases.
+
+Two secondary analytic predictors were also frozen before held-out inspection.
+The context-conditioned predictor uses a finite catalog of neighbor-type
+contexts calibrated at $K=101$. It achieved mean rank error 0.075 and worst
+per-state mean 0.236, with individual grid rank error at most one. This is
+finite empirical evidence for a context-dependent deformed quantile, not an
+exact algorithmic identity or a guarantee over all availability patterns.
+\IfFileExists{figures/candidate-predictions.pdf}{\begin{figure}[t]\centering
+\includegraphics[width=.8\linewidth]{figures/candidate-predictions.pdf}
+\caption{Frozen E1-0 candidate predictions from saved CSVs. Solid lines show
+mean per-state rank error; dotted lines show the worst per-state mean.
+Primary and secondary predictors remain separately identified.}
+\end{figure}}{}
 
 \subsection{A sufficient condition for progress}
 Condition on a proper state. Let $U_v$ be the pending neighbors. With private
@@ -329,11 +358,18 @@ by explicit protocol gating. All subsets are realizable by proper star states
 with at least two colors.
 \end{proof}
 Induction then preserves properness, without proving progress or termination.
-Historical E1's five checkpoints passed the measured 64-case table; C1 omitted
-fixed-color conflicts. We additionally implement outward interval enclosures
-for real weights and a conditional float32 affine-error model, with measured
-perturbations reported separately. SUM and MEAN lack this 64-set reduction.
-\todo{Awaiting interval certificates, numeric margins and progress probes.}
+All five historical E1 checkpoints now have interval-certified strict signs
+on all 64 sets, both for real weights and under the stated float32 affine-error
+model. Their real-arithmetic minimum signed margins range from 9.706 to
+13.547. Historical C1 and the new own-only seed-41000 checkpoint each have
+16 certified unsafe type sets. The new NORMALIZED, raw-endpoint, DeepSets and
+Transformer seed-41000 COMMIT channels also satisfy the certificate; this
+does not certify their candidate selection. SUM and MEAN lack this 64-set
+reduction, which is an applicability limitation rather than evidence of
+unsafe decisions. Complete arithmetic assumptions, per-mask intervals and
+checkpoint hashes accompany the certificate CSV and JSON records.
+\todo{Awaiting remaining checkpoint certificates, numeric perturbation and
+controlled rollout progress probes.}
 
 \section{Discussion, Limitations and Future Work}
 Success on finite graphs is evidence about a specified distribution, rather

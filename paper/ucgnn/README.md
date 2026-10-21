@@ -32,3 +32,11 @@ The numerical artifact manifest is `results/ucgnn-paper-study/artifact-manifest.
 The protocol, code, measurements and conditional mathematical arguments are
 distinct artifacts. A local COMMIT certificate does not certify candidate
 diversity, correctness of every numerical backend, or global termination.
+
+For the explicit partial-results handoff and outstanding evaluations, read
+`results/ucgnn-paper-study/CLOSEOUT.md`. The persistent CPU finalizer rebuilds
+the report and PDF when the queue completes or stops; run it manually with:
+
+```bash
+env PYTHONPATH=src CUDA_VISIBLE_DEVICES= /workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python -m dcl.paperstudy.finalize --once
+```
