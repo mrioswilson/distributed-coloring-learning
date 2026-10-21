@@ -27,10 +27,17 @@ def collect():
     for path in sorted((ROOT/'graphs').rglob('*.json')):
         row=json.loads(path.read_text());g=row['graph']
         fp=fingerprints.get(g['id'],{})
+        trace=row['trace'];max_stall=stall=0
+        for step in trace:
+            stall=stall+1 if step['commits']==0 else 0
+            max_stall=max(max_stall,stall)
+        derived=dict(actual_commits=sum(t['commits'] for t in trace),max_stall=max_stall,
+                     participation_rate=row.get('participations',0)/max(1,row.get('proposals',0)),
+                     commit_counterfactual_observer=all('exact_eligible_commits' in t for t in trace))
         cases.append({k:v for k,v in row.items() if k not in ('trace','graph','candidate_histogram_kind')}|
                      {k:g[k] for k in ('family','n','degree','target_degree','degree_cv')}|
                      {'graph_id':g['id'],'graph_cluster':fp.get('fingerprint',g['edges_sha256']),
-                      'historical_graph_overlap':fp.get('historical_overlap',False),'output':str(path)})
+                      'historical_graph_overlap':fp.get('historical_overlap',False),'output':str(path)}|derived)
     for path in sorted((ROOT/'distributions').rglob('*.json')):
         row=json.loads(path.read_text());laws.append(row['metrics']);b3.extend(row['b3'])
     return cases,laws,b3

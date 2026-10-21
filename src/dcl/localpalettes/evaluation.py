@@ -29,7 +29,8 @@ def rollout(model,edges,degrees,regime,graph_id,tape,rounds=256,initial=None,cap
     device=next(model.parameters()).device if model is not None else 'cpu'
     e=torch.as_tensor(edges,device=device)
     pal=torch.as_tensor(palette,device=device)
-    trace=[];totals=dict(unsafe_commits=0,out_of_list=0,forbidden_candidates=0,proposals=0,participations=0,simultaneous=0)
+    trace=[];totals=dict(unsafe_commits=0,out_of_list=0,forbidden_candidates=0,proposals=0,participations=0,simultaneous=0,
+                         exact_eligible_commits=0,false_rejects=0)
     captured=None
     start=time.monotonic()
     for r in range(rounds):
@@ -56,6 +57,7 @@ def rollout(model,edges,degrees,regime,graph_id,tape,rounds=256,initial=None,cap
         proposals=int(pending.sum())
         collision_pairs=int(np.sum(counts*(counts-1)//2))
         row=dict(round=r+1,pending=proposals,participations=int(part.sum()),commits=int(commit.sum()),
+                 exact_eligible_commits=int(exact.sum()),false_rejects=int((exact&~commit).sum()),
                  unsafe_commits=int((commit&~exact).sum()),forbidden_candidates=int((pending&fixed).sum()),
                  safe_proposals=int((pending&~fixed).sum()),simultaneous=int((pending&part&simultaneous).sum()),
                  distinct=int(len(counts)),max_candidate_mass=float(counts.max()/proposals),
