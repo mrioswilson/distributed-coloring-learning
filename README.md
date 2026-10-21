@@ -1,5 +1,10 @@
 # Aprender algoritmos distribuidos de coloración
 
+**E1 / Universal Color GNN:** [qué es E1 y dónde están sus resultados, código y
+cinco checkpoints](E1.md). Acceso directo al [manuscrito PDF](paper/ucgnn/main.pdf),
+al [informe histórico de E1](results/ucgnn/2026-10-20-final/INFORME.md) y a las
+[nuevas ablaciones y Transformer](results/ucgnn-paper-study/FINAL_REPORT.md).
+
 Estudiamos si una red neuronal pequeña puede aprender una regla local de coloración y ejecutarla de forma autónoma en grafos mucho mayores que los usados para entrenar. **Entrenamos con 40 nodos y evaluamos hasta 40.960: un aumento de 1.024 veces.**
 
 La pregunta central es si imitar decisiones locales alcanza para producir una coloración global correcta. Una precisión local muy alta puede esconder errores poco frecuentes que invalidan grafos grandes.
