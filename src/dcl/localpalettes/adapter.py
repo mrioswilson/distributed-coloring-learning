@@ -57,13 +57,18 @@ def first_state(model, colors, edges, receivers, k, edge_chunk=512):
 
 def score(model, h, alpha, rc):
     n, k = alpha.shape
+    if not hasattr(model,'palette_scores'):
+        total=alpha.sum(1).clamp_min(.5)[:,None]
+        prefix=alpha.cumsum(1)-alpha
+        extra=torch.stack((alpha,prefix/total,(prefix+alpha)/total,rc[:,None].expand(n,k)),-1)
+        return model.scorer(torch.cat((h,extra),-1)).squeeze(-1)
     palette = torch.full((n,), k, device=h.device, dtype=torch.long)
     mask = torch.ones((n, k), device=h.device, dtype=torch.bool)
     return model.palette_scores(h, alpha, rc, palette, mask)
 
 
 def score_chunk(model, k):
-    return max(1, min(128, 4_000_000 // (2*k*k))) if model.treatment == 'transformer' else 256
+    return max(1, min(128, 4_000_000 // (2*k*k))) if getattr(model,'treatment','') == 'transformer' else 256
 
 
 class LocalPaletteAdapter:

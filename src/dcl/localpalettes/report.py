@@ -22,10 +22,15 @@ def write_csv(path,rows):
 
 def collect():
     cases=[];laws=[];b3=[]
+    audit=RESULTS/'historical-overlap-audit.json'
+    fingerprints={r['graph']:r for r in json.loads(audit.read_text())['graphs']} if audit.exists() else {}
     for path in sorted((ROOT/'graphs').rglob('*.json')):
         row=json.loads(path.read_text());g=row['graph']
+        fp=fingerprints.get(g['id'],{})
         cases.append({k:v for k,v in row.items() if k not in ('trace','graph','candidate_histogram_kind')}|
-                     {k:g[k] for k in ('family','n','degree','target_degree','degree_cv')}|{'graph_id':g['id'],'output':str(path)})
+                     {k:g[k] for k in ('family','n','degree','target_degree','degree_cv')}|
+                     {'graph_id':g['id'],'graph_cluster':fp.get('fingerprint',g['edges_sha256']),
+                      'historical_graph_overlap':fp.get('historical_overlap',False),'output':str(path)})
     for path in sorted((ROOT/'distributions').rglob('*.json')):
         row=json.loads(path.read_text());laws.append(row['metrics']);b3.extend(row['b3'])
     return cases,laws,b3
@@ -35,12 +40,12 @@ def paired_bootstrap(frame):
     rows=[]
     if frame.empty:return rows
     for model,part in frame.groupby('model'):
-        wide=part.pivot(index=['graph_id','tape'],columns='regime',values=['success','rounds'])
+        wide=part.pivot(index=['graph_id','graph_cluster','tape'],columns='regime',values=['success','rounds'])
         if not all(('success',r) in wide for r in ('GLOBAL','LOCAL')):continue
         wide=wide.dropna(subset=[('success','GLOBAL'),('success','LOCAL')])
         difference=pd.DataFrame(dict(success=wide['success']['LOCAL']-wide['success']['GLOBAL'],
                                      rounds=wide['rounds']['LOCAL']-wide['rounds']['GLOBAL']))
-        pergraph=difference.groupby(level=0).mean()
+        pergraph=difference.groupby(level=1).mean()
         rng=np.random.default_rng(seed('bootstrap',model))
         draws=rng.integers(0,len(pergraph),size=(2000,len(pergraph)))
         bootstrap=pergraph.to_numpy()[draws].mean(1)

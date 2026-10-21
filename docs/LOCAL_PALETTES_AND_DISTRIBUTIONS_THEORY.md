@@ -208,7 +208,38 @@ laws alone describe surrogates. For any Qhat, coupling gives
 large m and must not be concealed. A one-draw Bayes interval is obtained directly
 from the interval for TV(P,Q).
 
-## 8. Honest uncertainty and precision
+## 8. Transfer of a certified MAX COMMIT channel to local lists
+
+**Proposition 9 (conditional certificate transfer).** Suppose a frozen model's
+COMMIT pathway has the exact module structure audited here: its selected-slot
+state sees [u,own,B,offer], neighbor messages are shared MLPs on those four bits,
+neighbor reduction is componentwise MAX of nonnegative messages (empty zero),
+and neither K, position, nor first-stage availability enters COMMIT. Suppose
+its logit is strictly negative for every finite set of legal neighbor types
+containing fixed-same or pending-participating-same. Then, in real arithmetic,
+permanent decisions under the receiver-query adapter preserve properness for
+arbitrary prefix-list sizes, provided own proposals are in their lists.
+
+**Proof.** At a pending participating receiver's own candidate c, its own bits
+are [1,0,1,1]. Every neighbor's bits are one of
+[0,0,0,0], [0,1,0,0], [1,0,0,0], [1,0,0,1], [1,0,1,0], [1,0,1,1].
+A neighbor whose list excludes c can produce only types with own=offer=0;
+this introduces no new type. Each finite multiset reduces to the same MAX as
+its set of present types, one of 64 sets including the empty set. A fixed-same
+or participating-same neighbor therefore implies a negative logit and rejection
+by hypothesis, regardless of degree, other nodes' K, or duplicate messages.
+The own-list check and the edge argument of Proposition 2 prove invariance. ∎
+
+This proposition transfers a **verified sign property**, not correctness from
+the mere name MAX. Previous interval certificates may be reused only after
+matching checkpoint hashes and module definitions. Float32 conclusions require
+the additional documented affine-error bounds, no overflow/TF32, correct gather
+and strict margins. They are conditional on the implementation's numerical
+error model, not an unconditional GPU guarantee. SUM/MEAN do not reduce to 64
+sets and this proposition does not apply to them. Nothing here proves neural
+progress or termination; RAW can remain safe and fail to advance.
+
+## 9. Honest uncertainty and precision
 
 For N IID categorical draws from Q on K colors, the subset characterization of
 TV and Hoeffding plus a union bound over at most 2^K subsets give

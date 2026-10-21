@@ -40,7 +40,10 @@ def specs():
 
 def load(spec):
     if file_hash(spec['checkpoint'])!=spec['sha256']:raise RuntimeError('Checkpoint hash changed')
-    model,_=load_model(spec['checkpoint'],'cuda')
+    if spec.get('kind')=='historical-e1':
+        from dcl.universal.train import load_model as old_load
+        model,_=old_load(spec['checkpoint'],'cuda')
+    else:model,_=load_model(spec['checkpoint'],'cuda')
     return model
 
 
@@ -189,7 +192,8 @@ def graph_worker(task):
 def laws_worker(task):
     model=load(task['model'])
     directory=ROOT/'distributions'/task['model']['label'];directory.mkdir(parents=True,exist_ok=True)
-    for state in build_states()+frozen_autonomous_states():
+    historical=read(RESULTS/'historical-state-manifest.json') if (RESULTS/'historical-state-manifest.json').exists() else []
+    for state in build_states()+frozen_autonomous_states()+historical:
         path=directory/f'{state["id"]}.json'
         if path.exists():continue
         with torch.inference_mode():result=evaluate_law(model,task['model']['label'],state,directory)
@@ -202,6 +206,8 @@ def worker(task_id):
     configure();protocol_hash()
     task=next(t for t in read(ROOT/'queue.json')['tasks'] if t['id']==task_id)
     before=resources(ROOT,device='cuda');torch.cuda.reset_peak_memory_stats()
+    source=dict(commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
+                files={str(p):file_hash(p) for p in sorted(Path('src/dcl/localpalettes').glob('*.py'))})
     t=time.monotonic()
     if task['kind']=='graphs':graph_worker(task)
     elif task['kind']=='laws':laws_worker(task)
@@ -210,7 +216,7 @@ def worker(task_id):
         run_progress()
     atomic_json(ROOT/'task-receipts'/f'{task_id}.json',dict(task=task_id,finished=now(),seconds=time.monotonic()-t,
                 before=before,peak_gpu_bytes=torch.cuda.max_memory_allocated(),reserved_gpu_bytes=torch.cuda.max_memory_reserved(),
-                protocol_sha256=protocol_hash()))
+                protocol_sha256=protocol_hash(),source=source))
 
 
 def run():

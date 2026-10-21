@@ -7,12 +7,12 @@ E1 seeds 0–4. NORMALIZED has the E1 architecture; the identities are not inter
 
 ## Exact interface and computation
 
-`UniversalColorGNN.forward` (`universal/model.py:155`) receives permanent colors
+`UniversalColorGNN.forward` (`universal/model.py:137`) receives permanent colors
 `colors[N]` (-1 pending), independent private `rp[N], rc[N]`, directed incidences
 `edge_index[2,E]`, and integer **per-node** `palette[N]`. No degree, available-set
 oracle, identifier, teacher action, or graph embedding is supplied. Constructor
 dimensions do not depend on K. `edge_chunk` is a memory parameter, not an input
-feature. `_slots` (`model.py:84`) validates own fixed colors and computes a storage
+feature. `_slots` (`model.py:83`) validates own fixed colors and computes a storage
 maximum; this maximum is not concatenated to features.
 
 Writing u_v=1[q_v=-1], o_vc=1[q_v=c], the first communication is
@@ -56,7 +56,7 @@ the two inputs are independent. Across nodes private input draws also ensure
 independence of these first-stage decisions. Learned COMMIT decisions are not
 independent because they observe neighbors' first-stage actions.
 
-Second communication (`model.py:132–153`; `models.py:106–126`):
+Second communication (`model.py:116–135`; `models.py:108–125`):
 
     m²_wc=MLP₄→₃₂→₃₂([u_w,1[q_w=c],B_w,1[C_w=c]]),
     z_vc=MLP₃₆→₆₄→₃₂([u_v,1[q_v=c],B_v,1[C_v=c],R_w m²_wc]),
