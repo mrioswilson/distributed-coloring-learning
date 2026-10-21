@@ -53,6 +53,10 @@ def test_padding_permutation_batch_and_randomness(treatment):
                   torch.cat((rc,torch.tensor([.8]))),edges,torch.cat((palettes,torch.tensor([201]))))
     torch.testing.assert_close(base.candidate_logits,joint.candidate_logits[:7,:7],atol=3e-5,rtol=3e-5)
     assert torch.equal(base.candidate,joint.candidate[:7])
+    doubled=adapter(torch.cat((colors,colors)),torch.cat((rp,rp)),torch.cat((rc,rc)),
+                    torch.cat((edges,edges+7),1),torch.cat((palettes,palettes)))
+    torch.testing.assert_close(base.candidate_logits,doubled.candidate_logits[:7],atol=3e-5,rtol=3e-5)
+    assert torch.equal(base.candidate,doubled.candidate[:7])
     swapped=adapter(colors,1-rp,rc,edges,palettes)
     assert torch.equal(base.candidate_logits,swapped.candidate_logits)
     swapped=adapter(colors,rp,1-rc,edges,palettes)
@@ -197,3 +201,11 @@ def test_worker_inherits_gpu_lock(tmp_path,monkeypatch):
             with persistent_gpu_lock():pass
     finally:child.terminate();child.wait()
     with persistent_gpu_lock():pass
+
+
+def test_padding_cannot_win_against_extreme_valid_logits(monkeypatch):
+    model=make_model('normalized').eval()
+    monkeypatch.setattr(model,'palette_scores',lambda h,a,rc,p,m:torch.full_like(a,-1e12))
+    output=LocalPaletteAdapter(model)(torch.tensor([-1,-1]),torch.tensor([.3,.7]),torch.tensor([.2,.8]),
+                                    torch.tensor([[0,1],[1,0]]),torch.tensor([1,4]),output_width=50)
+    assert output.candidate.tolist()==[0,0]

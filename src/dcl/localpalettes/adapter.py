@@ -90,6 +90,7 @@ class LocalPaletteAdapter:
         alpha = torch.zeros_like(scores)
         lo, hi = torch.zeros_like(scores), torch.zeros_like(scores)
         khat = torch.zeros(n, dtype=dtype, device=device)
+        candidate = torch.full_like(colors,-1)
         same = self._cache is not None and all(torch.equal(x,y) for x,y in zip(self._cache[:3],(colors,edges,palette)))
         if not same:
             groups=[]
@@ -108,11 +109,13 @@ class LocalPaletteAdapter:
             step = score_chunk(model, k)
             for start in range(0, len(indices), step):
                 ids = indices[start:start+step]
-                scores[ids, :k] = score(model, h[start:start+step], a[start:start+step], rc[ids])
+                local_scores = score(model, h[start:start+step], a[start:start+step], rc[ids])
+                scores[ids, :k] = local_scores
+                # Padding sentinels never enter argmax, even for extreme logits.
+                candidate[ids] = torch.where(colors[ids]<0,local_scores.argmax(1),-1)
         u = (colors < 0).to(dtype)
         p_logit = model.participation(torch.stack((rp, u), -1)).squeeze(-1)
         participate = (p_logit > 0) & (colors < 0)
-        candidate = torch.where(colors < 0, scores.argmax(1), -1)
         commit = self.commit_logits(colors, edges, palette, participate, candidate)
         return UOutput(p_logit, scores, commit, participate, candidate, alpha, khat, lo, hi)
 

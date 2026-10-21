@@ -16,7 +16,7 @@ def write_csv(path,rows):
     path.parent.mkdir(parents=True,exist_ok=True)
     keys=list(dict.fromkeys(k for row in rows for k in row))
     with path.open('w') as handle:
-        writer=csv.DictWriter(handle,keys);writer.writeheader()
+        writer=csv.DictWriter(handle,keys,lineterminator='\n');writer.writeheader()
         for row in rows:writer.writerow({k:json.dumps(v) if isinstance(v,(dict,list)) else v for k,v in row.items()})
 
 
