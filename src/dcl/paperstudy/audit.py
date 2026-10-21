@@ -91,6 +91,15 @@ def audit():
     require("controlled progress coverage",len(progress)==3520 and
         progress.groupby(["label","state_id"]).tape.nunique().eq(16).all(),{"executions":len(progress),"models":progress.label.nunique()})
     held=pd.read_csv("results/ucgnn-paper-study/candidate-diagnostics.csv")
+    ordinary=held[~held.heldout_prediction]
+    free=ordinary[(ordinary.available_count==ordinary.palette)&(ordinary.pattern=="LOW")]
+    require("all-free candidate laws for all 39 checkpoints",free.label.nunique()==39 and
+        free.groupby("label").palette.apply(lambda x:set(x)=={4,11,21,51,101,201}).all(),len(free))
+    require("full pattern battery for 11 fixed representatives",
+        dict(Counter(ordinary.groupby("label").size()))=={6:28,165:11},
+        "11 x 165 patterned + 28 x 6 all-free configurations")
+    resources=pd.read_csv("results/ucgnn-paper-study/resources.csv")
+    require("resource probes completed",len(resources)==66 and resources.status.eq("ok").all(),66)
     held=held[held.heldout_prediction]
     require("frozen E1 held-out prediction coverage",len(held)==120 and set(held.palette)=={17,63,251,997},len(held))
     registration=json.loads((ROOT/"mechanisms/cpu-prediction-registration.json").read_text())

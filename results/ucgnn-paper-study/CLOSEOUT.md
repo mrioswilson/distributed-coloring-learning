@@ -1,5 +1,8 @@
 # Cierre de intervención y entrega recuperable
 
+> Instantánea histórica de la entrega parcial. La cola terminó posteriormente
+> sus 157 tareas; el resultado actual está en `FINAL_REPORT.md`.
+
 Corte de estado: 2026-10-21T03:25:07.582668+00:00. La intervención del agente
 se cierra por indicación del usuario para conservar créditos. La cola computacional
 continúa en segundo plano y tiene un presupuesto acumulado máximo de 36 horas

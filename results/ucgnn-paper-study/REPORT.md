@@ -1,21 +1,30 @@
 # UCGNN paper study: measured results and limits
 
-Generated UTC: 2026-10-21T03:26:55.739474+00:00
+Generated UTC: 2026-10-21T11:05:26.965303+00:00
 
 Protocol: commit 023deaf; primary checkpoint epoch 120. Historical results remain separate.
 
-Training runs present: 13; completed: 12.
-Evaluation cases recorded: 0.
+Training runs present: 32; completed: 32.
+Evaluation cases recorded: 18363.
 
-Queue state at report generation: running; accumulated active GPU-process hours: 1.009 / 36.
+Queue state at report generation: complete; accumulated active GPU-process hours: 6.172 / 36.
 
 This report describes recorded coverage, including partial or unexecuted work. The handoff snapshot and exact recovery commands are in `CLOSEOUT.md`.
 
 ## Training
 
 treatment,seed,epoch,parameters,updates,validation_candidate,validation_commit
+cyclic_teacher,41005,120,16035,17760,0.9902893478582343,1.0
 deepsets,41000,120,17907,17880,0.9948050638018863,1.0
+deepsets,41001,120,17907,17640,0.9964501774911254,1.0
+deepsets,41002,120,17907,17760,0.9969998499924996,1.0
+deepsets,41003,120,17907,17760,0.9881189103201432,1.0
+deepsets,41004,120,17907,17760,0.9934985579508236,1.0
 mean,41000,120,16035,17880,0.9982851666918848,1.0
+mean,41001,120,16035,17640,0.9980500974951253,1.0
+mean,41002,120,16035,17760,0.99949997499875,1.0
+mean,41003,120,16035,17760,0.9980115331079737,1.0
+mean,41004,120,16035,17760,0.9994134037248863,1.0
 normalized,41000,120,16035,17880,0.9970746961214505,1.0
 normalized,41001,120,16035,17640,0.9984500774961252,1.0
 normalized,41002,120,16035,17760,0.9986499324966248,1.0
@@ -24,9 +33,57 @@ normalized,41004,120,16035,17760,0.9993156376790341,1.0
 own_only,41000,120,16035,17880,0.9970746961214505,1.0
 raw_endpoints,41000,120,16035,17880,0.9850204266908761,1.0
 raw_endpoints,41001,120,16035,17640,0.9897005149742513,1.0
-raw_endpoints,41002,88,16035,13024,0.9852492624631232,1.0
+raw_endpoints,41002,120,16035,17760,0.9891494574728736,1.0
+raw_endpoints,41003,120,16035,17760,0.9882183336647444,1.0
+raw_endpoints,41004,120,16035,17760,0.9886102556582099,1.0
 sum,41000,120,16035,17880,0.9982851666918848,1.0
+sum,41001,120,16035,17640,0.9980000999950003,1.0
+sum,41002,120,16035,17760,0.9990999549977498,1.0
+sum,41003,120,16035,17760,0.9982103797971764,1.0
+sum,41004,120,16035,17760,0.9992667546561079,1.0
 transformer,41000,120,16995,17880,0.995712916729712,1.0
+transformer,41001,120,16995,17640,0.992450377481126,1.0
+transformer,41002,120,16995,17760,0.9961998099904995,1.0
+transformer,41003,120,16995,17760,0.9931895008948101,1.0
+transformer,41004,120,16995,17760,0.9969203695556533,1.0
+
+
+## Primary epoch-120 outcomes
+
+```csv
+treatment,networks,executions,successes,seed_rate_min,seed_rate_max,unsafe,monochromatic_edges,unfinished,pending,rounds_max
+normalized,5,1520,1520,1.0,1.0,0,0,0,0,18
+raw_endpoints,5,1520,1174,0.7664473684210527,0.7796052631578947,0,0,346,78356,256
+sum,5,1520,324,0.14473684210526316,0.23026315789473684,0,0,1196,224659,256
+mean,5,1520,681,0.41118421052631576,0.4868421052631579,57340,38173,0,0,18
+deepsets,5,1520,1520,1.0,1.0,0,0,0,0,26
+transformer,5,1520,1520,1.0,1.0,0,0,0,0,49
+```
+
+Detailed seed, family, degree and size coverage is in `cells.csv`; `overall-results.csv` contains descriptive totals only. Paired bootstrap intervals are empirical resampling intervals: all-equal outcomes can yield degenerate endpoints and do not establish population certainty.
+
+## Evaluation inventory (descriptive totals, no pooled binomial inference)
+
+kind,treatment,selection,executions,networks,successes,unsafe,pending
+historical,A1,epoch120,304,1,265,0,14120
+historical,C1,epoch120,304,1,304,0,0
+historical,E1,epoch120,1520,5,1520,0,0
+paper,cyclic_teacher,epoch120,304,1,304,0,0
+paper,deepsets,best,960,5,960,0,0
+paper,deepsets,epoch120,1520,5,1520,0,0
+paper,mean,best,960,5,494,21090,0
+paper,mean,epoch120,1520,5,681,57340,0
+paper,normalized,best,960,5,960,0,0
+paper,normalized,epoch120,1520,5,1520,0,0
+paper,own_only,best,192,1,192,0,0
+paper,own_only,epoch120,304,1,304,0,0
+paper,raw_endpoints,best,960,5,799,0,33012
+paper,raw_endpoints,epoch120,1520,5,1174,0,78356
+paper,sum,best,960,5,255,0,87265
+paper,sum,epoch120,1520,5,324,0,224659
+paper,transformer,best,960,5,960,0,0
+paper,transformer,epoch120,1520,5,1520,0,0
+specialist,M6B,epoch120,555,15,555,0,0
 
 
 ## Frozen E1 candidate prediction

@@ -1,7 +1,7 @@
 # UCGNN manuscript
 
-`main.tex` is an English research draft, with explicit TODOs for results that
-are not complete. `references.bib` contains only bibliographic records checked
+`main.tex` is an English research draft incorporating the completed five-seed
+study and its negative results. `references.bib` contains only records checked
 against primary arXiv/publisher/conference sources on 2026-10-21. The source
 links and verification scope are listed in `bibliography-verification.json`.
 This is a scoped literature review, not a claim of exhaustive prior-art search.
@@ -33,9 +33,10 @@ The protocol, code, measurements and conditional mathematical arguments are
 distinct artifacts. A local COMMIT certificate does not certify candidate
 diversity, correctness of every numerical backend, or global termination.
 
-For the explicit partial-results handoff and outstanding evaluations, read
-`results/ucgnn-paper-study/CLOSEOUT.md`. The persistent CPU finalizer rebuilds
-the report and PDF when the queue completes or stops; run it manually with:
+For completed outcomes and limitations read
+`results/ucgnn-paper-study/FINAL_REPORT.md`. `CLOSEOUT.md` preserves the earlier
+partial-results snapshot. The queue completed all 157 tasks; its finalizer
+also exited successfully. Rebuild current tables, figures and PDF with:
 
 ```bash
 env PYTHONPATH=src CUDA_VISIBLE_DEVICES= /workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python -m dcl.paperstudy.finalize --once

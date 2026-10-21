@@ -40,3 +40,10 @@ See `tests-closeout.txt`. The report/PDF finalizer was exercised with `--once`;
 its exit code, queue snapshot hash and PDF hash are persisted in
 `data/ucgnn-paper-study/finalization.json`. A live independent CPU watcher in
 the `finalizer` tmux window will repeat this at completion or budget stop.
+
+The completed-study suite passed **259 tests** in 18.91 seconds; see
+`tests-final.txt`. This includes the reporting regression that excludes
+non-held-out E1 probes from the frozen held-out summary. The final audit
+checks all 85 model checkpoint views and all 18,363 paired case identities,
+including explicit train/validation fingerprint checks for the later cyclic
+teacher pilot. All 157 runtime tasks completed; no GPU worker remains.
