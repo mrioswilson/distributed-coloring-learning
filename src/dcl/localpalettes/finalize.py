@@ -150,6 +150,19 @@ def prose(frame,law,summary,b3):
         lines.append('These are controlled plug-in predictions from estimated laws, with fixed participation 1/2; '
                      'the heterogeneous-state experiment independently checks one-round confirmations. ')
         (directory/'progress-results-prose.tex').write_text(''.join(lines)+'\n')
+    negative=RESULTS/'negative-commit-certificates.json'
+    if negative.exists():
+        records=pd.DataFrame(json.loads(negative.read_text()))
+        real=records[records.arithmetic=='exact-real-coefficients']
+        text=[]
+        for case,degree in (('all-pending-other',8),('one-fixed-same',8),('one-pending-same',16)):
+            part=real[(real['case']==case)&(real.degree==degree)]
+            text.append(f'{int(part.certified_error.sum())}/{len(part)} frozen gates have a certified error '
+                        f'in the degree-{degree} {case} local-star intervention. ')
+        text.append('These are exploratory counterexamples selected from the recorded degree-probe grid, '
+                    'with unchanged checkpoints. They establish errors of these learned gates in real arithmetic; '
+                    'they do not establish an expressivity impossibility for SUM. ')
+        (directory/'negative-commit-prose.tex').write_text(''.join(text)+'\n')
 
 
 def executive(frame,law,summary,b3):
