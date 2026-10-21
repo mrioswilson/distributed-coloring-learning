@@ -81,3 +81,16 @@ def binary_product_tv(p, q, m):
 def product_bounds(tv, affinity, m):
     return dict(lower=max(tv, 1-affinity**m),
                 upper=min(1-(1-tv)**m, np.sqrt(max(0.,1-affinity**(2*m)))))
+
+
+def uncertain_product_bounds(metric,m):
+    """Valid on the event TV(Q,Qhat)<=r, using Hellinger triangle inequality."""
+    r=metric['tv_radius']
+    h=np.sqrt(max(0.,1-metric['affinity']))
+    rho_lower=max(0.,1-min(1.,h+np.sqrt(r))**2)
+    rho_upper=min(1.,1-max(0.,h-np.sqrt(r))**2)
+    low=max(metric['tv_lower'],1-rho_upper**m)
+    high=min(1-(1-metric['tv_upper'])**m,np.sqrt(max(0.,1-rho_lower**(2*m))))
+    return dict(tv_lower=float(low),tv_upper=float(high),bayes_accuracy_lower=float(.5*(1+low)),
+                bayes_accuracy_upper=float(.5*(1+high)),confidence=.95,
+                note='Pointwise MC uncertainty propagated to true product laws; often uninformative')

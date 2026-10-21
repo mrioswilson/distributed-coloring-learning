@@ -122,3 +122,64 @@ def test_distribution_controls_and_lrt():
     teacher=(4*r).astype(int);shift=(teacher+1)%4
     assert np.mean(shift==teacher)==0
     assert np.array_equal(np.bincount(shift),np.bincount(teacher))
+
+
+def test_conditional_formula_by_action_enumeration():
+    import itertools
+    from dcl.localpalettes.progress import expected_confirmations
+    edges=np.array([[0,1,1,2],[1,0,2,1]])
+    colors=np.full(3,-1);palette=np.array([2,3,2]);q=np.array([[.5,.5,0],[1/3,1/3,1/3],[.5,.5,0]])
+    p=np.full(3,.5)
+    expected=np.zeros(3)
+    for participation in itertools.product((False,True),repeat=3):
+        for candidate in itertools.product(range(2),range(3),range(2)):
+            weight=(.5**3)*q[0,candidate[0]]*q[1,candidate[1]]*q[2,candidate[2]]
+            expected+=weight*exact_commit_labels(colors,edges,participation,candidate)
+    formula=expected_confirmations(q,p,colors,edges,np.arange(3)[None,:]<palette[:,None])
+    np.testing.assert_allclose(expected,formula,atol=1e-14)
+    assert np.all(formula>=.25)
+
+
+def test_local_type_witness_legality():
+    from dcl.localpalettes.verification import local_type_witness
+    for mask in range(64):
+        colors,part,cand,edges,palette=local_type_witness(mask)
+        colors=np.array(colors);cand=np.array(cand)
+        assert np.all(colors<palette) and np.all(cand<palette)
+        assert palette[0]==1+mask.bit_count()
+        assert not np.any((colors[edges[0]]>=0)&(colors[edges[0]]==colors[edges[1]]))
+        label=exact_commit_labels(colors,edges,part,cand)[0]
+        assert label==not_conflicting(mask)
+
+
+def not_conflicting(mask):
+    return not(mask&(1<<1) or mask&(1<<5))
+
+
+def test_resume_charges_interruption_and_retains_partial_cases(tmp_path,monkeypatch):
+    from dcl.localpalettes import runner
+    from dcl.study.storage import atomic_json
+    monkeypatch.setattr(runner,'ROOT',tmp_path/'runtime')
+    monkeypatch.setattr(runner,'RESULTS',tmp_path/'results')
+    partial=tmp_path/'runtime/graphs/m/LOCAL/case.json'
+    atomic_json(partial,dict(status='success'))
+    state=dict(gpu_seconds=0,tasks=[dict(id='work',status='running',started='2026-01-01T00:00:00+00:00')])
+    result=runner.recover_and_extend(state)
+    assert result['gpu_seconds']==1800 and result['tasks'][0]['status']=='pending'
+    assert partial.exists()
+    # Completed orphan worker receipt is credited and not rerun.
+    atomic_json(tmp_path/'runtime/task-receipts/done.json',dict(seconds=23))
+    state=dict(gpu_seconds=0,tasks=[dict(id='done',status='running')])
+    result=runner.recover_and_extend(state)
+    assert result['gpu_seconds']==23 and result['tasks'][0]['status']=='complete'
+
+
+def test_adapter_never_calls_oracle(monkeypatch):
+    import dcl.universal.rules as oracle
+    def forbidden(*args,**kwargs):raise AssertionError('oracle entered inference')
+    monkeypatch.setattr(oracle,'available_matrix',forbidden)
+    monkeypatch.setattr(oracle,'teacher_offer',forbidden)
+    for treatment in PRIMARY:
+        model=LocalPaletteAdapter(make_model(treatment).eval())
+        model(torch.tensor([-1,-1]),torch.tensor([.2,.8]),torch.tensor([.7,.3]),
+              torch.tensor([[0,1],[1,0]]),torch.tensor([2,3]))

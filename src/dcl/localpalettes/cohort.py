@@ -89,8 +89,8 @@ def build_graphs():
 
 
 def palette_for(regime,degrees):
-    maximum=int(max(degrees))
     if regime=='LOCAL':return np.asarray(degrees)+1
+    maximum=int(max(degrees))
     factor={'GLOBAL':1.,'OVERSIZED-1.5':1.5,'OVERSIZED-2':2.}[regime]
     return np.full(len(degrees),int(np.ceil(factor*maximum))+1,dtype=np.int64)
 

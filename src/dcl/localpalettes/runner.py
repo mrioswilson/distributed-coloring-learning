@@ -3,6 +3,9 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from contextlib import contextmanager
+from datetime import datetime, timezone
+import fcntl
 import json
 import os
 from pathlib import Path
@@ -52,6 +55,38 @@ def protocol_hash():
     actual=file_hash(PROTOCOL)
     if actual!=expected:raise RuntimeError('Frozen protocol changed; add a prospective addendum instead')
     return actual
+
+
+@contextmanager
+def persistent_gpu_lock():
+    """Pass this flock descriptor to workers, retaining exclusion if parent dies."""
+    path=Path.home()/'.cache/dcl-m6-gpu.lock';path.parent.mkdir(parents=True,exist_ok=True)
+    with path.open('a+') as handle:
+        try:fcntl.flock(handle,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        except BlockingIOError:raise RuntimeError('Another GPU study is active; no concurrent launch') from None
+        yield handle.fileno()
+
+
+def recover_and_extend(state):
+    for task in state['tasks']:
+        if task['status']=='running':
+            # A surviving child retains the flock, so this point is reached
+            # only once it has exited. Conservatively charge lost bookkeeping.
+            receipt=ROOT/'task-receipts'/f'{task["id"]}.json'
+            if receipt.exists():
+                charge=read(receipt)['seconds'];task['status']='complete'
+            else:
+                wall=max(0.,(datetime.now(timezone.utc)-datetime.fromisoformat(task['started'])).total_seconds())
+                charge=min(1800.,wall);task['status']='pending'
+            state['gpu_seconds']+=charge
+            task['recovery_charged_seconds']=charge
+    supplement=RESULTS/'historical-e1-checkpoints.json'
+    if supplement.exists():
+        existing={t['id'] for t in state['tasks']}
+        for spec in read(supplement):
+            ident=f'laws-{spec["label"]}'
+            if ident not in existing:state['tasks'].append(dict(id=ident,kind='laws',model=spec,status='pending',secondary=True))
+    return state
 
 
 def status():
@@ -221,10 +256,9 @@ def worker(task_id):
 
 def run():
     configure();protocol_hash()
-    with training_lock(ROOT):
+    with persistent_gpu_lock() as lock_fd:
         state=read(ROOT/'queue.json') if (ROOT/'queue.json').exists() else plan()
-        for task in state['tasks']:
-            if task['status']=='running':task['status']='pending'
+        state=recover_and_extend(state)
         for task in state['tasks']:
             if task['status']!='pending':continue
             if state['gpu_seconds']>=BUDGET_SECONDS:break
@@ -237,7 +271,7 @@ def run():
             with log.open('a') as handle:
                 try:
                     result=subprocess.run([sys.executable,'-m','dcl.localpalettes','worker',task['id']],stdout=handle,stderr=subprocess.STDOUT,
-                                          timeout=min(1800,remaining))
+                                          timeout=min(1800,remaining),pass_fds=(lock_fd,))
                     code=result.returncode
                 except subprocess.TimeoutExpired:code=124
             elapsed=time.monotonic()-start
@@ -254,9 +288,10 @@ def run():
 
 def audit():
     protocol_hash()
-    missing=[s['checkpoint'] for s in specs() if not Path(s['checkpoint']).exists() or file_hash(s['checkpoint'])!=s['sha256']]
+    all_specs=specs()+(read(RESULTS/'historical-e1-checkpoints.json') if (RESULTS/'historical-e1-checkpoints.json').exists() else [])
+    missing=[s['checkpoint'] for s in all_specs if not Path(s['checkpoint']).exists() or file_hash(s['checkpoint'])!=s['sha256']]
     state=status()
-    result=dict(protocol_unchanged=True,checkpoints_unchanged=not missing,invalid_checkpoints=missing,
+    result=dict(protocol_unchanged=True,checkpoints_unchanged=not missing,checkpoints_checked=len(all_specs),invalid_checkpoints=missing,
                 graph_cases=len(list((ROOT/'graphs').rglob('*.json'))),conditional_laws=len(list((ROOT/'distributions').rglob('*.json'))),
                 tasks_complete=sum(t['status']=='complete' for t in state['tasks']),tasks_total=len(state['tasks']),
                 gpu_hours=state['gpu_seconds']/3600,environment=provenance())

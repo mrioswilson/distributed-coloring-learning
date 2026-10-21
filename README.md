@@ -1,5 +1,8 @@
 # Aprender algoritmos distribuidos de coloración
 
+**Extensión de paletas locales y distinguibilidad:** [protocolo, ejecución y resultados](LOCAL_PALETTES.md)
+(rama local `research/ucgnn-local-palettes`, sin publicación remota).
+
 **E1 / Universal Color GNN:** [qué es E1 y dónde están sus resultados, código y
 cinco checkpoints](E1.md). Acceso directo al [manuscrito PDF](paper/ucgnn/main.pdf),
 al [informe histórico de E1](results/ucgnn/2026-10-20-final/INFORME.md) y a las

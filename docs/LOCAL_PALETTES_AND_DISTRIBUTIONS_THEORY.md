@@ -115,6 +115,8 @@ bound on the result. Multiplying by p_vη_v proves the claim. ∎
 For q_v=(1−ε)Unif(A_v)+ε δ_{a_v}, choose D_v=A_v\{a_v} (k_v>1):
 η_v=(1−ε)(k_v−1)/k_v and β=1−ε. TV=ε(1−1/k_v) can approach ε, while for fixed
 ε<1 and k_v≥2 the bound remains a positive degree-independent constant.
+Since t_v≤k_v−1, the mixture's exponent is at most one, hence at p_v=p_max=1/2
+and k_v≥2 this also gives the explicit uniform bound P_v≥(1−ε)/8.
 This condition does not certify checkpoints unless a uniform diffuse mass bound
 is itself established beyond the sampled states.
 

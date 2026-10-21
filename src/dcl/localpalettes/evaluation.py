@@ -11,7 +11,7 @@ from dcl.universal.rules import available_matrix, conflict_flags, exact_commit_l
 from .adapter import LocalPaletteAdapter, converted_uniform, first_state, choices
 from .cohort import palette_for, star_edges
 from .config import ROOT, seed
-from .statistics import law_metrics, likelihood_curve, product_bounds, wilson
+from .statistics import law_metrics, likelihood_curve, product_bounds, uncertain_product_bounds, wilson
 
 
 def draw_tape(graph_id,tape,n,rounds=256):
@@ -126,7 +126,8 @@ def evaluate_law(model,model_label,state,directory):
                   rank_error=float(np.mean(np.abs(rank-teacher_rank))) if len(rank) else None,
                   cyclic_tv=float(.5*np.abs(q-cyc).sum()),estimation_n=len(est),test_n=len(test),
                   quadrature_tv=law_metrics(np.bincount(grid_choices,minlength=k),available)['tv'],
-                  seeds=seeds)
+                  seeds=seeds,rng_algorithm='PCG64',numpy_version=np.__version__,
+                  rng_initial_states={name:np.random.default_rng(s).bit_generator.state for name,s in seeds.items()})
     b3=[]
     if state.get('b3'):
         rng=np.random.default_rng(seeds['b3-model'])
@@ -136,7 +137,8 @@ def evaluate_law(model,model_label,state,directory):
         b3=likelihood_curve(counts,available,model_test,teacher_test,np.random.default_rng(seeds['calibration']))
         for row in b3:
             row.update(model=model_label,state=state_id,k=k,pattern=state['pattern'],
-                       estimated_law_product_bounds=product_bounds(metric['tv'],metric['affinity'],row['m']))
+                       estimated_law_product_bounds=product_bounds(metric['tv'],metric['affinity'],row['m']),
+                       true_law_product_uncertainty=uncertain_product_bounds(metric,row['m']))
         np.savez_compressed(directory/f'{state_id}-b3.npz',model=model_test.astype(np.uint16),teacher=teacher_test.astype(np.uint16))
     np.savez_compressed(directory/f'{state_id}.npz',estimation_counts=counts,test_counts=test_counts,
                         quadrature_rc=grid,quadrature_choices=grid_choices,boundary_rc=near,boundary_choices=near_choices,
