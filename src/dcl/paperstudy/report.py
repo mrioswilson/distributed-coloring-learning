@@ -109,7 +109,8 @@ def cell_summary(cases):
             algorithm=selected[selected.status.isin(["ok","coloring_failure"])] if len(selected) else pd.DataFrame()
             n=len(algorithm)
             successes=int(algorithm.success.sum()) if n else 0
-            random_graph=cell[-1]!="CLIQUE"
+            deterministic_structure=cell[-1]=="CLIQUE" or (cell[-1]=="BIPARTITE" and cell[0]=="structured" and cell[1]*2==cell[2])
+            random_graph=not deterministic_structure
             lower=float(beta_distribution.ppf(.025,successes,n-successes+1)) if successes and random_graph else (0. if n and random_graph else None)
             upper=float(beta_distribution.ppf(.975,successes+1,n-successes)) if successes<n and random_graph else (1. if n and random_graph else None)
             row={"label":spec["label"],"kind":spec["kind"],"treatment":spec["treatment"],"selection":spec["selection"],"seed":spec["seed"],

@@ -135,13 +135,14 @@ def freeze_calibration(model,checkpoint):
             "pattern":"all free, star degree 100","r":rc.tolist(),"selected":selected.tolist(),
             "g":quantiles.tolist(),"raw_monotone":bool(np.all(np.diff(selected)>=0)),
             "definition":"monotone accumulation of chosen zero-based rank / 101, linear interpolation, endpoint clipping",
-            "heldout_not_evaluated_yet":True,"frozen_utc":now()}
+            "heldout_not_evaluated_yet":True,"frozen_utc":now(),"device":str(next(model.parameters()).device),
+            "dtype":str(next(model.parameters()).dtype)}
     atomic_json(path,result)
     # This durable write precedes every held-out choice or score.
     return result
 
 
-def selection_probe(model,spec,heldout=False,calibration=None,stop_requested=lambda:False):
+def selection_probe(model,spec,heldout=False,calibration=None,stop_requested=lambda:False,analytic=None):
     label=spec["label"]
     output=DIRECTORY/"selection"/label
     output.mkdir(parents=True,exist_ok=True)
@@ -160,15 +161,22 @@ def selection_probe(model,spec,heldout=False,calibration=None,stop_requested=lam
                 colors[1:1+len(occupied)]=occupied
                 bulk,boundary=grids(count)
                 predicted=None
+                secondary={}
                 if calibration is not None:
                     g=np.interp(bulk,calibration["r"],calibration["g"])
                     predicted=np.floor(count*g).astype(int).clip(0,count-1)
                     # Save predictions before reading actual held-out choices.
-                    np.savez_compressed(output/f"{stem}-prediction.npz",rc=bulk,available=available,predicted_rank=predicted)
+                    if analytic is not None:
+                        from .predictors import predict_ranks
+                        secondary=predict_ranks(analytic,bulk,count,colors)
+                    np.savez_compressed(output/f"{stem}-prediction.npz",rc=bulk,available=available,predicted_rank=predicted,**secondary)
                 state=center_state(model,colors,k)
                 selected=choices(model,state,bulk)
                 boundary_choices=choices(model,state,boundary)
                 metrics,q=candidate_metrics(selected,available,k,bulk,predicted)
+                for name,ranks in secondary.items():
+                    comparison,_=candidate_metrics(selected,available,k,bulk,ranks)
+                    metrics.update({name+"_"+key:value for key,value in comparison.items() if "prediction" in key})
                 boundary_truth=available[np.floor(boundary.astype(np.float64)*count).astype(int).clip(0,count-1)]
                 frontiers=(np.arange(1,count,dtype=np.float64)/count).astype(np.float32)
                 below=np.searchsorted(boundary,np.nextafter(frontiers,np.float32(0)))
@@ -183,6 +191,7 @@ def selection_probe(model,spec,heldout=False,calibration=None,stop_requested=lam
                      "boundary_forbidden_rate":float((~np.isin(boundary_choices,available)).mean()),
                      "availability_slot_errors":int(((relative>=.5)!=exact).sum()),
                      "raw_availability_mass":float(state[2]),"calibration_checkpoint_sha256":calibration["checkpoint_sha256"] if calibration else None}
+                row.update(device=str(next(model.parameters()).device),dtype=str(next(model.parameters()).dtype))
                 atomic_json(path,row)
                 np.savez_compressed(output/f"{stem}.npz",rc=bulk,choices=selected,boundary_rc=boundary,boundary_choices=boundary_choices,
                                     available=available,colors=colors,q=q,alpha=alpha)
@@ -362,8 +371,10 @@ def run_all(stop_requested=lambda:False,only_spec=None):
         model,_=load_spec(spec)
         whash=weights_hash(model.state_dict())
         if spec["label"]=="historical-e1-s0-epoch120":
+            from .predictors import freeze_analytic
             calibration=freeze_calibration(model,spec["checkpoint"])
-            selection_probe(model,spec,True,calibration,stop_requested)
+            analytic=freeze_analytic(model,spec["checkpoint"],DIRECTORY/"frozen-analytic-quantiles.json")
+            selection_probe(model,spec,True,calibration,stop_requested,analytic)
         real=commit_certificate(model)
         numerical=commit_certificate(model,True)
         certificate={"label":spec["label"],"checkpoint_sha256":spec["checkpoint_sha256"],"real":real,"float32_model":numerical}

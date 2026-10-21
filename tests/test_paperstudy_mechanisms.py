@@ -83,3 +83,14 @@ def test_unsafe_commits_are_executed_and_rollout_continues():
     assert result["monochromatic_edges"]>0
     assert result["unsafe_commits"]>0 and not result["success"]
     assert (colors>=0).all()
+
+
+def test_analytic_quantile_enumerates_relu_kinks_and_tie_breaks_left():
+    from dcl.paperstudy.predictors import limiting_quantile
+    # -|x-r| = -ReLU(x-r)-ReLU(r-x): continuous maximum exactly x=r.
+    coefficients={"B":[0,0],"A":[1,-1],"R":[-1,1],"v":[-1,-1]}
+    grid=np.array([0.,.1,.37,.9,1.])
+    np.testing.assert_allclose(limiting_quantile(coefficients,grid),grid,rtol=0,atol=1e-15)
+    # A constant scorer has every point as a maximizer; predict the smallest.
+    flat={"B":[1],"A":[0],"R":[0],"v":[1]}
+    np.testing.assert_array_equal(limiting_quantile(flat,grid),np.zeros_like(grid))
