@@ -15,4 +15,8 @@ while kill -0 "$STUDY_COORDINATOR_PID" 2>/dev/null; do sleep 20; done
 "$STUDY_PY" -m pytest -q --junitxml=results/ucgnn-local-palettes/all-tests.xml > data/ucgnn-local-palettes/final-tests.log 2>&1
 /workspaces/AlgoLearning/ucgnn-paper-study/.tools/tectonic -X compile --keep-logs paper/ucgnn/main.tex > data/ucgnn-local-palettes/latex.log 2>&1
 "$STUDY_PY" -m dcl.localpalettes status > results/ucgnn-local-palettes/final-status.json
+git add results/ucgnn-local-palettes paper/ucgnn/figures paper/ucgnn/tables paper/ucgnn/main.pdf STATUS.md
+if ! git diff --cached --quiet; then
+  git commit -m "Record completed local-palette and conditional-distribution experiments"
+fi
 date -u > data/ucgnn-local-palettes/FINAL_STAGE_COMPLETE

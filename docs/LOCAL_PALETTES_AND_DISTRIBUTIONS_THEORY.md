@@ -252,7 +252,37 @@ error model, not an unconditional GPU guarantee. SUM/MEAN do not reduce to 64
 sets and this proposition does not apply to them. Nothing here proves neural
 progress or termination; RAW can remain safe and fail to advance.
 
-## 9. Honest uncertainty and precision
+## 9. Concrete certified COMMIT counterexamples
+
+`negative_certificates.py` propagates outward intervals through the frozen
+message/state/COMMIT modules. It retains both failing and correct degree controls.
+In the SUM degree-eight star, the pending participating center proposes 0 and
+all eight pending participating leaves propose 1. Every list is local: center
+size 9, leaves size 2. Received messages equal 8 φ([1,0,1,0]); exact COMMIT must
+accept. A strictly negative enclosed output proves a false rejection for these
+weights, without implying SUM could not represent a correct rule.
+
+For the MEAN fixed-conflict star at degree eight, seven fixed leaves have color 1
+and one has color 0, while the pending participating center proposes 0. The
+received vector is (7φ([0,0,0,0])+φ([0,1,0,0]))/8; exact COMMIT rejects. The
+analogous degree-sixteen simultaneous-conflict star has one pending participating
+leaf proposing 0 and fifteen proposing 1. A strictly positive enclosed logit
+proves a false authorization. These are proposal-conditional counterexamples;
+they alone do not prove that the autonomous candidate policy visits them.
+
+Each real interval uses exact stored coefficients with outward-rounded elementary
+operations. For the optional float32 error model, message intervals include
+the affine gamma_(n+2) bounds; nonnegative aggregation additionally uses
+gamma_(d+2) times the upper magnitude plus (d+2)2^(-149), covering the d-term sum
+and mean division conservatively. State/head affine bounds are then propagated.
+No overflow/TF32 and IEEE rounding are explicit hypotheses. Both float32 actual
+forwards and dtype-aware float64 forwards are checked inside their enclosures.
+The degree-four fixed-conflict control and one degree-eight pending-conflict
+replica remain correctly rejected; the output records that rather than hiding it.
+Counterexamples were explored after graph testing began, not used for model
+selection or training, and are labeled exploratory.
+
+## 10. Honest uncertainty and precision
 
 For N IID categorical draws from Q on K colors, the subset characterization of
 TV and Hoeffding plus a union bound over at most 2^K subsets give

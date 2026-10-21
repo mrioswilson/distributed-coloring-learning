@@ -115,3 +115,13 @@ histograms and from candidates conditional on participation.
 All 30 checkpoint hashes and source/environment hashes are frozen in the study
 manifest. Original modules and checkpoints remain unchanged. M6B's learned
 dimensions fix K, so M6B is excluded rather than padded into a different model.
+
+The historical slot construction hardcodes float32 (`.float()`); simply calling
+the entire historical model `.double()` is not a supported float64 execution.
+The secondary precision probes use dtype-aware receiver-query modules with the
+same coefficients. Their 257-point deterministic grids compare float32 and
+float64 evaluation with **identical converted rc**, separately from changing
+rc's precision. No discrepancy on such grids is a universal numerical certificate.
+`participation-exact-real.json` integrates the 35 frozen ReLU participation heads
+using rational arithmetic at u=1. Its probabilities concern real evaluation of
+the stored coefficients, not rounding of intermediate GPU operations.
