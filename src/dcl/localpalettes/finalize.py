@@ -16,7 +16,7 @@ from .report import collect, report, write_csv
 
 def aggregate_laws(laws,b3):
     law=pd.DataFrame(laws)
-    if law.empty:return law,pd.DataFrame()
+    if law.empty:return law,pd.DataFrame(columns=['treatment','k','pattern','kind','networks','tv','fidelity','effective_colors','max_mass','forbidden_mass'])
     law['treatment']=law.model.str.rsplit('-s',n=1).str[0]
     summary=law.groupby(['treatment','k','pattern','kind'],dropna=False).agg(
         networks=('model','nunique'),tv=('tv','mean'),tv_min=('tv','min'),tv_max=('tv','max'),
@@ -270,8 +270,8 @@ con `python -m dcl.localpalettes.finalize`; no se copiaron cifras manualmente.
 def finalize():
     report()
     frame=pd.read_csv(RESULTS/'graph-cases.csv');frame['success']=(frame.status=='success').astype(int)
-    laws=pd.read_csv(RESULTS/'candidate-laws.csv').to_dict('records')
-    b3=pd.read_csv(RESULTS/'distinguishability.csv').to_dict('records')
+    laws=pd.read_csv(RESULTS/'candidate-laws.csv').to_dict('records') if (RESULTS/'candidate-laws.csv').exists() else []
+    b3=pd.read_csv(RESULTS/'distinguishability.csv').to_dict('records') if (RESULTS/'distinguishability.csv').exists() else []
     law,summary=aggregate_laws(laws,b3)
     cluster_uncertainty(frame);extra_figures();prose(frame,law,summary,b3);archive();executive(frame,law,summary,b3)
     rows=[]

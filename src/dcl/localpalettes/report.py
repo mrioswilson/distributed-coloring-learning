@@ -27,6 +27,10 @@ def collect():
     for path in sorted((ROOT/'graphs').rglob('*.json')):
         row=json.loads(path.read_text());g=row['graph']
         fp=fingerprints.get(g['id'],{})
+        family,replicate=g['family'],g['replicate']
+        random_spec=(family in ('REGULAR','IRREGULAR','HETEROGENEOUS') or
+                     (replicate==1 and family in ('LOW_HIGH','DENSE')) or
+                     (replicate==1 and family=='BIPARTITE' and g['target_degree']//4>1))
         trace=row['trace'];max_stall=stall=0
         for step in trace:
             stall=stall+1 if step['commits']==0 else 0
@@ -38,6 +42,7 @@ def collect():
                      {k:g[k] for k in ('family','n','degree','target_degree','degree_cv')}|
                      {'graph_id':g['id'],'graph_cluster':fp.get('fingerprint',g['edges_sha256']),
                       'historical_graph_overlap':fp.get('historical_overlap',False),'output':str(path)}|derived)
+        cases[-1]['random_graph_spec']=random_spec
     for path in sorted((ROOT/'distributions').rglob('*.json')):
         row=json.loads(path.read_text());laws.append(row['metrics']);b3.extend(row['b3'])
     return cases,laws,b3
@@ -136,6 +141,9 @@ def report():
         aggregates=frame.groupby(['treatment','regime'],dropna=False).agg(successes=('success','sum'),cases=('success','size'),
                    mean_rounds=('rounds','mean'),unsafe_commits=('unsafe_commits','sum')).reset_index()
         aggregates.to_csv(RESULTS/'regime-summary.csv',index=False)
+        fresh=frame[frame.random_graph_spec & ~frame.historical_graph_overlap]
+        fresh.groupby(['treatment','regime']).agg(successes=('success','sum'),cases=('success','size'),
+            mean_rounds=('rounds','mean'),unsafe_commits=('unsafe_commits','sum')).reset_index().to_csv(RESULTS/'fresh-random-summary.csv',index=False)
         write_csv(RESULTS/'paired-comparisons.csv',paired_bootstrap(frame))
         summary=aggregates.to_string(index=False)
         table=Path('paper/ucgnn/tables/local-palettes.tex')
