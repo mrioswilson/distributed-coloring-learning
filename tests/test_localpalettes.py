@@ -209,3 +209,15 @@ def test_padding_cannot_win_against_extreme_valid_logits(monkeypatch):
     output=LocalPaletteAdapter(model)(torch.tensor([-1,-1]),torch.tensor([.3,.7]),torch.tensor([.2,.8]),
                                     torch.tensor([[0,1],[1,0]]),torch.tensor([1,4]),output_width=50)
     assert output.candidate.tolist()==[0,0]
+
+
+def test_exact_participation_integration():
+    from dcl.localpalettes.controls import participation_measure
+    head=torch.nn.Sequential(torch.nn.Linear(2,2),torch.nn.ReLU(),torch.nn.Linear(2,1))
+    with torch.no_grad():
+        head[0].weight[:]=torch.tensor([[1.,0.],[-1.,0.]])
+        head[0].bias[:]=torch.tensor([0.,0.])
+        head[2].weight[:]=torch.tensor([[1.,0.]])
+        head[2].bias[:]=-.25
+    result=participation_measure(head)
+    assert result['exact_rational']=='3/4' and result['probability_real']==.75

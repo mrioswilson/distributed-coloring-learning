@@ -52,6 +52,8 @@ def run_progress():
                     p[v]=float((logit>0).float().mean())
             formula=expected_confirmations(q,p,colors,edges,available)
             empirical_exact=[];empirical_learned=[];unsafe=[]
+            histograms={name:np.zeros_like(q,dtype=np.int64) for name in
+                        ('candidate','candidate_participating','confirmed_exact','confirmed_learned')}
             rng=np.random.default_rng(seed('progress-test',spec['label'],state['id']))
             for _ in range(256):
                 draws=converted_uniform(rng.random((n,2)))
@@ -59,6 +61,10 @@ def run_progress():
                 part=output.participate.cpu().numpy();cand=output.candidate.cpu().numpy()
                 exact=exact_commit_labels(colors,edges,part,cand)
                 learned=(output.commit_logit>0).cpu().numpy()&part&(colors<0)
+                for name,mask in (('candidate',colors<0),('candidate_participating',part),
+                                  ('confirmed_exact',exact),('confirmed_learned',learned)):
+                    ids=np.flatnonzero(mask)
+                    np.add.at(histograms[name],(ids,cand[ids]),1)
                 empirical_exact.append(int(exact.sum()));empirical_learned.append(int(learned.sum()));unsafe.append(int(np.sum(learned&~exact)))
             row=dict(model=spec['label'],state=state['id'],pending=int(np.sum(colors<0)),
                      expected_exact_commits_plugin=float(formula.sum()),empirical_exact_commits=float(np.mean(empirical_exact)),
@@ -67,6 +73,7 @@ def run_progress():
                      learned_standard_error=float(np.std(empirical_learned,ddof=1)/16))
             heterogeneous.append(row)
             path=ROOT/'controlled-progress'/f'{spec["label"]}-{state["id"]}.npz';path.parent.mkdir(parents=True,exist_ok=True)
-            np.savez_compressed(path,q=q,p=p,available=available,formula=formula,exact=empirical_exact,learned=empirical_learned,unsafe=unsafe)
+            np.savez_compressed(path,q=q,p=p,available=available,formula=formula,exact=empirical_exact,learned=empirical_learned,unsafe=unsafe,
+                                **histograms)
             print(f'controlled {spec["label"]} {state["id"]} predicted={formula.sum():.3f} exact={np.mean(empirical_exact):.3f}',flush=True)
     atomic_json(RESULTS/'controlled-progress.json',dict(cliques=clique,heterogeneous=heterogeneous))
