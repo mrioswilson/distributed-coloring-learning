@@ -1,0 +1,473 @@
+{
+  "config": {
+    "batch_decisions": 1680,
+    "checkpoints": [
+      100,
+      500,
+      1000,
+      4000,
+      8000,
+      17760
+    ],
+    "cohort_batch": 16,
+    "graphs": 800,
+    "hidden": 64,
+    "log_every": 500,
+    "lr": 0.001,
+    "message": 32,
+    "n": 40,
+    "namespace": 2026101902,
+    "protocol": "native-policy-v1",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "tapes": 3,
+    "teachers": [
+      "LUBY",
+      "JOHANSSON",
+      "JP",
+      "COLOR_TRIALS",
+      "BE_BASE_D3",
+      "SPECULATIVE_GM",
+      "GREEDY"
+    ],
+    "test_counts": [
+      [
+        40,
+        50
+      ],
+      [
+        160,
+        25
+      ],
+      [
+        640,
+        10
+      ],
+      [
+        2560,
+        5
+      ],
+      [
+        10240,
+        3
+      ]
+    ],
+    "test_tapes": 2,
+    "threads": 2,
+    "updates": 17760,
+    "val_graphs": 50,
+    "workers": 3
+  },
+  "created_utc": "2026-10-20T02:15:13.018389+00:00",
+  "models": [
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "7ca243af1f1d78a85773826a52f7255f41a22140764f613c0b2d680e4cf989bf",
+      "parameters": 36719,
+      "path": "runs/luby/s0/step-017760.pt",
+      "seed": 0,
+      "sha256": "83cadacef051c4fdeed0375a720f8123c756bf98e6ba2681cf52d00b1a429278",
+      "teacher": "LUBY",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "6658423481bdc54a853dd3d77f17ace8e4d0d00c38dff4020a3d236b62b6b1fc",
+      "parameters": 36719,
+      "path": "runs/luby/s1/step-017760.pt",
+      "seed": 1,
+      "sha256": "aaa6f733be8294032268c58c46f2918d5caf39b5e2beb1b2b6617460ce9283a0",
+      "teacher": "LUBY",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "5a6f439493d25c8113f24adb1b37fe6b77ad6e00ecdd1aa5397f632e2f07b2f5",
+      "parameters": 36719,
+      "path": "runs/luby/s2/step-017760.pt",
+      "seed": 2,
+      "sha256": "b11bd4dd197f55ab915f904acdef6a99b4e7e4c2a3a78912fda0ba7997725ee1",
+      "teacher": "LUBY",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "812dff2da4e08236b6c70cedf850d4986660aff5e0ebb585ffe904afd1e4af50",
+      "parameters": 36719,
+      "path": "runs/luby/s3/step-017760.pt",
+      "seed": 3,
+      "sha256": "3e63a735af32bd31d53e4d784b9ecd3e29b71152b1b6e1018a46510e98be4d65",
+      "teacher": "LUBY",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "081b971b05ddf675889563276a7097fc67624e7130a4e29d77ff7e638e08bb85",
+      "parameters": 36719,
+      "path": "runs/luby/s4/step-017760.pt",
+      "seed": 4,
+      "sha256": "ea00105842eda95d17fe41395d6bce5a825dccc7b058a920dfb41dfc8c5ac767",
+      "teacher": "LUBY",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "7ca243af1f1d78a85773826a52f7255f41a22140764f613c0b2d680e4cf989bf",
+      "parameters": 36719,
+      "path": "runs/johansson/s0/step-017760.pt",
+      "seed": 0,
+      "sha256": "e372777607634f8b00144a46af0f1fb7b517eba6fef3748703b7be70fc9df9e4",
+      "teacher": "JOHANSSON",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "6658423481bdc54a853dd3d77f17ace8e4d0d00c38dff4020a3d236b62b6b1fc",
+      "parameters": 36719,
+      "path": "runs/johansson/s1/step-017760.pt",
+      "seed": 1,
+      "sha256": "bacbc8276cdf162e8e45b194168081ab2db8a4b042e4da27b8ba2fb9a36ea5d2",
+      "teacher": "JOHANSSON",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "5a6f439493d25c8113f24adb1b37fe6b77ad6e00ecdd1aa5397f632e2f07b2f5",
+      "parameters": 36719,
+      "path": "runs/johansson/s2/step-017760.pt",
+      "seed": 2,
+      "sha256": "968be3dd76394ee9dfacc96cdd60c416d202c0919ecb56dc59a6b178bf9ce310",
+      "teacher": "JOHANSSON",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "812dff2da4e08236b6c70cedf850d4986660aff5e0ebb585ffe904afd1e4af50",
+      "parameters": 36719,
+      "path": "runs/johansson/s3/step-017760.pt",
+      "seed": 3,
+      "sha256": "68a9779134b23e19bd0a03a09365a0b9943316f3d38a0b04a518df966fabf6d6",
+      "teacher": "JOHANSSON",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "081b971b05ddf675889563276a7097fc67624e7130a4e29d77ff7e638e08bb85",
+      "parameters": 36719,
+      "path": "runs/johansson/s4/step-017760.pt",
+      "seed": 4,
+      "sha256": "45a3ff43f6deb78a4b4a1439c193f61619f9b4f1e1bc8d3437d6a37a2dcb8c37",
+      "teacher": "JOHANSSON",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "7ca243af1f1d78a85773826a52f7255f41a22140764f613c0b2d680e4cf989bf",
+      "parameters": 36719,
+      "path": "runs/jp/s0/step-017760.pt",
+      "seed": 0,
+      "sha256": "9301418b96969f7625294d244169db734f3c29cbf2118f48d57307f02b1891b9",
+      "teacher": "JP",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "6658423481bdc54a853dd3d77f17ace8e4d0d00c38dff4020a3d236b62b6b1fc",
+      "parameters": 36719,
+      "path": "runs/jp/s1/step-017760.pt",
+      "seed": 1,
+      "sha256": "ddd96a29b3de32758362e43d58450c25b116ca3ef3b97031bf50c2a736ae938a",
+      "teacher": "JP",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "5a6f439493d25c8113f24adb1b37fe6b77ad6e00ecdd1aa5397f632e2f07b2f5",
+      "parameters": 36719,
+      "path": "runs/jp/s2/step-017760.pt",
+      "seed": 2,
+      "sha256": "aab8b401283a5f2e094221c6f7163dc31ba7d35275ca013d250f816ec19ff536",
+      "teacher": "JP",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "812dff2da4e08236b6c70cedf850d4986660aff5e0ebb585ffe904afd1e4af50",
+      "parameters": 36719,
+      "path": "runs/jp/s3/step-017760.pt",
+      "seed": 3,
+      "sha256": "1754464d55401996201f9389d11e96d360a64ffff110bf7d1f94a38cd7fb2da5",
+      "teacher": "JP",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "081b971b05ddf675889563276a7097fc67624e7130a4e29d77ff7e638e08bb85",
+      "parameters": 36719,
+      "path": "runs/jp/s4/step-017760.pt",
+      "seed": 4,
+      "sha256": "f59aad48539923eff3c1d102d5ab9a37afb43c8e5ffa2eefeb0dd3a9e5ca2783",
+      "teacher": "JP",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "7ca243af1f1d78a85773826a52f7255f41a22140764f613c0b2d680e4cf989bf",
+      "parameters": 36719,
+      "path": "runs/color_trials/s0/step-017760.pt",
+      "seed": 0,
+      "sha256": "33872e44a58642e490ef72c83bee293cdf2a7019b4cf9654149b1ada62be854d",
+      "teacher": "COLOR_TRIALS",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "6658423481bdc54a853dd3d77f17ace8e4d0d00c38dff4020a3d236b62b6b1fc",
+      "parameters": 36719,
+      "path": "runs/color_trials/s1/step-017760.pt",
+      "seed": 1,
+      "sha256": "7fc10d0fa78b372c783ef10ac658258404e8d168750793eac531ba7b1df305db",
+      "teacher": "COLOR_TRIALS",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "5a6f439493d25c8113f24adb1b37fe6b77ad6e00ecdd1aa5397f632e2f07b2f5",
+      "parameters": 36719,
+      "path": "runs/color_trials/s2/step-017760.pt",
+      "seed": 2,
+      "sha256": "0f89689cad89a040becee144d13a0b261bf18193029894110700737ee50938e7",
+      "teacher": "COLOR_TRIALS",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "812dff2da4e08236b6c70cedf850d4986660aff5e0ebb585ffe904afd1e4af50",
+      "parameters": 36719,
+      "path": "runs/color_trials/s3/step-017760.pt",
+      "seed": 3,
+      "sha256": "8a03d9ed906069a82a5d59bc941e52dd0dee38e2ff5a9d8ca3bc826f6f6d3587",
+      "teacher": "COLOR_TRIALS",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "081b971b05ddf675889563276a7097fc67624e7130a4e29d77ff7e638e08bb85",
+      "parameters": 36719,
+      "path": "runs/color_trials/s4/step-017760.pt",
+      "seed": 4,
+      "sha256": "08e30db0da49ae4eafd9c573deeb6009d1cbd14357db5c129be34eec9c46c5d7",
+      "teacher": "COLOR_TRIALS",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "7ca243af1f1d78a85773826a52f7255f41a22140764f613c0b2d680e4cf989bf",
+      "parameters": 36719,
+      "path": "runs/be_base_d3/s0/step-017760.pt",
+      "seed": 0,
+      "sha256": "5ef364529db1046c93b62b7efc77d492d6cf6943bb7538aa6ba7be3087502207",
+      "teacher": "BE_BASE_D3",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "6658423481bdc54a853dd3d77f17ace8e4d0d00c38dff4020a3d236b62b6b1fc",
+      "parameters": 36719,
+      "path": "runs/be_base_d3/s1/step-017760.pt",
+      "seed": 1,
+      "sha256": "3db1db41d07391bac52d205c7b956c01288c3664dedadae6f9c315ddfb44439c",
+      "teacher": "BE_BASE_D3",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "5a6f439493d25c8113f24adb1b37fe6b77ad6e00ecdd1aa5397f632e2f07b2f5",
+      "parameters": 36719,
+      "path": "runs/be_base_d3/s2/step-017760.pt",
+      "seed": 2,
+      "sha256": "dfb52338317e2cb2e1f7f9ac2a0a251f5c9db5722cb58a0b68121f6b294802a9",
+      "teacher": "BE_BASE_D3",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "812dff2da4e08236b6c70cedf850d4986660aff5e0ebb585ffe904afd1e4af50",
+      "parameters": 36719,
+      "path": "runs/be_base_d3/s3/step-017760.pt",
+      "seed": 3,
+      "sha256": "b502b18345adf446290e128f70e37f700b79212cefe44d9acdccda399203b866",
+      "teacher": "BE_BASE_D3",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "081b971b05ddf675889563276a7097fc67624e7130a4e29d77ff7e638e08bb85",
+      "parameters": 36719,
+      "path": "runs/be_base_d3/s4/step-017760.pt",
+      "seed": 4,
+      "sha256": "b81a957da81be72d8eb4cc9d8cecea9bc84da62bf87e4ef29f53186521f3a250",
+      "teacher": "BE_BASE_D3",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "7ca243af1f1d78a85773826a52f7255f41a22140764f613c0b2d680e4cf989bf",
+      "parameters": 36719,
+      "path": "runs/speculative_gm/s0/step-017760.pt",
+      "seed": 0,
+      "sha256": "239acb1252493817a5923c25da4dbdc4e38e374600e76147bcf8ab53fa671c90",
+      "teacher": "SPECULATIVE_GM",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "6658423481bdc54a853dd3d77f17ace8e4d0d00c38dff4020a3d236b62b6b1fc",
+      "parameters": 36719,
+      "path": "runs/speculative_gm/s1/step-017760.pt",
+      "seed": 1,
+      "sha256": "e03a84ce464728f838e0ddec4ba527ff104a225dd6ffe8b01938ece3e330efde",
+      "teacher": "SPECULATIVE_GM",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "5a6f439493d25c8113f24adb1b37fe6b77ad6e00ecdd1aa5397f632e2f07b2f5",
+      "parameters": 36719,
+      "path": "runs/speculative_gm/s2/step-017760.pt",
+      "seed": 2,
+      "sha256": "840213cc3582fe537387a36e6b335cca92a0a93d02526fb979e00d485b1d83ce",
+      "teacher": "SPECULATIVE_GM",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "812dff2da4e08236b6c70cedf850d4986660aff5e0ebb585ffe904afd1e4af50",
+      "parameters": 36719,
+      "path": "runs/speculative_gm/s3/step-017760.pt",
+      "seed": 3,
+      "sha256": "0c9e1a22ca476b2677711180f1035f242568dae6731832171b4ff50605ca62c8",
+      "teacher": "SPECULATIVE_GM",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "081b971b05ddf675889563276a7097fc67624e7130a4e29d77ff7e638e08bb85",
+      "parameters": 36719,
+      "path": "runs/speculative_gm/s4/step-017760.pt",
+      "seed": 4,
+      "sha256": "3725aeee711f424445b78a005bfdb66667c19c195815b8f238584446b81d7979",
+      "teacher": "SPECULATIVE_GM",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "7ca243af1f1d78a85773826a52f7255f41a22140764f613c0b2d680e4cf989bf",
+      "parameters": 36719,
+      "path": "runs/greedy/s0/step-017760.pt",
+      "seed": 0,
+      "sha256": "9d91c4fc18d81691d5b4c32a23fbea6d1c72cb4507ce41346b7d99ae59b83bf6",
+      "teacher": "GREEDY",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "6658423481bdc54a853dd3d77f17ace8e4d0d00c38dff4020a3d236b62b6b1fc",
+      "parameters": 36719,
+      "path": "runs/greedy/s1/step-017760.pt",
+      "seed": 1,
+      "sha256": "52470c629a820a77bf929eea333f010944077b367c566d9bdf9990eb8670c499",
+      "teacher": "GREEDY",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "5a6f439493d25c8113f24adb1b37fe6b77ad6e00ecdd1aa5397f632e2f07b2f5",
+      "parameters": 36719,
+      "path": "runs/greedy/s2/step-017760.pt",
+      "seed": 2,
+      "sha256": "fe6eda1e5db2ffa2242e32b0b6ee0d69a674a8a5bb67eaba7f69730c030f2cca",
+      "teacher": "GREEDY",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "812dff2da4e08236b6c70cedf850d4986660aff5e0ebb585ffe904afd1e4af50",
+      "parameters": 36719,
+      "path": "runs/greedy/s3/step-017760.pt",
+      "seed": 3,
+      "sha256": "82cc40841174fa016825afbff7cadc0245b52a8615997f193421ac75eecdc568",
+      "teacher": "GREEDY",
+      "updates": 17760
+    },
+    {
+      "decisions": 29836800,
+      "initial_state_hash": "081b971b05ddf675889563276a7097fc67624e7130a4e29d77ff7e638e08bb85",
+      "parameters": 36719,
+      "path": "runs/greedy/s4/step-017760.pt",
+      "seed": 4,
+      "sha256": "4195e593772ae509ff094c1c74066f780eb6243af1b9232c5df5150ced280871",
+      "teacher": "GREEDY",
+      "updates": 17760
+    }
+  ],
+  "protocol": "native-policy-v1",
+  "provenance": {
+    "created_utc": "2026-10-20T02:00:19.988089+00:00",
+    "git_commit": "9607dbea89aab9aaf6b9e55e7b64a63a1208cf77",
+    "git_status": "M .gitignore\n M README.md\n?? configs/extrapolation/\n?? configs/johansson/\n?? configs/multiteacher/\n?? configs/qlearning/\n?? docs/EXTRAPOLATION.md\n?? docs/QLEARNING.md\n?? docs/QLEARNING_REPORT.md\n?? docs/QLEARNING_REPORT.pdf\n?? docs/QLEARNING_REPORT.tex\n?? experiments/analyze_multiteacher.py\n?? experiments/analyze_qlearning_policy.py\n?? experiments/hidden_palette_gnn.py\n?? experiments/qlearning_budget.py\n?? experiments/qlearning_global_credit.py\n?? experiments/qlearning_gnn.py\n?? experiments/qlearning_variants.py\n?? experiments/rooted_multiteacher_cache.py\n?? experiments/run_johansson.py\n?? experiments/run_multiteacher.py\n?? experiments/run_multiteacher_cached.py\n?? experiments/run_multiteacher_grouped.py\n?? experiments/run_multiteacher_serial.py\n?? experiments/run_multiteacher_threads.py\n?? experiments/verify_fixed_palette_transfer.py\n?? results/qlearning/\n?? src/dcl/extrapolation/\n?? src/dcl/johansson.py\n?? src/dcl/multiteacher/\n?? tests/test_extrapolation.py\n?? tests/test_hidden_palette_gnn.py\n?? tests/test_johansson.py\n?? tests/test_multiteacher.py\n?? tests/test_qlearning_budget.py\n?? tests/test_qlearning_global_credit.py\n?? tests/test_qlearning_gnn.py\n?? tests/test_qlearning_variants.py",
+    "hostname": "codex-gnn-for-coloring",
+    "python": "3.12.3",
+    "source_hashes": {
+      "experiments/run_multiteacher.py": "c673484f37ff25ca2371558b4b79e4232cda61472a954496af3f321dab13065e",
+      "src/dcl/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "src/dcl/counterfactual.py": "8d9adf46bcada7a1b6e81dbbe6f69123803cce83d148ff35f4e929fc95d1dac8",
+      "src/dcl/dagger.py": "de7a3a80d669b83f4644ebd66fa6991126b13e26ad096ee3ecefcaceda29fae6",
+      "src/dcl/dataset.py": "abcb4c377aa51e6cbd1be915eca13dac0bcf0e28c31411aa073207694bee2ea6",
+      "src/dcl/extrapolation/__init__.py": "0777d25c14597b53969ebfc179d7e9d205382caee162f9357bb015d88deb2838",
+      "src/dcl/extrapolation/__main__.py": "6d8b7d7846a845059d7a3107143f11131f63c5511d669b44085b15ec5e3d2279",
+      "src/dcl/extrapolation/cli.py": "b49f339c6ef55aeb9f81e44caf25507ff218335434c044b1a15b86d1daab02ad",
+      "src/dcl/extrapolation/config.py": "e67984e8adcb51d79d6b84a8cd5ade4fff682510d38546e98e5d4434c49ca843",
+      "src/dcl/extrapolation/data.py": "15a349a9ebe411a68173827a1c90d5be0ff53cf7b2c83fec69c75d65e671a07d",
+      "src/dcl/extrapolation/evaluation.py": "f64d1f1428e30b862576724d8e5cabfbb497997af0b03626013d7a0de958744c",
+      "src/dcl/extrapolation/models.py": "488461bc1d4dc4fd159c88faf0f516ec27958942f2bf2a4990898f3b9084ea1c",
+      "src/dcl/extrapolation/report.py": "c4843b68dd7a2b06ca88fa6ebbe1112279082e9e05f22d36f9ea89ecf71c597d",
+      "src/dcl/extrapolation/runner.py": "e0ef750a5b7574ce9f191d1bd41caeff9f2346da007bfd8d81f9f082f547c433",
+      "src/dcl/graphs.py": "1fc7322bf8696d61e23f9dc7e888aa1136d8809251877ba6284e1e16baae5662",
+      "src/dcl/johansson.py": "7e32921369197742cb1ef7883d99fbad5761b0f6a3b77957ad43bd21a8bfa7b8",
+      "src/dcl/m4_data.py": "7c425907fb9203e2a939dde2bc7c5859a5352ae8be6a3cf6bdcee7e778a63d71",
+      "src/dcl/m4_models.py": "f11b3b2a6ed89835272de5da24138a91858c378de0239f820c01aee56e1de7c3",
+      "src/dcl/model.py": "31ce7940381448c7305fbe5daa8359f013a71d93cbbb42bc7222f16c9284bec5",
+      "src/dcl/multiteacher/__init__.py": "1e8301a2d7f3488eec7d20a1bcbbbb0174987db5fa73a7a0a20fc47d8650863a",
+      "src/dcl/multiteacher/data.py": "9ada4791717f415b7d6158b91dd7fece7601768f0560dc9e5dd605512a6b28de",
+      "src/dcl/multiteacher/experiment.py": "70de36f09f4c162592a631a1964322834808bebca10cfaa3c136947b2af9b684",
+      "src/dcl/multiteacher/model.py": "df8d7d3506ff7d20cbc70f340f6198cac6c675fca39397675a29e7eb207e0a64",
+      "src/dcl/multiteacher/programs.py": "3cd83e39e888b0f4428fcfecfb2c1760c4bc26e0d8d7182ece9ad4d35788d9d9",
+      "src/dcl/oracle.py": "e7415746bda868807b2b6124ea320a9961a344d8328a950dae54d66fc040d8cd",
+      "src/dcl/staged_data.py": "83cfbf0e32e196325eadfbfd3e7d09b6a4aaee54a592db67b1ece1bd6fdec45b",
+      "src/dcl/staged_models.py": "51e729869dca3bdce71b3576f9e63399b67879dff01c1b3653ab1118ef20e627",
+      "src/dcl/study/__init__.py": "1907c28191524525f0b7c55e48e423c5c39f342924a5c69aa93a8f39482aa6b1",
+      "src/dcl/study/cli.py": "530b506b11bdec5c78410939ad9edbd573db78143b02c6ccc1df87b9892f4036",
+      "src/dcl/study/config.py": "30cc38a984b90c219efc6b986e549772e4b8a5ddecd9eaa99ed0dac5f7287b87",
+      "src/dcl/study/data.py": "22da99083f2bf76ed8408bc47003244d7f0221dd8fc6ddd333b94766dc6498ee",
+      "src/dcl/study/evaluation.py": "7d516a585f39c3fbb764a27941d1a7c4b870306ad045950766be47b6c79b731e",
+      "src/dcl/study/graphs.py": "9979cd184051eb230c4b1dfe3c3d68cf1f56741ec417dd8df4203456b9d9831a",
+      "src/dcl/study/report.py": "7f153f324ffb6ea6172edb6f2383f9944da04341e686767ceeeec1f6320ba1f5",
+      "src/dcl/study/storage.py": "236f57a82bfe4df1b0a49dd7d0925a2857485ee4fa55124b02da712ff22bf5b3",
+      "src/dcl/study/train.py": "cc0ff1ee5aff6e91253aa489d6ca72da06d5df7cd8890ef0afe1b2883888ce41"
+    },
+    "versions": {
+      "matplotlib": "3.11.2",
+      "networkx": "3.6.1",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "torch": "2.5.1"
+    }
+  },
+  "selection": "last prespecified update; validation is monitoring only"
+}
