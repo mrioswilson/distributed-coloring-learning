@@ -176,8 +176,10 @@ def main():
         ax.scatter(rows.degree[~seen], 100 * rows.candidate_accuracy[~seen], s=40, facecolor=SURFACE, edgecolor=color,
                    linewidth=1.8, zorder=3)
         last = rows.iloc[-1]
-        ax.annotate(f"{name}", (last.degree, 100 * last.candidate_accuracy), xytext=(6, 0), textcoords="offset points",
-                    color=INK2, fontsize=8, va="center")
+        label_offset = {"E1": (6, 0), "E2": (8, -16), "E3": (8, 9)}[name]
+        ax.annotate(name, (last.degree, 100 * last.candidate_accuracy), xytext=label_offset,
+                    textcoords="offset points", color=INK2, fontsize=8, va="center",
+                    arrowprops=dict(arrowstyle="-", color=AXIS, linewidth=0.7) if name != "E1" else None)
     sd = spec_deg[spec_deg.checkpoint_policy == "epoch-120"].sort_values("degree")
     ax.plot(sd.degree, 100 * sd.candidate_accuracy, color=MODEL_COLOR["M6B"], linewidth=2, linestyle=(0, (4, 2)), zorder=2)
     ax.scatter(sd.degree, 100 * sd.candidate_accuracy, s=40, marker="s", color=MODEL_COLOR["M6B"], zorder=3,
@@ -188,7 +190,7 @@ def main():
     handles = [Line2D([], [], color=MODEL_COLOR[m], linewidth=2, label=label) for m, label in
                (("E1", "E1: entrenado en Δ=3"), ("E2", "E2: Δ=3 y 10"), ("E3", "E3: Δ=3,5,8,10"))]
     handles += [Line2D([], [], color=MODEL_COLOR["M6B"], linewidth=2, linestyle=(0, (4, 2)), marker="s",
-                       label="M6B: un especialista por Δ (media de 20)"),
+                       label="M6B: especialistas (20 réplicas por Δ)"),
                 Line2D([], [], color=MUTED, marker="o", linestyle="", label="grado entrenado"),
                 Line2D([], [], color=MUTED, marker="o", markerfacecolor=SURFACE, linestyle="", label="grado no observado")]
     ax.legend(handles=handles, frameon=False, fontsize=7.5, labelcolor=INK2, loc="lower left")

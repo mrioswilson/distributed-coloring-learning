@@ -8,6 +8,18 @@ La pregunta central es si imitar decisiones locales alcanza para producir una co
 
 **Para compartir:** [informe ejecutivo en PDF, con gráficos y referencias](docs/informes/M6B_informe_ejecutivo.pdf) — cinco páginas, con un resumen autónomo en la primera.
 
+**Universal Color GNN — cierre del 20 de octubre de 2026:** los 22 entrenamientos
+y las baterías original y extrema terminaron. E1 entrenado sólo en Δ=3 obtuvo
+24.400/24.400 éxitos en las cohortes originales y 8.629/8.629 en el estudio
+extremo; las pruebas de Δ=500 son exploratorias y usan una sola réplica.
+Los 43 negativos extremos corresponden a la ablación A1 sin normalización.
+El [informe de Universal](results/ucgnn/2026-10-20-final/INFORME.md) incluye
+réplicas, controles, costes, negativos reproducidos y estado verificable.
+La [auditoría explicativa](docs/UCGNN_MODELOS_EXPLICADOS.md) reconstruye el
+forward, los gradientes y los mecanismos de selección/COMMIT; su
+[resumen de preguntas abiertas](docs/UCGNN_PREGUNTAS_ABIERTAS.md) propone cinco
+investigaciones ordenadas por importancia científica.
+
 ## El problema y el algoritmo profesor
 
 Queremos asignar un color a cada nodo de un grafo, de modo que **dos nodos unidos por una arista tengan colores distintos**. Si el máximo número de vecinos de un nodo es Δ, usamos una paleta de Δ+1 colores: por ejemplo, cuatro colores para Δ=3.
