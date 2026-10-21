@@ -1,0 +1,56 @@
+........................................................................ [ 28%]
+........................................................................ [ 56%]
+..........................F........F...........F........................ [ 84%]
+........................................                                 [100%]
+=================================== FAILURES ===================================
+____________________ test_global_training_lock_and_registry ____________________
+tests/test_study.py:244: in test_global_training_lock_and_registry
+    with training_lock(tmp_path):
+/usr/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+src/dcl/study/storage.py:74: in training_lock
+    raise RuntimeError("Another study training/evaluation process holds the GPU lock") from None
+E   RuntimeError: Another study training/evaluation process holds the GPU lock
+_________________ test_evaluation_resume_and_scientific_report _________________
+tests/test_study.py:358: in test_evaluation_resume_and_scientific_report
+    evaluate(args)
+src/dcl/study/cli.py:163: in evaluate
+    with training_lock(root):
+/usr/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+src/dcl/study/storage.py:74: in training_lock
+    raise RuntimeError("Another study training/evaluation process holds the GPU lock") from None
+E   RuntimeError: Another study training/evaluation process holds the GPU lock
+----------------------------- Captured stdout call -----------------------------
+d3-regular-counterfactual-s00-6a6ec26fa82c generating data on cpu
+parameters=8967 rounds=19 resume_epoch=0
+epoch=001 loss=2.97453 val_action=0.591837 updates=3 seconds=0.0
+epoch=002 loss=2.90628 val_action=0.591837 updates=6 seconds=0.0
+epoch=003 loss=2.87666 val_action=0.591837 updates=9 seconds=0.1
+Frozen 2 models; final test is now permitted: /tmp/pytest-of-maf/pytest-30/test_evaluation_resume_and_sci0/frozen.json
+__ test_cohort_reporting_preserves_paired_denominators_and_checks_completion ___
+tests/test_study_finalization.py:178: in test_cohort_reporting_preserves_paired_denominators_and_checks_completion
+    evaluate(types.SimpleNamespace(freeze=frozen_path, root=tmp_path, device="cpu"))
+src/dcl/study/cli.py:163: in evaluate
+    with training_lock(root):
+/usr/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+src/dcl/study/storage.py:74: in training_lock
+    raise RuntimeError("Another study training/evaluation process holds the GPU lock") from None
+E   RuntimeError: Another study training/evaluation process holds the GPU lock
+----------------------------- Captured stdout call -----------------------------
+d3-regular-counterfactual-s998877-eec3fa081e4a generating data on cpu
+parameters=8967 rounds=23 resume_epoch=0
+epoch=001 loss=3.00856 val_action=0.587940 updates=1 seconds=0.0
+d3-regular-own_only-s998877-b5e08fff67d2 generating data on cpu
+parameters=8967 rounds=23 resume_epoch=0
+epoch=001 loss=3.00856 val_action=0.587940 updates=1 seconds=0.0
+Frozen 2 models; final test is now permitted: /tmp/pytest-of-maf/pytest-30/test_cohort_reporting_preserve0/technical.json
+=========================== short test summary info ============================
+FAILED tests/test_study.py::test_global_training_lock_and_registry - RuntimeE...
+FAILED tests/test_study.py::test_evaluation_resume_and_scientific_report - Ru...
+FAILED tests/test_study_finalization.py::test_cohort_reporting_preserves_paired_denominators_and_checks_completion
+3 failed, 253 passed in 13.81s

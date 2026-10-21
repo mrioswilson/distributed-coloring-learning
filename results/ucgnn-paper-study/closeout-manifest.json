@@ -1,0 +1,737 @@
+{
+  "active_seconds": 3526.354988792911,
+  "budget_hours": 36,
+  "created_utc": "2026-10-21T02:21:47.952087+00:00",
+  "evaluation_scheduled": false,
+  "manual_budget_events": [
+    {
+      "action": "pilot_resource_preflight",
+      "confirmatory_graphs_used": false,
+      "outcomes_examined": false,
+      "seconds": 2.263933241018094,
+      "utc": "2026-10-21T03:01:46.917485+00:00"
+    },
+    {
+      "action": "pilot_resource_preflight",
+      "confirmatory_graphs_used": false,
+      "outcomes_examined": false,
+      "seconds": 3.9903581379912794,
+      "utc": "2026-10-21T03:02:14.184519+00:00"
+    }
+  ],
+  "promotions_final": true,
+  "protocol_commit": "023deaf",
+  "protocol_sha256": "6bb9af85893a7c48c41362a875cbbc0cd1f0d38b989785c0d931f68510f2087a",
+  "secondary_scheduled": false,
+  "status": "running",
+  "tasks": [
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "normalized",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:26:18.748085+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-normalized-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 270.69475935795344,
+          "timed_out": false
+        }
+      ],
+      "id": "train-normalized-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-normalized-s41000-attempt1.txt",
+      "pid": 3716745,
+      "pilot": true,
+      "run": "normalized-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:21:48.048173+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "normalized"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "raw_endpoints",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:30:45.444653+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 266.66908971907105,
+          "timed_out": false
+        }
+      ],
+      "id": "train-raw_endpoints-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41000-attempt1.txt",
+      "pid": 3720707,
+      "pilot": true,
+      "run": "raw_endpoints-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:26:18.770478+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "raw_endpoints"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "sum",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:35:10.141162+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-sum-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 264.6755509090144,
+          "timed_out": false
+        }
+      ],
+      "id": "train-sum-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-sum-s41000-attempt1.txt",
+      "pid": 3724589,
+      "pilot": true,
+      "run": "sum-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:30:45.460919+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "sum"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "mean",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:39:44.884432+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-mean-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 274.71486230101436,
+          "timed_out": false
+        }
+      ],
+      "id": "train-mean-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-mean-s41000-attempt1.txt",
+      "pid": 3728468,
+      "pilot": true,
+      "run": "mean-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:35:10.164798+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "mean"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "deepsets",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:40:22.068054+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-deepsets-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 37.1534786230186,
+          "timed_out": false
+        },
+        {
+          "ended_utc": "2026-10-21T02:44:48.214535+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-deepsets-s41000-attempt2.txt",
+          "returncode": 0,
+          "seconds": 264.68907699291594,
+          "timed_out": false
+        }
+      ],
+      "id": "train-deepsets-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-deepsets-s41000-attempt2.txt",
+      "pid": 3733284,
+      "pilot": true,
+      "run": "deepsets-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:40:23.520101+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "deepsets"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "transformer",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:51:33.315984+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-transformer-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 405.07197237794753,
+          "timed_out": false
+        }
+      ],
+      "id": "train-transformer-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-transformer-s41000-attempt1.txt",
+      "pid": 3737266,
+      "pilot": true,
+      "run": "transformer-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:44:48.239435+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "transformer"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "own_only",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:55:50.080060+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-own_only-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 256.6891121279914,
+          "timed_out": false
+        }
+      ],
+      "id": "train-own_only-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-own_only-s41000-attempt1.txt",
+      "pid": 3743274,
+      "pilot": false,
+      "run": "own_only-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:51:33.385635+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "own_only"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "normalized",
+        "--seed",
+        "41001"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:00:03.158920+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-normalized-s41001-attempt1.txt",
+          "returncode": 0,
+          "seconds": 253.05028274096549,
+          "timed_out": false
+        },
+        {
+          "ended_utc": "2026-10-21T03:05:02.731075+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-normalized-s41001-attempt2.txt",
+          "returncode": 0,
+          "seconds": 22.065191711997613,
+          "timed_out": false
+        }
+      ],
+      "id": "train-normalized-s41001",
+      "log": "data/ucgnn-paper-study/logs/train-normalized-s41001-attempt2.txt",
+      "pid": 3755202,
+      "pilot": false,
+      "run": "normalized-s41001",
+      "seed": 41001,
+      "started_utc": "2026-10-21T03:04:40.659099+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "normalized"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "normalized",
+        "--seed",
+        "41002"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:09:41.501933+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-normalized-s41002-attempt1.txt",
+          "returncode": 0,
+          "seconds": 278.73639888106845,
+          "timed_out": false
+        }
+      ],
+      "id": "train-normalized-s41002",
+      "log": "data/ucgnn-paper-study/logs/train-normalized-s41002-attempt1.txt",
+      "pid": 3755508,
+      "pilot": false,
+      "run": "normalized-s41002",
+      "seed": 41002,
+      "started_utc": "2026-10-21T03:05:02.760083+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "normalized"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "normalized",
+        "--seed",
+        "41003"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:14:20.347798+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-normalized-s41003-attempt1.txt",
+          "returncode": 0,
+          "seconds": 278.7793380829971,
+          "timed_out": false
+        }
+      ],
+      "id": "train-normalized-s41003",
+      "log": "data/ucgnn-paper-study/logs/train-normalized-s41003-attempt1.txt",
+      "pid": 3759507,
+      "pilot": false,
+      "run": "normalized-s41003",
+      "seed": 41003,
+      "started_utc": "2026-10-21T03:09:41.561691+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "normalized"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "normalized",
+        "--seed",
+        "41004"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:18:55.179689+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-normalized-s41004-attempt1.txt",
+          "returncode": 0,
+          "seconds": 274.7739415570395,
+          "timed_out": false
+        }
+      ],
+      "id": "train-normalized-s41004",
+      "log": "data/ucgnn-paper-study/logs/train-normalized-s41004-attempt1.txt",
+      "pid": 3763550,
+      "pilot": false,
+      "run": "normalized-s41004",
+      "seed": 41004,
+      "started_utc": "2026-10-21T03:14:20.400459+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "normalized"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "raw_endpoints",
+        "--seed",
+        "41001"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:23:35.152923+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41001-attempt1.txt",
+          "returncode": 0,
+          "seconds": 279.94134588190354,
+          "timed_out": false
+        }
+      ],
+      "id": "train-raw_endpoints-s41001",
+      "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41001-attempt1.txt",
+      "pid": 3767669,
+      "pilot": false,
+      "run": "raw_endpoints-s41001",
+      "seed": 41001,
+      "started_utc": "2026-10-21T03:18:55.206338+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "raw_endpoints"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "raw_endpoints",
+        "--seed",
+        "41002"
+      ],
+      "attempts": [],
+      "id": "train-raw_endpoints-s41002",
+      "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41002-attempt1.txt",
+      "pid": 3771848,
+      "pilot": false,
+      "run": "raw_endpoints-s41002",
+      "seed": 41002,
+      "started_utc": "2026-10-21T03:23:35.180261+00:00",
+      "status": "running",
+      "timeout": 2400,
+      "treatment": "raw_endpoints"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "raw_endpoints",
+        "--seed",
+        "41003"
+      ],
+      "attempts": [],
+      "id": "train-raw_endpoints-s41003",
+      "pilot": false,
+      "run": "raw_endpoints-s41003",
+      "seed": 41003,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "raw_endpoints"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "raw_endpoints",
+        "--seed",
+        "41004"
+      ],
+      "attempts": [],
+      "id": "train-raw_endpoints-s41004",
+      "pilot": false,
+      "run": "raw_endpoints-s41004",
+      "seed": 41004,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "raw_endpoints"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "sum",
+        "--seed",
+        "41001"
+      ],
+      "attempts": [],
+      "id": "train-sum-s41001",
+      "pilot": false,
+      "run": "sum-s41001",
+      "seed": 41001,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "sum"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "sum",
+        "--seed",
+        "41002"
+      ],
+      "attempts": [],
+      "id": "train-sum-s41002",
+      "pilot": false,
+      "run": "sum-s41002",
+      "seed": 41002,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "sum"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "sum",
+        "--seed",
+        "41003"
+      ],
+      "attempts": [],
+      "id": "train-sum-s41003",
+      "pilot": false,
+      "run": "sum-s41003",
+      "seed": 41003,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "sum"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "sum",
+        "--seed",
+        "41004"
+      ],
+      "attempts": [],
+      "id": "train-sum-s41004",
+      "pilot": false,
+      "run": "sum-s41004",
+      "seed": 41004,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "sum"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "mean",
+        "--seed",
+        "41001"
+      ],
+      "attempts": [],
+      "id": "train-mean-s41001",
+      "pilot": false,
+      "run": "mean-s41001",
+      "seed": 41001,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "mean"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "mean",
+        "--seed",
+        "41002"
+      ],
+      "attempts": [],
+      "id": "train-mean-s41002",
+      "pilot": false,
+      "run": "mean-s41002",
+      "seed": 41002,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "mean"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "mean",
+        "--seed",
+        "41003"
+      ],
+      "attempts": [],
+      "id": "train-mean-s41003",
+      "pilot": false,
+      "run": "mean-s41003",
+      "seed": 41003,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "mean"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "mean",
+        "--seed",
+        "41004"
+      ],
+      "attempts": [],
+      "id": "train-mean-s41004",
+      "pilot": false,
+      "run": "mean-s41004",
+      "seed": 41004,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "mean"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "deepsets",
+        "--seed",
+        "41001"
+      ],
+      "attempts": [],
+      "id": "train-deepsets-s41001",
+      "pilot": false,
+      "run": "deepsets-s41001",
+      "seed": 41001,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "deepsets"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "deepsets",
+        "--seed",
+        "41002"
+      ],
+      "attempts": [],
+      "id": "train-deepsets-s41002",
+      "pilot": false,
+      "run": "deepsets-s41002",
+      "seed": 41002,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "deepsets"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "deepsets",
+        "--seed",
+        "41003"
+      ],
+      "attempts": [],
+      "id": "train-deepsets-s41003",
+      "pilot": false,
+      "run": "deepsets-s41003",
+      "seed": 41003,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "deepsets"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "deepsets",
+        "--seed",
+        "41004"
+      ],
+      "attempts": [],
+      "id": "train-deepsets-s41004",
+      "pilot": false,
+      "run": "deepsets-s41004",
+      "seed": 41004,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "deepsets"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "transformer",
+        "--seed",
+        "41001"
+      ],
+      "attempts": [],
+      "id": "train-transformer-s41001",
+      "pilot": false,
+      "run": "transformer-s41001",
+      "seed": 41001,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "transformer"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "transformer",
+        "--seed",
+        "41002"
+      ],
+      "attempts": [],
+      "id": "train-transformer-s41002",
+      "pilot": false,
+      "run": "transformer-s41002",
+      "seed": 41002,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "transformer"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "transformer",
+        "--seed",
+        "41003"
+      ],
+      "attempts": [],
+      "id": "train-transformer-s41003",
+      "pilot": false,
+      "run": "transformer-s41003",
+      "seed": 41003,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "transformer"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "transformer",
+        "--seed",
+        "41004"
+      ],
+      "attempts": [],
+      "id": "train-transformer-s41004",
+      "pilot": false,
+      "run": "transformer-s41004",
+      "seed": 41004,
+      "status": "pending",
+      "timeout": 2400,
+      "treatment": "transformer"
+    }
+  ],
+  "updated_utc": "2026-10-21T03:25:07.582668+00:00"
+}

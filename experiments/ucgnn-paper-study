@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /workspaces/AlgoLearning/ucgnn-paper-study
+export PYTHONPATH=src
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
+case "${1:-resume}" in
+  resume|start)
+    mkdir -p data/ucgnn-paper-study/logs
+    if ! tmux has-session -t ucgnn-paper-study 2>/dev/null; then
+      tmux new-session -d -s ucgnn-paper-study -n coordinator -c "$PWD" \
+      'cd /workspaces/AlgoLearning/ucgnn-paper-study && env PYTHONPATH=/workspaces/AlgoLearning/ucgnn-paper-study/src CUBLAS_WORKSPACE_CONFIG=:4096:8 /workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python -u -m dcl.paperstudy.coordinator 2>&1 | tee -a data/ucgnn-paper-study/logs/coordinator.txt'
+    elif ! tmux list-windows -t ucgnn-paper-study -F '#{window_name}' | rg -qx coordinator; then
+      tmux new-window -d -t ucgnn-paper-study -n coordinator -c "$PWD" \
+        'env PYTHONPATH=/workspaces/AlgoLearning/ucgnn-paper-study/src CUBLAS_WORKSPACE_CONFIG=:4096:8 /workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python -u -m dcl.paperstudy.coordinator 2>&1 | tee -a data/ucgnn-paper-study/logs/coordinator.txt'
+    fi
+    if ! tmux list-windows -t ucgnn-paper-study -F '#{window_name}' | rg -qx finalizer; then
+      tmux new-window -d -t ucgnn-paper-study -n finalizer -c "$PWD" \
+        'env PYTHONPATH=/workspaces/AlgoLearning/ucgnn-paper-study/src CUDA_VISIBLE_DEVICES= /workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python -u -m dcl.paperstudy.finalize >> data/ucgnn-paper-study/logs/finalizer.txt 2>&1'
+    fi
+    ;;
+  status)
+    /workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python -m json.tool data/ucgnn-paper-study/manifest.json
+    ;;
+  *) echo 'Usage: bash experiments/ucgnn-paper-study {start|resume|status}' >&2; exit 2 ;;
+esac

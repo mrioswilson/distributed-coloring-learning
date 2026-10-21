@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Existing M6 tests acquire the same lock as real GPU jobs, even on CPU.
+# Give only this pytest process a temporary Path.home() for test locks.
+# This does not change HOME or touch the real GPU lock or original tests.
+set -euo pipefail
+repo=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+cd "$repo"
+export PYTHONPATH="$repo/src${PYTHONPATH:+:$PYTHONPATH}"
+export CUDA_VISIBLE_DEVICES='' OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+python_bin=${UCGNN_PYTHON:-/workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python}
+exec "$python_bin" - "$@" <<'PY'
+from pathlib import Path
+import sys
+import pytest
+
+class IsolatedTestHome:
+    @pytest.fixture(autouse=True)
+    def isolate_test_lock(self, monkeypatch, tmp_path):
+        monkeypatch.setattr(Path, 'home', classmethod(lambda cls: tmp_path / 'isolated-test-home'))
+
+raise SystemExit(pytest.main(sys.argv[1:] or ['-q'], plugins=[IsolatedTestHome()]))
+PY

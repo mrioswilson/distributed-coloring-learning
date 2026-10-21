@@ -1,0 +1,3971 @@
+{
+  "active_seconds": 22218.177687442047,
+  "budget_hours": 36,
+  "created_utc": "2026-10-21T02:21:47.952087+00:00",
+  "cyclic_evaluation_scheduled": true,
+  "evaluation_scheduled": true,
+  "manual_budget_events": [
+    {
+      "action": "pilot_resource_preflight",
+      "confirmatory_graphs_used": false,
+      "outcomes_examined": false,
+      "seconds": 2.263933241018094,
+      "utc": "2026-10-21T03:01:46.917485+00:00"
+    },
+    {
+      "action": "pilot_resource_preflight",
+      "confirmatory_graphs_used": false,
+      "outcomes_examined": false,
+      "seconds": 3.9903581379912794,
+      "utc": "2026-10-21T03:02:14.184519+00:00"
+    }
+  ],
+  "mechanisms_scheduled": true,
+  "promotions_final": true,
+  "protocol_commit": "023deaf",
+  "protocol_sha256": "6bb9af85893a7c48c41362a875cbbc0cd1f0d38b989785c0d931f68510f2087a",
+  "secondary_scheduled": true,
+  "status": "complete",
+  "tasks": [
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "normalized",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:26:18.748085+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-normalized-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 270.69475935795344,
+          "timed_out": false
+        }
+      ],
+      "id": "train-normalized-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-normalized-s41000-attempt1.txt",
+      "pid": 3716745,
+      "pilot": true,
+      "run": "normalized-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:21:48.048173+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "normalized"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "raw_endpoints",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:30:45.444653+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 266.66908971907105,
+          "timed_out": false
+        }
+      ],
+      "id": "train-raw_endpoints-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41000-attempt1.txt",
+      "pid": 3720707,
+      "pilot": true,
+      "run": "raw_endpoints-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:26:18.770478+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "raw_endpoints"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "sum",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:35:10.141162+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-sum-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 264.6755509090144,
+          "timed_out": false
+        }
+      ],
+      "id": "train-sum-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-sum-s41000-attempt1.txt",
+      "pid": 3724589,
+      "pilot": true,
+      "run": "sum-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:30:45.460919+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "sum"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "mean",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:39:44.884432+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-mean-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 274.71486230101436,
+          "timed_out": false
+        }
+      ],
+      "id": "train-mean-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-mean-s41000-attempt1.txt",
+      "pid": 3728468,
+      "pilot": true,
+      "run": "mean-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:35:10.164798+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "mean"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "deepsets",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:40:22.068054+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-deepsets-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 37.1534786230186,
+          "timed_out": false
+        },
+        {
+          "ended_utc": "2026-10-21T02:44:48.214535+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-deepsets-s41000-attempt2.txt",
+          "returncode": 0,
+          "seconds": 264.68907699291594,
+          "timed_out": false
+        }
+      ],
+      "id": "train-deepsets-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-deepsets-s41000-attempt2.txt",
+      "pid": 3733284,
+      "pilot": true,
+      "run": "deepsets-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:40:23.520101+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "deepsets"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "transformer",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:51:33.315984+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-transformer-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 405.07197237794753,
+          "timed_out": false
+        }
+      ],
+      "id": "train-transformer-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-transformer-s41000-attempt1.txt",
+      "pid": 3737266,
+      "pilot": true,
+      "run": "transformer-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:44:48.239435+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "transformer"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "own_only",
+        "--seed",
+        "41000"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T02:55:50.080060+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-own_only-s41000-attempt1.txt",
+          "returncode": 0,
+          "seconds": 256.6891121279914,
+          "timed_out": false
+        }
+      ],
+      "id": "train-own_only-s41000",
+      "log": "data/ucgnn-paper-study/logs/train-own_only-s41000-attempt1.txt",
+      "pid": 3743274,
+      "pilot": false,
+      "run": "own_only-s41000",
+      "seed": 41000,
+      "started_utc": "2026-10-21T02:51:33.385635+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "own_only"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "normalized",
+        "--seed",
+        "41001"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:00:03.158920+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-normalized-s41001-attempt1.txt",
+          "returncode": 0,
+          "seconds": 253.05028274096549,
+          "timed_out": false
+        },
+        {
+          "ended_utc": "2026-10-21T03:05:02.731075+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-normalized-s41001-attempt2.txt",
+          "returncode": 0,
+          "seconds": 22.065191711997613,
+          "timed_out": false
+        }
+      ],
+      "id": "train-normalized-s41001",
+      "log": "data/ucgnn-paper-study/logs/train-normalized-s41001-attempt2.txt",
+      "pid": 3755202,
+      "pilot": false,
+      "run": "normalized-s41001",
+      "seed": 41001,
+      "started_utc": "2026-10-21T03:04:40.659099+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "normalized"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "normalized",
+        "--seed",
+        "41002"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:09:41.501933+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-normalized-s41002-attempt1.txt",
+          "returncode": 0,
+          "seconds": 278.73639888106845,
+          "timed_out": false
+        }
+      ],
+      "id": "train-normalized-s41002",
+      "log": "data/ucgnn-paper-study/logs/train-normalized-s41002-attempt1.txt",
+      "pid": 3755508,
+      "pilot": false,
+      "run": "normalized-s41002",
+      "seed": 41002,
+      "started_utc": "2026-10-21T03:05:02.760083+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "normalized"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "normalized",
+        "--seed",
+        "41003"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:14:20.347798+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-normalized-s41003-attempt1.txt",
+          "returncode": 0,
+          "seconds": 278.7793380829971,
+          "timed_out": false
+        }
+      ],
+      "id": "train-normalized-s41003",
+      "log": "data/ucgnn-paper-study/logs/train-normalized-s41003-attempt1.txt",
+      "pid": 3759507,
+      "pilot": false,
+      "run": "normalized-s41003",
+      "seed": 41003,
+      "started_utc": "2026-10-21T03:09:41.561691+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "normalized"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "normalized",
+        "--seed",
+        "41004"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:18:55.179689+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-normalized-s41004-attempt1.txt",
+          "returncode": 0,
+          "seconds": 274.7739415570395,
+          "timed_out": false
+        }
+      ],
+      "id": "train-normalized-s41004",
+      "log": "data/ucgnn-paper-study/logs/train-normalized-s41004-attempt1.txt",
+      "pid": 3763550,
+      "pilot": false,
+      "run": "normalized-s41004",
+      "seed": 41004,
+      "started_utc": "2026-10-21T03:14:20.400459+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "normalized"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "raw_endpoints",
+        "--seed",
+        "41001"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:23:35.152923+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41001-attempt1.txt",
+          "returncode": 0,
+          "seconds": 279.94134588190354,
+          "timed_out": false
+        }
+      ],
+      "id": "train-raw_endpoints-s41001",
+      "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41001-attempt1.txt",
+      "pid": 3767669,
+      "pilot": false,
+      "run": "raw_endpoints-s41001",
+      "seed": 41001,
+      "started_utc": "2026-10-21T03:18:55.206338+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "raw_endpoints"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "raw_endpoints",
+        "--seed",
+        "41002"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:28:06.425255+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41002-attempt1.txt",
+          "returncode": 0,
+          "seconds": 271.23907994211186,
+          "timed_out": false
+        }
+      ],
+      "id": "train-raw_endpoints-s41002",
+      "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41002-attempt1.txt",
+      "pid": 3771848,
+      "pilot": false,
+      "run": "raw_endpoints-s41002",
+      "seed": 41002,
+      "started_utc": "2026-10-21T03:23:35.180261+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "raw_endpoints"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "raw_endpoints",
+        "--seed",
+        "41003"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:32:44.325170+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41003-attempt1.txt",
+          "returncode": 0,
+          "seconds": 277.8671327290358,
+          "timed_out": false
+        }
+      ],
+      "id": "train-raw_endpoints-s41003",
+      "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41003-attempt1.txt",
+      "pid": 3775893,
+      "pilot": false,
+      "run": "raw_endpoints-s41003",
+      "seed": 41003,
+      "started_utc": "2026-10-21T03:28:06.452401+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "raw_endpoints"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "raw_endpoints",
+        "--seed",
+        "41004"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:37:08.038250+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41004-attempt1.txt",
+          "returncode": 0,
+          "seconds": 263.6807802399853,
+          "timed_out": false
+        }
+      ],
+      "id": "train-raw_endpoints-s41004",
+      "log": "data/ucgnn-paper-study/logs/train-raw_endpoints-s41004-attempt1.txt",
+      "pid": 3779896,
+      "pilot": false,
+      "run": "raw_endpoints-s41004",
+      "seed": 41004,
+      "started_utc": "2026-10-21T03:32:44.352312+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "raw_endpoints"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "sum",
+        "--seed",
+        "41001"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:41:32.884165+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-sum-s41001-attempt1.txt",
+          "returncode": 0,
+          "seconds": 264.80495602893643,
+          "timed_out": false
+        }
+      ],
+      "id": "train-sum-s41001",
+      "log": "data/ucgnn-paper-study/logs/train-sum-s41001-attempt1.txt",
+      "pid": 3783671,
+      "pilot": false,
+      "run": "sum-s41001",
+      "seed": 41001,
+      "started_utc": "2026-10-21T03:37:08.072525+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "sum"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "sum",
+        "--seed",
+        "41002"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:46:07.892497+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-sum-s41002-attempt1.txt",
+          "returncode": 0,
+          "seconds": 274.9754732910078,
+          "timed_out": false
+        }
+      ],
+      "id": "train-sum-s41002",
+      "log": "data/ucgnn-paper-study/logs/train-sum-s41002-attempt1.txt",
+      "pid": 3787477,
+      "pilot": false,
+      "run": "sum-s41002",
+      "seed": 41002,
+      "started_utc": "2026-10-21T03:41:32.911394+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "sum"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "sum",
+        "--seed",
+        "41003"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:50:32.769634+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-sum-s41003-attempt1.txt",
+          "returncode": 0,
+          "seconds": 264.84390046307817,
+          "timed_out": false
+        }
+      ],
+      "id": "train-sum-s41003",
+      "log": "data/ucgnn-paper-study/logs/train-sum-s41003-attempt1.txt",
+      "pid": 3791456,
+      "pilot": false,
+      "run": "sum-s41003",
+      "seed": 41003,
+      "started_utc": "2026-10-21T03:46:07.920182+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "sum"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "sum",
+        "--seed",
+        "41004"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:54:57.647420+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-sum-s41004-attempt1.txt",
+          "returncode": 0,
+          "seconds": 264.8447730850894,
+          "timed_out": false
+        }
+      ],
+      "id": "train-sum-s41004",
+      "log": "data/ucgnn-paper-study/logs/train-sum-s41004-attempt1.txt",
+      "pid": 3795433,
+      "pilot": false,
+      "run": "sum-s41004",
+      "seed": 41004,
+      "started_utc": "2026-10-21T03:50:32.797213+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "sum"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "mean",
+        "--seed",
+        "41001"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T03:59:28.562917+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-mean-s41001-attempt1.txt",
+          "returncode": 0,
+          "seconds": 270.88326639297884,
+          "timed_out": false
+        }
+      ],
+      "id": "train-mean-s41001",
+      "log": "data/ucgnn-paper-study/logs/train-mean-s41001-attempt1.txt",
+      "pid": 3799268,
+      "pilot": false,
+      "run": "mean-s41001",
+      "seed": 41001,
+      "started_utc": "2026-10-21T03:54:57.674409+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "mean"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "mean",
+        "--seed",
+        "41002"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T04:04:05.507769+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-mean-s41002-attempt1.txt",
+          "returncode": 0,
+          "seconds": 276.9112796279369,
+          "timed_out": false
+        }
+      ],
+      "id": "train-mean-s41002",
+      "log": "data/ucgnn-paper-study/logs/train-mean-s41002-attempt1.txt",
+      "pid": 3803191,
+      "pilot": false,
+      "run": "mean-s41002",
+      "seed": 41002,
+      "started_utc": "2026-10-21T03:59:28.590755+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "mean"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "mean",
+        "--seed",
+        "41003"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T04:08:46.393275+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-mean-s41003-attempt1.txt",
+          "returncode": 0,
+          "seconds": 280.8531533740461,
+          "timed_out": false
+        }
+      ],
+      "id": "train-mean-s41003",
+      "log": "data/ucgnn-paper-study/logs/train-mean-s41003-attempt1.txt",
+      "pid": 3807168,
+      "pilot": false,
+      "run": "mean-s41003",
+      "seed": 41003,
+      "started_utc": "2026-10-21T04:04:05.534452+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "mean"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "mean",
+        "--seed",
+        "41004"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T04:13:17.188731+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-mean-s41004-attempt1.txt",
+          "returncode": 0,
+          "seconds": 270.76227377797477,
+          "timed_out": false
+        }
+      ],
+      "id": "train-mean-s41004",
+      "log": "data/ucgnn-paper-study/logs/train-mean-s41004-attempt1.txt",
+      "pid": 3811237,
+      "pilot": false,
+      "run": "mean-s41004",
+      "seed": 41004,
+      "started_utc": "2026-10-21T04:08:46.421055+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "mean"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "deepsets",
+        "--seed",
+        "41001"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T04:18:04.158906+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-deepsets-s41001-attempt1.txt",
+          "returncode": 0,
+          "seconds": 286.9373504309915,
+          "timed_out": false
+        }
+      ],
+      "id": "train-deepsets-s41001",
+      "log": "data/ucgnn-paper-study/logs/train-deepsets-s41001-attempt1.txt",
+      "pid": 3815141,
+      "pilot": false,
+      "run": "deepsets-s41001",
+      "seed": 41001,
+      "started_utc": "2026-10-21T04:13:17.216217+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "deepsets"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "deepsets",
+        "--seed",
+        "41002"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T04:22:49.150092+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-deepsets-s41002-attempt1.txt",
+          "returncode": 0,
+          "seconds": 284.9599120860221,
+          "timed_out": false
+        }
+      ],
+      "id": "train-deepsets-s41002",
+      "log": "data/ucgnn-paper-study/logs/train-deepsets-s41002-attempt1.txt",
+      "pid": 3819300,
+      "pilot": false,
+      "run": "deepsets-s41002",
+      "seed": 41002,
+      "started_utc": "2026-10-21T04:18:04.184216+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "deepsets"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "deepsets",
+        "--seed",
+        "41003"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T04:27:38.028115+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-deepsets-s41003-attempt1.txt",
+          "returncode": 0,
+          "seconds": 288.8341539829271,
+          "timed_out": false
+        }
+      ],
+      "id": "train-deepsets-s41003",
+      "log": "data/ucgnn-paper-study/logs/train-deepsets-s41003-attempt1.txt",
+      "pid": 3823420,
+      "pilot": false,
+      "run": "deepsets-s41003",
+      "seed": 41003,
+      "started_utc": "2026-10-21T04:22:49.188556+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "deepsets"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "deepsets",
+        "--seed",
+        "41004"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T04:32:26.965002+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-deepsets-s41004-attempt1.txt",
+          "returncode": 0,
+          "seconds": 288.9088792959228,
+          "timed_out": false
+        }
+      ],
+      "id": "train-deepsets-s41004",
+      "log": "data/ucgnn-paper-study/logs/train-deepsets-s41004-attempt1.txt",
+      "pid": 3827605,
+      "pilot": false,
+      "run": "deepsets-s41004",
+      "seed": 41004,
+      "started_utc": "2026-10-21T04:27:38.051284+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "deepsets"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "transformer",
+        "--seed",
+        "41001"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T04:39:10.321784+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-transformer-s41001-attempt1.txt",
+          "returncode": 0,
+          "seconds": 403.32323044503573,
+          "timed_out": false
+        }
+      ],
+      "id": "train-transformer-s41001",
+      "log": "data/ucgnn-paper-study/logs/train-transformer-s41001-attempt1.txt",
+      "pid": 3831722,
+      "pilot": false,
+      "run": "transformer-s41001",
+      "seed": 41001,
+      "started_utc": "2026-10-21T04:32:26.992632+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "transformer"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "transformer",
+        "--seed",
+        "41002"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T04:45:59.661636+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-transformer-s41002-attempt1.txt",
+          "returncode": 0,
+          "seconds": 409.3050103150308,
+          "timed_out": false
+        }
+      ],
+      "id": "train-transformer-s41002",
+      "log": "data/ucgnn-paper-study/logs/train-transformer-s41002-attempt1.txt",
+      "pid": 3837531,
+      "pilot": false,
+      "run": "transformer-s41002",
+      "seed": 41002,
+      "started_utc": "2026-10-21T04:39:10.351130+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "transformer"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "transformer",
+        "--seed",
+        "41003"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T04:52:44.931913+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-transformer-s41003-attempt1.txt",
+          "returncode": 0,
+          "seconds": 405.2341428369982,
+          "timed_out": false
+        }
+      ],
+      "id": "train-transformer-s41003",
+      "log": "data/ucgnn-paper-study/logs/train-transformer-s41003-attempt1.txt",
+      "pid": 3843509,
+      "pilot": false,
+      "run": "transformer-s41003",
+      "seed": 41003,
+      "started_utc": "2026-10-21T04:45:59.691519+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "transformer"
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "transformer",
+        "--seed",
+        "41004"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T04:59:30.224741+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-transformer-s41004-attempt1.txt",
+          "returncode": 0,
+          "seconds": 405.258269640035,
+          "timed_out": false
+        }
+      ],
+      "id": "train-transformer-s41004",
+      "log": "data/ucgnn-paper-study/logs/train-transformer-s41004-attempt1.txt",
+      "pid": 3849527,
+      "pilot": false,
+      "run": "transformer-s41004",
+      "seed": 41004,
+      "started_utc": "2026-10-21T04:52:44.960808+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "transformer"
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:00:31.403474+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-normalized-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 60.242150809965096,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-normalized-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-normalized-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41000-epoch120.json",
+      "pid": 3855353,
+      "started_utc": "2026-10-21T04:59:31.154723+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:08:08.636210+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 457.2074630499119,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-raw_endpoints-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41000-epoch120.json",
+      "pid": 3856225,
+      "started_utc": "2026-10-21T05:00:31.422393+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:22:58.917993+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-sum-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 890.2230027390178,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-sum-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-sum-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41000-epoch120.json",
+      "pid": 3862834,
+      "started_utc": "2026-10-21T05:08:08.673913+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:23:43.084078+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-mean-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 44.13955674495082,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-mean-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-mean-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41000-epoch120.json",
+      "pid": 3875505,
+      "started_utc": "2026-10-21T05:22:58.937633+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:24:23.248123+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 40.13513366295956,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-deepsets-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41000-epoch120.json",
+      "pid": 3876170,
+      "started_utc": "2026-10-21T05:23:43.106022+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:25:09.431714+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-transformer-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 46.157252091914415,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-transformer-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-transformer-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41000-epoch120.json",
+      "pid": 3876755,
+      "started_utc": "2026-10-21T05:24:23.267482+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/own_only-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:25:45.587786+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-own_only-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 36.12957871996332,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-own_only-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-own_only-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/own_only-s41000-epoch120.json",
+      "pid": 3877510,
+      "started_utc": "2026-10-21T05:25:09.451048+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41001-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:26:21.743096+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-normalized-s41001-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 36.12878746399656,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-normalized-s41001-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-normalized-s41001-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41001-epoch120.json",
+      "pid": 3878021,
+      "started_utc": "2026-10-21T05:25:45.607188+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41001-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:34:29.391625+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41001-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 487.6197216330329,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-raw_endpoints-s41001-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41001-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41001-epoch120.json",
+      "pid": 3878594,
+      "started_utc": "2026-10-21T05:26:21.762489+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41001-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:49:15.869425+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-sum-s41001-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 886.4403320070123,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-sum-s41001-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-sum-s41001-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41001-epoch120.json",
+      "pid": 3885568,
+      "started_utc": "2026-10-21T05:34:29.422435+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41001-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:50:00.043225+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-mean-s41001-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 44.14734503894579,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-mean-s41001-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-mean-s41001-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41001-epoch120.json",
+      "pid": 3898507,
+      "started_utc": "2026-10-21T05:49:15.889469+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41001-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:50:40.196110+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41001-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 40.128176771104336,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-deepsets-s41001-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41001-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41001-epoch120.json",
+      "pid": 3899170,
+      "started_utc": "2026-10-21T05:50:00.061082+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41001-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:51:34.385212+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-transformer-s41001-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 54.165569931967184,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-transformer-s41001-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-transformer-s41001-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41001-epoch120.json",
+      "pid": 3899752,
+      "started_utc": "2026-10-21T05:50:40.213351+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41002-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:52:10.533486+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-normalized-s41002-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 36.12173837609589,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-normalized-s41002-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-normalized-s41002-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41002-epoch120.json",
+      "pid": 3900534,
+      "started_utc": "2026-10-21T05:51:34.402806+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41002-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T05:59:49.570898+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41002-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 459.01344269595575,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-raw_endpoints-s41002-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41002-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41002-epoch120.json",
+      "pid": 3901057,
+      "started_utc": "2026-10-21T05:52:10.551373+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41002-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T06:14:33.341987+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-sum-s41002-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 883.7196068899939,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-sum-s41002-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-sum-s41002-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41002-epoch120.json",
+      "pid": 3907663,
+      "started_utc": "2026-10-21T05:59:49.605125+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41002-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T06:15:17.540520+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-mean-s41002-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 44.14936991396826,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-mean-s41002-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-mean-s41002-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41002-epoch120.json",
+      "pid": 3920421,
+      "started_utc": "2026-10-21T06:14:33.377447+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41002-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T06:15:57.709373+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41002-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 40.13089071610011,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-deepsets-s41002-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41002-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41002-epoch120.json",
+      "pid": 3921081,
+      "started_utc": "2026-10-21T06:15:17.571517+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41002-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T06:16:49.903213+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-transformer-s41002-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 52.16657092701644,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-transformer-s41002-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-transformer-s41002-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41002-epoch120.json",
+      "pid": 3921672,
+      "started_utc": "2026-10-21T06:15:57.729952+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41003-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T06:17:26.047685+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-normalized-s41003-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 36.119366787024774,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-normalized-s41003-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-normalized-s41003-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41003-epoch120.json",
+      "pid": 3922446,
+      "started_utc": "2026-10-21T06:16:49.921801+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41003-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T06:25:04.859156+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41003-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 458.7857621180592,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-raw_endpoints-s41003-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41003-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41003-epoch120.json",
+      "pid": 3922962,
+      "started_utc": "2026-10-21T06:17:26.066790+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41003-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T06:40:15.540900+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-sum-s41003-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 910.6551905160304,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-sum-s41003-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-sum-s41003-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41003-epoch120.json",
+      "pid": 3929495,
+      "started_utc": "2026-10-21T06:25:04.878602+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41003-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T06:40:59.728005+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-mean-s41003-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 44.16008475597482,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-mean-s41003-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-mean-s41003-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41003-epoch120.json",
+      "pid": 3942523,
+      "started_utc": "2026-10-21T06:40:15.560526+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41003-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T06:41:39.894706+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41003-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 40.13973551604431,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-deepsets-s41003-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41003-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41003-epoch120.json",
+      "pid": 3943174,
+      "started_utc": "2026-10-21T06:40:59.747489+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41003-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T06:42:32.445570+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-transformer-s41003-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 52.511617265990935,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-transformer-s41003-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-transformer-s41003-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41003-epoch120.json",
+      "pid": 3943748,
+      "started_utc": "2026-10-21T06:41:39.918216+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41004-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T06:43:12.816501+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-normalized-s41004-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 40.31400384102017,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-normalized-s41004-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-normalized-s41004-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41004-epoch120.json",
+      "pid": 3944471,
+      "started_utc": "2026-10-21T06:42:32.480724+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41004-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T06:51:18.716266+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41004-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 485.8532591899857,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-raw_endpoints-s41004-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41004-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41004-epoch120.json",
+      "pid": 3945114,
+      "started_utc": "2026-10-21T06:43:12.849411+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41004-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:06:04.236990+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-sum-s41004-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 885.4917491279775,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-sum-s41004-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-sum-s41004-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41004-epoch120.json",
+      "pid": 3952282,
+      "started_utc": "2026-10-21T06:51:18.737357+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41004-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:06:48.422097+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-mean-s41004-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 44.15993338194676,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-mean-s41004-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-mean-s41004-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41004-epoch120.json",
+      "pid": 3964936,
+      "started_utc": "2026-10-21T07:06:04.255420+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41004-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:07:28.589834+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41004-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 40.14268768299371,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-deepsets-s41004-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41004-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41004-epoch120.json",
+      "pid": 3965592,
+      "started_utc": "2026-10-21T07:06:48.440469+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41004-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:08:20.790479+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-transformer-s41004-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 52.17380163806956,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-transformer-s41004-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-transformer-s41004-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41004-epoch120.json",
+      "pid": 3966169,
+      "started_utc": "2026-10-21T07:07:28.609511+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-a1-s0-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:15:13.836452+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-historical-a1-s0-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 413.02168691100087,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-historical-a1-s0-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-historical-a1-s0-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-a1-s0-epoch120.json",
+      "pid": 3966963,
+      "started_utc": "2026-10-21T07:08:20.808525+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-c1-s0-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:15:52.031696+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-historical-c1-s0-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 38.153570272028446,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-historical-c1-s0-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-historical-c1-s0-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-c1-s0-epoch120.json",
+      "pid": 3972825,
+      "started_utc": "2026-10-21T07:15:13.871244+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-e1-s0-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:16:30.206810+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-historical-e1-s0-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 38.13739438599441,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-historical-e1-s0-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-historical-e1-s0-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-e1-s0-epoch120.json",
+      "pid": 3973348,
+      "started_utc": "2026-10-21T07:15:52.063210+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d10-s0-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:16:34.260085+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d10-s0-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.02568227192387,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d10-s0-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d10-s0-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d10-s0-epoch120.json",
+      "pid": 3973913,
+      "started_utc": "2026-10-21T07:16:30.227020+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d3-s0-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:16:38.324533+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d3-s0-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.026187153998762,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d3-s0-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d3-s0-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d3-s0-epoch120.json",
+      "pid": 3973986,
+      "started_utc": "2026-10-21T07:16:34.291649+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d5-s0-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:16:42.381674+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d5-s0-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.0183568900683895,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d5-s0-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d5-s0-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d5-s0-epoch120.json",
+      "pid": 3974002,
+      "started_utc": "2026-10-21T07:16:38.356799+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-e1-s1-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:17:20.541898+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-historical-e1-s1-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 38.13478741806466,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-historical-e1-s1-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-historical-e1-s1-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-e1-s1-epoch120.json",
+      "pid": 3974089,
+      "started_utc": "2026-10-21T07:16:42.400461+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d10-s1-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:17:24.584831+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d10-s1-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.017870259005576,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d10-s1-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d10-s1-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d10-s1-epoch120.json",
+      "pid": 3974663,
+      "started_utc": "2026-10-21T07:17:20.560636+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d3-s1-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:17:28.628305+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d3-s1-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.01781333098188,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d3-s1-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d3-s1-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d3-s1-epoch120.json",
+      "pid": 3974736,
+      "started_utc": "2026-10-21T07:17:24.603652+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d5-s1-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:17:32.672521+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d5-s1-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.017773735919036,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d5-s1-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d5-s1-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d5-s1-epoch120.json",
+      "pid": 3974744,
+      "started_utc": "2026-10-21T07:17:28.647303+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-e1-s2-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:18:10.828149+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-historical-e1-s2-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 38.1297233850928,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-historical-e1-s2-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-historical-e1-s2-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-e1-s2-epoch120.json",
+      "pid": 3974825,
+      "started_utc": "2026-10-21T07:17:32.691410+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d10-s2-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:18:14.879443+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d10-s2-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.024000191944651,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d10-s2-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d10-s2-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d10-s2-epoch120.json",
+      "pid": 3975394,
+      "started_utc": "2026-10-21T07:18:10.848125+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d3-s2-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:18:18.972597+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d3-s2-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.028158264933154,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d3-s2-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d3-s2-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d3-s2-epoch120.json",
+      "pid": 3975474,
+      "started_utc": "2026-10-21T07:18:14.927466+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d5-s2-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:18:23.026367+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d5-s2-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.027427908964455,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d5-s2-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d5-s2-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d5-s2-epoch120.json",
+      "pid": 3975562,
+      "started_utc": "2026-10-21T07:18:18.993022+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-e1-s3-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:18:59.198629+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-historical-e1-s3-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 36.13296688301489,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-historical-e1-s3-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-historical-e1-s3-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-e1-s3-epoch120.json",
+      "pid": 3975579,
+      "started_utc": "2026-10-21T07:18:23.059094+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d10-s3-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:19:03.247053+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d10-s3-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.0199028049828485,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d10-s3-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d10-s3-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d10-s3-epoch120.json",
+      "pid": 3976128,
+      "started_utc": "2026-10-21T07:18:59.219876+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d3-s3-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:19:07.310503+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d3-s3-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.0242861760780215,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d3-s3-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d3-s3-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d3-s3-epoch120.json",
+      "pid": 3976155,
+      "started_utc": "2026-10-21T07:19:03.279346+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d5-s3-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:19:11.356495+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d5-s3-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.019401681958698,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d5-s3-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d5-s3-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d5-s3-epoch120.json",
+      "pid": 3976221,
+      "started_utc": "2026-10-21T07:19:07.330197+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-e1-s4-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:19:47.516895+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-historical-e1-s4-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 36.13325042906217,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-historical-e1-s4-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-historical-e1-s4-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-e1-s4-epoch120.json",
+      "pid": 3976301,
+      "started_utc": "2026-10-21T07:19:11.376055+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d10-s4-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:19:51.561779+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d10-s4-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.017589983996004,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d10-s4-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d10-s4-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d10-s4-epoch120.json",
+      "pid": 3976817,
+      "started_utc": "2026-10-21T07:19:47.536585+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d3-s4-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:19:55.606779+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d3-s4-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.018017016001977,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d3-s4-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d3-s4-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d3-s4-epoch120.json",
+      "pid": 3976890,
+      "started_utc": "2026-10-21T07:19:51.580977+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/m6b-d5-s4-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:19:59.654809+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-m6b-d5-s4-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.020473520038649,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-m6b-d5-s4-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-m6b-d5-s4-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/m6b-d5-s4-epoch120.json",
+      "pid": 3976970,
+      "started_utc": "2026-10-21T07:19:55.626370+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41000-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:20:19.755547+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-normalized-s41000-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 20.07422782096546,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-normalized-s41000-best",
+      "log": "data/ucgnn-paper-study/logs/eval-normalized-s41000-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41000-best.json",
+      "pid": 3977043,
+      "started_utc": "2026-10-21T07:19:59.674096+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41000-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:23:47.944723+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41000-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 208.15501869900618,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-raw_endpoints-s41000-best",
+      "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41000-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41000-best.json",
+      "pid": 3977347,
+      "started_utc": "2026-10-21T07:20:19.782532+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41000-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:30:46.621511+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-sum-s41000-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 418.65033278800547,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-sum-s41000-best",
+      "log": "data/ucgnn-paper-study/logs/eval-sum-s41000-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41000-best.json",
+      "pid": 3980273,
+      "started_utc": "2026-10-21T07:23:47.964219+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41000-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:31:10.758023+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-mean-s41000-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 24.08371996099595,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-mean-s41000-best",
+      "log": "data/ucgnn-paper-study/logs/eval-mean-s41000-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41000-best.json",
+      "pid": 3986355,
+      "started_utc": "2026-10-21T07:30:46.659970+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41000-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:31:32.874941+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41000-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 22.087205155054107,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-deepsets-s41000-best",
+      "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41000-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41000-best.json",
+      "pid": 3986720,
+      "started_utc": "2026-10-21T07:31:10.780673+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41000-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:31:56.989998+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-transformer-s41000-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 24.085993858985603,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-transformer-s41000-best",
+      "log": "data/ucgnn-paper-study/logs/eval-transformer-s41000-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41000-best.json",
+      "pid": 3987019,
+      "started_utc": "2026-10-21T07:31:32.896079+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/own_only-s41000-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:32:17.099172+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-own_only-s41000-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 20.083138423971832,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-own_only-s41000-best",
+      "log": "data/ucgnn-paper-study/logs/eval-own_only-s41000-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/own_only-s41000-best.json",
+      "pid": 3987393,
+      "started_utc": "2026-10-21T07:31:57.008872+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41001-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:32:37.213025+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-normalized-s41001-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 20.073447137954645,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-normalized-s41001-best",
+      "log": "data/ucgnn-paper-study/logs/eval-normalized-s41001-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41001-best.json",
+      "pid": 3987689,
+      "started_utc": "2026-10-21T07:32:17.132579+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41001-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:36:06.627417+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41001-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 209.385706717032,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-raw_endpoints-s41001-best",
+      "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41001-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41001-best.json",
+      "pid": 3987972,
+      "started_utc": "2026-10-21T07:32:37.233691+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41001-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:42:47.735212+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-sum-s41001-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 401.08161065599415,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-sum-s41001-best",
+      "log": "data/ucgnn-paper-study/logs/eval-sum-s41001-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41001-best.json",
+      "pid": 3990989,
+      "started_utc": "2026-10-21T07:36:06.646537+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41001-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:43:11.852234+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-mean-s41001-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 24.09117499808781,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-mean-s41001-best",
+      "log": "data/ucgnn-paper-study/logs/eval-mean-s41001-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41001-best.json",
+      "pid": 3996725,
+      "started_utc": "2026-10-21T07:42:47.754096+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41001-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:43:33.958781+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41001-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 22.081741058966145,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-deepsets-s41001-best",
+      "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41001-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41001-best.json",
+      "pid": 3997020,
+      "started_utc": "2026-10-21T07:43:11.870071+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41001-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:44:04.155216+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-transformer-s41001-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 30.171134322998114,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-transformer-s41001-best",
+      "log": "data/ucgnn-paper-study/logs/eval-transformer-s41001-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41001-best.json",
+      "pid": 3997374,
+      "started_utc": "2026-10-21T07:43:33.977344+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41002-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:44:24.268897+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-normalized-s41002-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 20.072738377959467,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-normalized-s41002-best",
+      "log": "data/ucgnn-paper-study/logs/eval-normalized-s41002-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41002-best.json",
+      "pid": 3997809,
+      "started_utc": "2026-10-21T07:44:04.189253+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41002-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:47:56.027165+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41002-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 211.73109648900572,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-raw_endpoints-s41002-best",
+      "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41002-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41002-best.json",
+      "pid": 3998109,
+      "started_utc": "2026-10-21T07:44:24.289116+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41002-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:54:44.173702+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-sum-s41002-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 408.1195218380308,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-sum-s41002-best",
+      "log": "data/ucgnn-paper-study/logs/eval-sum-s41002-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41002-best.json",
+      "pid": 4001289,
+      "started_utc": "2026-10-21T07:47:56.046937+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41002-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:55:06.309755+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-mean-s41002-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 22.0943849820178,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-mean-s41002-best",
+      "log": "data/ucgnn-paper-study/logs/eval-mean-s41002-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41002-best.json",
+      "pid": 4007222,
+      "started_utc": "2026-10-21T07:54:44.208287+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41002-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:55:28.436975+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41002-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 22.0858612380689,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-deepsets-s41002-best",
+      "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41002-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41002-best.json",
+      "pid": 4007510,
+      "started_utc": "2026-10-21T07:55:06.344042+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41002-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:55:52.555041+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-transformer-s41002-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 24.090737662976608,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-transformer-s41002-best",
+      "log": "data/ucgnn-paper-study/logs/eval-transformer-s41002-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41002-best.json",
+      "pid": 4007871,
+      "started_utc": "2026-10-21T07:55:28.457035+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41003-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:56:12.667043+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-normalized-s41003-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 20.08416547998786,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-normalized-s41003-best",
+      "log": "data/ucgnn-paper-study/logs/eval-normalized-s41003-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41003-best.json",
+      "pid": 4008238,
+      "started_utc": "2026-10-21T07:55:52.575113+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41003-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T07:59:40.032727+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41003-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 207.3374880689662,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-raw_endpoints-s41003-best",
+      "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41003-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41003-best.json",
+      "pid": 4008531,
+      "started_utc": "2026-10-21T07:56:12.687297+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41003-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:06:54.935244+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-sum-s41003-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 434.8610378439771,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-sum-s41003-best",
+      "log": "data/ucgnn-paper-study/logs/eval-sum-s41003-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41003-best.json",
+      "pid": 4011474,
+      "started_utc": "2026-10-21T07:59:40.055582+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41003-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:07:19.050831+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-mean-s41003-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 24.090724662994035,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-mean-s41003-best",
+      "log": "data/ucgnn-paper-study/logs/eval-mean-s41003-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41003-best.json",
+      "pid": 4017780,
+      "started_utc": "2026-10-21T08:06:54.953361+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41003-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:07:41.174948+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41003-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 22.0941976349568,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-deepsets-s41003-best",
+      "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41003-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41003-best.json",
+      "pid": 4018141,
+      "started_utc": "2026-10-21T08:07:19.071255+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41003-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:08:07.295050+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-transformer-s41003-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 26.093932574032806,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-transformer-s41003-best",
+      "log": "data/ucgnn-paper-study/logs/eval-transformer-s41003-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41003-best.json",
+      "pid": 4018486,
+      "started_utc": "2026-10-21T08:07:41.193802+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41004-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:08:27.398921+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-normalized-s41004-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 20.075940205017105,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-normalized-s41004-best",
+      "log": "data/ucgnn-paper-study/logs/eval-normalized-s41004-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41004-best.json",
+      "pid": 4018846,
+      "started_utc": "2026-10-21T08:08:07.315129+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41004-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:11:30.991442+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41004-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 183.56421015097294,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-raw_endpoints-s41004-best",
+      "log": "data/ucgnn-paper-study/logs/eval-raw_endpoints-s41004-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41004-best.json",
+      "pid": 4019146,
+      "started_utc": "2026-10-21T08:08:27.419044+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41004-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:18:30.964049+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-sum-s41004-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 419.9439360590186,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-sum-s41004-best",
+      "log": "data/ucgnn-paper-study/logs/eval-sum-s41004-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41004-best.json",
+      "pid": 4021734,
+      "started_utc": "2026-10-21T08:11:31.012088+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41004-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:18:55.088039+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-mean-s41004-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 24.09623966109939,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-mean-s41004-best",
+      "log": "data/ucgnn-paper-study/logs/eval-mean-s41004-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41004-best.json",
+      "pid": 4027783,
+      "started_utc": "2026-10-21T08:18:30.984322+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41004-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:19:15.196496+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41004-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 20.078636219957843,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-deepsets-s41004-best",
+      "log": "data/ucgnn-paper-study/logs/eval-deepsets-s41004-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41004-best.json",
+      "pid": 4028154,
+      "started_utc": "2026-10-21T08:18:55.108242+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41004-best.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:19:43.328977+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-transformer-s41004-best-attempt1.txt",
+          "returncode": 0,
+          "seconds": 28.104129468090832,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-transformer-s41004-best",
+      "log": "data/ucgnn-paper-study/logs/eval-transformer-s41004-best-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41004-best.json",
+      "pid": 4028449,
+      "started_utc": "2026-10-21T08:19:15.216703+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "train",
+      "arguments": [
+        "train",
+        "--treatment",
+        "cyclic_teacher",
+        "--seed",
+        "41005"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:24:16.410330+00:00",
+          "log": "data/ucgnn-paper-study/logs/train-cyclic_teacher-s41005-attempt1.txt",
+          "returncode": 0,
+          "seconds": 273.04971843003295,
+          "timed_out": false
+        }
+      ],
+      "id": "train-cyclic_teacher-s41005",
+      "log": "data/ucgnn-paper-study/logs/train-cyclic_teacher-s41005-attempt1.txt",
+      "pid": 4028817,
+      "pilot": false,
+      "run": "cyclic_teacher-s41005",
+      "seed": 41005,
+      "started_utc": "2026-10-21T08:19:43.352688+00:00",
+      "status": "complete",
+      "timeout": 2400,
+      "treatment": "cyclic_teacher"
+    },
+    {
+      "action": "evaluate",
+      "arguments": [
+        "evaluate",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/cyclic_teacher-s41005-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:24:56.599197+00:00",
+          "log": "data/ucgnn-paper-study/logs/eval-cyclic_teacher-s41005-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 40.141046467004344,
+          "timed_out": false
+        }
+      ],
+      "id": "eval-cyclic_teacher-s41005-epoch120",
+      "log": "data/ucgnn-paper-study/logs/eval-cyclic_teacher-s41005-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/cyclic_teacher-s41005-epoch120.json",
+      "pid": 4032764,
+      "started_utc": "2026-10-21T08:24:16.450557+00:00",
+      "status": "complete",
+      "timeout": 21600
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-e1-s0-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:25:13.245098+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-historical-e1-s0-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 16.070683122961782,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-historical-e1-s0-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-historical-e1-s0-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-e1-s0-epoch120.json",
+      "pid": 4033368,
+      "started_utc": "2026-10-21T08:24:57.167096+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/cyclic_teacher-s41005-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:25:31.348818+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-cyclic_teacher-s41005-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 18.078777490067296,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-cyclic_teacher-s41005-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-cyclic_teacher-s41005-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/cyclic_teacher-s41005-epoch120.json",
+      "pid": 4033639,
+      "started_utc": "2026-10-21T08:25:13.263177+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:25:51.455518+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-deepsets-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 20.07845700602047,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-deepsets-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-deepsets-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41000-epoch120.json",
+      "pid": 4033937,
+      "started_utc": "2026-10-21T08:25:31.368687+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41001-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:25:57.518956+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-deepsets-s41001-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.036156211979687,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-deepsets-s41001-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-deepsets-s41001-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41001-epoch120.json",
+      "pid": 4034233,
+      "started_utc": "2026-10-21T08:25:51.474602+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41002-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:26:03.590145+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-deepsets-s41002-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.027582234004512,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-deepsets-s41002-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-deepsets-s41002-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41002-epoch120.json",
+      "pid": 4034374,
+      "started_utc": "2026-10-21T08:25:57.555202+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41003-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:26:09.648075+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-deepsets-s41003-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.029002578929067,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-deepsets-s41003-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-deepsets-s41003-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41003-epoch120.json",
+      "pid": 4034448,
+      "started_utc": "2026-10-21T08:26:03.610377+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/deepsets-s41004-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:26:15.698835+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-deepsets-s41004-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.022775207995437,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-deepsets-s41004-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-deepsets-s41004-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/deepsets-s41004-epoch120.json",
+      "pid": 4034545,
+      "started_utc": "2026-10-21T08:26:09.668017+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-a1-s0-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:26:51.863069+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-historical-a1-s0-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 36.13526966003701,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-historical-a1-s0-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-historical-a1-s0-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-a1-s0-epoch120.json",
+      "pid": 4034627,
+      "started_utc": "2026-10-21T08:26:15.720060+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-c1-s0-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:27:07.952648+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-historical-c1-s0-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 16.0621823820984,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-historical-c1-s0-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-historical-c1-s0-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-c1-s0-epoch120.json",
+      "pid": 4035195,
+      "started_utc": "2026-10-21T08:26:51.883351+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-e1-s1-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:27:14.004526+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-historical-e1-s1-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.022611081018113,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-historical-e1-s1-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-historical-e1-s1-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-e1-s1-epoch120.json",
+      "pid": 4035410,
+      "started_utc": "2026-10-21T08:27:07.973156+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-e1-s2-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:27:20.064429+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-historical-e1-s2-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.02912839804776,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-historical-e1-s2-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-historical-e1-s2-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-e1-s2-epoch120.json",
+      "pid": 4035500,
+      "started_utc": "2026-10-21T08:27:14.027698+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-e1-s3-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:27:26.121434+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-historical-e1-s3-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.027684240951203,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-historical-e1-s3-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-historical-e1-s3-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-e1-s3-epoch120.json",
+      "pid": 4035588,
+      "started_utc": "2026-10-21T08:27:20.085368+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/historical-e1-s4-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:27:32.177982+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-historical-e1-s4-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.027039193082601,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-historical-e1-s4-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-historical-e1-s4-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/historical-e1-s4-epoch120.json",
+      "pid": 4035669,
+      "started_utc": "2026-10-21T08:27:26.142187+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:27:48.265988+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-mean-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 16.05965168203693,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-mean-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-mean-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41000-epoch120.json",
+      "pid": 4035799,
+      "started_utc": "2026-10-21T08:27:32.198635+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41001-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:27:52.328609+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-mean-s41001-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.026707265991718,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-mean-s41001-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-mean-s41001-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41001-epoch120.json",
+      "pid": 4036028,
+      "started_utc": "2026-10-21T08:27:48.294488+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41002-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:27:56.376776+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-mean-s41002-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.019972056034021,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-mean-s41002-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-mean-s41002-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41002-epoch120.json",
+      "pid": 4036103,
+      "started_utc": "2026-10-21T08:27:52.347599+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41003-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:28:00.425571+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-mean-s41003-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.019617995014414,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-mean-s41003-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-mean-s41003-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41003-epoch120.json",
+      "pid": 4036125,
+      "started_utc": "2026-10-21T08:27:56.397355+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/mean-s41004-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:28:04.475410+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-mean-s41004-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.019735003937967,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-mean-s41004-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-mean-s41004-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/mean-s41004-epoch120.json",
+      "pid": 4036197,
+      "started_utc": "2026-10-21T08:28:00.446635+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:28:22.578048+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-normalized-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 18.0729688659776,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-normalized-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-normalized-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41000-epoch120.json",
+      "pid": 4036263,
+      "started_utc": "2026-10-21T08:28:04.496147+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41001-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:28:28.630225+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-normalized-s41001-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.0230466009816155,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-normalized-s41001-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-normalized-s41001-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41001-epoch120.json",
+      "pid": 4036565,
+      "started_utc": "2026-10-21T08:28:22.598450+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41002-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:28:34.685972+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-normalized-s41002-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.027825281955302,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-normalized-s41002-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-normalized-s41002-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41002-epoch120.json",
+      "pid": 4036645,
+      "started_utc": "2026-10-21T08:28:28.650270+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41003-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:28:40.741979+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-normalized-s41003-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.027099204016849,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-normalized-s41003-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-normalized-s41003-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41003-epoch120.json",
+      "pid": 4036719,
+      "started_utc": "2026-10-21T08:28:34.707173+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/normalized-s41004-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:28:46.806890+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-normalized-s41004-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.034884859924205,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-normalized-s41004-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-normalized-s41004-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/normalized-s41004-epoch120.json",
+      "pid": 4036810,
+      "started_utc": "2026-10-21T08:28:40.763057+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/own_only-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:29:04.918851+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-own_only-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 18.082281374023296,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-own_only-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-own_only-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/own_only-s41000-epoch120.json",
+      "pid": 4036897,
+      "started_utc": "2026-10-21T08:28:46.828013+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:30:53.672667+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-raw_endpoints-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 108.72494095296133,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-raw_endpoints-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-raw_endpoints-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41000-epoch120.json",
+      "pid": 4037169,
+      "started_utc": "2026-10-21T08:29:04.938970+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41001-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:30:59.729762+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-raw_endpoints-s41001-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.027376246987842,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-raw_endpoints-s41001-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-raw_endpoints-s41001-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41001-epoch120.json",
+      "pid": 4038758,
+      "started_utc": "2026-10-21T08:30:53.693914+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41002-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:31:05.785461+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-raw_endpoints-s41002-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.027335307910107,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-raw_endpoints-s41002-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-raw_endpoints-s41002-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41002-epoch120.json",
+      "pid": 4038840,
+      "started_utc": "2026-10-21T08:30:59.750250+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41003-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:31:11.841845+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-raw_endpoints-s41003-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.028066825005226,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-raw_endpoints-s41003-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-raw_endpoints-s41003-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41003-epoch120.json",
+      "pid": 4038906,
+      "started_utc": "2026-10-21T08:31:05.806182+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/raw_endpoints-s41004-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:31:17.897921+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-raw_endpoints-s41004-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.025475481990725,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-raw_endpoints-s41004-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-raw_endpoints-s41004-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/raw_endpoints-s41004-epoch120.json",
+      "pid": 4038995,
+      "started_utc": "2026-10-21T08:31:11.863070+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:35:28.735393+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-sum-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 250.80926806200296,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-sum-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-sum-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41000-epoch120.json",
+      "pid": 4039090,
+      "started_utc": "2026-10-21T08:31:17.917534+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41001-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:35:34.792658+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-sum-s41001-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.028062889934517,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-sum-s41001-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-sum-s41001-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41001-epoch120.json",
+      "pid": 4042678,
+      "started_utc": "2026-10-21T08:35:28.755740+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41002-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:35:40.847682+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-sum-s41002-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.026863630977459,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-sum-s41002-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-sum-s41002-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41002-epoch120.json",
+      "pid": 4042809,
+      "started_utc": "2026-10-21T08:35:34.813080+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41003-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:35:46.899470+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-sum-s41003-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.023484667995945,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-sum-s41003-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-sum-s41003-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41003-epoch120.json",
+      "pid": 4042907,
+      "started_utc": "2026-10-21T08:35:40.868044+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/sum-s41004-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:35:52.956803+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-sum-s41004-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.028257968951948,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-sum-s41004-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-sum-s41004-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/sum-s41004-epoch120.json",
+      "pid": 4042980,
+      "started_utc": "2026-10-21T08:35:46.920161+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41000-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:36:17.081653+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-transformer-s41000-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 24.096521801897325,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-transformer-s41000-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-transformer-s41000-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41000-epoch120.json",
+      "pid": 4043068,
+      "started_utc": "2026-10-21T08:35:52.976920+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41001-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:36:23.141604+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-transformer-s41001-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.0283520959783345,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-transformer-s41001-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-transformer-s41001-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41001-epoch120.json",
+      "pid": 4043427,
+      "started_utc": "2026-10-21T08:36:17.105400+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41002-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:36:29.200013+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-transformer-s41002-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.028377673937939,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-transformer-s41002-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-transformer-s41002-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41002-epoch120.json",
+      "pid": 4043515,
+      "started_utc": "2026-10-21T08:36:23.162814+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41003-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:36:35.257994+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-transformer-s41003-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.028464387054555,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-transformer-s41003-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-transformer-s41003-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41003-epoch120.json",
+      "pid": 4043588,
+      "started_utc": "2026-10-21T08:36:29.220585+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms",
+        "--model-spec",
+        "data/ucgnn-paper-study/models/transformer-s41004-epoch120.json"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:36:41.314957+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-transformer-s41004-epoch120-attempt1.txt",
+          "returncode": 0,
+          "seconds": 6.027499821968377,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-transformer-s41004-epoch120",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-transformer-s41004-epoch120-attempt1.txt",
+      "model_spec": "data/ucgnn-paper-study/models/transformer-s41004-epoch120.json",
+      "pid": 4043718,
+      "started_utc": "2026-10-21T08:36:35.278649+00:00",
+      "status": "complete",
+      "timeout": 1800
+    },
+    {
+      "action": "mechanisms",
+      "arguments": [
+        "mechanisms"
+      ],
+      "attempts": [
+        {
+          "ended_utc": "2026-10-21T08:36:45.364721+00:00",
+          "log": "data/ucgnn-paper-study/logs/mechanisms-finalize-attempt1.txt",
+          "returncode": 0,
+          "seconds": 4.0204029500018805,
+          "timed_out": false
+        }
+      ],
+      "id": "mechanisms-finalize",
+      "log": "data/ucgnn-paper-study/logs/mechanisms-finalize-attempt1.txt",
+      "pid": 4043809,
+      "started_utc": "2026-10-21T08:36:41.335543+00:00",
+      "status": "complete",
+      "timeout": 1800
+    }
+  ],
+  "updated_utc": "2026-10-21T08:37:07.020233+00:00"
+}
