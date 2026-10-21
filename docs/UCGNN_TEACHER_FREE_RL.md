@@ -140,5 +140,6 @@ is a separately labeled algorithm baseline, not a policy shield.
 These tests are requirements for the later project. No teacher-free
 performance result is claimed by this specification.
 
-Method reference: Schulman et al., *Proximal Policy Optimization Algorithms*,
-arXiv:1707.06347 (metadata to be verified in the future RL preregistration).
+Method reference: John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford
+and Oleg Klimov (2017), [*Proximal Policy Optimization Algorithms*](https://arxiv.org/abs/1707.06347).
+Title, authors and submission year verified against arXiv on 2026-10-21.

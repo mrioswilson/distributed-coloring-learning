@@ -232,6 +232,7 @@ def rollout(model,n,edges,palette,tape_seed,max_rounds=256,initial_colors=None,c
               "success":bool(finished and bad==0),"monochromatic_edges":bad,"rounds":t,
               "uncolored_nodes":int((colors<0).sum()),"first_unsafe_round":first_unsafe,
               "first_confirmation_round":first_commit,"max_interconfirmation_wait":max(max_wait,t-previous_commit),
+              "trailing_wait_rounds":t-previous_commit,"trailing_wait_right_censored":not finished,
               "wall_seconds":time.perf_counter()-tick,"gpu_peak_bytes":int(torch.cuda.max_memory_allocated()) if device.type=="cuda" else 0,
               "by_k":{k:dict(v) for k,v in by_k.items()},"round_trace":traces,**dict(totals)}
     if not first_commit:
@@ -280,6 +281,10 @@ def schedule_evaluations(cyclic_only=False):
                     raise RuntimeError(f"Expected one compatible M6B checkpoint d={d},s={seed}, found {matches}")
                 specs.append({"label":f"m6b-d{d}-s{seed}-epoch120","kind":"specialist","treatment":"M6B", "seed":seed,
                               "checkpoint":str(matches[0]),"selection":"epoch120","core_only":False,"degree":d})
+    # Epoch 120 is primary. Evaluate one seed across all primary treatments
+    # before the next seed; validation-best is the final, optional tier.
+    order={name:i for i,name in enumerate(("normalized","raw_endpoints","sum","mean","deepsets","transformer","own_only","cyclic_teacher"))}
+    specs.sort(key=lambda s:(s["selection"]=="best",s["kind"]!="paper",s["seed"],order.get(s["treatment"],99),s["label"]))
     tasks = []
     for spec in specs:
         spec["checkpoint_sha256"] = file_hash(spec["checkpoint"])
@@ -332,7 +337,8 @@ def evaluate_spec(spec_path,stop_requested=lambda:False):
             torch.cuda.empty_cache()
         except CaseTimeout as error:
             result = {"status":"timeout","success":None,"error":str(error),"wall_seconds":time.perf_counter()-tick}
-        row = {**case,**spec,**result,"completed_utc":now(),"epoch":saved["epoch"],"weights_sha256":initial_hash}
+        # spec.degree is an eligibility restriction, not the evaluated degree.
+        row = {**spec,**case,**result,"completed_utc":now(),"epoch":saved["epoch"],"weights_sha256":initial_hash}
         atomic_json(output,row)
         counts[result["status"]] += 1
         atomic_json(directory/"progress.json",{"planned_cases":sum((spec["degree"] is None or c["degree"]==spec["degree"]) and

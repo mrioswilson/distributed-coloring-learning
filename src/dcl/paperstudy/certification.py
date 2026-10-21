@@ -40,7 +40,7 @@ def affine_interval(lo,hi,weight,bias=None,float32_error=False):
         gamma = up((m*unit)/(1-m*unit))
         error = up(up(gamma*absolute_bound) + up(m * 2.**-149))
         lower,upper = down(lower-error),up(upper+error)
-        if np.any(np.maximum(np.abs(lower),np.abs(upper)) >= np.finfo(np.float32).max):
+        if np.any(up(absolute_bound+error) >= np.finfo(np.float32).max):
             raise OverflowError("Cannot certify float32 without excluding overflow")
     return lower,upper
 
@@ -102,7 +102,12 @@ def numeric_perturbation_probe(model,epsilon=1e-6):
     w4 = model.commit_head[2].weight
     lipschitz = 1.
     for w in (w1,w2,w3,w4):
-        lipschitz *= float(w.abs().sum(1).max())
+        values=np.abs(w.detach().cpu().double().numpy())
+        row_sum=np.zeros(values.shape[0])
+        for j in range(values.shape[1]):
+            row_sum=up(row_sum+values[:,j])
+        lipschitz=float(up(lipschitz*float(row_sum.max())))
+    real=commit_certificate(model)
     rows=[]
     for mask in range(64):
         ids=[j for j in range(6) if mask&(1<<j)]
@@ -113,9 +118,76 @@ def numeric_perturbation_probe(model,epsilon=1e-6):
             z=model.state2(torch.cat((center,r+perturbation)))
             logit=float(model.commit_head(torch.cat((z,torch.ones(3,dtype=dtype,device=device)))).squeeze())
             signs.append(logit)
-        signed=signs[0] if valid else -signs[0]
+        signed=real["rows"][mask]["correct_signed_margin_lower"]
         rows.append({"mask":mask,"valid":valid,"logit":signs[0],"minus_epsilon_logit":signs[1],
                      "plus_epsilon_logit":signs[2],"correct":bool((signs[0]>0)==valid),
                      "perturbed_both_correct":all((s>0)==valid for s in signs),
-                     "certified_input_radius_by_lipschitz":max(0.,signed)/max(lipschitz,1e-300)})
+                     "certified_real_input_radius_by_lipschitz":float(max(0.,down(max(0.,signed)/max(lipschitz,1e-300))))})
     return {"epsilon":epsilon,"infinity_lipschitz_upper":lipschitz,"rows":rows}
+
+
+@torch.inference_mode()
+def realizable_star_probe(model):
+    """Execute actual legal star inputs, not only a reduced type-table MLP."""
+    device=next(model.parameters()).device
+    rows=[]
+    reduction=getattr(model,"reduction","max")
+    types=torch.tensor(TYPES,dtype=next(model.parameters()).dtype,device=device)
+    messages=model.message2(types)
+    for mask in range(64):
+        ids=[j for j in range(6) if mask&(1<<j)]
+        n=1+len(ids)
+        colors=[-1]
+        participate=[True]
+        candidates=[0]
+        for t in ids:
+            colors.append(1 if t==0 else 0 if t==1 else -1)
+            participate.append(t in (4,5))
+            candidates.append(0 if t in (3,5) else 1 if t==4 else -1)
+        leaves=torch.arange(1,n,device=device)
+        edges=torch.stack((torch.cat((torch.zeros_like(leaves),leaves)),torch.cat((leaves,torch.zeros_like(leaves)))))
+        color_t=torch.tensor(colors,device=device)
+        part_t=torch.tensor(participate,device=device)
+        cand_t=torch.tensor(candidates,device=device)
+        palette=torch.full((n,),7,dtype=torch.long,device=device)
+        actual=float(model.commit_logits(color_t,edges,palette,part_t,cand_t)[0])
+        if not ids:r=torch.zeros_like(messages[0])
+        elif reduction=="max":r=messages[ids].amax(0)
+        elif reduction=="sum":r=messages[ids].sum(0)
+        else:r=messages[ids].mean(0)
+        own=torch.tensor([1,0,1,1],dtype=messages.dtype,device=device)
+        h=model.state2(torch.cat((own,r)))
+        reduced=float(model.commit_head(torch.cat((h,torch.ones(3,dtype=messages.dtype,device=device)))).squeeze())
+        valid=not (mask&(1<<1) or mask&(1<<5))
+        rows.append({"mask":mask,"degree":len(ids),"palette":7,"valid":valid,"actual_logit":actual,
+                     "reduced_logit":reduced,"absolute_logit_difference":abs(actual-reduced),
+                     "same_decision":bool((actual>0)==(reduced>0)),"correct":bool((actual>0)==valid),
+                     "unsafe_actual_commit":bool(actual>0 and not valid)})
+    return rows
+
+
+def main():
+    import argparse
+    from pathlib import Path
+    from dcl.study.storage import atomic_json,file_hash
+    from .config import HISTORICAL,ROOT
+    from .training import load_model as paper_load
+    from dcl.universal.train import load_model as old_load
+    parser=argparse.ArgumentParser()
+    parser.add_argument("--output",default="results/ucgnn-paper-study/certificates")
+    args=parser.parse_args()
+    paths=[]
+    for group in ("e1","c1","a1"):
+        paths.extend((HISTORICAL/"data/ucgnn/runs").glob(f"{group}-*/epoch-120.pt"))
+    paths.extend((ROOT/"runs").glob("*/epoch-120.pt"))
+    for p in sorted(paths):
+        loader=paper_load if str(p).startswith(str(ROOT)) else old_load
+        model,_=loader(p,"cpu")
+        value={"checkpoint":str(p),"checkpoint_sha256":file_hash(p),
+               "real":commit_certificate(model),"float32_model":commit_certificate(model,True)}
+        atomic_json(Path(args.output)/f"{p.parent.name}.json",value)
+        print(p.parent.name,value["real"].get("certified_exact_rule"),flush=True)
+
+
+if __name__=="__main__":
+    main()

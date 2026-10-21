@@ -103,10 +103,12 @@ def advance(manifest):
             if not (ROOT / "MECHANISMS_READY").exists():
                 manifest["status"] = "waiting_mechanisms_implementation"
                 return
-            manifest["tasks"].append({"id":"mechanisms", "action":"mechanisms", "status":"pending", "attempts":[],
-                                      "timeout":1800, "arguments":["mechanisms"]})
+            from .mechanisms import schedule_tasks
+            manifest["tasks"].extend(schedule_tasks())
             manifest["mechanisms_scheduled"] = True
         else:
+            from .report import build
+            build()
             manifest["status"] = "complete"
 
 
@@ -206,8 +208,23 @@ def run():
                 expected = ROOT / "runs" / task["run"] / "epoch-120.pt"
                 if not expected.exists():
                     raise RuntimeError(f"Worker exited without required checkpoint: {expected}")
+                import torch
+                verified=torch.load(expected,map_location="cpu",weights_only=False)
+                if verified["epoch"]!=120 or not verified["complete"]:
+                    raise RuntimeError(f"Checkpoint is not complete: {expected}")
                 task["status"] = "complete"
             else:
+                if task["action"]=="evaluate":
+                    spec=json.loads(Path(task["model_spec"]).read_text())
+                    expected=ROOT/"evaluations"/spec["label"]/"complete.json"
+                else:
+                    if task.get("model_spec"):
+                        spec=json.loads(Path(task["model_spec"]).read_text())
+                        expected=ROOT/"mechanisms"/"completed"/f"{spec['label']}.json"
+                    else:
+                        expected=ROOT/"mechanisms"/"complete.json"
+                if not expected.exists() or not json.loads(expected.read_text()).get("complete"):
+                    raise RuntimeError(f"Task exited without verifiable completion: {expected}")
                 task["status"] = "complete"
             print(f"{now()} {task['id']} {task['status']} active_hours={manifest['active_seconds']/3600:.3f}",flush=True)
             persist(manifest)

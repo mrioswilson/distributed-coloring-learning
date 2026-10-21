@@ -40,7 +40,7 @@ def main():
             evaluate_spec(args.model_spec, stop_requested=lambda: stop[0])
         else:
             from .mechanisms import run_all
-            run_all(stop_requested=lambda: stop[0])
+            run_all(stop_requested=lambda: stop[0],only_spec=args.model_spec)
 
 
 if __name__ == "__main__":

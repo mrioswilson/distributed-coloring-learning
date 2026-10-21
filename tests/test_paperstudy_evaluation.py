@@ -2,7 +2,7 @@ from fractions import Fraction
 import numpy as np
 import torch
 
-from dcl.paperstudy.certification import affine_interval,commit_certificate
+from dcl.paperstudy.certification import affine_interval,commit_certificate,realizable_star_probe
 from dcl.paperstudy.evaluation import SpecialistAdapter,rollout
 from dcl.paperstudy.models import make_model
 from dcl.m4_data import _edge_index
@@ -63,3 +63,12 @@ def test_interval_certificate_rejects_incorrect_constant_commit_and_sum_scope():
     assert not certificate["certified_no_false_accept"]
     assert len(certificate["certified_unsafe_masks"])==48
     assert not commit_certificate(make_model("sum"))["applicable"]
+
+
+def test_full_realizable_stars_equal_the_type_reduction():
+    torch.set_num_threads(1)
+    for treatment in ("normalized","raw_endpoints","sum","mean","transformer"):
+        model=make_model(treatment)
+        rows=realizable_star_probe(model)
+        assert len(rows)==64 and all(r["same_decision"] for r in rows)
+        assert max(r["absolute_logit_difference"] for r in rows)<2e-5
