@@ -48,6 +48,12 @@ def log_weights(counts, available):
     return weights
 
 
+def conservative_threshold(scores,alpha=.05):
+    # Exchangeability rank: P(new score > threshold) <= alpha, also with ties.
+    order=int(np.ceil((len(scores)+1)*(1-alpha)))
+    return np.inf if order>len(scores) else float(np.partition(scores,order-1)[order-1])
+
+
 def likelihood_curve(counts, available, model_test, teacher_test, rng, calibration_trials=1024, tie_rng=None):
     weights = log_weights(counts, available)
     tie_rng = rng if tie_rng is None else tie_rng
@@ -57,7 +63,7 @@ def likelihood_curve(counts, available, model_test, teacher_test, rng, calibrati
         alt = weights[model_test[:, :m]].sum(1)
         # Calibration draws only from the known teacher, separate from test.
         calibration = weights[rng.choice(available, size=(calibration_trials,m))].sum(1)
-        threshold = float(np.quantile(calibration,.95,method='higher'))
+        threshold = conservative_threshold(calibration)
         ties0, ties1 = tie_rng.integers(0,2,len(null)), tie_rng.integers(0,2,len(alt))
         correct0 = int(np.sum((null < 0) | ((null == 0) & (ties0 == 0))))
         correct1 = int(np.sum((alt > 0) | ((alt == 0) & (ties1 == 1))))

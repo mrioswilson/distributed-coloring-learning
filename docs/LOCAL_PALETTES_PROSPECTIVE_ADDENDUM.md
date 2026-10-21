@@ -29,3 +29,12 @@ change its hypotheses, primary checkpoints, graph generation or metrics.
 
 The extra five law tasks start only after the 155-task main queue and share its
 12-hour resource ceiling. Pending/failed cells remain explicit. No extra training.
+
+Before starting conditional-law tests, the conservative calibration quantile is
+made precise as the order statistic ceil((N_cal+1)×.95), with strict rejection.
+For N_cal=1024 this is order 974 (one-based). A generic 95th empirical percentile
+would not necessarily give finite-sample level ≤.05. Exchangeability of the
+independent calibration/test null scores gives unconditional FPR at most .05
+(ties can only make it smaller). This does not assert conditional FPR ≤.05 for
+every realized calibration set; the independent test FPR and intervals remain
+reported. No model probability estimates, sample sizes or hypotheses change.

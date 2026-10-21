@@ -221,3 +221,13 @@ def test_exact_participation_integration():
         head[2].bias[:]=-.25
     result=participation_measure(head)
     assert result['exact_rational']=='3/4' and result['probability_real']==.75
+
+
+def test_calibration_rank_is_finite_sample_conservative():
+    from dcl.localpalettes.statistics import conservative_threshold
+    assert conservative_threshold(np.arange(1024))==973
+    assert conservative_threshold(np.arange(19))==18
+    assert np.isinf(conservative_threshold(np.arange(1)))
+    # Rank of an independent continuous null amongst N+1 exchangeable scores.
+    n=1024;k=974
+    assert (n+1-k)/(n+1)<=.05
