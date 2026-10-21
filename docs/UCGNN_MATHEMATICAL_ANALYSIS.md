@@ -216,3 +216,82 @@ This differs from uniform over A when gaps differ. Exact conflict rejection
 still preserves properness. However, constant beta in Proposition 1 need
 not hold uniformly: a large gap can put most mass on one color. The pilot
 tests candidate imitation and progress separately from this safety argument.
+
+## A diffuse component is sufficient even with a heavy candidate atom
+
+This extension was derived after the fixed-protocol results were observed;
+it is a mathematical consequence, not an additional preregistered hypothesis.
+Retain the proper-state, private independent draws, exact rejection and
+participation assumptions of the progress proposition. Suppose a set
+S_v contained in A_v has mass eta_v = sum_{c in S_v} q_v(c) > 0 and
+q_v(c) <= beta/k_v for every c in S_v. Then
+
+P(v confirms | state) >= p_v eta_v
+ (1-p_max)^(beta |U_v| / (eta_v k_v)).
+
+In particular, if eta_v >= eta > 0 and beta is uniformly bounded at every
+reachable state, the per-node bound is at least
+p_min eta (1-p_max)^(beta/eta), independent of degree.
+No restriction on the size of an atom outside S_v is required.
+
+Proof. Drop nonnegative terms outside S_v from the exact confirmation sum.
+Normalize the remaining weights to q_v(c)/eta_v. The log-chord inequality
+from the main proposition bounds each product below by exp(a Lambda_c),
+where a=log(1-p_max)/p_max<0 and
+Lambda_c=sum_{u in U_v} p_u q_u(c). Jensen's inequality gives a lower bound
+p_v eta_v exp(a sum_{c in S_v} q_v(c)Lambda_c/eta_v).
+The averaged load is at most beta sum_u p_u/(eta_v k_v), hence at most
+beta p_max |U_v|/(eta_v k_v). Substituting proves the displayed bound.
+Since |U_v|/k_v<=1, it is at least
+p_min eta_v (1-p_max)^(beta/eta_v). The function
+x (1-p_max)^(beta/x) is increasing for x>0: its derivative is
+(1-p_max)^(beta/x) [1-beta log(1-p_max)/x]>0.
+Substitution of eta_v>=eta proves the uniform statement. QED.
+
+The sufficient bound separates a diffuse tail from the largest atom. In the
+finite measurements, attention can have a large atom and still retain many
+other candidates. Those observations do not prove a uniform eta bound over
+all reachable states. `diffuse-tail-mass.csv` reports grid-based examples
+with participation fixed hypothetically at one half; it is not a certificate
+of the learned candidate distributions.
+
+## MEAN cannot implement the exact presence rule with a strict safe margin
+
+This proposition concerns the implemented COMMIT interface, not every GNN
+using MEAN or the reachability of a counterexample under its own candidates.
+Fix the active center's own bits and candidate slot. Let m_o be the learned
+message for a legal ordinary, nonconflicting neighbor type, and m_f the
+message for a fixed neighbor owning the candidate. Assume these messages
+and the continuous post-aggregation classifier F do not depend on degree or
+palette size. This holds for the current per-slot COMMIT interface.
+
+Proposition. If F(m_o)=gamma>0, then some finite proper star configuration
+with a conflicting fixed neighbor is also accepted under MEAN aggregation.
+Consequently this interface cannot implement the exact conflict rejection
+rule at all degrees while strictly accepting that conflict-free state.
+
+Proof. Take d ordinary leaves and one conflicting fixed leaf. The center
+is pending and participating with candidate c, ordinary leaves are pending
+and nonparticipating, and the fixed leaf has color c. Leaves are pairwise
+nonadjacent, so this is a proper partial state. Choose K=d+2 and declared
+Delta=d+1. The center sees
+x_d=(d m_o+m_f)/(d+1) -> m_o.
+Continuity gives F(x_d)->gamma>0; hence F(x_d)>0 for all sufficiently large d,
+although exact COMMIT must reject. If F is L-Lipschitz in infinity norm, any
+d with d+1 > L ||m_f-m_o||_infinity / gamma is sufficient, since
+F(x_d)>=gamma-L||m_f-m_o||_infinity/(d+1)>0. QED.
+
+The conclusion uses real arithmetic, strict acceptance threshold, a
+continuous finite classifier and absence of a separate degree/K input in
+the COMMIT path. It does not imply that every finite test graph fails or
+that every reachable rollout is unsafe. Supplying degree, a discontinuous
+presence test, or another channel changes the proposition's assumptions.
+
+SUM has no analogous representational obstruction here. One shared learned
+message coordinate can implement b(u,o,p,a)=o+ReLU(p+a-1), the conflict bit
+on all six legal types. A SUM head 1/2-sum_neighbors b accepts exactly when
+no conflict is present. ReLU modules of the implemented widths can realize
+this construction in real arithmetic, with ordinary messages zero in this
+coordinate. Thus the observed SUM over-rejection is a failure of the learned
+representation under this training distribution, not an impossibility of
+representing the exact COMMIT rule. Neither construction proves progress.
