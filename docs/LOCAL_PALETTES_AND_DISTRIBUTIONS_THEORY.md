@@ -95,12 +95,12 @@ almost-sure termination, and not a wall-clock timeout.
 ## 4. How different may candidate laws be?
 
 **Proposition 5 (TV perturbation at a vertex).** Keep the neighbors' independent
-action laws fixed. With exact COMMIT and q_v supported on A_v, write
+action laws fixed. With exact COMMIT and q_v supported on its own list L_v, write
 ε_v=TV(q_v,Unif(A_v)). If all neighbors have p_u≤p_max, then
 
     P_v ≥ p_v max(0,1−p_max t_v/k_v−ε_v).
 
-**Proof.** g(c)=Π_u(1−p_u q_u(c)) takes values in [0,1]. For any such g,
+**Proof.** g(c)=1[c∈A_v]Π_u(1−p_u q_u(c)) takes values in [0,1]. For any such g,
 |E_q g−E_uniform g|≤TV(q,uniform), by the positive/negative parts of the signed
 measure (or the layer-cake representation). The uniform expectation is at least
 1−p_max t_v/k_v by the preceding union bound. Multiply by p_v and use P_v≥0. ∎
