@@ -69,3 +69,23 @@ wording describes the generator target, not this measured maximum. This
 entry is retained, not regenerated, and all tables use actual delta=4.
 The other target-degree suffixes match their actual maxima. No hypothesis
 or observation is removed because of this design discrepancy.
+
+Degree plots and adjacent-degree descriptive contrasts use the unbiased
+MMD-squared estimator U, alongside the archived nonnegative empirical norm.
+The latter has a positive finite-sample bias whose magnitude depends on the
+graph and kernel; it should not alone support a degree trend. U can be negative
+and is retained as such. Figure 6 shows the norm with its conservative
+population interval to display the large Monte Carlo uncertainty around
+between-training comparisons. Both estimators were specified in the original
+protocol; no kernel, test or p-value selection changes.
+
+Permutation ties include a conservative floating-point guard. For the primary
+250+250 observations the guard is exactly the original 1e-14. It is defined
+as 1e-14*min(1,500/(m+n)) at other sizes, tending to zero with increasing
+sample size, rather than leaving a fixed asymptotic effect threshold. This
+refinement leaves every primary comparison numerically unchanged and is not
+a p-value/kernel selection. The known localized-control diagnostic was
+computed before this refinement using the original 1e-14 guard; its archived
+values retain that source history. As with any floating-point procedure,
+mathematical consistency is an ideal-arithmetic property, not a guarantee
+for effects below representable numerical precision.

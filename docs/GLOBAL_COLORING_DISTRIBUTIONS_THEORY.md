@@ -198,3 +198,15 @@ This is strictly positive but small. Characteristicness does not guarantee
 high finite-sample power for this alternative, nor make MMD a universal TV
 surrogate across graph sizes. It motivates the explicitly supplementary
 localized positive-control diagnostic without changing the primary kernel.
+
+For numerical ties the software uses a conservative guard
+1e-14*min(1,500/(m+l)), which is 1e-14 throughout the primary family.
+This threshold tends to zero as samples increase; the above ideal-arithmetic
+consistency argument therefore also holds with this conservative guard.
+Floating-point resolution itself remains a practical limitation.
+
+The exact teacher has full support on C(G): for any proper x, the event
+that all vertices participate initially and each proposes x_v has probability
+2^(-n) product_v (d(v)+1)^(-1)>0. Since x is proper, all confirmations succeed
+in that first round. This proves positivity of every valid final coloring,
+not uniformity of those probabilities or full support for a learned policy.

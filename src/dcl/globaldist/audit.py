@@ -11,6 +11,18 @@ def main():
     assert freeze['graphs_sha256']==file_hash(OUT/'graphs.json')
     assert freeze['checkpoints_sha256']==file_hash(OUT/'checkpoints.json')
     assert len(specs())==15 and all(file_hash(s['checkpoint'])==s['sha256'] for s in read(OUT/'checkpoints.json'))
+    from dcl.paperstudy.training import load_model
+    import pandas as pd
+    historical=read('/workspaces/AlgoLearning/ucgnn-local-palette-study/results/ucgnn-local-palettes/historical-e1-checkpoints.json')
+    old_hashes={s['sha256'] for s in historical};identity=[]
+    for s in read(OUT/'checkpoints.json'):
+        assert s['sha256'] not in old_hashes
+        model,ck=load_model(s['checkpoint'],'cpu')
+        assert ck['epoch']==120 and ck['complete']
+        assert ck['paper_config']['seed']==s['seed'] and ck['paper_config']['treatment']==s['treatment']
+        identity.append(dict(label=s['label'],seed=s['seed'],epoch=ck['epoch'],parameters=ck['parameters'],sha256=s['sha256'],checkpoint=s['checkpoint'],training_sources_sha256=ck['training_sources_sha256'],historical_e1_overlap=False))
+        del model,ck
+    pd.DataFrame(identity).to_csv(OUT/'checkpoint-content-audit.csv',index=False)
     seen=set();rows=[];status=np.zeros(4,dtype=int)
     for task in queue['tasks']:
         assert task['status']=='complete',task['id']

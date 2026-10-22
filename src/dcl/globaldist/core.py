@@ -116,17 +116,18 @@ def mmd_from_kernel(K,m,n,rng,B=19999,gamma=1.):
         bb=tot-2*ar+aa;ab=ar-aa
         return aa/(m*(m-1))+bb/(n*(n-1))-2*ab/(m*n)
     a=np.r_[np.ones(m),np.zeros(n)][None,:];obs=float(stat(a)[0]);ge=0
+    tie_tolerance=1e-14*min(1.,500/(m+n))
     for start in range(0,B,256):
         b=min(256,B-start);A=np.zeros((b,m+n))
         for r in range(b):A[r,rng.choice(m+n,m,replace=False)]=1
-        ge+=int(np.sum(stat(A)>=obs-1e-14))
+        ge+=int(np.sum(stat(A)>=obs-tie_tolerance))
     # Distribution-free bounded-difference confidence interval for biased MMD norm.
     Kfull=K.copy();np.fill_diagonal(Kfull,1)
     w=np.r_[np.full(m,1/m),np.full(n,-1/n)]
     norm=float(np.sqrt(max(0,w@Kfull@w)))
     radius=(1/np.sqrt(m)+1/np.sqrt(n))*(1+np.sqrt(2*np.log(2/.05)))
     return dict(m=m,n=n,mmd2_unbiased=obs,mmd_biased=norm,mmd_population_ci95=[max(0,norm-radius),min(np.sqrt(2),norm+radius)],
-                p=(ge+1)/(B+1),B=B,gamma=gamma,ci_method='distribution-free RKHS mean concentration; conservative')
+                p=(ge+1)/(B+1),B=B,gamma=gamma,permutation_tie_tolerance=tie_tolerance,ci_method='distribution-free RKHS mean concentration; conservative')
 
 def holm(p):
     p=np.asarray(p);order=np.argsort(p);out=np.empty(len(p));v=0

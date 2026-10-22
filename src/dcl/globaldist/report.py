@@ -34,8 +34,8 @@ def figures(primary,tv):
         for arch,c in COLORS.items():
             for s in range(41000,41005):
                 a=primary[(primary.architecture==arch)&(primary.training_seed==s)&(primary.family=='regular')&(primary.n_vertices==n)].sort_values('delta')
-                ax.plot(a.delta,a.mmd_biased,color=c,alpha=.6,marker='o',ms=3,label=NAMES[arch] if s==41000 else None)
-        ax.set(xscale='log',xlabel='Maximum degree',ylabel='Empirical MMD norm',title=f'Regular graphs, n={n}; five policies each')
+                ax.plot(a.delta,a.mmd2_unbiased,color=c,alpha=.6,marker='o',ms=3,label=NAMES[arch] if s==41000 else None)
+        ax.set(xscale='log',xlabel='Maximum degree',ylabel='Unbiased MMD squared estimate',title=f'Regular graphs, n={n}; five policies each')
         ax.legend(fontsize=7)
     save(fig,'figure2-degree')
     power=pd.read_csv(OUT/'power.csv');fig,axes=plt.subplots(1,3,figsize=(12,3.8),layout='constrained')
@@ -56,9 +56,10 @@ def figures(primary,tv):
     ax.legend(fontsize=7);fig.suptitle('20 disjoint experiments per m; seed 41000; nominal alpha=.05',fontsize=9)
     save(fig,'figure3b-independent-power')
     piv=primary.pivot(index='graph',columns='model',values='p_holm');fig,ax=plt.subplots(figsize=(10,13),layout='constrained')
-    im=ax.imshow(-np.log10(np.maximum(piv.values,1e-6)),aspect='auto',vmin=0,vmax=4,cmap='viridis')
+    im=ax.imshow(-np.log10(np.maximum(piv.values,1e-6)),aspect='auto',vmin=0,vmax=max(1.5,float(-np.log10(max(piv.values.min(),1e-6)))),cmap='viridis')
     ax.set_xticks(range(len(piv.columns)),piv.columns,rotation=70,ha='right',fontsize=7);ax.set_yticks(range(len(piv.index)),[g+' [actual D=4]' if g=='bipartite-n256-d3' else g for g in piv.index],fontsize=6)
-    ax.set_title('Primary family: -log10 Holm-adjusted p; 795 tests');fig.colorbar(im,ax=ax,label='-log10 adjusted p')
+    iy,ix=np.where(piv.values<=.05);ax.scatter(ix,iy,s=6,color='white')
+    ax.set_title('Primary family: -log10 Holm p; white dots: rejection; 795 tests');fig.colorbar(im,ax=ax,label='-log10 adjusted p')
     save(fig,'figure4-tests')
     st=pd.DataFrame(read(OUT/'structural.json'));gg=read(OUT/'graphs.json');meta={g['id']:g for g in gg}
     st['delta']=st.graph.map(lambda g:meta[g]['delta']);st['family']=st.graph.map(lambda g:meta[g]['family']);st['n']=st.graph.map(lambda g:meta[g]['n'])
@@ -75,23 +76,24 @@ def figures(primary,tv):
     for ax,g in zip(axes,('path3','star-d200','regular-n256-d100')):
         for arch,c in COLORS.items():
             a=primary[(primary.graph==g)&(primary.architecture==arch)].sort_values('training_seed')
-            ax.plot(a.training_seed-41000,a.mmd_biased,'o-',color=c,label=NAMES[arch])
+            ci=np.array(a.mmd_population_ci95.tolist())
+            ax.errorbar(a.training_seed-41000,a.mmd_biased,yerr=np.vstack((a.mmd_biased.to_numpy()-ci[:,0],ci[:,1]-a.mmd_biased.to_numpy())),fmt='o-',color=c,label=NAMES[arch],alpha=.7,lw=.8,elinewidth=.5,capsize=2)
         ax.set(title=g,xlabel='Training replicate (41000 + index)',ylabel='Empirical MMD norm',xticks=range(5))
-    axes[0].legend(fontsize=6);save(fig,'figure6-training-variation')
+    axes[0].legend(fontsize=6);fig.suptitle('Five fixed policies; conservative pointwise 95% population-MMD intervals',fontsize=10);save(fig,'figure6-training-variation')
     return directory
 
 def report():
     p=pd.DataFrame(read(OUT/'primary.json'));tv=pd.read_csv(OUT/'small-tv.csv');audit=read(OUT/'audit.json');ctrl=read(OUT/'controls.json')
     figures(p,tv)
-    p.groupby(['architecture','family','delta','n_vertices'],as_index=False).agg(tests=('p','size'),rejections=('reject_holm','sum'),median_empirical_mmd=('mmd_biased','median')).to_csv(OUT/'by-degree-family-size.csv',index=False)
-    p.groupby(['architecture','training_seed'],as_index=False).agg(tests=('p','size'),rejections=('reject_holm','sum'),median_empirical_mmd=('mmd_biased','median')).to_csv(OUT/'by-training-seed.csv',index=False)
+    p.groupby(['architecture','family','delta','n_vertices'],as_index=False).agg(tests=('p','size'),rejections=('reject_holm','sum'),median_empirical_mmd=('mmd_biased','median'),median_unbiased_mmd2=('mmd2_unbiased','median')).to_csv(OUT/'by-degree-family-size.csv',index=False)
+    p.groupby(['architecture','training_seed'],as_index=False).agg(tests=('p','size'),rejections=('reject_holm','sum'),median_empirical_mmd=('mmd_biased','median'),median_unbiased_mmd2=('mmd2_unbiased','median')).to_csv(OUT/'by-training-seed.csv',index=False)
     # Descriptive controlled adjacent-degree changes, one graph per grid cell.
     differences=[]
     for (arch,s,n),a in p[p.family=='regular'].groupby(['architecture','training_seed','n_vertices']):
         a=a.sort_values('delta')
         for i in range(1,len(a)):
             differences.append(dict(architecture=arch,training_seed=int(s),n=int(n),degree_from=int(a.iloc[i-1].delta),degree_to=int(a.iloc[i].delta),
-                                    empirical_mmd_change=float(a.iloc[i].mmd_biased-a.iloc[i-1].mmd_biased)))
+                                    unbiased_mmd2_change=float(a.iloc[i].mmd2_unbiased-a.iloc[i-1].mmd2_unbiased)))
     pd.DataFrame(differences).to_csv(OUT/'controlled-degree-changes.csv',index=False)
     aggregate=[]
     for arch in COLORS:
@@ -120,7 +122,7 @@ def report():
         a=p[p.architecture==arch];k=int(a.reject_holm.sum())
         lines.append(f"**P{i}. Luby versus {NAMES[arch]}:** "+(f"yes, in {k} of the 265 fixed graph/checkpoint contrasts after Holm correction; this conclusion concerns precisely the cells in `rejected.csv`." if k else 'no primary difference was detected in this battery. This does not establish equality.')+'\n')
     lines += ['**P4. Graphs, degrees and sizes:** `by-degree-family-size.csv` reports all covered strata; `primary.csv` retains exact graph/checkpoint identities. Regular graphs cover all eight requested degrees at both n=256 and n=512; heterogeneous families extend through degree 200. Stars and cliques have size dictated by degree. One graph per random grid cell limits graph-seed generalization.','',
-      '**P5. Does distinguishability increase with degree at fixed size and family?** Figure 2 and `controlled-degree-changes.csv` describe the fixed-n regular grids separately for every policy. We do not claim a universal monotone relationship: kernel geometry changes with the graph, only one graph is sampled per cell, and degree is not randomized independently of graph construction. Descriptive signs and variability are retained rather than replacing them with an unplanned pooled regression.','',
+      '**P5. Does distinguishability increase with degree at fixed size and family?** Figure 2 and `controlled-degree-changes.csv` describe the fixed-n regular grids separately for every policy. We do not claim a universal monotone relationship: kernel geometry changes with the graph, only one graph is sampled per cell, and degree is not randomized independently of graph construction. Figure 2 and the adjacent changes use unbiased MMD-squared estimates to avoid a degree-dependent positive finite-sample bias of the nonnegative empirical norm; negative estimates are permitted. Descriptive signs and variability are retained rather than replacing them with an unplanned pooled regression.','',
       '**P6. How many independent complete colorings?** Primary detections use 250 per generator. Figure 3 and `power.csv` examine 100, 250, 500, 1000 and 2000 for three prespecified graphs and seed 41000 of each architecture. These are conditional empirical-bank power estimates at nominal alpha .05; their 30-trial intervals omit finite-bank uncertainty and do not estimate Holm-adjusted population power. They cannot justify a universal required sample size.','',
       '**P7. Variation among independent trainings:** Figure 6 and `by-training-seed.csv` show each of the five fixed policies separately. These are five independently trained functions, never a single mixed output distribution. Variation between policies remains distinct from Monte Carlo intervals within each policy. Shared graphs are blocks; no independent graph-by-seed population standard error is claimed.','',
       '**P8. Different proposals but indistinguishable complete outputs?** Earlier proposal tests alone cannot answer this. This extension archives a contextual, explicitly post-hoc match between the previous all-free center law at K=201 and the identical initial degree-200 star, if available. Any nonrejection there means failure to detect a global difference at m=250, not equality or cancellation of all proposal differences. See `proposal-context.csv`; conditional proposals along entire trajectories were not exhaustively measured.','',
@@ -142,8 +144,8 @@ def report():
     lines += ['', '## Observed degree contrasts and structural diagnostics', '']
     dd=pd.DataFrame(differences)
     for (arch,n),a in dd.groupby(['architecture','n']):
-        positive=int((a.empirical_mmd_change>0).sum())
-        lines.append(f'{NAMES[arch]}, regular n={n}: {positive}/{len(a)} adjacent-degree empirical MMD changes are positive across the five separately plotted policies. These signs are descriptive estimates, without a monotonic population claim.')
+        positive=int((a.unbiased_mmd2_change>0).sum())
+        lines.append(f'{NAMES[arch]}, regular n={n}: {positive}/{len(a)} adjacent-degree unbiased MMD-squared estimate changes are positive across the five separately plotted policies. These signs are descriptive estimates, without a monotonic population claim.')
     st=pd.DataFrame(read(OUT/'structural.json'))
     baseline=st[st.model=='Luby'].set_index('graph').used_mean
     st=st[st.model!='Luby'].copy();st['used_colors_difference']=st.used_mean-st.graph.map(baseline)
@@ -223,8 +225,9 @@ positivity. Holm correction controls familywise error at $0.05$ across all
 \end{center}
 \begin{figure}[ht]
 \centering\includegraphics[width=\linewidth]{figures/global-degree.pdf}
-\caption{Complete-vector empirical MMD on the two fixed-size regular grids.
-Each curve is one frozen training checkpoint. These effects are graph-specific;
+\caption{Complete-vector unbiased MMD-squared estimates on the two fixed-size regular grids.
+Each curve is one frozen training checkpoint; unbiased estimates may be
+negative. These effects are graph-specific;
 the normalized Hamming kernel does not make different graph spaces universally
 comparable. One graph per grid cell limits graph-seed generalization.}
 \end{figure}
