@@ -9,6 +9,15 @@ ARCHES=('normalized','deepsets','transformer')
 NAMES=dict(normalized='E1 NORMALIZED',deepsets='DeepSets',transformer='LocalPaletteTransformer')
 def ci(r):return f"{r['estimate']:+.3f} [{r['ci'][0]:+.3f}, {r['ci'][1]:+.3f}]"
 
+def intervention_summary():
+    path=OUT/'candidate-intervention/results.json'
+    if not path.exists():return None
+    r=read(path);rows=r.get('rows',[])
+    return dict(status=r['status'],cells=len(rows),rows=rows,
+                equivalent=sum(x['approximate_equivalence'] for x in rows),
+                effects=sum(x['intervention_tv_effect_lower']>0 for x in rows),
+                unsafe=sum(x['unsafe_commits'] for x in rows))
+
 def facts():
     f=verify_frozen();summary=read(OUT/'summary.json');audit=read(OUT/'audit.json')
     assert audit['passed']
@@ -64,6 +73,51 @@ def main():
         rows=initial[initial['model']==spec['label']]
         pt.append(f"| {spec['label']} | {rows[rows['delta']==50].iloc[0]['q_top']:.6f} | {rows[rows['delta']==100].iloc[0]['q_top']:.6f} |")
     th=[r for r in events if r['stratum']=='historical-replication' and r['architecture']=='normalized' and r['event']=='used_le_delta']
+    replicas=['| Checkpoint E1 | Media P_E1(A), 3 grafos | Rango entre grafos | Menor cota TV de A |',
+              '|---|---:|---:|---:|']
+    for spec in [r for r in specs() if r['treatment']=='normalized']:
+        rr=[r for r in target if r['model']==spec['label']]
+        pp=[r['probability_model'] for r in rr]
+        replicas.append(f"| {spec['label']} | {np.mean(pp):.3f} | {min(pp):.3f}–{max(pp):.3f} | {min(r['tv_lower'] for r in rr):.3f} |")
+    architecture_effects=['| Arquitectura | D_A(256,50) | D_A(512,100) | D_T(128,100) |',
+                          '|---|---:|---:|---:|']
+    for arch in ARCHES:
+        architecture_effects.append(f"| {NAMES[arch]} | {ci(cell(arch,256,50))} | {ci(cell(arch,512,100))} | {ci(cell(arch,128,100,'uses_top_color'))} |")
+    iv=intervention_summary();iv_text=('La intervención exploratoria no produjo bancos evaluables.' if not iv else f"Estado de la intervención exploratoria: `{iv['status']}`; no produjo celdas evaluables.")
+    iv_short='Los registros de propuestas y COMMIT son descriptivos.'
+    if iv and iv['cells']:
+        iv_table=['| Arquitectura | Celdas | TV(I,L)≤0,05 respaldada | TV(original,I)>0 respaldada | Rango cotas superiores TV(I,L) |',
+                  '|---|---:|---:|---:|---:|']
+        for arch in ARCHES:
+            rr=[r for r in iv['rows'] if r['architecture']==arch]
+            if rr:
+                bounds=[r['conditional_tv_upper'] for r in rr]
+                iv_table.append(f"| {NAMES[arch]} | {len(rr)}/20 | {sum(r['approximate_equivalence'] for r in rr)} | {sum(r['intervention_tv_effect_lower']>0 for r in rr)} | {min(bounds):.3f}–{max(bounds):.3f} |")
+        iv_text=f'''### Intervención exploratoria separada
+
+Se reemplazó únicamente el canal de candidatos por la propuesta exacta local
+del profesor, sobre el estado de la política intervenida I. Se conservaron
+sus pesos, participación y COMMIT originales, sin escudo. El plan se versionó
+antes de obtener datos de esta intervención; su tamaño se eligió sólo por
+coste. Estado: `{iv['status']}`, {iv['cells']}/60 celdas, tres grafos nuevos
+n512-d100 y el histórico, con las quince redes.
+
+{chr(10).join(iv_table)}
+
+Cada pareja I–Luby comparte números aleatorios; parejas distintas son
+independientes. No se aplicó un test de dos muestras independientes a esas
+parejas. La desigualdad de acoplamiento y cotas binomiales simultáneas dan
+las cotas superiores de TV condicional. Cotas de eventos originales y nuevos
+dan los efectos inferiores TV(original,I), con cobertura conjunta al menos
+95%. Se observaron {iv['unsafe']} COMMIT inseguros, sin corregirlos.
+
+Un límite superior ≤0,05 respalda equivalencia aproximada sólo de I con Luby.
+Un límite superior grande puede reflejar un acoplamiento poco ajustado; no
+demuestra discrepancia residual. El efecto controlado del canal de propuestas
+es distinto de identificar mediación completa o separar grado de paleta.
+Estos resultados no cambian ninguna de las 720 hipótesis originales.
+'''
+        iv_short=f"La intervención separada en candidatos respaldó un efecto sobre la ley completa en {iv['effects']}/{iv['cells']} celdas y TV(I,Luby)≤0,05 en {iv['equivalent']}/{iv['cells']}."
     models=read(OUT/'exploratory-binomial-models.json');predict=[]
     for arch in ARCHES:
         rows=sorted([r for r in models if r['architecture']==arch and r['event']=='used_le_delta'],key=lambda r:r['mean_heldout_cross_entropy'])
@@ -126,6 +180,13 @@ en la potencia del test. La evidencia no establece una ley monótona de TV.
 
 {join(table)}
 
+El evento T aporta información distinta. A grado 50, su diferencia pasó de
+{ci(cell('normalized',128,50,'uses_top_color'))} en n=128 a
+{ci(cell('normalized',1024,50,'uses_top_color'))} en n=1024: el sesgo observable
+se atenúa en ese régimen. A grado 100, el cambio de A entre n256 y n512 es
+{ci(next(r for r in fc if r['group']=='normalized' and r['event']=='used_le_delta' and r['contrast']=='n512-n256|d100'))}.
+Estos comportamientos dependen del observable y no ordenan las TV completas.
+
 ## P2. ¿Aumenta con el grado a tamaño fijo?
 
 Para A, los doce contrastes adyacentes de grado dieron **{dp} incrementos y
@@ -133,6 +194,9 @@ Para A, los doce contrastes adyacentes de grado dieron **{dp} incrementos y
 detecciones aparecen en `factorial-contrasts.csv` y en las figuras 2 y 4.
 En regulares, cambiar Δ cambia también K=Δ+1: sus efectos causales separados
 no están identificados. La respuesta debe leerse por evento y régimen.
+En n128-d100, A tiene diferencia {ci(cell('normalized',128,100))}, mientras
+T tiene diferencia {ci(cell('normalized',128,100,'uses_top_color'))}. Que falte
+algún color bajo ambas leyes no implica que falten los mismos colores.
 
 ## P3. ¿Existe interacción entre n y Δ?
 
@@ -151,6 +215,8 @@ entre {min(r['probability_model'] for r in target):.3f} y {max(r['probability_mo
 La figura 7 conserva las diferencias entre checkpoints; cinco entrenamientos
 no constituyen una muestra grande de todas las redes que podrían entrenarse.
 
+{join(replicas)}
+
 ## P5. ¿Se reproduce en grafos nuevos?
 
 {join(target_table)}
@@ -167,6 +233,10 @@ bandas en la misma escala. Las diferencias entre arquitecturas no se resumen
 como una clasificación por número de rechazos. Los irregulares aparecen en
 un estrato separado, con sus histogramas de grados y paletas; una realización
 por celda limita su generalización.
+
+Tres cortes en probabilidades comparables, con intervalos simultáneos:
+
+{join(architecture_effects)}
 
 Además, en cinco de las ocho celdas irregulares las paletas locales fuerzan
 A≡1 bajo cualquier algoritmo: U≤min_t[t+#{{v:d(v)≥t}}]≤Δ. Por ejemplo, en
@@ -226,6 +296,8 @@ referencia, COMMIT y clases finales sin modificar decisiones. Se observaron
 temporal es descriptiva: correlación y contabilidad de autorizaciones no
 identifican por sí solas el efecto causal de intervenir en una propuesta.
 
+{iv_text}
+
 ## P10. ¿Qué podemos afirmar sobre pérdida de equivalencia?
 
 Las cotas positivas de eventos respaldan diferencias entre leyes completas
@@ -284,11 +356,11 @@ ideales no son certificados bit a bit de toda la aritmética numérica.
 checkpoints y perfiles de propuestas/COMMIT de esta cohorte. Los intervalos
 delimitan cuáles diferencias respaldan las muestras.
 
-**Abierto:** ordenar las TV completas, separar grado de paleta, demostrar
-mediación causal y extender estas conclusiones a todos los grafos o a todos
+**Abierto:** ordenar las TV completas, separar grado de paleta, establecer
+mediación completa y extender estas conclusiones a todos los grafos o a todos
 los entrenamientos. Los no rechazos grandes no establecen equivalencia.
 
-Las nueve figuras requeridas, dos suplementos y el PDF de 16 páginas con
+Las nueve figuras requeridas, los suplementos y el PDF de 16 páginas con
 todas las distribuciones de U se regeneran de los datos archivados. Se
 conservan los resultados y secciones anteriores del manuscrito.
 '''
@@ -303,8 +375,8 @@ checkpoints históricos, 500 intentos por generador más 125 de holdout.
 En los tres grafos nuevos n512-d100, la menor cota TV del evento preregistrado
 U≤100 entre las quince comparaciones E1 fue {min(r['tv_lower'] for r in target):.3f}.
 Los efectos por tamaño y grado se informan con intervalos simultáneos; no se
-deduce una ley monótona de TV. Grado y paleta siguen confundidos. Los sesgos
-de candidatos son evidencia descriptiva, sin intervención causal.
+deduce una ley monótona de TV. Grado y paleta siguen confundidos.
+{iv_short}
 
 Auditoría: {a['new_algorithm_seeds']:,} semillas nuevas sin solapamiento;
 {a['gpu_process_hours']:.3f}/12 horas GPU-proceso; sin entrenamiento ni push.

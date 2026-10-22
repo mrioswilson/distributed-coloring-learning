@@ -44,12 +44,31 @@ family and writing final event and factorial summaries. `gpu-workflow.json`
 records completion or budget incompleteness. A physical reboot requires an
 explicit resume; reboot scheduling is not claimed.
 
+A separate exploratory candidate-channel intervention was preregistered in
+`docs/FACTORIAL_CANDIDATE_INTERVENTION_PLAN.md` at commit
+`8d538766cd038190e38c1d7305c982124c20aa71`, before any intervention banks.
+Its worker waits for the original GPU workflow, uses the same lock and total
+12-hour ledger, and chooses its fixed sample count only from a timing pilot:
+
+```bash
+$PYTHON -m dcl.sizedegree.intervention worker
+```
+
+Do not duplicate the existing `ucgnn-size-degree-intervention` session. Only
+the candidate channel is replaced; learned participation and COMMIT are
+unchanged. Paired intervention/teacher draws are never included in the
+original independent two-sample tests. A coupling can bound TV from above
+for this intervened policy only; it does not establish equivalence for the
+unmodified checkpoint. Missing or budget-skipped cells remain explicit.
+
 ## Reproduction and derived outputs
 
 After all sampling and contrast jobs complete:
 
 ```bash
+$PYTHON -m dcl.sizedegree.intervention analyze
 $PYTHON -m dcl.sizedegree.precision
+$PYTHON -m dcl.sizedegree.capacity
 $PYTHON -m dcl.sizedegree.exploratory
 $PYTHON -m dcl.sizedegree.audit
 $PYTHON -m dcl.sizedegree.summaries
@@ -62,7 +81,7 @@ $PYTHON -m dcl.sizedegree.report
 simultaneous bounds, 1,800 contrasts, same-sample old/new comparisons,
 per-run structural metrics, held-out witnesses, per-color profiles and
 proposal/COMMIT records. `figures.py` generates the nine requested PDF/PNG
-figures, two additional diagnostics and a 16-page full-cohort occupancy PDF.
+figures, additional diagnostics and a 16-page full-cohort occupancy PDF.
 The report explicitly answers P1–P10; the new provisional manuscript section
 preserves all historical sections. Full interpretation follows the completed
 audit, not an intermediate count of rejections.

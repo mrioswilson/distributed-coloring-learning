@@ -16,7 +16,7 @@ source=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(source/'src'))
 os.chdir(source)
 parser=argparse.ArgumentParser()
-parser.add_argument('module',choices=['analysis','validation','precision','exploratory','audit','summaries','figures','report','envelope'])
+parser.add_argument('module',choices=['analysis','validation','precision','capacity','exploratory','audit','summaries','figures','report','envelope','intervention'])
 parser.add_argument('--package-root',type=Path,default=source.parent)
 parser.add_argument('--restore-git-metadata',action='store_true')
 args,rest=parser.parse_known_args()

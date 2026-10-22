@@ -141,6 +141,17 @@ Mixed-state availability, simultaneous conflicts and repeated rounds can
 amplify or offset a proposal difference. No observational correlation is
 called a causal mediation estimate.
 
+A separate prospectively documented candidate-channel intervention goes
+beyond these observational records. It retains learned participation and
+COMMIT, replaces only candidates by exact local teacher proposals, and never
+feeds its paired outputs into the original independent two-sample tests.
+Its coupling bounds and direct original-versus-intervened event effects are
+derived in `FACTORIAL_CANDIDATE_INTERVENTION_PLAN.md`. Such a controlled
+computational change can establish an effect of that channel for the fixed
+policy and graph, without identifying complete mediation or the separate
+causal effects of degree and palette size. A loose coupling cannot prove
+residual discrepancy from a large TV upper bound.
+
 On regular graphs delta and K are deterministically linked. This design
 controls observed n versus observed delta/K but cannot separate their causal
 roles. Correctness of all recorded colorings, equality by a precise symmetry

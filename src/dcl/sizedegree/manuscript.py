@@ -1,7 +1,7 @@
 """Append the verified factorial contribution while preserving earlier sections."""
 from pathlib import Path
 from .common import *
-from .report import facts,ARCHES,NAMES
+from .report import facts,intervention_summary,ARCHES,NAMES
 
 def make_paper():
     f,s,a,fc,events,tests,target=facts()
@@ -12,6 +12,9 @@ def make_paper():
         r=next(r for r in fc if r['group']==arch and r['event']=='used_le_delta' and r['contrast']=='full-corners')
         interactions.append(f"{NAMES[arch]} & {r['estimate']:+.3f} & [{r['ci'][0]:+.3f}, {r['ci'][1]:+.3f}] \\\\")
     tv=min(r['tv_lower'] for r in target)
+    def effect(group,event,name):
+        r=next(r for r in fc if r['group']==group and r['event']==event and r['contrast']==name)
+        return f"{r['estimate']:+.3f} [{r['ci'][0]:+.3f}, {r['ci'][1]:+.3f}]"
     text=r'''\section{How Graph Size and Degree Affect Distributional Generalization}
 \label{sec:factorial}
 \paragraph{Motivation and controlled design.}
@@ -95,6 +98,18 @@ test power. Top-color appearance is separately reported in
 Figure~\\ref{{fig:factorial-top}}, including regimes where $U\\le d$ is nearly
 certain under both generators. We impose no monotone full-law TV interpretation.
 
+For E1 at degree 50, the top-appearance risk difference is
+{effect('normalized','uses_top_color','n128-d50')} at 128 vertices and
+{effect('normalized','uses_top_color','n1024-d50')} at 1,024 vertices.
+Thus this observable discrepancy attenuates in that regime. At degree 100,
+the adjacent 256-to-512 change in the missing-color risk difference is
+{effect('normalized','used_le_delta','n512-n256|d100')}.
+Already at $n=128,d=100$, the top-appearance difference is
+{effect('normalized','uses_top_color','n128-d100')}, despite a missing-color
+risk difference of {effect('normalized','used_le_delta','n128-d100')}.
+The two observables therefore supply different information; an uninformative
+missing-color event is not evidence of equal complete laws.
+
 \\begin{{table}}[t]
 \\centering\\small
 \\begin{{tabular}}{{lrr}}
@@ -119,6 +134,9 @@ retain occupancy distributions, all five training replicas and the independent
 replication on the original edge list. Leave-one-graph/checkpoint ranges are
 sensitivity analyses rather than population confidence intervals.
 '''
+    text+='\nArchitecture-level missing-color differences at $n=512,d=100$ are '
+    text+='; '.join(NAMES[arch]+': '+effect(arch,'used_le_delta','n512-d100') for arch in ARCHES)+'. '
+    text+='These contrasts retain a common probability scale and are not rankings by rejection frequency.\n'
     text+=r'''
 \paragraph{Mechanistic evidence.}
 Read-only observers record proposals, participation, exact availability
@@ -151,6 +169,33 @@ measuring every color permits simultaneous rather than naive selected-color
 intervals. A small normalized occupancy-mean difference can coexist with a
 large discrepancy of an occupancy-tail event.
 '''
+    iv=intervention_summary()
+    if iv and iv['cells']:
+        text+=f'''
+\\paragraph{{Separate exploratory candidate intervention.}}
+A prospectively recorded extra experiment replaces only the candidate
+channel by exact local teacher proposals on the intervened policy's own
+state. Learned participation, original COMMIT, checkpoints and cutoff are
+unchanged; no safety mask is added. Across {iv['cells']} of 60 planned cells
+(all checkpoints on three new priority graphs and the historical graph),
+the status is \\texttt{{{iv['status'].replace('_', chr(92)+'_')}}}.
+The sample count was selected exclusively from a separate timing pilot,
+within the same total GPU budget. These observations do not enter the
+original 720 hypotheses.
+
+Common-random-number coupling, with independent pairs, gives simultaneous
+upper bounds on conditional TV between the intervened policy $I$ and Luby;
+paired outputs are never treated as independent two-sample observations.
+The bound is at most .05 in {iv['equivalent']}/{iv['cells']} cells.
+Original and intervention event intervals jointly support a positive
+lower bound on $\\operatorname{{TV}}(P_M,P_I)$ in
+{iv['effects']}/{iv['cells']} cells, with coverage at least .95.
+We recorded {iv['unsafe']} unsafe COMMIT decisions and did not repair them.
+A large coupling upper bound does not prove residual discrepancy, since
+the coupling need not be optimal. This controlled computational intervention
+addresses the candidate channel; it does not identify complete mediation
+or separate degree from palette causality.
+'''
     text+=f'''
 The final ledger charged {a['gpu_process_hours']:.3f} of 12 GPU-process hours,
 including pilots and diagnostic trajectories. Statistical analyses use CPU.
@@ -166,9 +211,10 @@ improper, cutoff and technical error. The protocol was committed as
 We can prove ideal teacher color symmetry, initial MAX-state invariance,
 conditional permutation validity and stated coverage under independent runs.
 We observe finite-cohort effects, interactions, replications and diagnostic
-proposal/acceptance chains. We cannot order all complete-law TV distances,
-generalize three graphs and five trainings universally, or infer a causal
-mechanism from association. On regular graphs, degree and palette size vary
+proposal/acceptance chains. Any candidate intervention has the separate
+scope stated above. We cannot order all complete-law TV distances, generalize
+three graphs and five trainings universally, or infer complete mediation
+from association. On regular graphs, degree and palette size vary
 together, leaving their separate causal effects unidentified. Previous
 small-graph equivalence statements retain their original scope; large-graph
 nonrejections establish no approximate equivalence.
@@ -183,6 +229,8 @@ nonrejections establish no approximate equivalence.
       ('07-checkpoints','checkpoints','All five checkpoints; faint points retain individual graph variation.'),
       ('08-target-replication','replication','Independent priority-case E1 replications, without pooling historical outcomes.'),
       ('09-candidates-and-global-law','candidates','Same-state candidate quadrature and independent final samples: association does not identify causality.')]
+    if iv and iv['cells']:
+        captions.append(('12-candidate-intervention','intervention','Separate exploratory candidate-channel intervention on four priority graphs. Upper coupling bounds concern the intervened policy versus Luby; lower effect bounds concern the original versus intervened policy. All original-policy tests remain separate.'))
     for name,label,caption in captions:
         text+='\n\\begin{figure}[p]\n\\centering\n\\includegraphics[width=\\linewidth]{figures/factorial-'+name+'.pdf}\n\\caption{'+caption+'}\n\\label{fig:factorial-'+label+'}\n\\end{figure}\n'
     text+='\n\\clearpage\n'

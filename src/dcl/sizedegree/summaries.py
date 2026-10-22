@@ -100,6 +100,11 @@ def main():
                 holdout_witnesses_of_primary_rejections=sum(w['reject'] and next(r['reject'] for r in alltests if r['graph']==w['graph'] and r['model']==w['model']) for w in witnesses),
                 positive_event_tv_bounds=int((event['tv_lower']>0).sum()),
                 initial_invariance_checks=len(equality),initial_invariance_all=all(r['identical_initial_q_across_sizes'] for r in equality))
+    if (OUT/'candidate-intervention/results.json').exists():
+        iv=read(OUT/'candidate-intervention/results.json');ir=iv.get('rows',[])
+        result['candidate_intervention']=dict(status=iv['status'],cells=len(ir),
+                    approximately_equivalent=sum(r['approximate_equivalence'] for r in ir),
+                    positive_effect_lower_bounds=sum(r['intervention_tv_effect_lower']>0 for r in ir))
     atomic_json(OUT/'summary.json',result)
     print(json.dumps({k:v for k,v in result.items() if k not in ('interactions','counts')}),flush=True)
 

@@ -207,8 +207,33 @@ def main():
     fig.colorbar(im,ax=axes,shrink=.85,label='Event probability difference')
     fig.suptitle('Secondary irregular cohort: one graph × five checkpoints; forced events labeled explicitly')
     save(fig,'factorial-11-irregular-cohort')
+
+    intervention_path=OUT/'candidate-intervention/results.json'
+    if intervention_path.exists() and read(intervention_path).get('rows'):
+        rows=read(intervention_path)['rows'];gids=sorted(set(r['graph'] for r in rows))
+        graphcolors=plt.get_cmap('tab10')(np.arange(len(gids)))
+        offsets=np.linspace(-.24,.24,len(gids))
+        fig,axes=plt.subplots(2,3,figsize=(12,6.8),layout='constrained')
+        for j,arch in enumerate(ARCHES):
+            labels=[s['label'] for s in specs() if s['treatment']==arch]
+            for gi,gid in enumerate(gids):
+                selected={r['model']:r for r in rows if r['graph']==gid and r['architecture']==arch}
+                xx=[i+offsets[gi] for i,label in enumerate(labels) if label in selected]
+                vals=[selected[label] for label in labels if label in selected]
+                axes[0,j].scatter(xx,[r['conditional_tv_upper'] for r in vals],s=25,color=graphcolors[gi])
+                axes[1,j].scatter(xx,[r['intervention_tv_effect_lower'] for r in vals],s=25,color=graphcolors[gi])
+            for ax in axes[:,j]:
+                ax.set(xticks=range(5),xticklabels=[s['seed'] for s in specs() if s['treatment']==arch],ylim=(-.025,1.025))
+                ax.tick_params(axis='x',rotation=30,labelsize=7)
+            axes[0,j].axhline(.05,color='black',ls='--',lw=.8)
+            axes[0,j].set(title=NAMES[arch],ylabel='Upper TV bound: intervened vs Luby')
+            axes[1,j].set(xlabel='Checkpoint seed',ylabel='Lower TV bound: original vs intervened')
+        handles=[Line2D([0],[0],marker='o',ls='',color=graphcolors[i],label='Historical graph' if gid.startswith('historical-') else 'New graph r'+gid.rsplit('r',1)[-1]) for i,gid in enumerate(gids)]
+        fig.legend(handles=handles,loc='outside lower center',ncol=len(gids),fontsize=8)
+        fig.suptitle('12. Exploratory candidate replacement; simultaneous bounds, independent of original tests')
+        save(fig,'factorial-12-candidate-intervention')
     atomic_json(OUT/'figure-manifest.json',dict(required_figures=9,figures=[p.stem for p in sorted((OUT/'figures').glob('*.png'))],
                                                supplementary_occupancy_pages=16,generated=now()))
-    print('Eleven figure pairs and full-cohort occupancy supplement generated',flush=True)
+    print('Required figure pairs and exploratory supplements generated',flush=True)
 
 if __name__=='__main__':main()
