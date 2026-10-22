@@ -93,6 +93,25 @@ It retains the full .4975 probability difference and ignores irrelevant
 leaves. Learning a similar event on independent selection data can have
 useful finite-sample power while retaining conditional calibration.
 
+The remaining remote-triple limitation also has an explicit calculation.
+Keep the center fixed at2, P uniform on D binary leaves, and Q conditioned
+on even parity of a specified r-leaf subset. Then TV=.5, and the Boolean
+parity vector is an eigenvector of the product Gram matrix, giving
+
+    MMD^2=((1-a)/2)^r ((1+a)/2)^(D-r).
+
+For D=200 and r=3 this is 9.36528475045e-9. The null SD at m=250 is about
+.000242473, yielding signal/SD3.86e-5. A known parity event has probabilities
+.5 and1 and is easy to test; all marginal and pair laws coincide. Thus an
+all-pair search cannot represent that signal unless a suitable triple is
+already included. This is a representation/power failure, not statistical
+impossibility of distinguishing the two specified laws. A third-order search
+or a prespecified relevant triple would be needed to expose that witness;
+the final instrument does not claim to perform that search. The analogous
+diffuse .55-versus-.5 binary-leaf alternative has squared kernel effect
+about .00303445, despite a global TV of similar order. Kernel geometry and
+noise structure, rather than TV alone, determine these finite power gaps.
+
 ## 4. Honest omnibus construction
 
 For each generator, split total m into s=floor(m/2) selection rows and
@@ -104,12 +123,24 @@ color and median-binary selection representations before that four-candidate
 interaction selection. The search covers all vertex pairs but uses only
 selection labels; the conditional calibration proof is unchanged. It does
 not search all triples, and remote third-order alternatives can remain hidden.
+Screening uses only two covariance representations; it does not guarantee
+selection of every pair with a changed categorical joint law. An alternative
+preserving both screened covariances may also remain poorly represented.
 Structural candidates include used-color counts, class concentration/entropy,
 degree-wise means/parity, and predefined nonadjacent co-color events. Add
 a dense marginal score and four empirical global-kernel witness functions
 at gamma=.25,1,4,16. The exact graph-seeded region construction and finite
 threshold grids are implementation constants, frozen before confirmation.
 This family cannot represent every localized high-order alternative.
+
+Explicitly, let N_c(x)=#{v:c_v=c} and p_c=N_c/n. The reported observables
+are used_colors=#{c:N_c>0}, largest_class_fraction=max_c p_c,
+class_entropy=-sum_c p_c ln(p_c) (natural logarithms, with 0 ln0=0),
+and mean_color=(1/n)sum_v c_v. Degree-group summaries apply to the named
+fixed vertex group, and a co-color feature is 1[c_u=c_v]. A threshold event
+is the preimage {x:h(x)<=t}. For integer used-color counts, displaying
+floor(t) instead of a fractional quantile threshold defines exactly the
+same event; the original numerical descriptor remains in the raw result.
 
 Evaluate these functions h_j on held-out pooled rows. Center and scale each
 by its pooled SD, without using evaluation source labels; constant features
@@ -226,6 +257,31 @@ On small enumerated supports, a likelihood-ratio statistic is calibrated
 by the exact conditional multivariate-hypergeometric count law (or equivalent
 uniform row allocations). No asymptotic chi-square reference is used.
 
+Extreme exact hypergeometric probabilities can underflow to zero in float
+arithmetic. Valid reported probabilities replace those numerical zeros by
+a conservative finite-population Hoeffding upper bound. For m observations
+per test class and balanced accuracy A, correct_count=m-K+2TP and
+E_0(TP)=K/2, so Pr_0(TP-K/2>=m(A-.5))<=exp(-2m(A-.5)^2), uniformly over K.
+The audit exports these positive upper probabilities and verifies that every
+recorded .05 decision is unchanged. Raw underflows remain identified in the
+archive. The main m=500 classifiers have representable tails. This numerical
+postprocessing changes no feature, statistic, selection, or primary test.
+
+For completeness, the without-replacement exponential bound follows from
+elementary symmetric means. The mgf of drawing m entries without replacement
+from fixed nonnegative values x_i=exp(lambda b_i), b_i in {0,1}, is the
+normalized degree-m elementary symmetric polynomial. At fixed sum, replacing
+any two x,y by their average leaves its terms independent of x,y and linear
+in x+y unchanged, and increases the remaining xy times a nonnegative
+coefficient. Repeated averaging and continuity therefore bound this mgf by
+the mth power of the arithmetic mean, the binomial mgf. For the centered
+Bernoulli log-mgf f(lambda), f(0)=f'(0)=0 and
+f''(lambda)=p_lambda(1-p_lambda)<=1/4. Integrating gives
+f(lambda)<=lambda^2/8. The exponential Markov inequality, minimized at
+lambda=4d/m, gives Pr(TP-E TP>=d)<=exp(-2d^2/m). Substituting
+d=m(A-.5) proves the reported upper bound. These are known concentration
+arguments, not a new theorem.
+
 ## 8. TV inference, uncertainty and multiplicity
 
 For known reference p on S valid vectors, use empirical q from M independent
@@ -262,6 +318,11 @@ Clopper-Pearson bounds on its two probabilities, unioned over all planned
 graph/checkpoint cells, provide valid difference intervals despite primary
 selection. If explanation observations were reused to choose the event,
 those intervals would be naive and are not allowed.
+
+Every such event additionally gives TV(P,Q)>=|P(A)-Q(A)|. Transforming its
+simultaneous probability-difference interval [l,u] into max(0,l,-u) therefore
+gives a simultaneous lower bound on complete-vector TV. This remains useful
+on large spaces without enumerating them; it supplies no TV upper bound.
 
 For an arbitrary dependence structure among valid primary p-values, Holm
 controls FWER: if any true null is rejected, the first rejected true null

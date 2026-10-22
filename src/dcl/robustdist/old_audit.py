@@ -93,7 +93,8 @@ On the 201-vertex star, leaves are iid uniform {{0,1}} under both laws.
 The independent center is uniform {{2,...,200}} under A and {{2,...,101}}
 under B. Both use valid local lists. TV=99/199. Let a=exp(-1/201), b=(1+a)/2.
 The exact kernel effect is b^200(1-a)(1/100-1/199)={signal:.12g}.
-The disjoint center supports and irrelevant leaves attenuate the signal.
+The large center alphabet and irrelevant leaves attenuate the signal; the
+second center support is a subset of the first, not disjoint from it.
 
 Under A/A, the kernel row expectation is constant mu=b^200[a+(1-a)/199].
 For the centered kernel, zeta2=E[k^2]-mu^2={zeta:.12g}, with

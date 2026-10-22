@@ -1,3 +1,15 @@
+# Pruebas robustas de distribuciones completas: estudio terminado
+
+El [informe completo](results/ucgnn-robust-distribution/FINAL_REPORT.md)
+responde P1–P10, conserva resultados positivos y negativos, y separa las
+familias confirmatorias y exploratorias. El
+[resumen ejecutivo](results/ucgnn-robust-distribution/RESUMEN_EJECUTIVO.md)
+presenta los resultados principales. [ROBUST_DISTRIBUTIONS.md](ROBUST_DISTRIBUTIONS.md)
+explica la reproducción. El protocolo se congeló antes de generar las
+muestras nuevas. Los informes y resultados históricos se conservan debajo.
+
+---
+
 # Distribuciones de coloraciones completas: estudio terminado
 
 El informe de este worktree está en

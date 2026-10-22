@@ -1,0 +1,126 @@
+{
+  "actual_m_Luby": 500,
+  "actual_m_model": 500,
+  "architecture": "deepsets",
+  "checkpoint_sha256": "2968345009b97829e72fd6f9a984fef57fc81162242c6972f44e706003ec3fd7",
+  "delta": 2,
+  "explanation": {
+    "ci_Luby": [
+      0.3918377267528863,
+      0.6538829899365266
+    ],
+    "ci_model": [
+      0.30157416375592166,
+      0.5612646127084553
+    ],
+    "count_Luby": 131,
+    "count_model": 107,
+    "difference": -0.09600000000000003,
+    "difference_ci": [
+      -0.35230882618060494,
+      0.16942688595556898
+    ],
+    "event": {
+      "column": 8,
+      "event_threshold": 0.0,
+      "family": "structural",
+      "kind": "structural",
+      "name": "degree_parity:1"
+    },
+    "n_Luby": 250,
+    "n_model": 250,
+    "p": 0.039333745787051386,
+    "probability_Luby": 0.524,
+    "probability_model": 0.428,
+    "selection": "primary data only; estimation on final reserved 250 runs; simultaneous CP bounds over 1590 probabilities"
+  },
+  "family": "path",
+  "graph": "path4",
+  "graph_sha256": "c495215a6641e2ffa32599b2aa0f388170083d2afa34d715918a7baef4f39c9c",
+  "model": "deepsets-s41001",
+  "n": 4,
+  "old": {
+    "B": 19999,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "multi_max": 1.0,
+      "multi_softmax": 1.0,
+      "old_hamming": 1.0
+    },
+    "permutations_used": 128,
+    "seconds": 0.03375770500861108,
+    "statistics": {
+      "multi_max": -1.1537238787678776,
+      "multi_softmax": -1.1537238787678776,
+      "old_hamming": -0.001230655379473422
+    }
+  },
+  "old_empirical_mmd": 0.020518383559364698,
+  "old_mmd2_unbiased": -0.001230655379473422,
+  "old_p": 1.0,
+  "old_p_kind": "conservative_futility",
+  "old_p_lower_bound": 0.00105,
+  "old_permutations_used": 128,
+  "old_population_mmd_ci95": [
+    0.0,
+    0.35290568742267836
+  ],
+  "p": 1.0,
+  "p_kind": "conservative_futility",
+  "p_lower_bound": 0.00105,
+  "permutations_used": 128,
+  "robust": {
+    "B": 19999,
+    "evaluation_per_class": [
+      250,
+      250
+    ],
+    "exceedances": [
+      107,
+      124,
+      60,
+      116,
+      81,
+      128
+    ],
+    "p": 1.0,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "interaction": 1.0,
+      "local": 1.0,
+      "omnibus": 1.0,
+      "split_global": 1.0,
+      "split_multiscale": 1.0,
+      "structural": 1.0
+    },
+    "permutations_used": 128,
+    "seconds": 0.029999871971085668,
+    "selection_per_class": [
+      250,
+      250
+    ],
+    "statistics": {
+      "interaction": 0.9932003102006466,
+      "local": 0.40150827142952444,
+      "omnibus": 0.9932003102006466,
+      "split_global": -1.2521839590003803,
+      "split_multiscale": 0.7922663499647804,
+      "structural": 0.4487997640218675
+    }
+  },
+  "statistic": 0.9932003102006466,
+  "statuses_Luby": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "statuses_model": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "total_per_generator": 500,
+  "training_seed": 41001
+}

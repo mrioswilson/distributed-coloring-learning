@@ -1,0 +1,204 @@
+{
+  "actual_m_Luby": 500,
+  "actual_m_model": 500,
+  "architecture": "deepsets",
+  "checkpoint_sha256": "ebce11457332ea09d2eca87a4e374effa7c3789e8f999d6689d5ad77f701e0dc",
+  "delta": 2,
+  "explanation": {
+    "ci_Luby": [
+      0.3879829141784453,
+      0.650117692775759
+    ],
+    "ci_model": [
+      0.34988230722421854,
+      0.6120170858215315
+    ],
+    "count_Luby": 130,
+    "count_model": 120,
+    "difference": -0.040000000000000036,
+    "difference_ci": [
+      -0.3002353855515405,
+      0.22403417164308614
+    ],
+    "event": {
+      "family": "interaction",
+      "ids": [
+        1,
+        2,
+        3
+      ],
+      "keys": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          0,
+          1
+        ],
+        [
+          2,
+          0,
+          2
+        ],
+        [
+          2,
+          1,
+          0
+        ],
+        [
+          2,
+          1,
+          2
+        ]
+      ],
+      "kind": "categorical",
+      "scores": [
+        0.0,
+        -0.06896551724137932,
+        -0.03508771929824565,
+        -0.2222222222222222,
+        0.06349206349206349,
+        0.0,
+        0.03571428571428575,
+        -0.23214285714285712,
+        0.34782608695652173,
+        0.08163265306122448,
+        0.15624999999999997,
+        0.02272727272727267
+      ]
+    },
+    "n_Luby": 250,
+    "n_model": 250,
+    "p": 0.42085704330534807,
+    "probability_Luby": 0.52,
+    "probability_model": 0.48,
+    "selection": "primary data only; estimation on final reserved 250 runs; simultaneous CP bounds over 1590 probabilities"
+  },
+  "family": "cycle",
+  "graph": "cycle4",
+  "graph_sha256": "dc5258a4d86c5488e11e9d4094dc9884abd9dfb4e56f3ac2bb14eead031575b0",
+  "model": "deepsets-s41002",
+  "n": 4,
+  "old": {
+    "B": 19999,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "multi_max": 1.0,
+      "multi_softmax": 1.0,
+      "old_hamming": 1.0
+    },
+    "permutations_used": 128,
+    "seconds": 0.028189267963171005,
+    "statistics": {
+      "multi_max": -0.7480557837160484,
+      "multi_softmax": -0.7480557837160484,
+      "old_hamming": -0.0007540487258599349
+    }
+  },
+  "old_empirical_mmd": 0.03296229656174118,
+  "old_mmd2_unbiased": -0.0007540487258599349,
+  "old_p": 1.0,
+  "old_p_kind": "conservative_futility",
+  "old_p_lower_bound": 0.00105,
+  "old_permutations_used": 128,
+  "old_population_mmd_ci95": [
+    0.0,
+    0.3653496004250548
+  ],
+  "p": 1.0,
+  "p_kind": "conservative_futility",
+  "p_lower_bound": 0.00105,
+  "permutations_used": 128,
+  "robust": {
+    "B": 19999,
+    "evaluation_per_class": [
+      250,
+      250
+    ],
+    "exceedances": [
+      65,
+      27,
+      81,
+      66,
+      69,
+      61
+    ],
+    "p": 1.0,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "interaction": 1.0,
+      "local": 1.0,
+      "omnibus": 1.0,
+      "split_global": 1.0,
+      "split_multiscale": 1.0,
+      "structural": 1.0
+    },
+    "permutations_used": 128,
+    "seconds": 0.029146431013941765,
+    "selection_per_class": [
+      250,
+      250
+    ],
+    "statistics": {
+      "interaction": 0.9521638094424337,
+      "local": 1.669187233630063,
+      "omnibus": 1.669187233630063,
+      "split_global": -0.07079334019750595,
+      "split_multiscale": 0.9770669053713017,
+      "structural": 1.1127914890867159
+    }
+  },
+  "statistic": 1.669187233630063,
+  "statuses_Luby": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "statuses_model": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "total_per_generator": 500,
+  "training_seed": 41002
+}
