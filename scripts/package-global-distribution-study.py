@@ -12,6 +12,7 @@ def sha(p):
 assert read(results/'audit.json')['passed']
 assert read(results/'manuscript-audit.json')['passed']
 assert read(results/'manuscript-audit.json')['pdf_sha256']==sha(base/'paper/ucgnn/main.pdf')
+for name,digest in read(results/'manuscript-audit.json')['source_hashes'].items():assert sha(base/name)==digest,name
 assert all(t['status']=='complete' for t in read(data/'queue.json')['tasks'])
 assert not subprocess.check_output(['git','status','--porcelain'],cwd=base,text=True).strip(),'Commit reviewed results before packaging'
 out.mkdir(parents=True,exist_ok=True);work.mkdir(parents=True,exist_ok=True)

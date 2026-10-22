@@ -85,3 +85,8 @@ primary 795-hypothesis family unchanged. Figure 3b and
 `independent-power.csv` contain true independent repeated-experiment power
 on path3. `localized-positive-control.csv` records a known-TV star
 alternative whose kernel effect is analytically small.
+
+Figure 3c and independent-power.csv also contain independent population-power
+experiments at m=100,250 on star-d200 and regular-n256-d100 for seed 41000.
+Each point uses twenty disjoint trials; intervals are pointwise and nominal,
+with no claim about the Holm-adjusted primary family or all training seeds.
