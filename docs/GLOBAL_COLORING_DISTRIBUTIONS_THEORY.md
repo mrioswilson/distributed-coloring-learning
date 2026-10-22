@@ -358,3 +358,17 @@ A union bound over the m_0 super-uniform true-null p-values bounds its
 probability by alpha. No independence across shared-graph or shared-teacher
 contrasts is required. This justifies the implemented cumulative-max adjusted
 p-values and the preserved 795-hypothesis family, including graph aliases.
+
+## I. Labeled vectors, color counts and partitions differ
+
+On path3 with lists (2,3,2), both x=(0,1,0) and y=(1,2,1) are proper.
+Point masses at x and y have TV=1 and positive complete-vector MMD, but
+identical distributions of used-color count (two), sorted class sizes (2,1),
+all co-color pair indicators, and the induced partition {{0,2},{1}}.
+These are precisely the two valid vectors used in the easy positive control.
+Thus even the entire unlabeled partition law need not determine the labeled
+coloring law. An unrestricted global permutation taking 1 to 2 does not
+preserve every endpoint list, so quotienting by arbitrary color permutations
+is not automatically a group action on the declared local-list space.
+The secondary restricted-growth representation describes a partition map;
+it does not change the principal labeled-vector hypothesis.

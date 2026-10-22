@@ -129,7 +129,7 @@ def report():
       'Every final vector was checked against all edges and its own local list. The frozen model hashes match the recent paper-study cohort (seeds 41000–41004, epoch 120), not the historical E1 cohort. TF32 was disabled, float32 neural input conversion is explicit, and the teacher uses float64 PCG64 uniforms. Actual seed-41000 policies and all fifteen CPU integration tests reproduced hard actions across reset/interleaving and batching probes. This is numerical validation, not a proof that every boundary input is invariant.','',
       '## Calibration controls','', '| Control | Rejections / trials | 95% rate interval |','|---|---:|---|']
     for r in ctrl['summary']:lines.append(f"| {r['kind']} | {r['rejections']}/{r['trials']} | [{r['ci95'][0]:.3f}, {r['ci95'][1]:.3f}] |")
-    lines += ['', 'Null control groups are compatible with their preregistered 99% binomial acceptance intervals. A point-mass positive control is intentionally easy; it cannot establish sensitivity against every neural alternative. Teacher/teacher controls include a high-dimensional degree-100 graph. Same-checkpoint controls cover all fifteen policies on path3 only.','',
+    lines += ['', 'Null control groups are compatible with their preregistered 99% binomial acceptance intervals. The two point-mass control vectors (0,1,0) and (1,2,1) have identical color counts, class sizes and unlabeled partitions, yet different labeled laws. A point-mass positive control is intentionally easy; it cannot establish sensitivity against every neural alternative. Teacher/teacher controls include a high-dimensional degree-100 graph. Same-checkpoint controls cover all fifteen policies on path3 only.','',
       '## Exact small graphs','',
       'All seven supports were enumerated and teacher laws computed using rational absorbing-chain recursion, independently of Monte Carlo estimation banks. The path3 probabilities are 343/1628 (two vectors), 205/1628 (two), and 133/814 (two), rather than 1/6. Uniform proposals therefore do not imply uniformly distributed final solutions. This also occurs with homogeneous lists: on cycle4, each two-color vector has mass 35051/859584 and each three-color vector 36071/573056, giving TV 38111/429792 from the uniform valid-coloring law. `exact-*.json` archives every rational mass and reachable-state count.','',
       'The exact reference is the teacher eventual-absorption law; the empirical banks are conditional on valid completion by 128 rounds. A conservative per-node progress argument bounds their teacher-reference TV difference by n(1-2^(-Delta-1))^128; each small-graph row reports this bound. This distinction is retained even with zero observed cutoffs. The 2000-run independent neural estimation banks give plug-in TV against exact teacher probabilities and finite-support concentration intervals in `small-tv.csv`. TV estimation has sampling bias; intervals, rather than raw point estimates alone, govern interpretation. Exact teacher versus uniform is a separate reference. Teacher Monte Carlo validation is reported in the same table; finite nonzero empirical TV is expected.','',
@@ -167,7 +167,27 @@ def report():
     for (arch,n),a in dd.groupby(['architecture','n']):
         positive=int((a.unbiased_mmd2_change>0).sum())
         lines.append(f'{NAMES[arch]}, regular n={n}: {positive}/{len(a)} adjacent-degree unbiased MMD-squared estimate changes are positive across the five separately plotted policies. These signs are descriptive estimates, without a monotonic population claim.')
-    st=pd.DataFrame(read(OUT/'structural.json'))
+    structural_rows=read(OUT/'structural.json');st=pd.DataFrame(structural_rows)
+    reference={r['graph']:r for r in structural_rows if r['model']=='Luby'}
+    graph_meta={g['id']:g for g in read(OUT/'graphs.json')};comparisons=[]
+    for row in structural_rows:
+        if row['model']=='Luby':continue
+        ref=reference[row['graph']];g=graph_meta[row['graph']]
+        marginal=0.
+        for degree,value in row['color_by_degree'].items():
+            weight=g['degrees'].count(int(degree))/g['n']
+            marginal+=weight*.5*np.abs(np.array(value['mean'])-np.array(ref['color_by_degree'][degree]['mean'])).sum()
+        co=np.abs(np.array(row['cocolor_mean'])-np.array(ref['cocolor_mean']))
+        comparisons.append(dict(graph=row['graph'],model=row['model'],actual_delta=g['delta'],n=g['n'],
+           used_colors_mean_difference=row['used_mean']-ref['used_mean'],largest_class_mean_difference=row['largest_class_mean']-ref['largest_class_mean'],
+           entropy_mean_difference=row['class_entropy_mean']-ref['class_entropy_mean'],empirical_degree_color_frequency_tv=float(marginal),
+           used_colors_difference_mc_se=float(np.sqrt(np.var(row['used_values'],ddof=1)/len(row['used_values'])+np.var(ref['used_values'],ddof=1)/len(ref['used_values']))),
+           n_nonadjacent_pairs=len(co),mean_nonadjacent_cocolor_difference=float(co.mean()) if len(co) else None,max_nonadjacent_cocolor_difference=float(co.max()) if len(co) else None))
+    diagnostic=pd.DataFrame(comparisons).merge(p[['graph','model','reject_holm','p_holm','mmd2_unbiased']],on=['graph','model'])
+    diagnostic.to_csv(OUT/'structural-comparisons.csv',index=False)
+    lines += ['', 'Degree-wise color frequencies and nonadjacent co-color comparisons are in structural-comparisons.csv. Their point estimates aggregate full-run features; vertices are never used as independent units for uncertainty. The following rejected cells have the largest observed degree-weighted color-frequency TV projections (descriptive, not complete-vector TV or causal attribution).', '', '| Graph | Policy | Empirical degree-color projection TV | Mean used-color shift |', '|---|---|---:|---:|']
+    for _,r in diagnostic[diagnostic.reject_holm].sort_values('empirical_degree_color_frequency_tv',ascending=False).head(8).iterrows():
+        lines.append(f'| {r.graph} | {r.model} | {r.empirical_degree_color_frequency_tv:.4f} | {r.used_colors_mean_difference:.3f} |')
     baseline=st[st.model=='Luby'].set_index('graph').used_mean
     st=st[st.model!='Luby'].copy();st['used_colors_difference']=st.used_mean-st.graph.map(baseline)
     top=st.reindex(st.used_colors_difference.abs().sort_values(ascending=False).index).head(8)
