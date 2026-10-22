@@ -206,20 +206,22 @@ def independent_power():
     target=OUT/'independent-power.json'
     if target.exists():return read(target)
     rows=[]
-    for s in [s for s in specs() if s['seed']==41000]:
-        a=bank('independent-power','Luby','path3');b=bank('independent-power',s['label'],'path3');offset=0
-        for m in (100,250,500,1000,2000):
-            pv=[];sizes=[]
-            for trial in range(20):
-                take=slice(offset,offset+m);offset+=m
-                x=a['colors'][take][a['status'][take]==0];y=b['colors'][take][b['status'][take]==0]
-                sizes.append([len(x),len(y)])
-                r=mmd_test(x,y,np.random.default_rng(seed('independent-power-perm',s['label'],m,trial)),B=199);pv.append(r.get('p',1))
-            k=sum(p<=.05 for p in pv);ci=wilson(k,20)
-            rows.append(dict(graph='path3',model=s['label'],architecture=s['treatment'],m=m,trials=20,rejections=k,
-                             independent_population_power=k/20,ci_low=ci[0],ci_high=ci[1],p_values=pv,actual_success_sizes=sizes))
-            print('Independent power',s['label'],m,k,flush=True)
-        assert offset==77000
+    for g,grid,total in [('path3',(100,250,500,1000,2000),77000),('star-d200',(100,250),7000),('regular-n256-d100',(100,250),7000)]:
+        for s in [s for s in specs() if s['seed']==41000]:
+            a=bank('independent-power','Luby',g);b=bank('independent-power',s['label'],g);offset=0
+            for m in grid:
+                pv=[];sizes=[]
+                for trial in range(20):
+                    take=slice(offset,offset+m);offset+=m
+                    x=a['colors'][take][a['status'][take]==0];y=b['colors'][take][b['status'][take]==0]
+                    sizes.append([len(x),len(y)])
+                    parts=('independent-power-perm',s['label'],m,trial) if g=='path3' else ('independent-power-perm',g,s['label'],m,trial)
+                    r=mmd_test(x,y,np.random.default_rng(seed(*parts)),B=199);pv.append(r.get('p',1))
+                k=sum(p<=.05 for p in pv);ci=wilson(k,20)
+                rows.append(dict(graph=g,model=s['label'],architecture=s['treatment'],m=m,trials=20,rejections=k,
+                                 independent_population_power=k/20,ci_low=ci[0],ci_high=ci[1],p_values=pv,actual_success_sizes=sizes))
+                print('Independent power',g,s['label'],m,k,flush=True)
+            assert offset==total
     atomic_json(target,rows);pd.DataFrame(rows).drop(columns=['p_values','actual_success_sizes']).to_csv(OUT/'independent-power.csv',index=False)
     return rows
 

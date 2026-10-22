@@ -30,3 +30,24 @@ Retain failures and use conditional successes as in the principal protocol;
 report actual counts. Charge all process time against the same 12-hour budget.
 No additional primary rejection claim is introduced, no trained weights change,
 and no prior power curve is consulted to select graph, checkpoint or m.
+
+## Prospective extension before collecting any independent-power bank
+
+While the original primary queue is still running, extend the same independent
+experiment construction to the two other power graphs already fixed in the
+original protocol: star-d200 and regular-n256-d100. No empirical-bank power
+curve has yet been analyzed, and no independent-power bank exists. For each
+of the same four generators draw 7000 fresh runs per additional graph, split
+into twenty disjoint blocks of 100 and then twenty disjoint blocks of 250.
+Use the same `independent-power` run namespace with graph ID separating banks;
+permutation seeds additionally include graph ID. On path3 retain the original
+77000-run all-five-m grid and its existing permutation namespace.
+
+This gives true repeated-experiment power at the primary m=250 for all three
+originally selected power graphs. Larger-graph m=500,1000,2000 remain empirical-
+bank diagnostics only. The estimated incremental large-graph sampling cost
+is well within the remaining 12-hour cap; the same timer and accounting enforce
+it. Shared teacher blocks create across-model dependence, never within-model
+across-trial dependence. This is an explicit supplementary extension, not a
+change to the original confirmation. Retain all outcomes and wide twenty-trial
+intervals. It does not estimate power over all five training checkpoints.

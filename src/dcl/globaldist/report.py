@@ -49,12 +49,21 @@ def figures(primary,tv):
     independent=pd.read_csv(OUT/'independent-power.csv')
     fig,ax=plt.subplots(figsize=(6.5,4),layout='constrained')
     for arch,c in COLORS.items():
-        a=independent[independent.architecture==arch].sort_values('m')
+        a=independent[(independent.architecture==arch)&(independent.graph=='path3')].sort_values('m')
         ax.plot(a.m,a.independent_population_power,'o-',color=c,label=NAMES[arch])
         ax.fill_between(a.m,a.ci_low,a.ci_high,color=c,alpha=.15)
     ax.set(xscale='log',ylim=(-.03,1.03),xlabel='Complete observations per generator',ylabel='Independent-experiment detection rate',title='Path3: independent population-power supplement')
     ax.legend(fontsize=7);fig.suptitle('20 disjoint experiments per m; seed 41000; nominal alpha=.05',fontsize=9)
     save(fig,'figure3b-independent-power')
+    fig,axes=plt.subplots(1,2,figsize=(10,4),layout='constrained')
+    for ax,g in zip(axes,('star-d200','regular-n256-d100')):
+        for arch,c in COLORS.items():
+            a=independent[(independent.architecture==arch)&(independent.graph==g)].sort_values('m')
+            ax.plot(a.m,a.independent_population_power,'o-',color=c,label=NAMES[arch])
+            ax.fill_between(a.m,a.ci_low,a.ci_high,color=c,alpha=.15)
+        ax.set(ylim=(-.03,1.03),xlabel='Complete observations per generator',ylabel='Independent-experiment detection rate',title=g,xticks=[100,250])
+    axes[0].legend(fontsize=7);fig.suptitle('20 disjoint experiments per m; seed 41000; nominal alpha=.05',fontsize=9)
+    save(fig,'figure3c-independent-large-power')
     piv=primary.pivot(index='graph',columns='model',values='p_holm');fig,ax=plt.subplots(figsize=(10,13),layout='constrained')
     im=ax.imshow(-np.log10(np.maximum(piv.values,1e-6)),aspect='auto',vmin=0,vmax=max(1.5,float(-np.log10(max(piv.values.min(),1e-6)))),cmap='viridis')
     ax.set_xticks(range(len(piv.columns)),piv.columns,rotation=70,ha='right',fontsize=7);ax.set_yticks(range(len(piv.index)),[g+' [actual D=4]' if g=='bipartite-n256-d3' else g for g in piv.index],fontsize=6)
@@ -166,8 +175,8 @@ def report():
     for _,r in top.iterrows():lines.append(f'| {r.graph} | {r.model} | {r.used_colors_difference:.3f} |')
     lines += ['', 'These are observed run-level mean shifts, not separately calibrated structural discoveries or causal mechanisms.', '', '## Independent population-power supplement', '']
     ind=pd.read_csv(OUT/'independent-power.csv')
-    lines += ['The prospective supplement in `docs/GLOBAL_COLORING_POWER_SUPPLEMENT.md` fixes a new 77,000-run bank per generator on path3, split into disjoint blocks for twenty independent experiments at each m. Its rates estimate population detection probability for the specified policies on this graph. Teacher blocks are shared across policies but never across trials or m. Figure 3b and `independent-power.csv` report broad binomial intervals; high-degree power remains only conditionally estimated.', '', '| Policy | m | Rejections / 20 | 95% population-power interval |', '|---|---:|---:|---|']
-    for _,r in ind.iterrows():lines.append(f'| {r.model} | {r.m} | {r.rejections}/20 | [{r.ci_low:.3f}, {r.ci_high:.3f}] |')
+    lines += ['The prospective supplement in `docs/GLOBAL_COLORING_POWER_SUPPLEMENT.md` fixes a new 77,000-run bank per generator on path3, split into disjoint blocks for twenty independent experiments at each m. Its rates estimate population detection probability for the specified policies and graphs. Teacher blocks are shared across policies but never across trials or m. Figure 3b and `independent-power.csv` report broad binomial intervals; Independent population power at m=100 and 250 is also measured on star-d200 and regular-n256-d100; higher m on those two graphs remain conditionally estimated.', '', '| Graph | Policy | m | Rejections / 20 | 95% population-power interval |', '|---|---|---:|---:|---|']
+    for _,r in ind.iterrows():lines.append(f'| {r.graph} | {r.model} | {r.m} | {r.rejections}/20 | [{r.ci_low:.3f}, {r.ci_high:.3f}] |')
     if old.exists() and len(context):
         matched=context[(context.tv_lower>0)&(~context.reject_holm)]
         lines += ['', f'P8 contextual result: {len(matched)} of fifteen star/checkpoint comparisons have a previous initial-center proposal-TV lower bound above zero and no Holm rejection of the complete-vector law here. This is a post-hoc match of the identical initial state, not evidence of equal global laws. The complete fifteen-row comparison and original source hash are in proposal-context.csv.']
@@ -276,7 +285,8 @@ and induced partitions; none substitutes for the labeled-vector hypothesis.
 Secondary classifiers use independent training, validation and test banks.
 A separately prospective supplement measures population power on the
 three-vertex path using twenty disjoint experiments at each sample size and
-seed 41000 of each architecture; binomial intervals retain its finite-trial
+seed 41000 of each architecture; an additional 100/250 subgrid covers the
+star and regular power graphs. Binomial intervals retain finite-trial
 uncertainty. A known-law supplementary star alternative has global TV $99/199$ while
 its kernel effect is attenuated by $1-e^{-1/201}$; its independent detection
 trials document finite-power limitations despite characteristicness.
