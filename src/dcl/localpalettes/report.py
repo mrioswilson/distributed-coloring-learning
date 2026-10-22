@@ -74,7 +74,7 @@ def figures(frame,laws,b3):
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     directory=Path('paper/ucgnn/figures');directory.mkdir(parents=True,exist_ok=True)
-    colors={'normalized':'#2166ac','deepsets':'#1b9e77','transformer':'#984ea3','raw_endpoints':'#d95f02','sum':'#e41a1c','mean':'#777777'}
+    colors={'normalized':'#2166ac','deepsets':'#1b9e77','transformer':'#984ea3','raw_endpoints':'#d95f02','sum':'#e41a1c','mean':'#777777','e1-original':'#222244'}
     if not frame.empty:
         summary=frame.groupby(['treatment','regime'],dropna=False).agg(success=('success','mean'),rounds=('rounds','mean')).reset_index()
         fig,axes=plt.subplots(1,2,figsize=(10,3.4))
@@ -109,8 +109,8 @@ def figures(frame,laws,b3):
         axes[0].legend(fontsize=6);axes[1].legend(fontsize=6);fig.tight_layout()
         fig.savefig(directory/'candidate-fidelity-and-tv.pdf');plt.close(fig)
         fig,ax=plt.subplots(figsize=(8,3.3))
-        for treatment in ('normalized','deepsets','transformer'):
-            path=ROOT/'distributions'/f'{treatment}-s41000'/'k201-ALL_FREE.npz'
+        for treatment,model_seed in (('normalized',41000),('deepsets',41000),('transformer',41000),('e1-original',0)):
+            path=ROOT/'distributions'/f'{treatment}-s{model_seed}'/'k201-ALL_FREE.npz'
             if not path.exists():continue
             counts=np.load(path)['estimation_counts'];ax.plot(np.arange(201),counts/counts.sum(),label=treatment,alpha=.8,color=colors[treatment])
         ax.axhline(1/201,color='black',linestyle='--',label='exact teacher');ax.set(xlabel='Candidate color',ylabel='Estimated probability')

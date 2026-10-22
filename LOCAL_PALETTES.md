@@ -61,3 +61,20 @@ classifier trial arrays stay in runtime with their hashes in
 
 Reboot requires explicit resume.
 The historical [E1 entry](E1.md) remains available and unchanged.
+
+The run completed: **160 tasks**, **18,848 graph evaluations**, **3,255 conditional
+laws** and **1,260 empirical classifier cells**. The original E1 seeds 0–4 are
+separate from the 30 primary networks. All checkpoints are frozen. The coordinator
+has exited; no GPU work remains pending. Status reports include the subsequent
+independent progress diagnostic in the same 12-hour budget.
+
+`audit` now checks the complete cohort, failed final colorings, regular-regime
+trace equivalence, all distribution counts/split seeds, and replays every
+likelihood test from its archived independent banks. `report` regenerates the
+complete scientific report when the queue is finished. Main results and clearly
+labeled post-hoc analyses are distinguished in
+[the final report](results/ucgnn-local-palettes/FINAL_REPORT.md).
+
+See the [data dictionary](docs/LOCAL_PALETTES_DATA_DICTIONARY.md) for metric
+definitions, observer coverage, independent sample splits, and the distinction
+between empirical classifier curves and analytic singleton-law predictions.

@@ -99,6 +99,8 @@ def status():
 
 def update_status(state):
     counts=Counter(t['status'] for t in state['tasks'])
+    complete=bool(state['tasks']) and all(t['status']=='complete' for t in state['tasks'])
+    execution='Completed; no live coordinator is required. Resume is idempotent.' if complete else 'Running/resumable coordinator in tmux ucgnn-local-palette-study.'
     text=f'''# Local-palette study status
 
 Updated {now()}; branch research/ucgnn-local-palettes; protocol commit f516530.
@@ -111,7 +113,8 @@ See [LOCAL_PALETTES.md](LOCAL_PALETTES.md) for commands and scientific scope.
 Runtime manifest: data/ucgnn-local-palettes/queue.json.
 Per-case outputs: data/ucgnn-local-palettes/graphs/ and distributions/.
 Reports: results/ucgnn-local-palettes/.
-Coordinator tmux: ucgnn-local-palette-study (explicit resume after reboot).
+Execution: {execution}
+Explicit resume is required after reboot; no reboot persistence is promised.
 '''
     Path('STATUS.md').write_text(text)
 
@@ -282,6 +285,7 @@ def run():
             atomic_json(ROOT/'queue.json',state);update_status(state)
             print(f'{task["id"]}: {task["status"]} ({elapsed:.1f}s), cumulative {state["gpu_seconds"]/3600:.3f}h',flush=True)
         atomic_json(RESULTS/'execution-manifest.json',state)
+        update_status(state)
         from .report import report
         report()
 
@@ -297,6 +301,9 @@ def audit():
                 gpu_hours=state['gpu_seconds']/3600,environment=provenance())
     atomic_json(RESULTS/'audit.json',result)
     print(json.dumps({k:v for k,v in result.items() if k!='environment'},indent=2))
+    if state['tasks'] and all(t['status']=='complete' for t in state['tasks']):
+        from .completion_audit import run as complete_audit
+        complete_audit()
 
 
 def main():
@@ -311,8 +318,13 @@ def main():
     elif args.command=='worker':worker(args.task)
     elif args.command=='audit':audit()
     else:
-        from .report import report
-        report()
+        state=read(ROOT/'queue.json') if (ROOT/'queue.json').exists() else dict(tasks=[])
+        if state['tasks'] and all(t['status']=='complete' for t in state['tasks']):
+            from .finalize import finalize
+            finalize()
+        else:
+            from .report import report
+            report()
 
 
 if __name__=='__main__':main()

@@ -202,6 +202,10 @@ requires an upper confidence bound at most the prespecified TV tolerance
 entropy, inverse collision probability, largest mass, forbidden mass and
 shared-r rank error, before aggregation by network/state. Float64 teacher
 inputs and clipped float32 model inputs are compared explicitly at boundaries.
+The primary shared-r fidelity supplies the same clipped float32 draw to both
+candidate functions; a separate column uses the unconverted float64 teacher
+draw. This prevents input-precision differences from being described as a
+learned candidate mechanism.
 
 \IfFileExists{tables/distribution-results-prose.tex}{\input{tables/distribution-results-prose.tex}}{
 \todo{Awaiting conditional-law estimates and independent classifier test curves.}}
@@ -218,6 +222,22 @@ and Monte Carlo are stored separately.}\end{figure}}{}
 The curves summarize fixed checkpoints, not learned-law Bayes certificates.}
 \end{figure}}{}
 
+\begin{proposition}[Singleton teacher product laws]
+If $A_v=\{a\}$ and $\epsilon=1-q_M(a\mid S)$, then
+$\operatorname{TV}(q_L^m,q_M^m)=1-(1-\epsilon)^m$.
+Declaring the model exactly when any observed candidate differs from $a$
+has FPR zero, power $1-(1-\epsilon)^m$, and optimal equal-prior balanced accuracy
+$1-\tfrac12(1-\epsilon)^m$.
+\end{proposition}
+\begin{proof}
+The null product law is a point mass at $(a,\ldots,a)$, whose alternative
+mass is $(1-\epsilon)^m$. TV from a point mass is one minus that mass.
+All other sequences have null probability zero; at the all-$a$ sequence the
+null likelihood is at least the alternative likelihood. The stated rule is
+therefore optimal, including the identical-law tie case.
+\end{proof}
+\IfFileExists{tables/singleton-results.tex}{\input{tables/singleton-results.tex}}{}
+
 \paragraph{Distribution and progress.}
 For exact COMMIT and conditionally private independent actions, formula~(1) in
 the accompanying theory document applies even to heterogeneous lists. A useful
@@ -232,7 +252,11 @@ Thus at $p=1/2$ sufficiently small nonuniformity retains a positive constant
 bound, even if statistically detectable. Conversely, deterministic proposals
 on an all-free clique have the same one-node TV and entropy whether every
 node proposes a common color or different mutually compatible colors; their
-confirmation probabilities can be $2^{-K}$ or $1/2$. Marginal distance alone
+confirmation probabilities can be $2^{-K}$ or $1/2$. These marginal distances
+do not identify which vertices' proposals overlap. The distinct deterministic
+candidates here form a mathematical per-vertex distribution family; this is
+not claimed implementable by initially identical anonymous deterministic nodes.
+Marginal distance alone
 therefore cannot universally rank speed. The controlled experiments substitute
 uniform/learned/mixture candidate laws at the same state and exact COMMIT;
 autonomous round-count correlations remain descriptive.

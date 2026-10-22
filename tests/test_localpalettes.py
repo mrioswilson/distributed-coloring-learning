@@ -231,3 +231,17 @@ def test_calibration_rank_is_finite_sample_conservative():
     # Rank of an independent continuous null amongst N+1 exchangeable scores.
     n=1024;k=974
     assert (n+1-k)/(n+1)<=.05
+
+
+def test_singleton_product_law_and_sample_size():
+    from dcl.localpalettes.singleton_products import product_tv,sample_size
+    assert product_tv(0,2000)==0 and product_tv(1,1)==1
+    assert product_tv(.5,5)==pytest.approx(1-1/32)
+    assert sample_size(.5)==3 and sample_size(0) is None
+
+
+def test_cyclic_candidate_law_with_gaps():
+    from dcl.localpalettes.evaluation import cyclic_law
+    q=cyclic_law([1,6,10],11)
+    np.testing.assert_allclose(q[[1,6,10]],np.array([2,5,4])/11)
+    assert q.sum()==pytest.approx(1.) and q[[0,2,3,4,5,7,8,9]].sum()==0

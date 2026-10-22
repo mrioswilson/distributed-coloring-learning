@@ -282,7 +282,29 @@ replica remain correctly rejected; the output records that rather than hiding it
 Counterexamples were explored after graph testing began, not used for model
 selection or training, and are labeled exploratory.
 
-## 10. Honest uncertainty and precision
+## 10. Exact product-law expression for one available color
+
+**Proposition 10.** If the teacher's available set is {a} and the model's
+forbidden mass is ε=1−Q(a), then TV(P^m,Q^m)=1−(1−ε)^m. The rule "declare the
+model iff any observation is not a" has FPR zero, power 1−(1−ε)^m, and Bayes
+balanced accuracy 1−(1/2)(1−ε)^m under equal priors.
+
+**Proof.** P^m is a point mass at (a,...,a), whose Q^m probability is (1−ε)^m.
+TV from a point mass is one minus that mass. Every other sequence has null
+probability zero and must be classified as the model; at the all-a sequence
+the teacher's likelihood is at least the model's. Thus this rule is optimal
+without estimating a likelihood-ratio threshold. ∎
+
+The product expression is exact in the true ε; inserting an estimate does not
+make it an exact known-law result. `singleton_products.py` uses estimation-bank
+binomial counts, Bonferroni Clopper–Pearson intervals simultaneously covering
+all recorded singleton model-state laws, and monotone transforms to give
+product-TV, optimal-accuracy and power intervals. Independent test counts check
+one-draw support-test power. Results for m>1 are labeled analytic predictions,
+not new empirical classification trials. Zero observed forbidden proposals do
+not prove ε=0. This analysis was added after primary testing and is exploratory.
+
+## 11. Honest uncertainty and precision
 
 For N IID categorical draws from Q on K colors, the subset characterization of
 TV and Hoeffding plus a union bound over at most 2^K subsets give
