@@ -411,3 +411,28 @@ Cada réplica logró 20.480/20.480 coloraciones correctas en los grafos aleatori
 evaluados; ninguno de los 100 tests MMD detectó diferencias con Luby tras Holm.
 Se observan pequeñas diferencias locales: la ausencia de rechazo no demuestra
 equivalencia general. Revisión científica independiente pendiente.
+
+
+## Repetición de siete maestros con E1 — 22 de octubre de 2026
+
+Se repitió la comparación con el núcleo UniversalColorGNN NORMALIZED y
+entrenamiento contrafactual:16035 parámetros para Luby/Johansson/greedy;
+19396 con contexto nativo para JP/ColorTrials/BE/GM. Los35 modelos comparten
+los pools y presupuestos anteriores:800 grafos N40/Δ3, tres tapes,
+17760 actualizaciones de1680 decisiones y cinco inicializaciones por maestro.
+Se evalúan396 casos comunes por actor, hasta N10240, con16632 ejecuciones.
+
+Luby, Johansson, ColorTrials, BE y greedy logran1980/1980 éxitos cada uno;
+JP obtiene1631 y GM1951. Luby mejora respecto de1857 y Johansson de1919.
+JP empeora en los tamaños mayores aunque su tasa global sea parecida; GM
+registra29 ejecuciones incompletas. La comparación incluye cambios de
+representación y entrenamiento:en BE se aprende el punto y se suministra su
+valor polinomial. Es un seguimiento exploratorio sobre casos ya publicados.
+
+El [informe con curvas y límites](results/multiteacher-e1/2026-10-22/README.md),
+la [tabla antes/después](results/multiteacher-e1/2026-10-22/architecture-comparison.csv)
+y la [auditoría](results/multiteacher-e1/2026-10-22/audit.json) conservan los
+resultados de las cinco semillas y todos los fallos. El
+[protocolo](docs/MULTITEACHER_E1.md) y las
+[definiciones de métricas](docs/MULTITEACHER_E1_METRICAS.md) explican las adaptaciones.
+Los fuentes originales E1 y resultados anteriores se conservan íntegros.
