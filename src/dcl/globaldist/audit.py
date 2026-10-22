@@ -34,6 +34,8 @@ def main():
                          edge_conflicts=int(conflict.sum()),outside_list=int(outside.sum()),
                          first_rng_initial_state=json.loads(str(a['first_rng_initial_state'])),
                          final_rng_states_sha256=str(a['final_rng_states_sha256'])))
+    localized=read(OUT/'localized-positive-control.json')
+    for item in localized:assert file_hash(item['file'])==item['sha256']
     primary=read(OUT/'primary.json');assert len(primary)==795
     assert len({(r['graph'],r['model']) for r in primary})==795
     assert all(r['B']==19999 and r['gamma']==1 and r['planned_m']==250 for r in primary)

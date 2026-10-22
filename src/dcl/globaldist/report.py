@@ -57,7 +57,7 @@ def figures(primary,tv):
     save(fig,'figure3b-independent-power')
     piv=primary.pivot(index='graph',columns='model',values='p_holm');fig,ax=plt.subplots(figsize=(10,13),layout='constrained')
     im=ax.imshow(-np.log10(np.maximum(piv.values,1e-6)),aspect='auto',vmin=0,vmax=4,cmap='viridis')
-    ax.set_xticks(range(len(piv.columns)),piv.columns,rotation=70,ha='right',fontsize=7);ax.set_yticks(range(len(piv.index)),piv.index,fontsize=6)
+    ax.set_xticks(range(len(piv.columns)),piv.columns,rotation=70,ha='right',fontsize=7);ax.set_yticks(range(len(piv.index)),[g+' [actual D=4]' if g=='bipartite-n256-d3' else g for g in piv.index],fontsize=6)
     ax.set_title('Primary family: -log10 Holm-adjusted p; 795 tests');fig.colorbar(im,ax=ax,label='-log10 adjusted p')
     save(fig,'figure4-tests')
     st=pd.DataFrame(read(OUT/'structural.json'));gg=read(OUT/'graphs.json');meta={g['id']:g for g in gg}
@@ -102,7 +102,7 @@ def report():
       'No new networks were trained. Historical files were read only. No remote push was performed.','',
       f"The prospective primary family contains **795 tests on 53 fixed graphs and 15 frozen policies**, with 250 fresh complete runs per generator per graph. **{int(p.reject_holm.sum())}/795** reject after Holm correction at familywise alpha 0.05. These are conditional-on-valid-completion comparisons. Nonrejection does not prove equality.",'',
       '| Architecture | Tests | Holm rejections | Nonrejections | Empirical MMD range across graphs |','|---|---:|---:|---:|---:|',*aggregate,'',
-      'There are 53 planned graph entries but 51 unique labeled graphs: star3/star-d3 and wheel-d3/clique-d3 are duplicate graph hashes with fresh banks. They are not independent graph replicates. The MMD ranges above describe this finite battery. They are not universally comparable normalized distances across different graphs. Every individual test, effect interval and adjusted p-value is in `primary.json` and `primary.csv`.','',
+      'There are 53 planned graph entries but 51 unique labeled graphs: star3/star-d3 and wheel-d3/clique-d3 are duplicate graph hashes with fresh banks. They are not independent graph replicates. The bipartite-n256-d3 entry has actual maximum degree 4, correctly recorded in the frozen graph manifest; its suffix is the generation target, not its measured degree. The MMD ranges above describe this finite battery. They are not universally comparable normalized distances across different graphs. Every individual test, effect interval and adjusted p-value is in `primary.json` and `primary.csv`.','',
       '## Execution and success', '',f"The audit verified {audit['banks']} banks and **{audit['independent_run_seeds']:,} distinct execution seeds**. Status totals [valid, invalid-complete, cutoff, technical] = {audit['statuses']}. Charged GPU-process time, including pilot, teacher sampling and lock-held overhead: **{audit['gpu_hours']:.3f} / 12 hours**.",'',
       'Every final vector was checked against all edges and its own local list. The frozen model hashes match the recent paper-study cohort (seeds 41000–41004, epoch 120), not the historical E1 cohort. TF32 was disabled, float32 neural input conversion is explicit, and the teacher uses float64 PCG64 uniforms. Actual seed-41000 policies and all fifteen CPU integration tests reproduced hard actions across reset/interleaving and batching probes. This is numerical validation, not a proof that every boundary input is invariant.','',
       '## Calibration controls','', '| Control | Rejections / trials | 95% rate interval |','|---|---:|---|']
@@ -157,6 +157,10 @@ def report():
     if old.exists() and len(context):
         matched=context[(context.tv_lower>0)&(~context.reject_holm)]
         lines += ['', f'P8 contextual result: {len(matched)} of fifteen star/checkpoint comparisons have a previous initial-center proposal-TV lower bound above zero and no Holm rejection of the complete-vector law here. This is a post-hoc match of the identical initial state, not evidence of equal global laws. The complete fifteen-row comparison and original source hash are in proposal-context.csv.']
+    localized=pd.read_csv(OUT/'localized-positive-control.csv')
+    lines += ['', '## Known localized alternative: a finite-power failure', '', 'A separately prospective supplementary control holds all 200 star leaves iid uniform on {0,1}; only the center law changes, from uniform on 199 high colors to uniform on 100. Every vector is a valid local-list coloring. Exact global TV is 99/199 (about 0.4975), whereas exact MMD squared is '+str(localized.exact_mmd2.iloc[0])+'. The primary kernel is unchanged. This control demonstrates why characteristicness does not imply useful power for every finite-sample alternative.', '', '| m | Detections / 20 independent experiments | 95% power interval |', '|---:|---:|---|']
+    for _,r in localized.iterrows():lines.append(f'| {r.m} | {r.rejections}/20 | [{r.ci_low:.3f}, {r.ci_high:.3f}] |')
+    lines += ['', 'The easy point-mass control and this localized control answer different sensitivity questions. A nonrejected learned law may still differ substantially in TV; no equivalence conclusion follows from these primary tests.']
     (OUT/'FINAL_REPORT.md').write_text('\n'.join(lines)+'\n')
     # Finite-run success uncertainty separately, no claim of universal correctness.
     successes=[]
@@ -198,7 +202,7 @@ per generator, a fixed characteristic kernel
 \[
  k_G(x,y)=\exp(-d_H(x,y)/|V|),
 \]
-an unbiased MMD statistic and 19,999 fixed-size label permutations. Its
+an unbiased MMD statistic \citep{gretton2012kernel} and 19,999 fixed-size label permutations. Its
 finite-product Gram matrix is strictly positive definite: each coordinate
 matrix is $(1-a)I+a\mathbf1\mathbf1^\top$ with $a=e^{-1/|V|}\in(0,1)$;
 Kronecker products and restriction to valid colorings preserve strict
@@ -236,7 +240,10 @@ Secondary classifiers use independent training, validation and test banks.
 A separately prospective supplement measures population power on the
 three-vertex path using twenty disjoint experiments at each sample size and
 seed 41000 of each architecture; binomial intervals retain its finite-trial
-uncertainty. Power curves over 100--2,000 observations on larger graphs use independent empirical banks
+uncertainty. A known-law supplementary star alternative has global TV $99/199$ while
+its kernel effect is attenuated by $1-e^{-1/201}$; its independent detection
+trials document finite-power limitations despite characteristicness.
+Power curves over 100--2,000 observations on larger graphs use independent empirical banks
 for three prespecified graphs and seed 41000. Their resampling intervals are
 conditional on those banks and omit uncertainty in their population laws;
 they describe nominal, not Holm-adjusted, detection rates.
@@ -263,7 +270,7 @@ Se completaron 795 contrastes preregistrados sobre distribuciones de coloracione
 
 Se verificaron {audit['independent_run_seeds']:,} semillas distintas y {audit['banks']} bancos; estados [válidas, inválidas, cutoff, error] = {audit['statuses']}. Tiempo de proceso cargado: {audit['gpu_hours']:.3f}/12 horas. No hubo entrenamiento nuevo ni push.
 
-Luby no es uniforme sobre las soluciones del camino de tres vértices. La comparación principal usa vectores completos etiquetados, no colores individuales ni estadísticas marginales. Los resultados no rechazados no prueban igualdad. Los efectos entre grafos no son distancias universalmente normalizadas. Las curvas de potencia son condicionales a bancos empíricos, y no establecen un tamaño muestral universal. No se afirma una tendencia monótona con el grado ni generalización a todas las semillas o grafos.
+Luby no es uniforme sobre las soluciones del camino de tres vértices. La comparación principal usa vectores completos etiquetados, no colores individuales ni estadísticas marginales. Los resultados no rechazados no prueban igualdad. Los efectos entre grafos no son distancias universalmente normalizadas. Las curvas de grafos grandes son condicionales a bancos empíricos; el suplemento del camino usa ensayos independientes. Un control de estrella con TV conocida cercana a 0,5 documenta falta de potencia para diferencias localizadas. No se establece un tamaño muestral universal. No se afirma una tendencia monótona con el grado ni generalización a todas las semillas o grafos.
 
 El informe completo responde P1–P10, conserva todos los resultados negativos y especifica las limitaciones. Véanse FINAL_REPORT.md, primary.csv, small-tv.csv y las seis figuras.
 '''

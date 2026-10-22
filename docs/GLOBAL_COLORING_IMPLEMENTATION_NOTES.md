@@ -60,3 +60,12 @@ its TV intervals directly target the exact eventual teacher reference.
 For degree-three four-node graphs this bound is about 0.001, below the
 reported Monte Carlo uncertainty; absence of observed cutoffs alone is
 never used to assert the two mathematical laws are identical.
+
+The bipartite entry `bipartite-n256-d3` has actual maximum degree 4: a
+right-side vertex receives four independently sampled left neighbors, even
+though the designated hub has the target degree 3. The frozen manifest
+correctly records delta=4 and the exact edges. The protocol's degree-3
+wording describes the generator target, not this measured maximum. This
+entry is retained, not regenerated, and all tables use actual delta=4.
+The other target-degree suffixes match their actual maxima. No hypothesis
+or observation is removed because of this design discrepancy.

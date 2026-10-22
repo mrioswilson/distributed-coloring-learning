@@ -26,6 +26,7 @@ $PY -m dcl.globaldist.run
 $PY -m dcl.globaldist.supplement
 $PY -m dcl.globaldist.analyze
 $PY -c "from dcl.globaldist.analyze import independent_power; independent_power()"
+$PY -c "from dcl.globaldist.analyze import localized_control; localized_control()"
 $PY -m dcl.globaldist.audit
 $PY -m dcl.globaldist.report
 $PY -m pytest -q tests/test_globaldist.py tests/test_globaldist_integration.py tests/test_localpalettes.py tests/test_graphs.py tests/test_oracle.py
@@ -76,3 +77,11 @@ The regression command above is read only. Several unrelated historical tests
 exercise training/resume by fitting temporary neural models; they are excluded
 to honor the no-training instruction. The changed modules and reused local
 palette adapter receive the unit/integration coverage listed above.
+
+Prospective supplements are documented separately in
+`docs/GLOBAL_COLORING_POWER_SUPPLEMENT.md` and
+`docs/GLOBAL_COLORING_LOCALIZED_CONTROL_SUPPLEMENT.md`; they leave the
+primary 795-hypothesis family unchanged. Figure 3b and
+`independent-power.csv` contain true independent repeated-experiment power
+on path3. `localized-positive-control.csv` records a known-TV star
+alternative whose kernel effect is analytically small.
