@@ -90,3 +90,15 @@ def test_unknown_pair_search_uses_only_selection_and_recovers_remote_signal():
     assert a['p']<=.05
     chosen=[d['ids'] for d in a['selected'] if d['kind']=='categorical']
     assert [137,181] in chosen
+
+def test_futility_refinement_recovers_full_holm_decisions():
+    from dcl.robustdist.confirmation import pending_refinements
+    # Many genuine discoveries can loosen late Holm thresholds; simply
+    # replacing all censored tails by one would lose valid discoveries.
+    full=np.r_[np.full(960,1e-8),np.full(40,.0011)]
+    lower=np.r_[full[:960],np.full(40,.00105)]
+    upper=np.r_[full[:960],np.ones(40)]
+    rows=[dict(p=float(p),lo=float(l)) for p,l in zip(upper,lower)]
+    ids=pending_refinements(rows,'p','lo');assert len(ids)==40
+    upper[ids]=full[ids]
+    assert np.array_equal(holm(upper)<=.05,holm(full)<=.05)

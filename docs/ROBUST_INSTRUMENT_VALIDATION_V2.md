@@ -34,3 +34,10 @@ grid as round one. Null acceptance and global-loss criteria are unchanged.
 The main method is fixed before this validation; it is not selected using
 new neural teacher-versus-model comparisons. After acceptance, commit a
 separate final confirmation protocol before generating its first bank.
+
+An additional independent tail-validation2 namespace checks the exact
+B=19,999 computation with conservative futility, at threshold .05/795:
+30 trials for localized m=250, localized m=500, and diffuse m=500. Before
+generating these data, fix a lower Wilson >=.80 gate for the two m=500
+cells (matching primary total size); the m=250 tail check is descriptive.
+No universal externally adjusted power assertion is made.

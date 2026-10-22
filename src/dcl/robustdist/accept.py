@@ -32,9 +32,13 @@ def main():
     for r,p in zip(comparisons,adj):r['mcnemar_holm']=float(p)
     pd.DataFrame(comparisons).to_csv(OUT/('paired-power-comparison.csv' if args.round==2 else 'paired-power-comparison-v1.csv'),index=False)
     passed=calibration and all(r['passed'] for r in targets) and global_loss<=.15
+    tail=[]
+    if args.round==2:
+        tail=read(OUT/'tail-validation.json')
+        passed=passed and all(r['ci_low']>=.8 for r in tail if r['m']==500)
     result=dict(passed=bool(passed),method='honest joint-permutation omnibus',calibration_passed=calibration,calibration_cells=cells,
       null_binomial_cut=cut,minimum_null_exceedance_p=float(min(nulls.null_exceedance_p.min(),actual.null_exceedance_p.min())),power_targets=targets,
-      global_observed_power_loss=global_loss,source_hashes=freeze['source_hashes'],note='Targets and method fixed before independent validation; nominal-alpha sensitivity on named alternatives only. No universal power claim.')
+      global_observed_power_loss=global_loss,tail_validation=tail,source_hashes=freeze['source_hashes'],note='Targets and method fixed before independent validation; nominal-alpha sensitivity on named alternatives and a separate strict-tail check. No universal power claim.')
     atomic_json(OUT/('instrument-acceptance.json' if args.round==2 else 'instrument-acceptance-v1.json'),result);print({k:v for k,v in result.items() if k!='source_hashes'},flush=True)
     if not passed:raise RuntimeError('Instrument acceptance failed; no confirmation allowed')
 if __name__=='__main__':main()
