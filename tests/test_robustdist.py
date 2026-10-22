@@ -69,3 +69,10 @@ def test_futility_is_conservative():
     a=joint_test(x,y,g,rng('f-p'),B=299,futility=1)
     b=joint_test(x,y,g,rng('f-p'),B=299)
     assert a['p']>=b['p']
+
+def test_observation_order_with_fixed_ancillary_ids():
+    x,g,_=draw('localized',50,rng('ids-a'));y,_,_=draw('localized',50,rng('ids-b'),1)
+    ids=np.arange(50);a=rng('ids-order-a').permutation(50);b=rng('ids-order-b').permutation(50)
+    r=joint_test(x,y,g,rng('ids-permutation'),B=99,x_ids=ids,y_ids=ids)
+    s=joint_test(x[a],y[b],g,rng('ids-permutation'),B=99,x_ids=ids[a],y_ids=ids[b])
+    assert r['p_values']==s['p_values'] and r['statistics']==s['statistics']

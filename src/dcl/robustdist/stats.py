@@ -135,7 +135,14 @@ def prepare(x,y,g):
     K=np.exp(-distance(z,z));np.fill_diagonal(K,0.)
     return F,K,len(X),len(Y),families,desc
 
-def joint_test(x,y,g,generator,B=19999,futility=None,return_null=False):
+def ordered_samples(x,ids):
+    if ids is None:return x
+    ids=np.asarray(ids)
+    if len(ids)!=len(x) or len(np.unique(ids))!=len(ids):raise ValueError('Unique ancillary observation identifiers required')
+    return x[np.argsort(ids,kind='stable')]
+
+def joint_test(x,y,g,generator,B=19999,futility=None,return_null=False,x_ids=None,y_ids=None):
+    x=ordered_samples(x,x_ids);y=ordered_samples(y,y_ids)
     begin=time.monotonic();F,K,m,n,families,desc=prepare(x,y,g)
     N=m+n;scale=kernel_scale(K,m,n);fs=np.sqrt(1/m+1/n)
     def stats(A):

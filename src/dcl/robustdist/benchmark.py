@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import binom
 from .common import *
-from .controls import draw,CASES
+from .controls import draw,CASES,NULLS,ALTERNATIVES
 from .stats import joint_test,multiscale_test,multinomial_test
 from .classifier import classifier_test
 from dcl.globaldist.analyze import wilson
@@ -29,9 +29,9 @@ def trial(job):
 
 def plan(stage):
     if stage=='pilot':return [(stage,'localized',m,0,200,None) for m in (100,250,500,1000,2000)]
-    if stage=='development':return [(stage,c,m,t,200,None) for c in CASES[4:] for m in (100,250) for t in range(10)]
+    if stage=='development':return [(stage,c,m,t,200,None) for c in ALTERNATIVES for m in (100,250) for t in range(10)]
     if stage=='validation':
-        return [(stage,c,250,t,200,None) for c in CASES[:4] for t in range(400)]+[(stage,c,m,t,200,None) for c in CASES[4:] for m in (100,250,500,1000,2000) for t in range(30)]
+        return [(stage,c,250,t,200,None) for c in NULLS for t in range(400)]+[(stage,c,m,t,200,None) for c in ALTERNATIVES for m in (100,250,500,1000,2000) for t in range(30)]
     if stage=='sensitivity':
         cells=[('localized',D,None) for D in (20,1000)]+[('marginal',200,p) for p in (.6,.7)]+[('diffuse',200,p) for p in (.51,.53)]+[('rare',200,.01)]
         return [(stage,c,m,t,D,e) for c,D,e in cells for m in (250,1000) for t in range(30)]
@@ -46,7 +46,7 @@ def summarize(stage):
     rows=[]
     for ids,a in frame.groupby(['case','m','D','effect','method'],dropna=False):
         k=int(a.reject.sum());n=len(a);lo,hi=wilson(k,n)
-        rows.append(dict(zip(('case','m','D','effect','method'),ids))|dict(trials=n,rejections=k,rate=k/n,ci_low=lo,ci_high=hi,mean_wall_seconds=float(a.seconds.mean()),null_exceedance_p=float(binom.sf(k-1,n,.05))))
+        rows.append(dict(case=str(ids[0]),m=int(ids[1]),D=int(ids[2]),effect=None if pd.isna(ids[3]) else float(ids[3]),method=str(ids[4]),trials=n,rejections=k,rate=k/n,ci_low=lo,ci_high=hi,mean_wall_seconds=float(a.seconds.mean()),null_exceedance_p=float(binom.sf(k-1,n,.05))))
     pd.DataFrame(rows).to_csv(OUT/f'benchmark-{stage}.csv',index=False)
     atomic_json(OUT/f'benchmark-{stage}.json',rows)
     return frame,rows

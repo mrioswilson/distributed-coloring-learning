@@ -3,9 +3,16 @@ import numpy as np
 from dcl.globaldist.core import graph_record
 import networkx as nx
 
-CASES=('point_null','uniform_null','discrete_null','star_null','localized','localized_4','marginal','correlation','higher_order','structural','diffuse','rare','large_support','parity_global')
+NULLS=('point_null','uniform_null','discrete_null','star_null','clique_null')
+ALTERNATIVES=('localized','localized_4','marginal','correlation','higher_order','structural','diffuse','rare','large_support','parity_global')
+CASES=NULLS+ALTERNATIVES
 
 def draw(case,m,r,side=0,D=200,effect=None):
+    if case=='clique_null':
+        import itertools
+        g=graph_record('control-clique4',nx.complete_graph(4),'dense')
+        support=np.array(list(itertools.permutations(range(4))),np.int16)
+        return support[r.integers(0,len(support),m)],g,dict(tv=0.,kind='known equality by clique symmetry; simulated uniform law')
     if case in ('point_null','uniform_null','discrete_null'):
         g=graph_record('control-path3',nx.path_graph(3),'path')
         support=np.array([(0,1,0),(1,0,1),(0,2,0),(1,2,1),(0,2,1),(1,2,0)],np.int16)
