@@ -33,3 +33,10 @@ def test_null_permutation_exchangeability():
         a=rng.integers(0,3,(30,4));b=rng.integers(0,3,(30,4))
         pv.append(mmd_test(a,b,rng,B=99)['p'])
     assert sum(p<=.05 for p in pv)<=12
+
+def test_statistic_matches_direct_unequal_samples():
+    rng=np.random.default_rng(93);x=rng.integers(0,4,(7,5));y=rng.integers(0,4,(9,5))
+    kx=kernel(x,x);ky=kernel(y,y);kxy=kernel(x,y)
+    expected=(kx.sum()-len(x))/(len(x)*(len(x)-1))+(ky.sum()-len(y))/(len(y)*(len(y)-1))-2*kxy.mean()
+    result=mmd_test(x,y,rng,B=9)
+    assert abs(result['mmd2_unbiased']-expected)<1e-12

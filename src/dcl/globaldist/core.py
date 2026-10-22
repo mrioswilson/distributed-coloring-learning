@@ -105,9 +105,11 @@ def kernel(x,y,gamma=1.):
     return np.concatenate([np.exp(-gamma*np.mean(a[:,None,:]!=y[None,:,:],axis=2)) for a in np.array_split(x,max(1,(len(x)+63)//64))])
 
 def mmd_test(x,y,rng,B=19999,gamma=1.):
-    m=len(x);n=len(y)
+    return mmd_from_kernel(kernel(np.concatenate((x,y)),np.concatenate((x,y)),gamma),len(x),len(y),rng,B,gamma)
+
+def mmd_from_kernel(K,m,n,rng,B=19999,gamma=1.):
     if min(m,n)<2:return dict(error='insufficient successful observations')
-    z=np.concatenate((x,y));K=kernel(z,z,gamma);np.fill_diagonal(K,0)
+    K=K.copy();np.fill_diagonal(K,0)
     # U statistic. Fixed sample sizes permit reusing cross row sums.
     def stat(A):
         AK=A@K;aa=np.sum(AK*A,axis=1);ar=AK.sum(1);tot=K.sum()

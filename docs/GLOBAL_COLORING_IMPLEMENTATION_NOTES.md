@@ -1,0 +1,48 @@
+# Implementation and scope notes
+
+The statistical protocol was frozen at commit 80195c5, before every
+confirmatory sample. Sampling/analysis implementation follows that commit;
+this file does not alter any hypothesis, graph, sample size, kernel, cutoff,
+control, seed namespace, selection criterion or multiple-testing family.
+
+The sampler groups independent copies of the same graph in disjoint unions
+with up to 8192 vertices per batch. This is an inference-memory choice, not
+a graph feature. It retains a separate PCG64 state per execution and draws
+fresh independent uniforms for each node and round. Every batch creates new
+colors and a new LocalPaletteAdapter. The before-freeze cost pilot used
+1024 vertices per batch; larger batches amortize fixed kernel-launch overhead.
+Float32 reductions may depend on batch shape. Historical adapter tests and
+fifteen-checkpoint CPU integration probes check action agreement in sampled
+states, not every possible numerical boundary. The realized law being tested
+is the explicitly archived float32 implementation and batching scheme.
+
+The queue charges elapsed process time while holding the GPU lock, including
+teacher/CPU evaluation and overhead; this is conservative relative to time
+actively computing on GPU. Analysis occurs in a separate CPU process. If a
+coordinator is interrupted, recovery conservatively charges time since the
+last active receipt, including downtime. The queue cannot silently reset the
+budget. A timer interrupts sampling near the ceiling; an interrupted batch
+is retained as a technical error rather than replaced with successful runs.
+
+All exact laws use Fraction arithmetic, not neural Monte Carlo. For the MMD
+analysis, a precomputed-kernel entry point avoids recomputing kernels in
+power resampling and is unit-tested against the direct unequal-sample U
+formula. No primary statistic was selected using observed p-values.
+
+The power experiment is the prospectively declared conditional empirical-bank
+resampling procedure. Its results are explicitly not population power with
+full bank uncertainty. This limitation is retained in plots and manuscript.
+No universal or architecture-population equivalence is claimed.
+
+The contextual comparison to archived candidate laws is post-hoc and is
+not a new confirmatory claim. It matches only the identical all-free center
+state of the degree-200 star (palette 201 at the center, 2 at leaves) and
+keeps each checkpoint separate. It does not substitute proposal-law tests
+for final-vector tests or estimate every conditional law along trajectories.
+
+The frozen list has 53 graph entries and 51 unique labeled edge hashes:
+`star3`/`star-d3` and `wheel-d3`/`clique-d3` are duplicate fixed graphs under
+two family entries. Each entry has fresh banks and remains in the prospective
+795-test Holm family. They are not independent graph realizations; retaining
+rather than deleting them avoids changing the family after evaluation begins.
+All summaries identify entries and the report discloses this duplication.

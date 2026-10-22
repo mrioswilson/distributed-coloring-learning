@@ -1,14 +1,11 @@
-# Local-palette study status
+# Global complete-coloring study
 
-Updated 2026-10-22T01:04:45.555427+00:00; branch research/ucgnn-local-palettes; protocol commit f516530.
-No new training. Historical data untouched. No remote push.
+Protocol frozen at 80195c5; base local-palette extension 25cbeb5.
+Branch research/ucgnn-global-distribution, no remote push, no new training.
+The resumable coordinator writes data/ucgnn-global-distribution/queue.json
+and coordinator.log. Primary statistics are precomputed from the fixed
+banks in a separate CPU process. No adaptive design changes.
 
-GPU-process hours: 3.0353 / 12.
-Tasks: {'complete': 160}. Active: None.
-
-See [LOCAL_PALETTES.md](LOCAL_PALETTES.md) for commands and scientific scope.
-Runtime manifest: data/ucgnn-local-palettes/queue.json.
-Per-case outputs: data/ucgnn-local-palettes/graphs/ and distributions/.
-Reports: results/ucgnn-local-palettes/.
-Execution: Completed; no live coordinator is required. Resume is idempotent.
-Explicit resume is required after reboot; no reboot persistence is promised.
+53 graph entries (51 unique labeled graphs), 15 recent checkpoints,
+250 complete runs per generator for each primary entry, 795 planned tests.
+See GLOBAL_DISTRIBUTIONS.md for reproduction and scope.

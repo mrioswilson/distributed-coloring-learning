@@ -1,5 +1,5 @@
 from __future__ import annotations
-import time
+import time,json,hashlib
 import numpy as np
 import torch
 from dcl.localpalettes.adapter import LocalPaletteAdapter,converted_uniform
@@ -7,12 +7,12 @@ from dcl.universal.rules import teacher_offer,exact_commit_labels
 from .core import seed
 
 
-def sample(graph,model,label,stage,m,rounds=128,batch_nodes=2048,offset=0):
+def sample(graph,model,label,stage,m,rounds=128,batch_nodes=8192,offset=0):
     """Independent PCG64 stream per complete run; batching is disjoint-union execution."""
     n=graph['n'];e=np.asarray(graph['edges'],dtype=np.int64).reshape(2,-1);d=np.asarray(graph['degrees']);pal=d+1
     seeds=[seed(stage,graph['id'],label,'run',i) for i in range(offset,offset+m)]
     colors=np.full((m,n),-1,dtype=np.int16);status=np.full(m,3,dtype=np.int8);nr=np.zeros(m,dtype=np.int16)
-    errors=[];start=time.monotonic()
+    errors=[];final_states=[];start=time.monotonic()
     for lo in range(0,m,max(1,batch_nodes//n)):
         hi=min(m,lo+max(1,batch_nodes//n));b=hi-lo;rngs=[np.random.default_rng(s) for s in seeds[lo:hi]]
         c=np.full((b,n),-1,dtype=np.int64)
@@ -42,4 +42,7 @@ def sample(graph,model,label,stage,m,rounds=128,batch_nodes=2048,offset=0):
                 status[lo+j]=2 if (x<0).any() else (0 if (x<pal).all() and (x>=0).all() and (x[e[0]]!=x[e[1]]).all() else 1)
         except Exception as exc:
             colors[lo:hi]=c;errors.append(dict(start=lo,end=hi,error=repr(exc)))
-    return dict(colors=colors,status=status,rounds=nr,seeds=np.asarray(seeds,dtype=np.uint64),seconds=np.array(time.monotonic()-start),errors=np.array(str(errors)))
+        final_states.extend([rng.bit_generator.state for rng in rngs])
+    return dict(first_rng_initial_state=np.array(json.dumps(np.random.default_rng(seeds[0]).bit_generator.state)),
+                final_rng_states_sha256=np.array(hashlib.sha256(json.dumps(final_states,sort_keys=True).encode()).hexdigest()),
+                colors=colors,status=status,rounds=nr,seeds=np.asarray(seeds,dtype=np.uint64),seconds=np.array(time.monotonic()-start),errors=np.array(str(errors)))
