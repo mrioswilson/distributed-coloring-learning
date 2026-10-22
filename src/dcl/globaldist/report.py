@@ -19,7 +19,7 @@ def figures(primary,tv):
         fig.savefig(directory/f'{name}.pdf',bbox_inches='tight');fig.savefig(directory/f'{name}.png',bbox_inches='tight');plt.close(fig)
     laws=read(OUT/'small-laws.json')
     fig,axes=plt.subplots(2,2,figsize=(11,6.5),layout='constrained')
-    for ax,g in zip(axes.flat,('path3','triangle','star3','paw')):
+    for ax,g in zip(axes.flat,('path3','triangle','star3','cycle4')):
         rows=[r for r in laws if r['graph']==g];p=rows[0]['teacher_probabilities'];x=np.arange(len(p))
         for r in rows:
             if r['model']=='Luby':continue
@@ -85,6 +85,15 @@ def figures(primary,tv):
 def report():
     p=pd.DataFrame(read(OUT/'primary.json'));tv=pd.read_csv(OUT/'small-tv.csv');audit=read(OUT/'audit.json');ctrl=read(OUT/'controls.json')
     figures(p,tv)
+    structure=[]
+    for g in read(OUT/'graphs.json'):
+        graph=nx.Graph();graph.add_nodes_from(range(g['n']));graph.add_edges_from(np.array(g['edges']).T.tolist())
+        structure.append(dict(graph=g['id'],n=g['n'],actual_delta=g['delta'],minimum_degree=min(g['degrees']),mean_degree=g['mean_degree'],degree_cv=g['degree_cv'],components=nx.number_connected_components(graph),density=nx.density(graph),bipartite=nx.is_bipartite(graph),sha256=g['sha256']))
+    pd.DataFrame(structure).to_csv(OUT/'graph-structure.csv',index=False)
+    timing=[]
+    for task in read(OUT/'sampling-manifest.json')['tasks']:
+        timing.append(dict(stage=task['stage'],graph=task['graph'],model='Luby' if task['model'] is None else task['model']['label'],runs=task['m'],process_seconds=task['seconds'],seconds_per_run=task['seconds']/task['m']))
+    pd.DataFrame(timing).to_csv(OUT/'resource-costs.csv',index=False)
     clique_ids=[g['id'] for g in read(OUT/'graphs.json') if len(g['edges'][0])==g['n']*(g['n']-1)]
     clique_tests=p[p.graph.isin(clique_ids)];clique_tests.to_csv(OUT/'clique-symmetry-check.csv',index=False)
     p.groupby(['architecture','family','delta','n_vertices'],as_index=False).agg(tests=('p','size'),rejections=('reject_holm','sum'),median_empirical_mmd=('mmd_biased','median'),median_unbiased_mmd2=('mmd2_unbiased','median')).to_csv(OUT/'by-degree-family-size.csv',index=False)
@@ -113,7 +122,7 @@ def report():
     for r in ctrl['summary']:lines.append(f"| {r['kind']} | {r['rejections']}/{r['trials']} | [{r['ci95'][0]:.3f}, {r['ci95'][1]:.3f}] |")
     lines += ['', 'Null control groups are compatible with their preregistered 99% binomial acceptance intervals. A point-mass positive control is intentionally easy; it cannot establish sensitivity against every neural alternative. Teacher/teacher controls include a high-dimensional degree-100 graph. Same-checkpoint controls cover all fifteen policies on path3 only.','',
       '## Exact small graphs','',
-      'All seven supports were enumerated and teacher laws computed using rational absorbing-chain recursion, independently of Monte Carlo estimation banks. The path3 probabilities are 343/1628 (two vectors), 205/1628 (two), and 133/814 (two), rather than 1/6. Uniform proposals therefore do not imply uniformly distributed final solutions. `exact-*.json` archives every rational mass and reachable-state count.','',
+      'All seven supports were enumerated and teacher laws computed using rational absorbing-chain recursion, independently of Monte Carlo estimation banks. The path3 probabilities are 343/1628 (two vectors), 205/1628 (two), and 133/814 (two), rather than 1/6. Uniform proposals therefore do not imply uniformly distributed final solutions. This also occurs with homogeneous lists: on cycle4, each two-color vector has mass 35051/859584 and each three-color vector 36071/573056, giving TV 38111/429792 from the uniform valid-coloring law. `exact-*.json` archives every rational mass and reachable-state count.','',
       'The exact reference is the teacher eventual-absorption law; the empirical banks are conditional on valid completion by 128 rounds. A conservative per-node progress argument bounds their teacher-reference TV difference by n(1-2^(-Delta-1))^128; each small-graph row reports this bound. This distinction is retained even with zero observed cutoffs. The 2000-run independent neural estimation banks give plug-in TV against exact teacher probabilities and finite-support concentration intervals in `small-tv.csv`. TV estimation has sampling bias; intervals, rather than raw point estimates alone, govern interpretation. Exact teacher versus uniform is a separate reference. Teacher Monte Carlo validation is reported in the same table; finite nonzero empirical TV is expected.','',
       '## Statistically supported differences','', '| Graph | Policy | U-statistic MMD² | Raw p | Holm p |','|---|---|---:|---:|---:|']
     for _,r in example.iterrows():lines.append(f"| {r.graph} | {r.model} | {r.mmd2_unbiased:.6g} | {r.p:.5g} | {r.p_holm:.5g} |")
@@ -123,7 +132,7 @@ def report():
     for i,arch in enumerate(COLORS,1):
         a=p[p.architecture==arch];k=int(a.reject_holm.sum())
         lines.append(f"**P{i}. Luby versus {NAMES[arch]}:** "+(f"yes, in {k} of the 265 fixed graph/checkpoint contrasts after Holm correction; this conclusion concerns precisely the cells in `rejected.csv`." if k else 'no primary difference was detected in this battery. This does not establish equality.')+'\n')
-    lines += ['**P4. Graphs, degrees and sizes:** `by-degree-family-size.csv` reports all covered strata; `primary.csv` retains exact graph/checkpoint identities. Regular graphs cover all eight requested degrees at both n=256 and n=512; heterogeneous families extend through degree 200. Stars and cliques have size dictated by degree. One graph per random grid cell limits graph-seed generalization.','',
+    lines += ['**P4. Graphs, degrees and sizes:** `by-degree-family-size.csv` reports all covered strata; `primary.csv` retains exact graph/checkpoint identities. Regular graphs cover all eight requested degrees at both n=256 and n=512; heterogeneous families extend through degree 200. Stars and cliques have size dictated by degree. One graph per random grid cell limits graph-seed generalization. The derived graph-structure.csv reports connectivity and density; degree-2 random regular graphs can be disconnected. The initial resource plan used coarse pilot extrapolation rather than a separately archived per-cell forecast; resource-costs.csv retains all realized cell costs, and the hard budget was enforced independently of test outcomes.','',
       '**P5. Does distinguishability increase with degree at fixed size and family?** Figure 2 and `controlled-degree-changes.csv` describe the fixed-n regular grids separately for every policy. We do not claim a universal monotone relationship: kernel geometry changes with the graph, only one graph is sampled per cell, and degree is not randomized independently of graph construction. Figure 2 and the adjacent changes use unbiased MMD-squared estimates to avoid a degree-dependent positive finite-sample bias of the nonnegative empirical norm; negative estimates are permitted. Descriptive signs and variability are retained rather than replacing them with an unplanned pooled regression.','',
       '**P6. How many independent complete colorings?** Primary detections use 250 per generator. Figure 3 and `power.csv` examine 100, 250, 500, 1000 and 2000 for three prespecified graphs and seed 41000 of each architecture. These are conditional empirical-bank power estimates at nominal alpha .05; their 30-trial intervals omit finite-bank uncertainty and do not estimate Holm-adjusted population power. They cannot justify a universal required sample size.','',
       '**P7. Variation among independent trainings:** Figure 6 and `by-training-seed.csv` show each of the five fixed policies separately. These are five independently trained functions, never a single mixed output distribution. Variation between policies remains distinct from Monte Carlo intervals within each policy. Shared graphs are blocks; no independent graph-by-seed population standard error is claimed.','',
@@ -165,7 +174,7 @@ def report():
     localized=pd.read_csv(OUT/'localized-positive-control.csv')
     lines += ['', '## Known localized alternative: a finite-power failure', '', 'A separately prospective supplementary control holds all 200 star leaves iid uniform on {0,1}; only the center law changes, from uniform on 199 high colors to uniform on 100. Every vector is a valid local-list coloring. Exact global TV is 99/199 (about 0.4975), whereas exact MMD squared is '+str(localized.exact_mmd2.iloc[0])+'. The primary kernel is unchanged. This control demonstrates why characteristicness does not imply useful power for every finite-sample alternative.', '', '| m | Detections / 20 independent experiments | 95% power interval |', '|---:|---:|---|']
     for _,r in localized.iterrows():lines.append(f'| {r.m} | {r.rejections}/20 | [{r.ci_low:.3f}, {r.ci_high:.3f}] |')
-    lines += ['', 'The easy point-mass control and this localized control answer different sensitivity questions. A nonrejected learned law may still differ substantially in TV; no equivalence conclusion follows from these primary tests.']
+    lines += ['', 'For these known localized laws, the decision rule selecting B when the center lies in {2,...,101} has optimal balanced accuracy 149/199 (about .7487). Thus weak MMD power here is not an information-theoretic impossibility of distinguishing the two artificial generators. The easy point-mass control and this localized control answer different sensitivity questions. A nonrejected learned law may still differ substantially in TV; no equivalence conclusion follows from these primary tests.']
     (OUT/'FINAL_REPORT.md').write_text('\n'.join(lines)+'\n')
     # Finite-run success uncertainty separately, no claim of universal correctness.
     successes=[]
@@ -287,7 +296,10 @@ figure sources accompany this provisional section.
 '''
     Path('paper/ucgnn/global-distributions.tex').write_text(section)
     shutil.copy2(OUT/'figures/figure2-degree.pdf','paper/ucgnn/figures/global-degree.pdf')
+    abstract=f'A subsequent complete-coloring-law study used fifteen frozen policies on 53 fixed graph entries and rejected {int(p.reject_holm.sum())}/795 graph--checkpoint equality hypotheses after Holm correction. Exact teacher laws are nonuniform on small paths and cycles, whereas vertex symmetry forces uniform conditional solution laws on cliques for ideal equivariant protocols. Nonrejection alone is not evidence of equivalence.\n'
+    Path('paper/ucgnn/tables/global-abstract.tex').write_text(abstract)
     main=Path('paper/ucgnn/main.tex');text=main.read_text()
+    if 'tables/global-abstract.tex' not in text:text=text.replace('\\end{abstract}', '\\IfFileExists{tables/global-abstract.tex}{\\input{tables/global-abstract.tex}}{}\n\\end{abstract}')
     if '\\input{global-distributions}' not in text:text=text.replace('\\input{local-palettes}','\\input{local-palettes}\n\\input{global-distributions}')
     main.write_text(text)
     executive=f'''# Resumen ejecutivo

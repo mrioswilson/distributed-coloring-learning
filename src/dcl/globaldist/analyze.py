@@ -94,6 +94,7 @@ def primary():
                          teacher_status=np.bincount(teacher['status'],minlength=4).tolist(),
                          model_status=np.bincount(a['status'],minlength=4).tolist(),planned_m=250)
                 atomic_json(path,r)
+            r.update(graph_sha256=g['sha256'],graph_seed=g['graph_seed'],checkpoint_sha256=s['sha256'],palette_mode='local-d-plus-one')
             rows.append(r);struct.append(dict(graph=g['id'],model=s['label'],**structural(y,g)))
             if a['status'].any() or teacher['status'].any():
                 # Finite orthogonal category atoms plus kernel on valid vectors.

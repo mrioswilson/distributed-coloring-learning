@@ -257,3 +257,32 @@ apply to clique initial proposals too, while the conditional ideal complete
 law is nevertheless uniform by symmetry. This gives a precise mechanism
 by which proposal imitation and final-law equivalence diverge. It does not
 claim arbitrary graphs have uniform Luby laws; path3 is a counterexample.
+
+The four-cycle supplies a homogeneous-list counterexample too: all lists
+are {0,1,2}. Exact recursion gives probability 35051/859584 to each of the
+six two-color alternating vectors, and 36071/573056 to each of the twelve
+three-color vectors. They sum to one; TV from Uniform(C(C4)) is
+38111/429792, approximately 0.0886731. Thus teacher nonuniformity is not
+only a consequence of heterogeneous local lists. The vertex/color symmetries
+have two orbits here, unlike the transitive clique case.
+
+In the localized-star construction, let the center's alternative support
+have h=ceil((D-1)/2) of the D-1 high colors. TV=1-h/(D-1) tends to 1/2,
+while the exact MMD squared is
+
+    ((1+a)/2)^D (1-a) (1/h-1/(D-1)), a=exp(-1/(D+1)).
+
+Since ((1+a)/2)^D tends to exp(-1/2), 1-a is asymptotic to 1/D, and
+1/h-1/(D-1) is asymptotic to 1/D, MMD squared is asymptotic to
+exp(-1/2)/D^2. This compares a sequence of different graph spaces, not a
+failure of characteristicness for any fixed graph. It explicitly shows why
+normalized-Hamming MMD cannot be treated as a universal degree-independent
+surrogate for TV, and why sample complexity can increase with degree for
+localized alternatives whose TV does not shrink.
+
+For equal source priors, a classifier selecting Q on a measurable set A has
+balanced accuracy (1+Q(A)-P(A))/2. Maximizing over A gives (1+TV(P,Q))/2.
+For the known localized D=200 alternative, the set 'center in {2,...,101}'
+attains balanced accuracy 149/199, approximately 0.7487. Thus the observed
+MMD sensitivity limitation is not an information-theoretic impossibility of
+distinguishing those two artificial generators when their laws are known.

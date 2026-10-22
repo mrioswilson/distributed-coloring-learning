@@ -89,3 +89,14 @@ computed before this refinement using the original 1e-14 guard; its archived
 values retain that source history. As with any floating-point procedure,
 mathematical consistency is an ideal-arithmetic property, not a guarantee
 for effects below representable numerical precision.
+
+Resource planning used coarse pilot extrapolation and the 8192-node batching
+choice; a separate per-cell forecast table was not archived before launch.
+This is a planning/provenance limitation, not a change to the frozen graph
+or test family. The queue enforces the aggregate ceiling independently of
+outcomes and records realized process seconds for every bank; the report
+exports all of them in resource-costs.csv. The generic fourfold envelope
+sentence in the frozen protocol should not be read as a literal multiplication
+of the worst per-run pilot time by every observation: different graph groups
+have different costs and larger batches amortize launch overhead. Actual
+charged time, not that coarse sentence, governs the resource audit.

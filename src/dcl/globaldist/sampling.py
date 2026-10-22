@@ -41,7 +41,12 @@ def sample(graph,model,label,stage,m,rounds=128,batch_nodes=8192,offset=0):
                 # 0 valid complete; 1 invalid complete; 2 cutoff; 3 technical error.
                 status[lo+j]=2 if (x<0).any() else (0 if (x<pal).all() and (x>=0).all() and (x[e[0]]!=x[e[1]]).all() else 1)
         except Exception as exc:
-            colors[lo:hi]=c;errors.append(dict(start=lo,end=hi,error=repr(exc)))
+            colors[lo:hi]=c
+            # A later failure in another disjoint copy cannot revoke an already finished run.
+            for j,x in enumerate(c):
+                if (x>=0).all():
+                    status[lo+j]=0 if (x<pal).all() and (x[e[0]]!=x[e[1]]).all() else 1
+            errors.append(dict(start=lo,end=hi,error=repr(exc)))
         final_states.extend([rng.bit_generator.state for rng in rngs])
     return dict(first_rng_initial_state=np.array(json.dumps(np.random.default_rng(seeds[0]).bit_generator.state)),
                 final_rng_states_sha256=np.array(hashlib.sha256(json.dumps(final_states,sort_keys=True).encode()).hexdigest()),

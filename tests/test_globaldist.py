@@ -46,3 +46,23 @@ def test_clique_symmetry_exact_teacher():
         if g['id'] in ('edge','triangle'):
             x,p,_,_=exact_teacher(g)
             assert np.allclose(p,np.full(len(p),1/len(p)))
+
+def test_technical_failure_preserves_already_completed_runs(monkeypatch):
+    import dcl.globaldist.sampling as sampling
+    original=sampling.teacher_offer;calls=[]
+    def fail_after_first_round(*args,**kwargs):
+        calls.append(1)
+        if len(calls)>1:raise RuntimeError('injected technical error')
+        return original(*args,**kwargs)
+    monkeypatch.setattr(sampling,'teacher_offer',fail_after_first_round)
+    a=sampling.sample(small_graphs()[0],None,'Luby','technical-unit',100)
+    valid=(a['colors']>=0).all(1)&(a['colors'][:,0]!=a['colors'][:,1])
+    assert valid.any() and (~valid).any()
+    assert np.all(a['status'][valid]==0) and np.all(a['status'][~valid]==3)
+    assert 'injected technical error' in str(a['errors'])
+
+def test_homogeneous_cycle_teacher_is_not_uniform():
+    g=next(g for g in small_graphs() if g['id']=='cycle4');x,p,r,_=exact_teacher(g)
+    assert set(g['degrees'])=={2}
+    assert set(r.values())=={'35051/859584','36071/573056'}
+    assert np.isclose(np.abs(p-1/len(p)).sum()/2,38111/429792)
