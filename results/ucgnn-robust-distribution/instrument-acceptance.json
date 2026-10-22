@@ -1,0 +1,109 @@
+{
+  "calibration_cells": 104,
+  "calibration_passed": true,
+  "global_observed_power_loss": 0.0,
+  "method": "honest joint-permutation omnibus",
+  "minimum_null_exceedance_p": 0.0066649325532144,
+  "note": "Targets and method fixed before independent validation; nominal-alpha sensitivity on named alternatives and a separate strict-tail check. No universal power claim.",
+  "null_binomial_cut": 9.615384615384615e-05,
+  "passed": true,
+  "power_targets": [
+    {
+      "case": "localized",
+      "ci_low": 0.8864866068260312,
+      "m": 250,
+      "passed": true,
+      "power": 1.0,
+      "trials": 30
+    },
+    {
+      "case": "localized_4",
+      "ci_low": 0.8864866068260312,
+      "m": 500,
+      "passed": true,
+      "power": 1.0,
+      "trials": 30
+    },
+    {
+      "case": "correlation",
+      "ci_low": 0.8864866068260312,
+      "m": 1000,
+      "passed": true,
+      "power": 1.0,
+      "trials": 30
+    },
+    {
+      "case": "higher_order",
+      "ci_low": 0.8864866068260312,
+      "m": 1000,
+      "passed": true,
+      "power": 1.0,
+      "trials": 30
+    },
+    {
+      "case": "diffuse",
+      "ci_low": 0.8864866068260312,
+      "m": 1000,
+      "passed": true,
+      "power": 1.0,
+      "trials": 30
+    },
+    {
+      "case": "correlation_remote",
+      "ci_low": 0.8864866068260312,
+      "m": 1000,
+      "passed": true,
+      "power": 1.0,
+      "trials": 30
+    }
+  ],
+  "source_hashes": {
+    "src/dcl/robustdist/__init__.py": "f0b1bb7c5b266ff9c3a017760cf9337ca0f6ce919d03339cca9a8825696c8f96",
+    "src/dcl/robustdist/accept.py": "7190578bad8b4c9e791057cbfcd02604ba2bbcf0290142b5845d6deeb363ebd3",
+    "src/dcl/robustdist/benchmark.py": "a1b93d6a676017233791e8d38cc87ceed60f30e2a0ff9ef0c4d95bcc78530561",
+    "src/dcl/robustdist/classifier.py": "335aec80729fb32c7f1ebbcc29d4920a8ace7d009b535b23debc48feac056492",
+    "src/dcl/robustdist/common.py": "f916778c0b603e8402a73e160e1ccc731cacd7168103abc7347d59ead5eae057",
+    "src/dcl/robustdist/confirmation.py": "5b69abe71445ab827c21c63e726122e8da3987620f8f8d6da64ba7511e29e518",
+    "src/dcl/robustdist/controls.py": "d9a470d39a402638df30c6dcf4d967db9a75bd62a5ac3e3b26f139d659246aa4",
+    "src/dcl/robustdist/controls_v2.py": "e878ca128384367f9b9eeb6198b418ea397048bca7e6675e7a97f10646cc492f",
+    "src/dcl/robustdist/freeze.py": "7f6ee3fa1f8d77c4c9525ba96bd2348021b67bec0fc7ab521007df92a9c59126",
+    "src/dcl/robustdist/null_validation.py": "c239dbaf6bdc806f157deb8fe0995118dba65451e7f1b8ad69ee7f3c1f920657",
+    "src/dcl/robustdist/old_audit.py": "021d55235889603ec41e1008544ae05bb9bd017fcb2b160bbdabfcd0ba77a129",
+    "src/dcl/robustdist/remote_probe.py": "9b193f41940ae8b11f5f683cf3c03e4279347420be35f1df3514606d9062f176",
+    "src/dcl/robustdist/sampling.py": "755dd0b938e71986d92f849b603d545ea56a2638d1b613a0f107359ebbab92a1",
+    "src/dcl/robustdist/stats.py": "f95510202ff2609d29babc8141cb1a454a55be9ac6825da5c12f3a58a228006a",
+    "src/dcl/robustdist/stats_v1.py": "4e3997bb8f6df45f411641def7a1fe331dd642bbbc84590d3d9430cd024d0984"
+  },
+  "tail_validation": [
+    {
+      "case": "localized",
+      "ci_high": 0.9999999999999999,
+      "ci_low": 0.8864866068260312,
+      "detections": 30,
+      "m": 250,
+      "power": 1.0,
+      "threshold": 6.289308176100629e-05,
+      "trials": 30
+    },
+    {
+      "case": "localized",
+      "ci_high": 0.9999999999999999,
+      "ci_low": 0.8864866068260312,
+      "detections": 30,
+      "m": 500,
+      "power": 1.0,
+      "threshold": 6.289308176100629e-05,
+      "trials": 30
+    },
+    {
+      "case": "diffuse",
+      "ci_high": 0.9999999999999999,
+      "ci_low": 0.8864866068260312,
+      "detections": 30,
+      "m": 500,
+      "power": 1.0,
+      "threshold": 6.289308176100629e-05,
+      "trials": 30
+    }
+  ]
+}

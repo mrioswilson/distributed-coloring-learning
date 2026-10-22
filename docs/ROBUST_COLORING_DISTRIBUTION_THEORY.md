@@ -158,6 +158,18 @@ The result records its p-kind, used permutations and exceedances. It is not
 presented as a precise estimate of the full permutation tail. Strong results
 receive all B allocations; no parametric tail extrapolation is used.
 
+For final family decisions, each censored full-B p has a deterministic
+lower bound (L+1)/(B+1) when at least L exceedances were observed. Apply Holm
+to all these optimistic bounds. Recompute the conceptual full-B p, with
+the same RNG tape, for every censored cell rejected by that optimistic Holm.
+Every unrefined cell is nonrejected even with optimistic bounds, hence is
+nonrejected for the true full-B values by Holm monotonicity. All true full-B
+rejections consequently have known exact full-B values. Increasing the
+remaining nonrejected values to one cannot change the rejected sorted prefix.
+Thus the final rejection set equals complete fixed-B Holm computation.
+The reported p-values remain individually valid upper p-values; only
+nonrejected censored cells have an unevaluated exact full-B tail.
+
 ## 6. Fixed-space consistency and its limits
 
 The retained kernel is characteristic, so on a fixed alternative its
@@ -230,6 +242,19 @@ To derive delta, any pending vertex fixes with probability at least
 (1/2)2^-d(v), by participating while all pending neighbors do not. Iterated
 conditional failure and a union bound give the stated tail. Coupling an
 eventual output with completion by R gives the same TV upper bound.
+
+The exact rational reference uses ideal continuous proposals; execution uses
+float64 uniforms and rounded floor(r*k). Under the standard uniform 53-bit
+grid and IEEE nearest-rounding model, grid counting contributes at most
+k/(2*2^53) proposal TV. Rank multiplication can move at most two grid
+positions per integer boundary, giving a conservative combined bound
+4k/2^53. Union over R rounds and vertices gives
+epsilon_fp=4 R sum_v K_v/2^53 for the finite-path laws. Conditioning on
+success with probability at least 1-delta contributes at most
+2 epsilon_fp/(1-delta), by the total-variation conditioning inequality.
+The small-graph intervals include this additional conservative bound, about
+10^-12 or smaller here. It does not certify a neural real-arithmetic law;
+the neural estimand is its actual frozen numerical implementation.
 
 An event chosen on primary data and then estimated on a wholly independent
 explanation bank has conditional binomial sampling laws. Simultaneous

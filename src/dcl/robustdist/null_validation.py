@@ -7,6 +7,8 @@ import pandas as pd
 from .common import *
 from .stats import joint_test,multiscale_test,multinomial_test
 from .classifier import classifier_test
+from .stats_v1 import joint_test as joint_test_v1
+from .classifier_v1 import classifier_test as classifier_test_v1
 from dcl.globaldist.analyze import wilson
 from scipy.stats import binom
 
@@ -19,9 +21,12 @@ def trial(job):
     label,file,t,phase=job;path=OUT/f'{phase}-trials'/f'{label}-{t}.json'
     if path.exists():return read(path)
     z=bank(file);x,y=z[500*t:500*t+250],z[500*t+250:500*t+500];g=next(g for g in graphs() if g['id']=='path3')
-    a=joint_test(x,y,g,rng(phase,label,t,'omni'),B=199)
-    b=multiscale_test(x,y,rng(phase,label,t,'global'),B=199)
-    c=classifier_test(x,y,g);d=multinomial_test(x,y,rng(phase,label,t,'direct'),B=199)
+    joint=joint_test if phase=='null2' else joint_test_v1
+    classify=classifier_test if phase=='null2' else classifier_test_v1
+    namespace='actual-null' if phase=='null' else phase
+    a=joint(x,y,g,rng(namespace,label,t,'omni'),B=199)
+    b=multiscale_test(x,y,rng(namespace,label,t,'global'),B=199)
+    c=classify(x,y,g);d=multinomial_test(x,y,rng(namespace,label,t,'direct'),B=199)
     r=dict(label=label,trial=t,m=250,source_file=file,p_values={**a['p_values'],**b['p_values'],'classifier':c['p'],'multinomial':d['p']})
     atomic_json(path,r);return r
 

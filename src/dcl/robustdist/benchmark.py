@@ -10,6 +10,7 @@ from .controls_v2 import draw as draw_v2,ALTERNATIVES as ALTERNATIVES_V2
 from .stats_v1 import joint_test as joint_test_v1
 from .stats import joint_test,multiscale_test,multinomial_test
 from .classifier import classifier_test
+from .classifier_v1 import classifier_test as classifier_test_v1
 from dcl.globaldist.analyze import wilson
 
 def trial(job):
@@ -21,9 +22,11 @@ def trial(job):
     y,_,_=sampler(case,m,rng(stage,case,m,t,D,effect,'B'),1,D,effect)
     assert valid(x,g).all() and valid(y,g).all()
     raw=DATA/'benchmark'/f'{ident}.npz';save_bank(raw,X=x,Y=y)
-    r=joint_test(x,y,g,rng(stage,case,m,t,D,effect,'omni'),B=199)
+    joint=joint_test if stage.endswith('2') else joint_test_v1
+    classify=classifier_test if stage.endswith('2') else classifier_test_v1
+    r=joint(x,y,g,rng(stage,case,m,t,D,effect,'omni'),B=199)
     q=multiscale_test(x,y,rng(stage,case,m,t,D,effect,'multi'),B=199)
-    c=classifier_test(x,y,g);direct=multinomial_test(x,y,rng(stage,case,m,t,D,effect,'direct'),B=199)
+    c=classify(x,y,g);direct=multinomial_test(x,y,rng(stage,case,m,t,D,effect,'direct'),B=199)
     first=joint_test_v1(x,y,g,rng(stage,case,m,t,D,effect,'first-omnibus'),B=199) if stage.endswith('2') else None
     result=dict(id=ident,stage=stage,case=case,m=m,trial=t,D=D,effect=effect,**meta,
                 p_values={**r['p_values'],**q['p_values'],'classifier':c['p'],'multinomial':direct['p'],**({'omnibus_v1':first['p']} if first is not None else {})},

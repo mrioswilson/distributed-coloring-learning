@@ -8,6 +8,7 @@ from scipy.stats import fisher_exact
 from .common import *
 from .stats import joint_test,multiscale_test,multinomial_test,evaluate,distance,holm
 from .classifier import classifier_test,interval
+from .small import categorical_test
 from dcl.globaldist.core import exact_teacher,tv_interval,mmd_from_kernel
 
 @lru_cache(maxsize=64)
@@ -64,6 +65,8 @@ def comparison(job):
             total_per_generator=m,p=robust['p'],old_p=old['p_values']['old_hamming'],robust=robust,old=old,
             p_lower_bound=21/20000 if robust['p_kind']=='conservative_futility' else robust['p'],
             old_p_lower_bound=21/20000 if old['p_kind']=='conservative_futility' else old['p_values']['old_hamming'],
+            statistic=robust['statistics']['omnibus'],old_mmd2_unbiased=old['statistics']['old_hamming'],p_kind=robust['p_kind'],old_p_kind=old['p_kind'],
+            permutations_used=robust['permutations_used'],old_permutations_used=old['permutations_used'],actual_m_Luby=len(X),actual_m_model=len(Y),
             old_empirical_mmd=norm,old_population_mmd_ci95=[max(0.,norm-radius),min(np.sqrt(2),norm+radius)],
             graph_sha256=g['sha256'],checkpoint_sha256=spec['sha256'],
             statuses_Luby=np.bincount(a['status'][:m],minlength=4).tolist(),statuses_model=np.bincount(b['status'][:m],minlength=4).tolist())
@@ -89,10 +92,10 @@ def refine_one(job):
     X=a['colors'][:m][a['status'][:m]==0];Y=b['colors'][:m][b['status'][:m]==0]
     if side=='robust':
         q=joint_test(X,Y,g,rng('confirmatory',gid,label,m,'omnibus'),B=19999)
-        q.pop('selected');r.update(robust=q,p=q['p'],p_lower_bound=q['p'])
+        q.pop('selected');r.update(robust=q,p=q['p'],p_lower_bound=q['p'],p_kind=q['p_kind'],permutations_used=q['permutations_used'])
     else:
         q=multiscale_test(X,Y,rng('confirmatory',gid,label,m,'old'),B=19999,scales=(1.,))
-        p=q['p_values']['old_hamming'];r.update(old=q,old_p=p,old_p_lower_bound=p)
+        p=q['p_values']['old_hamming'];r.update(old=q,old_p=p,old_p_lower_bound=p,old_p_kind=q['p_kind'],old_permutations_used=q['permutations_used'])
     r[side+'_refined_full_B']=True
     atomic_json(OUT/'confirmation-tests'/f'{gid}__{label}__m{m}.json',r)
     return r
@@ -101,13 +104,19 @@ def small_reference(job):
     gid,label=job;path=OUT/'small-tests'/f'{gid}__{label}.json'
     if path.exists():return read(path)
     g=next(g for g in graphs() if g['id']==gid);support,p,law,states=exact_teacher(g)
-    a,b=loadbank('Luby',gid),loadbank(label,gid);X=a['colors'][:2000][a['status'][:2000]==0];Y=b['colors'][:2000][b['status'][:2000]==0]
-    k=min(len(X),len(Y));direct=multinomial_test(X[:k],Y[:k],rng('small-direct',gid,label),B=19999)
+    M=read(OUT/'freeze.json')['small_estimation_runs']
+    a,b=loadbank('Luby',gid),loadbank(label,gid);X=a['colors'][:M][a['status'][:M]==0];Y=b['colors'][:M][b['status'][:M]==0]
+    k=min(len(X),len(Y));direct=categorical_test(X[:k],Y[:k],rng('small-direct',gid,label),B=19999)
     mapping={tuple(v):i for i,v in enumerate(support)};counts=np.bincount([mapping[tuple(y)] for y in Y],minlength=len(p))
     tv,ci=tv_interval(counts,p,alpha=.05/105);tail=min(1.,g['n']*(1-2.**(-g['delta']-1))**128)
-    ci=[max(0.,ci[0]-tail),min(1.,ci[1]+tail)]
+    # Uniform 53-bit doubles and rounded rank multiplication differ minutely
+    # from ideal continuous proposals. Bound all 128-round rank discretizations,
+    # then conservatively account for conditioning on completion.
+    float_path=4*128*sum(d+1 for d in g['degrees'])/(2.**53)
+    float_conditional=2*float_path/max(1-tail,1e-12)
+    ci=[max(0.,ci[0]-tail-float_conditional),min(1.,ci[1]+tail+float_conditional)]
     r=dict(graph=gid,model=label,architecture=label.split('-s')[0],tv_estimate_vs_exact_eventual_teacher=tv,simultaneous_tv_ci=ci,
-           teacher_cutoff_tv_bound=tail,tolerance=.10,approximate_equivalence=bool(ci[1]<=.1),support_size=len(p),valid_model=len(Y),direct=direct,
+           teacher_cutoff_tv_bound=tail,teacher_float64_tv_bound=float_conditional,tolerance=.05,approximate_equivalence=bool(ci[1]<=.05),support_size=len(p),valid_model=len(Y),direct=direct,
            exact_law=law,reachable_states=states)
     atomic_json(path,r);return r
 

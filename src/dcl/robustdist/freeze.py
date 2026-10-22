@@ -4,20 +4,28 @@ from .common import *
 from dcl.study.storage import now,provenance
 
 EXTENDED=['edge','path3','path4','triangle','cycle4','star3','paw','star-d200','regular-n256-d100']
+SMALL=EXTENDED[:7]
 
 def main():
     assert read(OUT/'instrument-acceptance.json')['passed']
     if (OUT/'freeze.json').exists():raise RuntimeError('Final protocol already frozen; no overwrite')
     assert not (DATA/'queue-confirmatory.json').exists()
+    from .validation_report import generate
+    generate()
     OUT.mkdir(parents=True,exist_ok=True)
     for name in ('graphs.json','checkpoints.json'):shutil.copy2(OLD/'results/ucgnn-global-distribution'/name,OUT/name)
     for s in specs():assert file_hash(s['checkpoint'])==s['sha256']
     old=read(OLD/'data/ucgnn-global-distribution/queue.json');forecasts=[]
+    null=read(DATA/'queue-null.json')
+    rates={'Luby' if t['model'] is None else t['model']['treatment']:t['seconds']/t['m'] for t in null['tasks']}
     for t in old['tasks']:
         if t['stage']!='confirmatory':continue
-        runs=2250 if t['graph'] in EXTENDED else 750
+        runs=20250 if t['graph'] in SMALL else (2250 if t['graph'] in EXTENDED else 750)
+        label='Luby' if t['model'] is None else t['model']['label'];arch='Luby' if t['model'] is None else t['model']['treatment']
+        predicted=4*rates[arch]*runs if t['graph'] in SMALL else runs*t['seconds']/t['m']
         forecasts.append(dict(graph=t['graph'],model='Luby' if t['model'] is None else t['model']['label'],runs=runs,
-            old_reference_runs=t['m'],old_reference_seconds=t['seconds'],predicted_seconds=runs*t['seconds']/t['m'],reserved_seconds=1.5*runs*t['seconds']/t['m']))
+            old_reference_runs=t['m'],old_reference_seconds=t['seconds'],predicted_seconds=predicted,reserved_seconds=1.5*predicted,
+            forecast_reference='fresh path3 null per-run cost times four' if t['graph'] in SMALL else 'original matched graph/checkpoint bank'))
     atomic_json(OUT/'prospective-resource-costs.json',forecasts)
     import pandas as pd
     pd.DataFrame(forecasts).to_csv(OUT/'prospective-resource-costs.csv',index=False)
@@ -72,9 +80,15 @@ Five checkpoints remain separate policies; never pool their output vectors.
 
 ## Samples and independent explanation
 
-Generate 750 new runs per graph/generator. For nine fixed entries generate
-2250 instead: edge,path3,path4,triangle,cycle4,star3,paw,star-d200,
-regular-n256-d100. Primary tests use the first 500 observations per generator:
+Generate 750 new runs per graph/generator; use 2250 on star-d200 and
+regular-n256-d100, and 20,250 on the seven small graphs edge,path3,path4,
+triangle,cycle4,star3,paw. The small allocation is specifically for precise
+finite-support reference inference: with at most 18 solutions, M=20,000
+gives worst simultaneous TV radius .02244 before the cutoff adjustment,
+making a prospective tolerance .05 interpretable. It is not an increase
+of the primary large-graph budget. Cost uses fresh actual path3 self-control
+timings with an additional factor four and the separate50% reserve.
+Primary tests use the first 500 observations per generator:
 250 for selection and 250 for evaluation, by preassigned run index. New
 baseline MMD uses all the same first 500, allowing a matched sample-budget
 comparison. Historical baseline used 250, so its change alone does not
@@ -132,17 +146,31 @@ No fitted tail extrapolation, repeated significance peeking or early
 rejection is allowed. Holm uses all planned hypotheses, including incomplete
 cells assigned conservative p=1 and explicitly marked incomplete.
 
+After initial computation, form optimistic full-B p lower bounds: exact p
+when complete, or 21/20000 after conservative futility. Apply Holm to these
+bounds. Every censored cell that could reject under this optimistic family
+is recomputed with the same seed and full B; then apply Holm to the resulting
+valid upper p-values. By monotonicity, all unrefined cells cannot reject
+under full B. The resulting rejection set equals the conceptual full-B set.
+Thus futility saves computation without changing family rejection decisions.
+Nonrejected censored cells retain explicit lower bounds and conservative
+p=1; they are never presented as precisely evaluated permutation tails.
+
 ## Small-space reference and equivalence
 
 Recompute exact rational eventual teacher laws and supports on seven small
-graphs. Use first 2000 neural rows for finite-support TV estimates. The
+graphs. Use first 20,000 neural rows for finite-support TV estimates. The
 105 graph/checkpoint intervals use simultaneous union-bound coverage at
-95%; add the teacher eventual/cutoff tail bound. Tolerance TV<=.10 is fixed
+95%; add the teacher eventual/cutoff tail bound. Tolerance TV<=.05 is fixed
 here, before confirmation, for this family only. Declare approximate
-equivalence only when its upper bound is <=.10. Direct categorical
-likelihood-ratio tests use conditional permutation calibration, B=19,999,
+equivalence only when its upper bound is <=.05. Direct categorical
+likelihood-ratio tests use exact conditional multivariate-hypergeometric
+count sampling (equivalent to label permutations), B=19,999,
 and a separate 105-hypothesis Holm family. No sparse-cell chi-square
 approximation is used. No TV equivalence claim is planned for large graphs.
+Also include the conservative float64-grid/rank-rounding path bound
+epsilon_fp=4*128*sum_v K_v/2^53, inflated by 2/(1-delta) for conditioning,
+when comparing actual execution to the ideal rational teacher reference.
 
 ## Calibration, power and limits
 
@@ -179,11 +207,14 @@ before remaining budget. No foreign process is stopped. No remote push.
 Keep all incomplete cells and all errors if the cap prevents completion.
 '''
     Path('docs/ROBUST_GLOBAL_DISTRIBUTION_PROTOCOL.md').write_text(text)
-    source={str(p):file_hash(p) for p in Path('src/dcl/robustdist').glob('*.py')}
+    names=('common.py','stats.py','stats_v1.py','controls.py','controls_v2.py','classifier.py','confirmation.py','small.py','sampling.py','freeze.py','accept.py')
+    source={str(Path('src/dcl/robustdist')/name):file_hash(Path('src/dcl/robustdist')/name) for name in names}
+    for name in ('src/dcl/globaldist/sampling.py','src/dcl/localpalettes/adapter.py','src/dcl/paperstudy/models.py'):
+        source[name]=file_hash(name)
     atomic_json(OUT/'freeze.json',dict(created=now(),protocol_sha256=file_hash('docs/ROBUST_GLOBAL_DISTRIBUTION_PROTOCOL.md'),
         graphs_sha256=file_hash(OUT/'graphs.json'),checkpoints_sha256=file_hash(OUT/'checkpoints.json'),source_hashes=source,
         extended_graphs=EXTENDED,primary_hypotheses=795,primary_total_per_generator=500,selection_per_generator=250,evaluation_per_generator=250,
-        explanation_per_generator=250,B=19999,alpha=.05,secondary_hypotheses=405,planned_banks=848,planned_runs=sum(r['runs'] for r in forecasts),
+        explanation_per_generator=250,B=19999,alpha=.05,secondary_hypotheses=405,planned_banks=848,planned_runs=sum(r['runs'] for r in forecasts),small_estimation_runs=20000,tv_tolerance=.05,batch_nodes={'normalized':8192,'deepsets':8192,'transformer':8192},
         forecast_with_reserve_hours=predicted/3600,budget_hours=12,method='honest omnibus version 2',pre_freeze_provenance=provenance()))
     print('Final protocol prepared; commit before new sampling',predicted/3600,flush=True)
 if __name__=='__main__':main()

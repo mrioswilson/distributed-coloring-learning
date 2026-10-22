@@ -3,7 +3,7 @@ from concurrent.futures import ProcessPoolExecutor
 import numpy as np
 from .common import *
 from .controls import draw
-from .stats import joint_test
+from .stats_v1 import joint_test
 
 def one(job):
     case,m,t=job;ids=(137,181) if case=='correlation' else (97,155,197)
