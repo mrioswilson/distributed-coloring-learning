@@ -400,3 +400,14 @@ completa. Los comandos anteriores permiten volver a ejecutar el protocolo.
 Los CSV versionados usan saltos de línea LF según `.gitattributes`; el
 manifiesto conserva tanto su hash versionado como el hash del archivo original.
 Los hashes de `analysis-provenance.json` corresponden al archivo original.
+
+## Cinco réplicas nuevas E1 frente a Luby
+
+La [entrega E1 del 21 de octubre de 2026](results/e1-retrained/2026-10-21/README.md)
+reúne código, configuración, procedencia, tablas y cuatro gráficos de cinco
+réplicas nuevas UniversalColorGNN NORMALIZED/COUNTERFACTUAL, de 16.035 parámetros.
+Son checkpoints nuevos a época 120, separados de los históricos no disponibles.
+Cada réplica logró 20.480/20.480 coloraciones correctas en los grafos aleatorios
+evaluados; ninguno de los 100 tests MMD detectó diferencias con Luby tras Holm.
+Se observan pequeñas diferencias locales: la ausencia de rechazo no demuestra
+equivalencia general. Revisión científica independiente pendiente.

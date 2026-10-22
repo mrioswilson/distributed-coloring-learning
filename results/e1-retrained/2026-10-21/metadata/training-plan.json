@@ -1,0 +1,269 @@
+{
+  "canonical_config_sha256": "e1d5d62747eae6f818d11653006384adced68cafb796a18987932604bef42efd",
+  "checkpoint_selection": "epoch120 of all five replicas, fixed before test, no test selection",
+  "cohort_origin": "newly-trained-replicas",
+  "comparison_plan_sha256": "848dbefc33c587af71baf86826f6e06a32b56de08ced6c67cf9c19d435bbe098",
+  "configs": [
+    {
+      "batch_size": 128,
+      "checkpoint_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80,
+        100,
+        120
+      ],
+      "degrees": [
+        3
+      ],
+      "epochs": 120,
+      "family": "REGULAR",
+      "fixed_neighbor_probability": 0.17,
+      "graphs_per_degree": [
+        800
+      ],
+      "hidden_dim": 64,
+      "lr": 0.001,
+      "max_rounds": 256,
+      "message_dim": 32,
+      "method": "COUNTERFACTUAL",
+      "n": 40,
+      "name": "E1",
+      "protocol": "ucgnn-v1",
+      "seed": 0,
+      "simultaneous_probability": 0.04,
+      "tapes": 3,
+      "val_every": 10,
+      "val_graphs_per_degree": 200,
+      "val_rollouts": 4,
+      "val_sizes": [
+        40,
+        160
+      ],
+      "variant": "NORMALIZED",
+      "warmup": 10
+    },
+    {
+      "batch_size": 128,
+      "checkpoint_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80,
+        100,
+        120
+      ],
+      "degrees": [
+        3
+      ],
+      "epochs": 120,
+      "family": "REGULAR",
+      "fixed_neighbor_probability": 0.17,
+      "graphs_per_degree": [
+        800
+      ],
+      "hidden_dim": 64,
+      "lr": 0.001,
+      "max_rounds": 256,
+      "message_dim": 32,
+      "method": "COUNTERFACTUAL",
+      "n": 40,
+      "name": "E1",
+      "protocol": "ucgnn-v1",
+      "seed": 1,
+      "simultaneous_probability": 0.04,
+      "tapes": 3,
+      "val_every": 10,
+      "val_graphs_per_degree": 200,
+      "val_rollouts": 4,
+      "val_sizes": [
+        40,
+        160
+      ],
+      "variant": "NORMALIZED",
+      "warmup": 10
+    },
+    {
+      "batch_size": 128,
+      "checkpoint_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80,
+        100,
+        120
+      ],
+      "degrees": [
+        3
+      ],
+      "epochs": 120,
+      "family": "REGULAR",
+      "fixed_neighbor_probability": 0.17,
+      "graphs_per_degree": [
+        800
+      ],
+      "hidden_dim": 64,
+      "lr": 0.001,
+      "max_rounds": 256,
+      "message_dim": 32,
+      "method": "COUNTERFACTUAL",
+      "n": 40,
+      "name": "E1",
+      "protocol": "ucgnn-v1",
+      "seed": 2,
+      "simultaneous_probability": 0.04,
+      "tapes": 3,
+      "val_every": 10,
+      "val_graphs_per_degree": 200,
+      "val_rollouts": 4,
+      "val_sizes": [
+        40,
+        160
+      ],
+      "variant": "NORMALIZED",
+      "warmup": 10
+    },
+    {
+      "batch_size": 128,
+      "checkpoint_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80,
+        100,
+        120
+      ],
+      "degrees": [
+        3
+      ],
+      "epochs": 120,
+      "family": "REGULAR",
+      "fixed_neighbor_probability": 0.17,
+      "graphs_per_degree": [
+        800
+      ],
+      "hidden_dim": 64,
+      "lr": 0.001,
+      "max_rounds": 256,
+      "message_dim": 32,
+      "method": "COUNTERFACTUAL",
+      "n": 40,
+      "name": "E1",
+      "protocol": "ucgnn-v1",
+      "seed": 3,
+      "simultaneous_probability": 0.04,
+      "tapes": 3,
+      "val_every": 10,
+      "val_graphs_per_degree": 200,
+      "val_rollouts": 4,
+      "val_sizes": [
+        40,
+        160
+      ],
+      "variant": "NORMALIZED",
+      "warmup": 10
+    },
+    {
+      "batch_size": 128,
+      "checkpoint_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80,
+        100,
+        120
+      ],
+      "degrees": [
+        3
+      ],
+      "epochs": 120,
+      "family": "REGULAR",
+      "fixed_neighbor_probability": 0.17,
+      "graphs_per_degree": [
+        800
+      ],
+      "hidden_dim": 64,
+      "lr": 0.001,
+      "max_rounds": 256,
+      "message_dim": 32,
+      "method": "COUNTERFACTUAL",
+      "n": 40,
+      "name": "E1",
+      "protocol": "ucgnn-v1",
+      "seed": 4,
+      "simultaneous_probability": 0.04,
+      "tapes": 3,
+      "val_every": 10,
+      "val_graphs_per_degree": 200,
+      "val_rollouts": 4,
+      "val_sizes": [
+        40,
+        160
+      ],
+      "variant": "NORMALIZED",
+      "warmup": 10
+    }
+  ],
+  "device": "cpu",
+  "protocol": "e1-replication-v1",
+  "resource_guard": "same disk guard; CPU free-RAM floor 0.35GiB; original default is 2GiB",
+  "sources": {
+    "src/dcl/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/dcl/behavior_statistics.py": "1a55cd160ec7870ef37f0ea858280574593bba4b1cd2a4a7cd4911a58624003c",
+    "src/dcl/counterfactual.py": "8d9adf46bcada7a1b6e81dbbe6f69123803cce83d148ff35f4e929fc95d1dac8",
+    "src/dcl/dagger.py": "de7a3a80d669b83f4644ebd66fa6991126b13e26ad096ee3ecefcaceda29fae6",
+    "src/dcl/dataset.py": "abcb4c377aa51e6cbd1be915eca13dac0bcf0e28c31411aa073207694bee2ea6",
+    "src/dcl/e1_behavior.py": "f9ab89e07c8c9e4337a391d82b457d664f4b91eb4d7d071275f2ed7d4194e86a",
+    "src/dcl/e1_replication.py": "f3637495b304c95c87fbb515a01772914fb9984f70d21411005cded127e2766f",
+    "src/dcl/extrapolation/__init__.py": "0777d25c14597b53969ebfc179d7e9d205382caee162f9357bb015d88deb2838",
+    "src/dcl/extrapolation/__main__.py": "6d8b7d7846a845059d7a3107143f11131f63c5511d669b44085b15ec5e3d2279",
+    "src/dcl/extrapolation/cli.py": "b49f339c6ef55aeb9f81e44caf25507ff218335434c044b1a15b86d1daab02ad",
+    "src/dcl/extrapolation/config.py": "e67984e8adcb51d79d6b84a8cd5ade4fff682510d38546e98e5d4434c49ca843",
+    "src/dcl/extrapolation/data.py": "15a349a9ebe411a68173827a1c90d5be0ff53cf7b2c83fec69c75d65e671a07d",
+    "src/dcl/extrapolation/evaluation.py": "f64d1f1428e30b862576724d8e5cabfbb497997af0b03626013d7a0de958744c",
+    "src/dcl/extrapolation/models.py": "488461bc1d4dc4fd159c88faf0f516ec27958942f2bf2a4990898f3b9084ea1c",
+    "src/dcl/extrapolation/report.py": "c4843b68dd7a2b06ca88fa6ebbe1112279082e9e05f22d36f9ea89ecf71c597d",
+    "src/dcl/extrapolation/runner.py": "e0ef750a5b7574ce9f191d1bd41caeff9f2346da007bfd8d81f9f082f547c433",
+    "src/dcl/graphs.py": "1fc7322bf8696d61e23f9dc7e888aa1136d8809251877ba6284e1e16baae5662",
+    "src/dcl/johansson.py": "7e32921369197742cb1ef7883d99fbad5761b0f6a3b77957ad43bd21a8bfa7b8",
+    "src/dcl/luby_behavior.py": "3bea9da4bb983b15fbd648042cb52569ccbe6583147be2fdeee28cb21286328b",
+    "src/dcl/m4_data.py": "7c425907fb9203e2a939dde2bc7c5859a5352ae8be6a3cf6bdcee7e778a63d71",
+    "src/dcl/m4_models.py": "f11b3b2a6ed89835272de5da24138a91858c378de0239f820c01aee56e1de7c3",
+    "src/dcl/model.py": "31ce7940381448c7305fbe5daa8359f013a71d93cbbb42bc7222f16c9284bec5",
+    "src/dcl/multiteacher/__init__.py": "1e8301a2d7f3488eec7d20a1bcbbbb0174987db5fa73a7a0a20fc47d8650863a",
+    "src/dcl/multiteacher/data.py": "9ada4791717f415b7d6158b91dd7fece7601768f0560dc9e5dd605512a6b28de",
+    "src/dcl/multiteacher/experiment.py": "70de36f09f4c162592a631a1964322834808bebca10cfaa3c136947b2af9b684",
+    "src/dcl/multiteacher/model.py": "df8d7d3506ff7d20cbc70f340f6198cac6c675fca39397675a29e7eb207e0a64",
+    "src/dcl/multiteacher/programs.py": "3cd83e39e888b0f4428fcfecfb2c1760c4bc26e0d8d7182ece9ad4d35788d9d9",
+    "src/dcl/oracle.py": "e7415746bda868807b2b6124ea320a9961a344d8328a950dae54d66fc040d8cd",
+    "src/dcl/staged_data.py": "83cfbf0e32e196325eadfbfd3e7d09b6a4aaee54a592db67b1ece1bd6fdec45b",
+    "src/dcl/staged_models.py": "51e729869dca3bdce71b3576f9e63399b67879dff01c1b3653ab1118ef20e627",
+    "src/dcl/study/__init__.py": "1907c28191524525f0b7c55e48e423c5c39f342924a5c69aa93a8f39482aa6b1",
+    "src/dcl/study/cli.py": "530b506b11bdec5c78410939ad9edbd573db78143b02c6ccc1df87b9892f4036",
+    "src/dcl/study/config.py": "30cc38a984b90c219efc6b986e549772e4b8a5ddecd9eaa99ed0dac5f7287b87",
+    "src/dcl/study/data.py": "22da99083f2bf76ed8408bc47003244d7f0221dd8fc6ddd333b94766dc6498ee",
+    "src/dcl/study/evaluation.py": "7d516a585f39c3fbb764a27941d1a7c4b870306ad045950766be47b6c79b731e",
+    "src/dcl/study/graphs.py": "9979cd184051eb230c4b1dfe3c3d68cf1f56741ec417dd8df4203456b9d9831a",
+    "src/dcl/study/report.py": "7f153f324ffb6ea6172edb6f2383f9944da04341e686767ceeeec1f6320ba1f5",
+    "src/dcl/study/storage.py": "236f57a82bfe4df1b0a49dd7d0925a2857485ee4fa55124b02da712ff22bf5b3",
+    "src/dcl/study/train.py": "cc0ff1ee5aff6e91253aa489d6ca72da06d5df7cd8890ef0afe1b2883888ce41",
+    "src/dcl/universal/__init__.py": "36c3af111b9699a625fa24f73e2e37ca0bc70d7b2dca9516252f966f16f12be6",
+    "src/dcl/universal/cli.py": "f503603e826b52f78a0b799390fb763e2efc0259b242a2ff4ce6e75ec4f0829e",
+    "src/dcl/universal/config.py": "d8811cf701064a2fcc88255730a59ed5e119884beefefdb3e14fae0b11011fdf",
+    "src/dcl/universal/data.py": "80e392fcb367324552f6d67bc5131b718473c6b6c87da784f5341201f3bef065",
+    "src/dcl/universal/diagnostics.py": "d43fb60f91dd3a9de2637cae62fcea0a87fe6dff56d7e5ee185582914e718c5f",
+    "src/dcl/universal/evaluation.py": "9b71cf84e412bf9a5861d9b05bc1f8b0e3a04d3101b1a5794aee723025f9da14",
+    "src/dcl/universal/model.py": "05cad8dcb3b73e853963fd5d46a859640edaec77f4d66c13661639ed04f7e685",
+    "src/dcl/universal/report.py": "8065ca062cc4e60d860149406a41cdb48a624b42685c3c68a10dcd55c9f41270",
+    "src/dcl/universal/rules.py": "af0c07bae78f997ebfcbe8823850709104e09ad474ae2111ce7714b9f72d7338",
+    "src/dcl/universal/train.py": "9a893ce438147c9667b4b2fcb28b78cfad452b2975d905d99c3f328d2148715c"
+  },
+  "threads_per_trainer": 1,
+  "upstream_commit": "1d8857b25e8b654e87351fce33813692c70a6250"
+}

@@ -1,0 +1,79 @@
+{
+  "experiment": "E1",
+  "architecture": "UniversalColorGNN NORMALIZED",
+  "method": "COUNTERFACTUAL",
+  "training_degrees": [
+    3
+  ],
+  "training_nodes": 40,
+  "palette_training": 4,
+  "parameters": 16035,
+  "checkpoint_epoch": 120,
+  "networks": 5,
+  "historical_original": {
+    "executions": 24400,
+    "successes": 24400
+  },
+  "historical_extreme": {
+    "executions": 8629,
+    "successes": 8629,
+    "distinct_graphs": 1765,
+    "max_degree": 500,
+    "max_n": 40960,
+    "coverage_note": "Coverage varies by degree and model; degree 500 is exploratory, not five-seed coverage."
+  },
+  "new_confirmatory": {
+    "executions": 1520,
+    "successes": 1520,
+    "distinct_graph_identities": 288,
+    "graph_tape_cases_per_network": 304,
+    "max_degree": 200
+  },
+  "checkpoints": [
+    {
+      "run": "e1-normalized-counterfactual-s00-90d67ee02dc0",
+      "seed": 0,
+      "checkpoint": "data/ucgnn/runs/e1-normalized-counterfactual-s00-90d67ee02dc0/epoch-120.pt",
+      "sha256": "382448e45d600c9bb2e77ce217e3392185996e67b7a5b95d5d05e6c178cd2eed",
+      "bytes": 432979
+    },
+    {
+      "run": "e1-normalized-counterfactual-s01-c9fdd8747c6c",
+      "seed": 1,
+      "checkpoint": "data/ucgnn/runs/e1-normalized-counterfactual-s01-c9fdd8747c6c/epoch-120.pt",
+      "sha256": "f611a642428c98161f10ec1f394597324945f69320e7fdc6f0a26f0f2b386995",
+      "bytes": 433171
+    },
+    {
+      "run": "e1-normalized-counterfactual-s02-1db86150aab5",
+      "seed": 2,
+      "checkpoint": "data/ucgnn/runs/e1-normalized-counterfactual-s02-1db86150aab5/epoch-120.pt",
+      "sha256": "7abc38c119d603cd18309ab4d9c81a973435c3916fed8a84e114709eb5a4d0bc",
+      "bytes": 433235
+    },
+    {
+      "run": "e1-normalized-counterfactual-s03-8892b5b12af8",
+      "seed": 3,
+      "checkpoint": "data/ucgnn/runs/e1-normalized-counterfactual-s03-8892b5b12af8/epoch-120.pt",
+      "sha256": "b90a71da5698b726f387b6a2b618bb383533149860e18ffe124685eb2469fadb",
+      "bytes": 433171
+    },
+    {
+      "run": "e1-normalized-counterfactual-s04-80469181a736",
+      "seed": 4,
+      "checkpoint": "data/ucgnn/runs/e1-normalized-counterfactual-s04-80469181a736/epoch-120.pt",
+      "sha256": "086c75b1f303b7584410e672d1e457043b8b46404f13602fd1e834736191318f",
+      "bytes": 433171
+    }
+  ],
+  "sources": {
+    "configs/ucgnn/e1.json": "e1d5d62747eae6f818d11653006384adced68cafb796a18987932604bef42efd",
+    "configs/ucgnn/replication.json": "9815e04cb6726cdaca76b5b9cb46e35dd6a2dd510ad64bc41412b8b58b6597e0",
+    "src/dcl/universal/model.py": "05cad8dcb3b73e853963fd5d46a859640edaec77f4d66c13661639ed04f7e685",
+    "src/dcl/universal/train.py": "9a893ce438147c9667b4b2fcb28b78cfad452b2975d905d99c3f328d2148715c",
+    "results/ucgnn/2026-10-20-final/INFORME.md": "21b9deeb1ba02ac54b081e3085d41e6621ea9daf2162f97fe091c79bc0289638",
+    "results/ucgnn/2026-10-20-final/run-inventory.csv": "98ad54291758f9e4a02b84191fb41138ad78db62e4aca5664b92ede72b96bee1",
+    "results/ucgnn/2026-10-20-final/extreme-by-model.csv": "8ef2638d1add170973c97632eab0e7a233b25cb41115082cb59ce584a3fbdbb0",
+    "results/ucgnn-paper-study/cases.csv": "ac5e0b3691841e449dc3f0d3d462474f92a0b4fd7922c00dacb0ae2349e33967"
+  }
+}
