@@ -64,7 +64,7 @@ checkpoint, graph, size and degree. CSV tables are compact exports; JSON
 retains list-valued intervals and status counts. `rejected.csv` and
 `not-rejected.csv` retain both outcomes. `exact-*.json`, `small-tv.csv`,
 `power.csv`, `classifier.json`, `structural.json`, `controls.json`,
-`success.json`, `audit.json` and six PDF/PNG figures are regenerated from
+`success.json`, `audit.json` and six main plus two supplementary PDF/PNG figures are regenerated from
 raw archived arrays. Classifier and power banks have distinct RNG namespaces.
 
 Every checkpoint is analyzed separately. Architecture summaries aggregate

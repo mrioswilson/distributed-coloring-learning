@@ -122,7 +122,7 @@ def report():
     example=p[p.reject_holm].sort_values(['p_holm','graph','model']).head(12)
     lines=['# Global complete-coloring distributions: final technical and statistical report','',
       'No new networks were trained. Historical files were read only. No remote push was performed.','',
-      f"The prospective primary family contains **795 tests on 53 fixed graphs and 15 frozen policies**, with 250 fresh complete runs per generator per graph. **{int(p.reject_holm.sum())}/795** reject after Holm correction at familywise alpha 0.05. These are conditional-on-valid-completion comparisons. Nonrejection does not prove equality.",'',
+      f"The prospective primary family contains **795 tests on 53 fixed graph entries and 15 frozen policies**, with 250 fresh complete runs per generator per graph. **{int(p.reject_holm.sum())}/795** reject after Holm correction at familywise alpha 0.05. These are conditional-on-valid-completion comparisons. Nonrejection does not prove equality.",'',
       '| Architecture | Tests | Holm rejections | Nonrejections | Empirical MMD range across graphs |','|---|---:|---:|---:|---:|',*aggregate,'',
       'There are 53 planned graph entries but 51 unique labeled graphs: star3/star-d3 and wheel-d3/clique-d3 are duplicate graph hashes with fresh banks. They are not independent graph replicates. The bipartite-n256-d3 entry has actual maximum degree 4, correctly recorded in the frozen graph manifest; its suffix is the generation target, not its measured degree. The MMD ranges above describe this finite battery. They are not universally comparable normalized distances across different graphs. Every individual test, effect interval and adjusted p-value is in `primary.json` and `primary.csv`.','',
       '## Execution and success', '',f"The audit verified {audit['banks']} banks and **{audit['independent_run_seeds']:,} distinct execution seeds**. Status totals [valid, invalid-complete, cutoff, technical] = {audit['statuses']}. Charged GPU-process time, including pilot, teacher sampling and lock-held overhead: **{audit['gpu_hours']:.3f} / 12 hours**.",'',
@@ -152,7 +152,7 @@ def report():
       'Population MMD intervals use a conservative distribution-free RKHS mean bound. They are pointwise, may be wide, and are not exact TV distances on large spaces. Approximate equivalence tolerance MMD<=0.02 was specified prospectively; cells satisfying the upper-bound criterion: '+str(int(p.equivalent_mmd_002.sum()))+'. Failure of this criterion is not evidence of inequivalence. With only 19,999 permutations, p-values have finite resolution; strong alternatives can share the minimum raw p. Holm depends on the whole planned family, not only detected cases.','',
       'Success-frequency intervals and unconditional/coarsened failure tests are separate artifacts. If all runs succeed, this records zero observed failures rather than probability-zero failure. No training, calibration or classifier test split is reused. Power resampling repeats may coincidentally draw an identical vector, which is allowed by the empirical law and does not merge RNG streams.','',
       '## Files and reproduction','',
-      'See `GLOBAL_DISTRIBUTIONS.md` at the worktree root for exact commands. `sampling-manifest.json` contains all raw-bank paths and SHA256 hashes; `audit.json` checks every archive and seed, and replays three primary tests. `freeze.json` records the immutable protocol and checkpoint/graph hashes. `docs/GLOBAL_COLORING_DISTRIBUTIONS_THEORY.md` gives full finite-space proofs and the verified primary MMD reference. All six PDF/PNG figures regenerate from archived data.']
+      'See `GLOBAL_DISTRIBUTIONS.md` at the worktree root for exact commands. `sampling-manifest.json` contains all raw-bank paths and SHA256 hashes; `audit.json` checks every archive and seed, and replays three primary tests. `freeze.json` records the immutable protocol and checkpoint/graph hashes. `docs/GLOBAL_COLORING_DISTRIBUTIONS_THEORY.md` gives full finite-space proofs and the verified primary MMD reference. The six main and two supplementary PDF/PNG figures regenerate from archived data.']
     p[p.reject_holm].to_csv(OUT/'rejected.csv',index=False);p[~p.reject_holm].to_csv(OUT/'not-rejected.csv',index=False)
     # Post-hoc context: exact same all-free central star state, not a new test.
     old=Path('/workspaces/AlgoLearning/ucgnn-local-palette-study/results/ucgnn-local-palettes/candidate-laws.csv')
@@ -297,7 +297,7 @@ comparable. One graph per grid cell limits graph-seed generalization.}
 \end{figure}
 
 All per-graph, checkpoint, raw and Holm-adjusted $p$-values are archived in
-\texttt{results/ucgnn-global-distribution/primary.csv}; the accompanying
+\texttt{primary.csv} in the study results; the accompanying
 \texttt{rejected.csv} identifies exactly the cells supporting rejection.
 Five-policy plots retain training variability separately from within-policy
 Monte Carlo uncertainty. Structural diagnostics describe color usage,
@@ -311,8 +311,8 @@ star and regular power graphs. Binomial intervals retain finite-trial
 uncertainty. A known-law supplementary star alternative has global TV $99/199$ while
 its kernel effect is attenuated by $1-e^{-1/201}$; its independent detection
 trials document finite-power limitations despite characteristicness.
-Power curves over 100--2,000 observations on larger graphs use independent empirical banks
-for three prespecified graphs and seed 41000. Their resampling intervals are
+Separate resampling power curves over 100--2,000 observations use empirical banks
+for three prespecified graphs and seed 41000. Their intervals are
 conditional on those banks and omit uncertainty in their population laws;
 they describe nominal, not Holm-adjusted, detection rates.
 
@@ -343,9 +343,9 @@ Una demostración por simetría establece igualdad de las leyes condicionadas al
 
 Se verificaron {audit['independent_run_seeds']:,} semillas distintas y {audit['banks']} bancos; estados [válidas, inválidas, cutoff, error] = {audit['statuses']}. Tiempo de proceso cargado: {audit['gpu_hours']:.3f}/12 horas. No hubo entrenamiento nuevo ni push.
 
-Luby no es uniforme sobre las soluciones del camino de tres vértices. La comparación principal usa vectores completos etiquetados, no colores individuales ni estadísticas marginales. Los resultados no rechazados no prueban igualdad. Los efectos entre grafos no son distancias universalmente normalizadas. Las curvas de grafos grandes son condicionales a bancos empíricos; el suplemento del camino usa ensayos independientes. Un control de estrella con TV conocida cercana a 0,5 documenta falta de potencia para diferencias localizadas. No se establece un tamaño muestral universal. No se afirma una tendencia monótona con el grado ni generalización a todas las semillas o grafos.
+Luby no es uniforme sobre las soluciones del camino de tres vértices. La comparación principal usa vectores completos etiquetados, no colores individuales ni estadísticas marginales. Los resultados no rechazados no prueban igualdad. Los efectos entre grafos no son distancias universalmente normalizadas. Las curvas por remuestreo son condicionales a bancos empíricos; el suplemento usa ensayos independientes en el camino para toda la grilla y en dos grafos grandes con m=100 y 250. Un control de estrella con TV conocida cercana a 0,5 documenta falta de potencia para diferencias localizadas. No se establece un tamaño muestral universal. No se afirma una tendencia monótona con el grado ni generalización a todas las semillas o grafos.
 
-El informe completo responde P1–P10, conserva todos los resultados negativos y especifica las limitaciones. Véanse FINAL_REPORT.md, primary.csv, small-tv.csv y las seis figuras.
+El informe completo responde P1–P10, conserva todos los resultados negativos y especifica las limitaciones. Véanse FINAL_REPORT.md, primary.csv, small-tv.csv y las seis figuras principales con dos suplementos.
 '''
     (OUT/'RESUMEN_EJECUTIVO.md').write_text(executive)
     print(executive)

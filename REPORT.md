@@ -1,3 +1,16 @@
+# Distribuciones de coloraciones completas: estudio terminado
+
+El informe de este worktree está en
+[FINAL_REPORT.md](results/ucgnn-global-distribution/FINAL_REPORT.md), con respuestas
+P1–P10, resultados estadísticos y limitaciones. El
+[resumen ejecutivo](results/ucgnn-global-distribution/RESUMEN_EJECUTIVO.md) está en
+español. [GLOBAL_DISTRIBUTIONS.md](GLOBAL_DISTRIBUTIONS.md) contiene las instrucciones
+de reproducción. No se entrenaron redes nuevas ni se hizo push.
+
+El texto siguiente se conserva como referencia histórica del estudio anterior.
+
+---
+
 # Estudio sistemático del aprendizaje supervisado de coloración distribuida Δ+1
 
 **Estudio completado el 17 de octubre de 2026, hora de Chile.** El
