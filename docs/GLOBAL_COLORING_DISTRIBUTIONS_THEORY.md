@@ -170,3 +170,31 @@ Primary verified reference: Gretton et al. (2012), *A Kernel Two-Sample Test*,
 JMLR 13:723–773, https://www.jmlr.org/papers/v13/gretton12a.html . MMD and
 kernel two-sample testing are established methods; the finite-space kernel
 proof and the explicit teacher recursion above specialize them to this study.
+
+## F. A localized alternative can have small kernel effect at large TV
+
+Suppose P=p_v product R and Q=q_v product R, with independent coordinate v
+and remaining coordinates. Factor the product kernel into its v and remaining
+parts. Expanding MMD gives
+
+    MMD_k^2(P,Q) = E_{Z,Z'~R} k_{-v}(Z,Z') (1-a)||p_v-q_v||_2^2,
+    a=exp(-gamma/n).
+
+Indeed the one-coordinate Gram matrix is (1-a)I+a11^T; the 11^T term
+vanishes because the entries of p_v-q_v sum to zero. Thus 1-a is of order
+1/n even when TV(p_v,q_v) is large. This statement assumes the displayed
+factorization; it is not assumed for the learned laws.
+
+There is a valid-coloring example: on a degree-D star, leaves are independent
+uniform {0,1}, while the center is independent and takes colors in {2,...,D}.
+All outputs satisfy the local lists and all edges. At D=200 let p be uniform
+on the 199 high colors and q uniform on the first 100 of them. Their global
+TV is 99/199, by direct summation (the common leaf law factors out).
+Their exact MMD squared at gamma=1 is
+
+    ((1+a)/2)^200 (1-a) (1/100 - 1/199), a=exp(-1/201).
+
+This is strictly positive but small. Characteristicness does not guarantee
+high finite-sample power for this alternative, nor make MMD a universal TV
+surrogate across graph sizes. It motivates the explicitly supplementary
+localized positive-control diagnostic without changing the primary kernel.

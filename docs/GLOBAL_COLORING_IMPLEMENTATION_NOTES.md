@@ -46,3 +46,17 @@ two family entries. Each entry has fresh banks and remains in the prospective
 795-test Holm family. They are not independent graph realizations; retaining
 rather than deleting them avoids changing the family after evaluation begins.
 All summaries identify entries and the report discloses this duplication.
+
+The exact teacher reference is its eventual absorbing law. The primary
+empirical test compares conditional completion-by-128 laws. On a small graph,
+each still-pending vertex participates and sees all its neighbors
+nonparticipating with probability at least 2^(-d(v)-1), then necessarily
+commits. Iterating the conditional bound and taking a union bound gives
+Pr(teacher cutoff by R) <= n*(1-2^(-Delta-1))^R, capped at one. By decomposing
+the eventual law according to completion by R, its TV distance to the
+completion-by-R conditional law is at most this tail probability. The
+small-TV table reports this conservative reference discrepancy bound;
+its TV intervals directly target the exact eventual teacher reference.
+For degree-three four-node graphs this bound is about 0.001, below the
+reported Monte Carlo uncertainty; absence of observed cutoffs alone is
+never used to assert the two mathematical laws are identical.

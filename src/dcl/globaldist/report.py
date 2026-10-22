@@ -46,6 +46,15 @@ def figures(primary,tv):
         ax.set(xscale='log',ylim=(-.03,1.03),title=g,xlabel='Complete observations per generator',ylabel='Conditional bank detection rate')
     axes[0].legend(fontsize=6);fig.suptitle('Seed 41000; nominal alpha=.05; 30 resamples; intervals omit bank uncertainty',fontsize=10)
     save(fig,'figure3-power')
+    independent=pd.read_csv(OUT/'independent-power.csv')
+    fig,ax=plt.subplots(figsize=(6.5,4),layout='constrained')
+    for arch,c in COLORS.items():
+        a=independent[independent.architecture==arch].sort_values('m')
+        ax.plot(a.m,a.independent_population_power,'o-',color=c,label=NAMES[arch])
+        ax.fill_between(a.m,a.ci_low,a.ci_high,color=c,alpha=.15)
+    ax.set(xscale='log',ylim=(-.03,1.03),xlabel='Complete observations per generator',ylabel='Independent-experiment detection rate',title='Path3: independent population-power supplement')
+    ax.legend(fontsize=7);fig.suptitle('20 disjoint experiments per m; seed 41000; nominal alpha=.05',fontsize=9)
+    save(fig,'figure3b-independent-power')
     piv=primary.pivot(index='graph',columns='model',values='p_holm');fig,ax=plt.subplots(figsize=(10,13),layout='constrained')
     im=ax.imshow(-np.log10(np.maximum(piv.values,1e-6)),aspect='auto',vmin=0,vmax=4,cmap='viridis')
     ax.set_xticks(range(len(piv.columns)),piv.columns,rotation=70,ha='right',fontsize=7);ax.set_yticks(range(len(piv.index)),piv.index,fontsize=6)
@@ -101,7 +110,7 @@ def report():
     lines += ['', 'Null control groups are compatible with their preregistered 99% binomial acceptance intervals. A point-mass positive control is intentionally easy; it cannot establish sensitivity against every neural alternative. Teacher/teacher controls include a high-dimensional degree-100 graph. Same-checkpoint controls cover all fifteen policies on path3 only.','',
       '## Exact small graphs','',
       'All seven supports were enumerated and teacher laws computed using rational absorbing-chain recursion, independently of Monte Carlo estimation banks. The path3 probabilities are 343/1628 (two vectors), 205/1628 (two), and 133/814 (two), rather than 1/6. Uniform proposals therefore do not imply uniformly distributed final solutions. `exact-*.json` archives every rational mass and reachable-state count.','',
-      'The 2000-run independent neural estimation banks give plug-in TV against exact teacher probabilities and finite-support concentration intervals in `small-tv.csv`. TV estimation has sampling bias; intervals, rather than raw point estimates alone, govern interpretation. Exact teacher versus uniform is a separate reference. Teacher Monte Carlo validation is reported in the same table; finite nonzero empirical TV is expected.','',
+      'The exact reference is the teacher eventual-absorption law; the empirical banks are conditional on valid completion by 128 rounds. A conservative per-node progress argument bounds their teacher-reference TV difference by n(1-2^(-Delta-1))^128; each small-graph row reports this bound. This distinction is retained even with zero observed cutoffs. The 2000-run independent neural estimation banks give plug-in TV against exact teacher probabilities and finite-support concentration intervals in `small-tv.csv`. TV estimation has sampling bias; intervals, rather than raw point estimates alone, govern interpretation. Exact teacher versus uniform is a separate reference. Teacher Monte Carlo validation is reported in the same table; finite nonzero empirical TV is expected.','',
       '## Statistically supported differences','', '| Graph | Policy | U-statistic MMD² | Raw p | Holm p |','|---|---|---:|---:|---:|']
     for _,r in example.iterrows():lines.append(f"| {r.graph} | {r.model} | {r.mmd2_unbiased:.6g} | {r.p:.5g} | {r.p_holm:.5g} |")
     if not len(example):lines.append('| No primary rejection | — | — | — | — |')
@@ -130,6 +139,24 @@ def report():
         context=p[p.graph=='star-d200'].merge(prior[['model','tv','tv_lower','tv_upper']],on='model',how='inner')
         context['prior_candidate_csv_sha256']=file_hash(old)
         context.to_csv(OUT/'proposal-context.csv',index=False)
+    lines += ['', '## Observed degree contrasts and structural diagnostics', '']
+    dd=pd.DataFrame(differences)
+    for (arch,n),a in dd.groupby(['architecture','n']):
+        positive=int((a.empirical_mmd_change>0).sum())
+        lines.append(f'{NAMES[arch]}, regular n={n}: {positive}/{len(a)} adjacent-degree empirical MMD changes are positive across the five separately plotted policies. These signs are descriptive estimates, without a monotonic population claim.')
+    st=pd.DataFrame(read(OUT/'structural.json'))
+    baseline=st[st.model=='Luby'].set_index('graph').used_mean
+    st=st[st.model!='Luby'].copy();st['used_colors_difference']=st.used_mean-st.graph.map(baseline)
+    top=st.reindex(st.used_colors_difference.abs().sort_values(ascending=False).index).head(8)
+    lines += ['', '| Graph | Policy | Mean used-colors difference (model minus Luby) |', '|---|---|---:|']
+    for _,r in top.iterrows():lines.append(f'| {r.graph} | {r.model} | {r.used_colors_difference:.3f} |')
+    lines += ['', 'These are observed run-level mean shifts, not separately calibrated structural discoveries or causal mechanisms.', '', '## Independent population-power supplement', '']
+    ind=pd.read_csv(OUT/'independent-power.csv')
+    lines += ['The prospective supplement in `docs/GLOBAL_COLORING_POWER_SUPPLEMENT.md` fixes a new 77,000-run bank per generator on path3, split into disjoint blocks for twenty independent experiments at each m. Its rates estimate population detection probability for the specified policies on this graph. Teacher blocks are shared across policies but never across trials or m. Figure 3b and `independent-power.csv` report broad binomial intervals; high-degree power remains only conditionally estimated.', '', '| Policy | m | Rejections / 20 | 95% population-power interval |', '|---|---:|---:|---|']
+    for _,r in ind.iterrows():lines.append(f'| {r.model} | {r.m} | {r.rejections}/20 | [{r.ci_low:.3f}, {r.ci_high:.3f}] |')
+    if old.exists() and len(context):
+        matched=context[(context.tv_lower>0)&(~context.reject_holm)]
+        lines += ['', f'P8 contextual result: {len(matched)} of fifteen star/checkpoint comparisons have a previous initial-center proposal-TV lower bound above zero and no Holm rejection of the complete-vector law here. This is a post-hoc match of the identical initial state, not evidence of equal global laws. The complete fifteen-row comparison and original source hash are in proposal-context.csv.']
     (OUT/'FINAL_REPORT.md').write_text('\n'.join(lines)+'\n')
     # Finite-run success uncertainty separately, no claim of universal correctness.
     successes=[]
@@ -206,7 +233,10 @@ Monte Carlo uncertainty. Structural diagnostics describe color usage,
 class sizes, degree-conditioned color frequencies, co-color probabilities
 and induced partitions; none substitutes for the labeled-vector hypothesis.
 Secondary classifiers use independent training, validation and test banks.
-Power curves over 100--2,000 observations use independent empirical banks
+A separately prospective supplement measures population power on the
+three-vertex path using twenty disjoint experiments at each sample size and
+seed 41000 of each architecture; binomial intervals retain its finite-trial
+uncertainty. Power curves over 100--2,000 observations on larger graphs use independent empirical banks
 for three prespecified graphs and seed 41000. Their resampling intervals are
 conditional on those banks and omit uncertainty in their population laws;
 they describe nominal, not Holm-adjusted, detection rates.

@@ -23,10 +23,12 @@ export CUBLAS_WORKSPACE_CONFIG=:4096:8
 PY=/workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python
 $PY -m pytest -q tests/test_globaldist.py tests/test_globaldist_integration.py
 $PY -m dcl.globaldist.run
+$PY -m dcl.globaldist.supplement
 $PY -m dcl.globaldist.analyze
+$PY -c "from dcl.globaldist.analyze import independent_power; independent_power()"
 $PY -m dcl.globaldist.audit
 $PY -m dcl.globaldist.report
-$PY -m pytest -q
+$PY -m pytest -q tests/test_globaldist.py tests/test_globaldist_integration.py tests/test_localpalettes.py tests/test_graphs.py tests/test_oracle.py
 /workspaces/AlgoLearning/ucgnn-paper-study/.tools/tectonic -X compile --keep-logs paper/ucgnn/main.tex
 ```
 
@@ -69,3 +71,8 @@ test results and effects, never vectors from different policies. Graphs are
 fixed blocks, not independent replicas of graph populations. Nonrejection
 is not equality. Power estimates are conditional on empirical banks and
 have limited scope. Large-graph MMD is not exact TV.
+
+The regression command above is read only. Several unrelated historical tests
+exercise training/resume by fitting temporary neural models; they are excluded
+to honor the no-training instruction. The changed modules and reused local
+palette adapter receive the unit/integration coverage listed above.

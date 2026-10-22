@@ -132,7 +132,8 @@ def small():
             counts=np.array([np.sum((y==xx).all(1)) for xx in x]);assert counts.sum()==len(y)
             tv,ci=tv_interval(counts,p)
             rows.append(dict(graph=g['id'],model=label,n=len(y),tv=tv,tv_ci_low=ci[0],tv_ci_high=ci[1],
-                             tv_uniform=float(np.abs(counts/len(y)-1/len(x)).sum()/2),support_size=len(x)))
+                             tv_uniform=float(np.abs(counts/len(y)-1/len(x)).sum()/2),support_size=len(x),
+                             teacher_reference='eventual-absorption',teacher_cutoff_tv_bound=min(1,g['n']*(1-2.**(-g['delta']-1))**128)))
             laws.append(dict(graph=g['id'],model=label,support=x.tolist(),probabilities=(counts/len(y)).tolist(),counts=counts.tolist(),teacher_probabilities=p.tolist()))
     atomic_json(OUT/'small-laws.json',laws);pd.DataFrame(rows).to_csv(OUT/'small-tv.csv',index=False)
     return rows
@@ -199,7 +200,6 @@ def main():
     if any(r['compatible_with_nominal_null'] is False for r in c['summary']):
         raise RuntimeError('Negative control calibration requires investigation; raw controls retained')
     primary();small();classifier();power()
-if __name__=='__main__':main()
 
 def independent_power():
     target=OUT/'independent-power.json'
@@ -221,3 +221,29 @@ def independent_power():
         assert offset==77000
     atomic_json(target,rows);pd.DataFrame(rows).drop(columns=['p_values','actual_success_sizes']).to_csv(OUT/'independent-power.csv',index=False)
     return rows
+
+
+def localized_control():
+    target=OUT/'localized-positive-control.json'
+    if target.exists():return read(target)
+    from dcl.study.storage import atomic_write
+    rows=[];a=np.exp(-1/201);exact_mmd2=((1+a)/2)**200*(1-a)*(1/100-1/199)
+    for m in (100,250,500,1000,2000):
+        xs=[];ys=[];pv=[];allseeds=[]
+        for trial in range(20):
+            sa=seed('localized-control',m,trial,'A');sb=seed('localized-control',m,trial,'B')
+            ra=np.random.default_rng(sa);rb=np.random.default_rng(sb)
+            x=ra.integers(0,2,(m,201),dtype=np.int16);y=rb.integers(0,2,(m,201),dtype=np.int16)
+            x[:,0]=ra.integers(2,201,m);y[:,0]=rb.integers(2,102,m)
+            assert np.all(x[:,0,None]!=x[:,1:]) and np.all(y[:,0,None]!=y[:,1:])
+            r=mmd_test(x,y,np.random.default_rng(seed('localized-control-perm',m,trial)),B=199)
+            pv.append(r['p']);xs.append(x);ys.append(y);allseeds.append([sa,sb])
+        file=ROOT/f'localized-positive-m{m}.npz';atomic_write(file,lambda f:np.savez_compressed(f,A=np.stack(xs),B=np.stack(ys),seeds=np.array(allseeds,dtype=np.uint64)))
+        k=sum(p<=.05 for p in pv);ci=wilson(k,20)
+        rows.append(dict(m=m,trials=20,rejections=k,power=k/20,ci_low=ci[0],ci_high=ci[1],p_values=pv,
+                         exact_tv=99/199,exact_mmd2=exact_mmd2,file=str(file),sha256=file_hash(file)))
+        print('Localized known alternative',m,k,flush=True)
+    atomic_json(target,rows);pd.DataFrame(rows).drop(columns='p_values').to_csv(OUT/'localized-positive-control.csv',index=False)
+    return rows
+
+if __name__=='__main__':main()
