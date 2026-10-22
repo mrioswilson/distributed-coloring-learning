@@ -147,3 +147,57 @@ roles. Correctness of all recorded colorings, equality by a precise symmetry
 theorem, statistically supported approximate equivalence, and failure to
 reject equality remain four different kinds of statement. Only the first
 three have positive evidentiary content of their stated scope.
+## Numerical score reference beyond midpoint grids
+
+An additional exploratory diagnostic integrates the one-hidden-ReLU scorer
+for E1 and DeepSets. Its frozen first-stage float32 features and weights are
+promoted to float64; as a function of the private scalar r, each color score
+is piecewise affine. ReLU breakpoints partition [0,1], and the upper envelope
+of the affine color scores gives the winning-color masses. Tests include
+nonmonotone winner regions, ties and an independent dense-grid comparison.
+Transformer attention is not piecewise affine in r and is excluded here.
+
+This is a numerical reference for a real-arithmetic surrogate, not a certified
+probability law for the GPU float32 rollout. In particular, a zero integrated
+reference mass or a positive reference dominance gap must not be presented
+as a proof that the operational policy can never choose that color in every
+reachable state. It addresses the initial frozen state only. The reference
+and grid diagnostics are archived separately and do not select a test,
+sample size, checkpoint or confirmatory hypothesis.
+
+## Methodological references
+
+The coverage derivations above are given explicitly rather than importing
+guarantees from unrelated settings. Relevant original references are
+[Clopper and Pearson (1934)](https://academic.oup.com/biomet/article-abstract/26/4/404/291538)
+for binomial confidence limits,
+[Hoeffding (1963)](https://www.tandfonline.com/doi/abs/10.1080/01621459.1963.10500830)
+for bounded independent sums, and
+[Massart (1990)](https://projecteuclid.org/euclid.aop/1176990746)
+for the sharp DKW constant. No asymptotic graph-population guarantee is inferred
+from these finite independent-run bounds.
+## A sufficient power guarantee for event contrasts
+
+This calculation concerns the registered Bernoulli event contrasts, not
+omnibus power or a uniform guarantee in complete-vector TV. With independent
+bank counts N_i, combined weights w_i, S=sum(w_i^2/N_i), and a simultaneous
+Hoeffding radius R=sqrt(S log(2/alpha_c)/2), a true contrast delta>R satisfies
+
+    P(the Hoeffding interval excludes zero)
+      >= 1 - exp(-2(delta-R)^2/S).
+
+Indeed, failure to exclude zero requires the empirical contrast to be at most
+R; apply the one-sided bounded-sum inequality at delta-R. The symmetric result
+holds for negative delta. Intersecting with the CP interval cannot revoke an
+exclusion by the Hoeffding interval. These power statements are conditional
+on the valid counts, not a guarantee of obtaining those counts by R128.
+
+For equal N_i=m on the regular cohort, sum(w_i^2) is .4 for an architecture
+cell, 2/3 for a single-checkpoint cell, .8 for an architecture adjacent change,
+and 1.6 for a four-cell interaction. The shared teacher accounts for 1/3 of
+the .4 cell value; treating it as five independent teachers would be wrong.
+Thus delta >= R+sqrt(S log(1/(1-beta))/2) suffices for power beta. The archived
+table evaluates the formula for m=100,250,500,1000,2000 and beta=.8,.9, using
+alpha_c=.025/1800. It is deliberately conservative, does not exploit favorable
+event variances or the additional CP bound, and never justifies a TV upper
+bound after a nonrejection. Sample allocation remains the frozen fixed design.

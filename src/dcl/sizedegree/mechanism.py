@@ -26,6 +26,7 @@ def trace(g,model,label,m=8):
     if model is not None:
         device=next(model.parameters()).device;et=torch.as_tensor(ee,device=device);pt=torch.as_tensor(pp,device=device)
     states=[];cand_counts=[];part_counts=[];commits=[];reference=[];bad=[]
+    node_candidates=[];node_participate=[];node_commit=[];node_available=[]
     for r in range(128):
         if not (c<0).any():break
         states.append(c.copy().astype(np.int16))
@@ -40,6 +41,10 @@ def trace(g,model,label,m=8):
             commit=(q.commit_logit>0).cpu().numpy()&part&(flat<0)
         # Decisions above are already fixed. The following are observers only.
         available=available_matrix(flat,ee,pp);avail_n=available.sum(1)
+        node_candidates.append(cand.reshape(m,n).astype(np.int16).copy())
+        node_participate.append(part.reshape(m,n).copy())
+        node_commit.append(commit.reshape(m,n).copy())
+        node_available.append(avail_n.reshape(m,n).astype(np.int16).copy())
         expected=available/np.maximum(avail_n[:,None],1)*(flat<0)[:,None]
         reference.append(expected.reshape(m,n,K).sum(1))
         def histogram(mask):
@@ -56,7 +61,9 @@ def trace(g,model,label,m=8):
     status=np.array([2 if (x<0).any() else (0 if (x<pal).all() and (x[e[0]]!=x[e[1]]).all() else 1) for x in c],np.int8)
     return dict(colors=c.astype(np.int16),status=status,seeds=np.array(seeds,np.uint64),
                 states=np.array(states),candidate_counts=np.array(cand_counts),participating_counts=np.array(part_counts),
-                commit_counts=np.array(commits),same_state_teacher_expected=np.array(reference),observer_errors=np.array(bad))
+                commit_counts=np.array(commits),same_state_teacher_expected=np.array(reference),observer_errors=np.array(bad),
+                node_candidates=np.array(node_candidates),node_participate=np.array(node_participate),
+                node_commit=np.array(node_commit),node_available_counts=np.array(node_available))
 
 def quadrature(g,state,model,count):
     pending=np.flatnonzero(state<0)
