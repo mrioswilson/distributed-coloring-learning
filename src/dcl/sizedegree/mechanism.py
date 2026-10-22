@@ -69,7 +69,7 @@ def quadrature(g,state,model,count):
     pending=np.flatnonzero(state<0)
     if not len(pending):return None
     v=int(pending[0]);device=next(model.parameters()).device;e=np.array(g['edges']);k=g['degrees'][v]+1
-    h,a=first_state(model,torch.as_tensor(state,device=device),torch.as_tensor(e,device=device),torch.tensor([v],device=device),k)
+    h,a=first_state(model,torch.as_tensor(state,device=device,dtype=torch.long),torch.as_tensor(e,device=device,dtype=torch.long),torch.tensor([v],device=device,dtype=torch.long),k)
     grid=converted_uniform((np.arange(count)+.5)/count)
     selected=choices(model,(h[0],a[0]),grid)
     masses=np.bincount(selected,minlength=k)/count

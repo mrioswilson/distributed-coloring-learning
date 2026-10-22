@@ -191,6 +191,7 @@ def main():
     save(fig,'factorial-10-proposal-commit-chain')
 
     secondary=[g for g in gs if g['stage']=='secondary'];sns=sorted(set(g['n'] for g in secondary))
+    from .capacity import bound as capacity_bound
     fig,axes=plt.subplots(1,3,figsize=(12,3.5),layout='constrained')
     for ax,arch in zip(axes,ARCHES):
         labels=[s['label'] for s in specs() if s['treatment']==arch]
@@ -200,10 +201,11 @@ def main():
                 a=[g for g in secondary if g['n']==n and g['delta']==d]
                 if not a:continue
                 q,ql,qh=prob(labels,a,'used_le_delta');p,pl,ph=prob(['Luby'],a,'used_le_delta');z[i,j]=q-p
-                ax.text(j,i,f'{q-p:+.2f}\n[{ql-ph:+.2f}, {qh-pl:+.2f}]',ha='center',va='center',fontsize=7,color='white' if abs(q-p)>.65 else 'black')
+                annotation='A ≡ 1\n(list bound)' if capacity_bound(a[0]['degrees'])['A_deterministically_true'] else f'{q-p:+.2f}\n[{ql-ph:+.2f}, {qh-pl:+.2f}]'
+                ax.text(j,i,annotation,ha='center',va='center',fontsize=7,color='white' if abs(q-p)>.65 else 'black')
         im=ax.imshow(z,vmin=-1,vmax=1,cmap='RdBu_r',aspect='auto');ax.set(xticks=range(4),xticklabels=DS,yticks=range(len(sns)),yticklabels=sns,xlabel='Maximum degree Δ',ylabel='n',title=NAMES[arch])
     fig.colorbar(im,ax=axes,shrink=.85,label='Event probability difference')
-    fig.suptitle('Secondary irregular cohort: one graph × five checkpoints per cell; CP envelopes')
+    fig.suptitle('Secondary irregular cohort: one graph × five checkpoints; forced events labeled explicitly')
     save(fig,'factorial-11-irregular-cohort')
     atomic_json(OUT/'figure-manifest.json',dict(required_figures=9,figures=[p.stem for p in sorted((OUT/'figures').glob('*.png'))],
                                                supplementary_occupancy_pages=16,generated=now()))

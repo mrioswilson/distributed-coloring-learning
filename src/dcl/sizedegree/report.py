@@ -168,6 +168,13 @@ como una clasificación por número de rechazos. Los irregulares aparecen en
 un estrato separado, con sus histogramas de grados y paletas; una realización
 por celda limita su generalización.
 
+Además, en cinco de las ocho celdas irregulares las paletas locales fuerzan
+A≡1 bajo cualquier algoritmo: U≤min_t[t+#{{v:d(v)≥t}}]≤Δ. Por ejemplo, en
+n1024-d100 la cota determinista es U≤44. Esas diferencias nulas de A no
+constituyen evidencia de semejanza global. Se anotan expresamente y se
+conservan el omnibus, T y los demás perfiles; no se usa A para extrapolar una
+tendencia de regulares a esas celdas.
+
 ## P7. ¿Qué propiedades finales distinguen las leyes?
 
 Los testigos adaptativos se eligieron sólo en las primeras 500 muestras y se
@@ -247,6 +254,15 @@ la validación extensa anterior sigue siendo la referencia de calibración.
 Estrella m=500 al umbral 0,05/720: V2 30/30, antiguo 0/30; límite CP puntual
 inferior de potencia 0,884. Difuso: ambos 30/30. No se garantiza esa potencia
 para toda alternativa: persisten las limitaciones de orden alto y masa rara.
+
+La tabla `event-precision-and-power-guarantees.csv` aporta garantías
+conservadoras adicionales para los contrastes Bernoulli preregistrados. Con
+500 completaciones válidas por banco, efectos absolutos de aproximadamente
+0,094 (celda de arquitectura), 0,133 (cambio adyacente) o 0,189 (interacción)
+son suficientes para potencia al menos 80% por el componente Hoeffding,
+incluyendo su presupuesto simultáneo. No son garantías de potencia del
+omnibus, de TV arbitraria ni de obtener siempre 500 éxitos antes del cutoff.
+Para diferencias menores las cotas pueden ser poco informativas.
 
 Se verificaron {a['new_algorithm_seeds']:,} semillas nuevas distintas, sin
 solapamiento con {a['distinct_old_seeds']:,} históricas, y

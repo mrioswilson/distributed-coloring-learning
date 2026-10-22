@@ -201,3 +201,28 @@ table evaluates the formula for m=100,250,500,1000,2000 and beta=.8,.9, using
 alpha_c=.025/1800. It is deliberately conservative, does not exploit favorable
 event variances or the additional CP bound, and never justifies a TV upper
 bound after a nonrejection. Sample allocation remains the frozen fixed design.
+## A list-capacity limitation in the secondary cohort
+
+For prefix local palettes, every assignment respecting its lists, proper or
+not, obeys the deterministic upper bound
+
+    U(X) <= min_{0<=t<=delta+1} [t + #{v: d(v)>=t}].
+
+For a fixed t, at most t used colors are below t; each color at least t must
+be assigned to a vertex whose degree is at least t, and each such vertex
+supplies only one terminal color. Minimize these valid bounds over t.
+
+If this upper bound is at most delta, A={U<=delta} is identically true under
+every completed generator. Its observed zero difference cannot diagnose
+similarity of the complete laws. For example, ten degree-100 hubs, 358
+degree-33 vertices and 656 degree-two vertices have U<=34+10=44, even though
+the maximum palette has 101 colors. The graph may still admit substantial
+differences detectable through other labeled events or the complete test.
+
+This calculation is archived for every graph and is independent of algorithm
+outcomes. It does not change the frozen tests, event definitions, graph files
+or external families. In particular, the secondary A-matrix is annotated
+where the event is forced by the local lists. Comparing its zeros with the
+regular matrix would otherwise confound a support restriction with algorithmic
+agreement. Maximum degree alone is not an effective global palette capacity
+in a heterogeneous family.

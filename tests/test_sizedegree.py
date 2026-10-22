@@ -95,3 +95,12 @@ def test_cutoffs_are_separate_and_not_coloring_observations(monkeypatch,tmp_path
     assert r['status_model']==[19,0,1,0]
     assert 'coarsened_unconditional' in r and 'status_test' in r
     assert r['witness']['n_model']==10
+
+def test_probe_accepts_archived_int16_state_without_changing_state():
+    from dcl.sizedegree.mechanism import quadrature
+    from dcl.sizedegree.common import specs
+    from dcl.paperstudy.training import load_model
+    g=regular(8,3,0,'test');model,_=load_model(specs()[0]['checkpoint'],'cpu')
+    state=np.full(8,-1,dtype=np.int16)
+    r=quadrature(g,state,model,64)
+    assert np.isclose(sum(r['q']),1) and np.all(state==-1)

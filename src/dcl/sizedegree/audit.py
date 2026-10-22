@@ -8,10 +8,12 @@ import pandas as pd
 from .common import *
 from .graphs import validate
 from .inference import measurements,EVENTS
+from .capacity import bound as capacity_bound
 from dcl.globaldist.core import seed as run_seed,holm
 from dcl.globaldist.sampling import sample
 from dcl.robustdist.stats import joint_test
 from dcl.robustdist.confirmation import event_values
+from dcl.universal.rules import exact_commit_labels,available_matrix
 
 def main():
     f=verify_frozen();record=read(OUT/'protocol-commit.json');commit=record['commit']
@@ -38,6 +40,8 @@ def main():
             assert x.shape==(t['m'],g['n']) and np.isin(status,[0,1,2,3]).all()
             edges=np.array(g['edges']);valid=(x>=0).all(1)&(x<=np.array(g['degrees'])).all(1)&(x[:,edges[0]]!=x[:,edges[1]]).all(1)
             assert valid[status==0].all()
+            if capacity_bound(g['degrees'])['A_deterministically_true']:
+                assert all(len(set(row))<=g['delta'] for row in x[status==0])
             assert not valid[status==1].any()
             assert (x[status==2]<0).any(1).all()
             assert (a['rounds'][status==2]==128).all()
@@ -57,12 +61,51 @@ def main():
             expected=[run_seed('factorial-v1/mechanism',g['id'],label,'run',i) for i in range(8)]
             assert np.array_equal(a['seeds'],np.array(expected,np.uint64))
             assert (a['commit_counts'].sum((0,2))==(a['colors']>=0).sum(1)).all()
+            edges=np.concatenate([np.array(g['edges'])+i*g['n'] for i in range(8)],axis=1)
+            pal=np.tile(np.array(g['degrees'])+1,8)
+            for j,S in enumerate(a['states']):
+                candidate=a['node_candidates'][j];part=a['node_participate'][j];commit=a['node_commit'][j]
+                after=np.where(commit,candidate,S)
+                expected=a['states'][j+1] if j+1<len(a['states']) else a['colors']
+                assert np.array_equal(after,expected)
+                safe=exact_commit_labels(S.ravel(),edges,part.ravel(),candidate.ravel()).reshape(S.shape)
+                assert not (commit&~safe).any()
+                available=available_matrix(S.ravel(),edges,pal).sum(1).reshape(S.shape)
+                assert np.array_equal(available,a['node_available_counts'][j])
         manifests.append(dict(phase='mechanism',id=t['id'],graph=t['graph'],model=label,file=str(path),sha256=t['sha256'],attempts=8,seconds=t['seconds']))
     assert mechanism_errors[1]==0
+    intervention_streams=0;intervention_unsafe=0
+    ipath=ROOT/'candidate-intervention/queue.json'
+    if ipath.exists():
+        iq=read(ipath)
+        for t in iq.get('pilot_tasks',[])+iq.get('tasks',[]):
+            if t['status']!='complete':continue
+            path=Path(t['file']);assert file_hash(path)==t['sha256']
+            g=gs[t['graph']];label=t['model']['label']
+            with np.load(path) as c:
+                expected=np.array([run_seed('factorial-v1/candidate-intervention-'+t['phase'],g['id'],label,'run',i) for i in range(t['m'])],np.uint64)
+                assert np.array_equal(c['seeds'],expected)
+                newseeds.append(c['seeds']);intervention_streams+=len(c['seeds']);intervention_unsafe+=int(c['unsafe_commits'].sum())
+                for side in ('Luby','intervened'):
+                    X=c['colors_'+side];st=c['status_'+side];ee=np.array(g['edges'])
+                    valid=(X>=0).all(1)&(X<=np.array(g['degrees'])).all(1)&(X[:,ee[0]]!=X[:,ee[1]]).all(1)
+                    assert valid[st==0].all() and not valid[st==1].any()
+                    assert (X[st==2]<0).any(1).all() and (c['rounds_'+side][st==2]==128).all()
+                same=(c['status_Luby']==c['status_intervened'])&((c['status_Luby']!=0)|(c['colors_Luby']==c['colors_intervened']).all(1))
+                assert np.array_equal(~same,c['coarsened_mismatch'])
+            manifests.append(dict(phase='candidate-intervention-'+t['phase'],id=t['id'],graph=g['id'],model=label,
+                                  file=str(path),sha256=t['sha256'],attempts=2*t['m'],pairs=t['m'],seconds=t['seconds']))
     new=np.concatenate(newseeds);assert len(np.unique(new))==len(new)
     oldseeds=[];oldbank_count=0
     for root,sub in [(GLOBAL,'ucgnn-global-distribution'),(BASE,'ucgnn-robust-distribution')]:
+        if sub=='ucgnn-global-distribution':
+            reference=read(root/'results'/sub/'sampling-manifest.json')['tasks']
+            expected={Path(t['file']).name:t['sha256'] for t in reference}
+        else:
+            reference=pd.read_csv(root/'results'/sub/'sampling-manifest.csv')
+            expected={Path(r.file).name:r.sha256 for r in reference.itertuples()}
         for path in (root/'data'/sub/'banks').glob('*.npz'):
+            assert path.name in expected and file_hash(path)==expected[path.name]
             with np.load(path) as a:
                 if 'seeds' in a.files:oldseeds.append(a['seeds']);oldbank_count+=1
     old=np.concatenate(oldseeds);assert not len(np.intersect1d(new,old))
@@ -109,6 +152,7 @@ def main():
                 banks=len(manifests),new_algorithm_seeds=len(new),distinct_old_seeds=len(np.unique(old)),old_banks_checked=oldbank_count,
                 distinct_transfer_test_seeds=len(auxiliary),overlap_seeds=0,statuses_main_and_pilots=allstatus.tolist(),
                 mechanism_forbidden_candidates=int(mechanism_errors[0]),mechanism_unsafe_commits=int(mechanism_errors[1]),
+                candidate_intervention_pair_streams=intervention_streams,candidate_intervention_unsafe_commits=intervention_unsafe,
                 teacher_bank_replay=True,test_replays=tests,factorial_contrasts=len(fc),gpu_process_hours=budget['seconds']/3600,
                 source_hashes=f['source_hashes'])
     atomic_json(OUT/'audit.json',result);print(json.dumps({k:v for k,v in result.items() if k not in ('source_hashes','test_replays')}),flush=True)
