@@ -70,6 +70,18 @@ def fit_features(x,y,g):
     """
     z=np.r_[x,y];m=len(x);descriptors=[];pools={k:[] for k in ('local','interaction','structural')}
     pairs,triples=groups(g)
+    # Supervised search is confined to selection rows. All evaluation-label
+    # permutations keep these choices fixed, so no uncalibrated scan occurs.
+    extra=set();n=g['n']
+    if n>1:
+        raw=z.astype(float);binary=(raw<=np.median(raw,axis=0)).astype(float)
+        for W in (raw,binary):
+            W=(W-W.mean(0))/np.maximum(W.std(0),1e-6)
+            a=W[:m]-W[:m].mean(0);b=W[m:]-W[m:].mean(0)
+            C=np.abs(a.T@a/len(a)-b.T@b/len(b));C[np.tril_indices(n)]=-np.inf
+            count=min(8,n*(n-1)//2)
+            for idx in np.argpartition(C.ravel(),-count)[-count:]:extra.add(tuple(map(int,divmod(int(idx),n))))
+    pairs=sorted(set(pairs)|extra)
     region_list=[('local',(v,)) for v in range(g['n'])]+[('interaction',p) for p in pairs+triples]
     dense=[]
     for family,ids in region_list:

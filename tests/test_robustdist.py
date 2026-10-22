@@ -76,3 +76,17 @@ def test_observation_order_with_fixed_ancillary_ids():
     r=joint_test(x,y,g,rng('ids-permutation'),B=99,x_ids=ids,y_ids=ids)
     s=joint_test(x[a],y[b],g,rng('ids-permutation'),B=99,x_ids=ids[a],y_ids=ids[b])
     assert r['p_values']==s['p_values'] and r['statistics']==s['statistics']
+
+def test_budget_alarm_bypasses_ordinary_sampler_errors():
+    from dcl.robustdist.sampling import BudgetExceeded,alarm
+    import pytest
+    assert not issubclass(BudgetExceeded,Exception)
+    with pytest.raises(BudgetExceeded):alarm(None,None)
+
+def test_unknown_pair_search_uses_only_selection_and_recovers_remote_signal():
+    from dcl.robustdist.controls_v2 import draw
+    x,g,_=draw('correlation_remote',250,rng('remote-test-a'));y,_,_=draw('correlation_remote',250,rng('remote-test-b'),1)
+    a=joint_test(x,y,g,rng('remote-test-p'),B=199)
+    assert a['p']<=.05
+    chosen=[d['ids'] for d in a['selected'] if d['kind']=='categorical']
+    assert [137,181] in chosen

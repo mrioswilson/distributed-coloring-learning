@@ -6,6 +6,8 @@ import pandas as pd
 from scipy.stats import binom
 from .common import *
 from .controls import draw,CASES,NULLS,ALTERNATIVES
+from .controls_v2 import draw as draw_v2,ALTERNATIVES as ALTERNATIVES_V2
+from .stats_v1 import joint_test as joint_test_v1
 from .stats import joint_test,multiscale_test,multinomial_test
 from .classifier import classifier_test
 from dcl.globaldist.analyze import wilson
@@ -14,20 +16,25 @@ def trial(job):
     stage,case,m,t,D,effect=job;ident=f'{stage}-{case}-D{D}-e{effect}-m{m}-t{t}'
     path=OUT/'benchmark-trials'/f'{ident}.json'
     if path.exists():return read(path)
-    start=time.monotonic();x,g,meta=draw(case,m,rng(stage,case,m,t,D,effect,'A'),0,D,effect)
-    y,_,_=draw(case,m,rng(stage,case,m,t,D,effect,'B'),1,D,effect)
+    sampler=draw_v2 if stage.endswith('2') else draw
+    start=time.monotonic();x,g,meta=sampler(case,m,rng(stage,case,m,t,D,effect,'A'),0,D,effect)
+    y,_,_=sampler(case,m,rng(stage,case,m,t,D,effect,'B'),1,D,effect)
     assert valid(x,g).all() and valid(y,g).all()
     raw=DATA/'benchmark'/f'{ident}.npz';save_bank(raw,X=x,Y=y)
     r=joint_test(x,y,g,rng(stage,case,m,t,D,effect,'omni'),B=199)
     q=multiscale_test(x,y,rng(stage,case,m,t,D,effect,'multi'),B=199)
     c=classifier_test(x,y,g);direct=multinomial_test(x,y,rng(stage,case,m,t,D,effect,'direct'),B=199)
+    first=joint_test_v1(x,y,g,rng(stage,case,m,t,D,effect,'first-omnibus'),B=199) if stage.endswith('2') else None
     result=dict(id=ident,stage=stage,case=case,m=m,trial=t,D=D,effect=effect,**meta,
-                p_values={**r['p_values'],**q['p_values'],'classifier':c['p'],'multinomial':direct['p']},
+                p_values={**r['p_values'],**q['p_values'],'classifier':c['p'],'multinomial':direct['p'],**({'omnibus_v1':first['p']} if first is not None else {})},
                 omnibus_statistics=r['statistics'],global_statistics=q['statistics'],classifier=c,
                 seconds=time.monotonic()-start,omnibus_seconds=r['seconds'],quadratic_seconds=q['seconds'],raw_file=str(raw),raw_sha256=file_hash(raw))
     atomic_json(path,result);return result
 
 def plan(stage):
+    if stage=='development2':return [(stage,c,m,t,200,None) for c in ALTERNATIVES_V2 for m in (100,250) for t in range(10)]
+    if stage=='validation2':return [(stage,c,250,t,200,None) for c in NULLS for t in range(400)]+[(stage,c,m,t,200,None) for c in ALTERNATIVES_V2 for m in (100,250,500,1000,2000) for t in range(30)]
+    if stage=='sensitivity2':return [(stage,c,m,t,D,e) for _,c,m,t,D,e in plan('sensitivity')]
     if stage=='pilot':return [(stage,'localized',m,0,200,None) for m in (100,250,500,1000,2000)]
     if stage=='development':return [(stage,c,m,t,200,None) for c in ALTERNATIVES for m in (100,250) for t in range(10)]
     if stage=='validation':
@@ -52,7 +59,7 @@ def summarize(stage):
     return frame,rows
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('stage',choices=['pilot','development','validation','sensitivity']);parser.add_argument('--workers',type=int,default=4);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('stage',choices=['pilot','development','validation','sensitivity','development2','validation2','sensitivity2']);parser.add_argument('--workers',type=int,default=4);args=parser.parse_args()
     OUT.mkdir(parents=True,exist_ok=True);jobs=plan(args.stage);begin=time.monotonic()
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
         futures=[pool.submit(trial,j) for j in jobs]
