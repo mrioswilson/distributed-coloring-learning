@@ -140,7 +140,7 @@ def prose(frame,law,summary,b3):
     examined=frame[frame.historical_graph_overlap];fresh=frame[frame.random_graph_spec & ~frame.historical_graph_overlap]
     lines.append(f'{examined.graph_id.nunique()} specifications ({examined.graph_cluster.nunique()} distinct structures) '
                  f'are previously examined controls; {fresh.graph_id.nunique()} fresh random specifications are reported separately. ')
-    (directory/'local-results-prose.tex').write_text(''.join(lines)+'\n')
+    (directory/'local-results-prose.tex').write_text(''.join(lines).rstrip()+'\n')
     abstract=[]
     for treatment in ('normalized','deepsets','transformer'):
         part=local[local.treatment==treatment]
@@ -165,7 +165,7 @@ def prose(frame,law,summary,b3):
                      'the MAX COMMIT certificate rejects the corresponding fixed-color conflicts. ')
     lines.append('Estimation uncertainty and per-state sample-based classification curves are reported separately; '
                  'low power is not a proof of equality. ')
-    (directory/'distribution-results-prose.tex').write_text(''.join(lines)+'\n')
+    (directory/'distribution-results-prose.tex').write_text(''.join(lines).rstrip()+'\n')
     singleton=RESULTS/'singleton-product-laws.csv'
     if singleton.exists():
         single=pd.read_csv(singleton)
@@ -197,7 +197,7 @@ def prose(frame,law,summary,b3):
                          f'which predicted {rep["prediction"]:.2f} versus {rep["observed_mean"]:.2f} confirmations '
                          f'(observation-only standard error {rep["observed_standard_error"]:.2f}, 1,024 trials). '
                          'Prediction uncertainty is additional; the original 256-trial results remain unchanged. ')
-        (directory/'progress-results-prose.tex').write_text(''.join(lines)+'\n')
+        (directory/'progress-results-prose.tex').write_text(''.join(lines).rstrip()+'\n')
     negative=RESULTS/'negative-commit-certificates.json'
     if negative.exists():
         records=pd.DataFrame(json.loads(negative.read_text()))
@@ -210,7 +210,7 @@ def prose(frame,law,summary,b3):
         text.append('These are exploratory counterexamples selected from the recorded degree-probe grid, '
                     'with unchanged checkpoints. They establish errors of these learned gates in real arithmetic; '
                     'they do not establish an expressivity impossibility for SUM. ')
-        (directory/'negative-commit-prose.tex').write_text(''.join(text)+'\n')
+        (directory/'negative-commit-prose.tex').write_text(''.join(text).rstrip()+'\n')
 
 
 def executive(frame,law,summary,b3):

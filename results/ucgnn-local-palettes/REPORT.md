@@ -2,7 +2,7 @@
 
 Graph cases observed: 18848 / 18848 planned. Conditional laws: 3255.
 Finite-sample classifier rows: 1260. Task states: {'complete': 160, 'running': 0, 'pending': 0, 'technical_failure': 0}.
-GPU-process hours: 3.0239 / 12.
+GPU-process hours: 3.0353 / 12.
 
 ```text
     treatment        regime  successes  cases  mean_rounds  unsafe_commits

@@ -1,103 +1,231 @@
 # Informe final: paletas locales e identificabilidad
 
 Estado: COHORTE COMPLETA.
-18,848/18.848 evaluaciones de grafos; 73 estructuras
-distintas en 76 especificaciones; 3,255 leyes condicionales estimadas;
-1,260 celdas de clasificación. GPU-proceso acumulada: 3.0239 h / 12 h.
-Estados de ejecución: {'success': 14694, 'progress_cutoff': 2892, 'unsafe_failure': 1262}. No entrenamiento nuevo; no push remoto.
+18,848 evaluaciones de grafos de 18.848 previstas; 73
+estructuras en 76 especificaciones; 3,255 leyes condicionales estimadas;
+1,260 celdas empíricas de clasificación. GPU-proceso acumulada:
+3.0353 h / 12 h, incluyendo la réplica exploratoria adicional.
+Estados: {'success': 14694, 'progress_cutoff': 2892, 'unsafe_failure': 1262}. No hay OOM ni timeout técnico en la batería.
+No se entrenaron modelos nuevos ni se hizo push remoto.
 
-1. **Paletas locales sin Δ.** Los resultados medidos por tratamiento son:
-
-- normalized: LOCAL 760/760, GLOBAL 760/760; rondas medias 9.03 vs 8.86; autorizaciones inseguras LOCAL 0.
-- raw_endpoints: LOCAL 637/760, GLOBAL 637/760; rondas medias 54.21 vs 54.18; autorizaciones inseguras LOCAL 0.
-- sum: LOCAL 160/760, GLOBAL 160/760; rondas medias 203.58 vs 203.62; autorizaciones inseguras LOCAL 0.
-- mean: LOCAL 431/760, GLOBAL 431/760; rondas medias 8.43 vs 8.31; autorizaciones inseguras LOCAL 18727.
-- deepsets: LOCAL 760/760, GLOBAL 760/760; rondas medias 9.17 vs 9.02; autorizaciones inseguras LOCAL 0.
-- transformer: LOCAL 760/760, GLOBAL 760/760; rondas medias 9.78 vs 9.82; autorizaciones inseguras LOCAL 0.
-- teacher: LOCAL 152/152, GLOBAL 152/152; rondas medias 8.97 vs 8.97; autorizaciones inseguras LOCAL 0.
-
-2. **Cambio frente a GLOBAL.** Las líneas anteriores comparan la misma matriz de
-grafos/cintas. `regime-summary.csv` añade sobredimensionamiento 1.5 y 2;
-`paired-comparisons.csv` contiene contrastes emparejados y bootstrap por estructura
-real. Las rondas incluyen el corte 256. No se interpreta el cutoff como timeout.
-
-3. **Mecanismos.** El código usa representaciones compartidas por color y consulta
-el estado de cada vecino en los colores válidos del receptor. DeepSets y Transformer
-reciben c/(K_v−1) e inversa de su propio K: sí tienen información de orden. MAX
-conserva el conjunto finito de tipos de COMMIT cuando cambian las listas;
-SUM/MEAN conservan multiplicidades y no heredan esa reducción. Estos hechos
-arquitectónicos y los certificados de signos se distinguen de explicaciones
-causales no identificadas por comparar sólo tasas de éxito.
-
-4. **Distancia a Luby en los mismos estados.** Esta tabla resume primero por red
-y estado, después sobre cinco réplicas. Las E1 originales son un grupo separado.
+1. **¿Qué modelos colorean con paletas locales sin Δ global?**
 
 ```text
-  treatment   k  networks       tv  fidelity  effective_colors  max_mass  forbidden_mass
-   deepsets   4         5 0.006293  0.995313          3.999034  0.254004             0.0
-   deepsets  51         5 0.138417  0.191821         33.475094  0.108496             0.0
-   deepsets 201         5 0.164151  0.021167         63.164472  0.106464             0.0
-e1-original   4         5 0.003583  0.998535          3.999692  0.252271             0.0
-e1-original  51         5 0.045875  0.353857         48.292984  0.036786             0.0
-e1-original 201         5 0.063895  0.037598        173.183752  0.024146             0.0
- normalized   4         5 0.005402  0.997778          3.999332  0.253864             0.0
- normalized  51         5 0.031652  0.445605         49.970335  0.023383             0.0
- normalized 201         5 0.046439  0.052710        194.645756  0.008148             0.0
-transformer   4         5 0.004993  0.994458          3.999418  0.254034             0.0
-transformer  51         5 0.259850  0.092700         18.314257  0.181128             0.0
-transformer 201         5 0.290935  0.020313         23.708436  0.180060             0.0
+        model   LOCAL  GLOBAL rounds_LOCAL rounds_GLOBAL  unsafe_LOCAL
+   normalized 760/760 760/760        9.025         8.859             0
+raw_endpoints 637/760 637/760       54.213        54.182             0
+          sum 160/760 160/760      203.579       203.618             0
+         mean 431/760 431/760        8.426         8.308         18727
+     deepsets 760/760 760/760        9.172         9.018             0
+  transformer 760/760 760/760        9.782         9.821             0
+      teacher 152/152 152/152        8.974         8.974             0
 ```
 
-5. **Fidelidad frente a ley.** La tabla diferencia F con r compartido de TV sin
-observar r. El control analítico de cuantil desplazado tiene F=0 y TV=0: ninguna
-muestra de candidatos puede distinguir esas leyes idénticas. Una baja fidelidad
-del modelo no determina por sí sola su distancia distribucional.
+NORMALIZED, DeepSets y Transformer completaron todos los casos LOCAL de las cinco
+réplicas. NORMALIZED son los pesos 41000–41004 del paper anterior; las cinco E1
+originales 0–4 se estudian separadamente en los diagnósticos de candidatos.
+Estos son resultados finitos, no corrección universal.
 
-6. **Número de candidatos observados.** `sample-requirements.csv` da, por red y
-estado, el primer m de {1,5,20,100,500,2000} con potencia observada ≥.8 y FPR
-observado ≤.05. No alcanzarlo se registra como pendiente de potencia, no igualdad.
-`distinguishability.csv` contiene exactitud balanceada, potencia, FPR e intervalos;
-son pruebas plug-in con estimación/calibración/test disjuntos, no reglas Bayes
-exactas de una ley desconocida. Los puntos de cada curva usan prefijos anidados.
+2. **¿Qué cambia respecto de GLOBAL?**
 
-7. **Paleta y disponibilidad.** `law-summary.csv` y los CSV por estado separan
-ALL_FREE, SINGLE, bloques, alternados, dispersos y estados autónomos. No existe
-un m universal para todos esos contextos. Los límites conservadores de TV se
-ensanchan con K y pueden impedir declarar equivalencia a tolerancia .05 incluso
-cuando la estimación puntual es pequeña. No se confunde esto con desigualdad
-probada ni con falta de éxito de coloración.
+La tabla compara los mismos grafos y cintas. Las tasas agregadas coinciden,
+pero MEAN tiene 23 éxitos exclusivos GLOBAL y
+23 exclusivos LOCAL. Hay 33 ejecuciones MEAN LOCAL con
+coloración final propia y autorizaciones contrarias a la regla exacta:
+un rollout correcto no certifica COMMIT. Los cuatro regímenes y todos los
+intervalos/contrastes están en `regime-summary.csv`, `paired-comparisons.csv`
+y `cluster-uncertainty.csv`. Rondas incluyen cutoff 256; no es timeout técnico.
+También incluyen terminaciones impropias: el tiempo de MEAN no debe interpretarse
+como velocidad de una coloración correcta.
 
-8. **Distancia y velocidad.** No hay una ordenación necesaria: se demuestra un
-contraejemplo de leyes deterministas con el mismo TV/entropía y probabilidades
-de confirmar 2^(-K) o 1/2 según solapamientos. `clique-progress.csv` compara
-uniforme, ley aprendida estimada y mezcla 50:50 en el mismo estado. Los experimentos
-de estados heterogéneos comparan la fórmula con 256 rondas independientes y
-COMMIT exacto/aprendido. Las correlaciones de rollouts no establecen causalidad.
+3. **¿Qué mecanismos explican las diferencias?**
 
-9. **Qué está demostrado.** Disponibilidad k_v≥t_v+1; seguridad del profesor exacto;
-confirmación ≥1/4 y cola n(3/4)^t; fidelidad distinta de igualdad de ley; equivalencia
-de kernels bajo igualdad conjunta de acciones; relación Bayes–TV, cotas producto
-y límites de incertidumbre; transferencia condicional de un certificado MAX a
-listas heterogéneas. Para los 20 modelos MAX primarios, hashes y certificados
-previos se verificaron, con 1.280 testigos locales adicionales. Las afirmaciones
-float32 conservan sus hipótesis explícitas de redondeo y ausencia de TF32/overflow.
-No hay demostración universal de progreso neuronal.
+Las representaciones compartidas permiten consultar cada color válido del
+receptor con los mismos pesos. DeepSets y Transformer reciben c/(K_v−1) y 1/K_v:
+sí tienen orden funcional. Sus mensajes no contienen posición ni K del vecino.
+MAX reduce COMMIT a 64 conjuntos legales también con listas heterogéneas.
+Los certificados muestran que las cinco SUM rechazan un testigo seguro de grado
+8 y las cinco MEAN aceptan conflictos en testigos de grados 8 y 16. Son errores
+de estos pesos: SUM puede representar la regla exacta con otros parámetros.
+En LOCAL, SUM perdió 6,271,641 oportunidades observadas que COMMIT exacto habría aceptado
+en el mismo estado y con las mismas propuestas; no es una simulación de una
+trayectoria alternativa completa con shield.
 
-10. **Tesis del paper.** El experimento separa conocimiento global del grado,
-política candidata y regla de seguridad. Una política útil puede diferir del
-profesor punto a punto y en distribución. La evidencia nueva debe presentarse
-con sus denominadores y dominios finitos; los negativos no se reoptimizan.
+DeepSets y Transformer también proponen colores ocupados, en
+13/465 y
+13/465 pares red–estado, respectivamente.
+Las masas máximas estimadas son 0.152 y
+0.559. Sus COMMIT MAX rechazan esos conflictos.
+Los ejemplos completos están en `candidate-counterexamples/`. No se observaron
+candidatos prohibidos de NORMALIZED ni E1 original en los bancos auditados;
+esa observación no es una prueba universal de seguridad de propuestas.
 
-Limitaciones: cinco redes por tratamiento; 76 especificaciones con familias
-deterministas, estructuras repetidas y cinco controles previamente examinados;
-matriz de grados finita; sondas K=501 locales, no grandes rollouts de grado 500;
-incertidumbre MC y LRT estimada; estados autónomos seleccionados por regla fija
-pero no muestreo uniforme del espacio de estados. Las trazas autónomas guardan
-resúmenes de diversidad/colisiones, y los estados controlados histogramas completos.
-Los casos no ejecutados y fallos técnicos permanecen en execution-manifest.json.
+4. **¿Cuánto se parecen las leyes a Luby?**
 
-Reproducción: [entrada y comandos](../../LOCAL_PALETTES.md),
+Medias descriptivas de cinco modelos, tras calcular cada métrica por red y estado:
+
+```text
+  treatment   k     tv  fidelity  effective_colors  entropy_effective_colors  max_mass
+   deepsets   4 0.0063    0.9953            3.9990                    3.9995    0.2540
+   deepsets  51 0.1384    0.1918           33.4751                   43.6044    0.1085
+   deepsets 201 0.1642    0.0212           63.1645                  143.0618    0.1065
+e1-original   4 0.0036    0.9985            3.9997                    3.9998    0.2523
+e1-original  51 0.0459    0.3539           48.2930                   49.4982    0.0368
+e1-original 201 0.0639    0.0376          173.1838                  189.4573    0.0241
+ normalized   4 0.0054    0.9978            3.9993                    3.9997    0.2539
+ normalized  51 0.0317    0.4456           49.9703                   50.1475    0.0234
+ normalized 201 0.0464    0.0527          194.6458                  195.7433    0.0081
+transformer   4 0.0050    0.9945            3.9994                    3.9997    0.2540
+transformer  51 0.2598    0.0927           18.3143                   33.4871    0.1811
+transformer 201 0.2909    0.0203           23.7084                   93.3039    0.1801
+```
+
+TV y fidelidad son diferentes. `effective_colors` es 1/Σq²;
+`entropy_effective_colors` es exp(H). No se comparan las dos definiciones como
+si fueran la misma métrica. Los intervalos de TV y métricas completas por estado
+están en `candidate-laws.csv`; sus límites son puntuales salvo indicación contraria.
+
+5. **¿Qué cambia al esconder r?**
+
+Con r compartido se mide imitación de una función acoplada, no igualdad de ley.
+El cuantil desplazado del control analítico tiene fidelidad cero y ley uniforme
+idéntica: ningún número de candidatos independientes lo distingue del profesor.
+Las redes pueden tener baja fidelidad y una ley bastante cercana al uniforme.
+Igualdad de candidatos marginales tampoco implica igualdad de trayectorias si
+cambia la participación, la dependencia entre nodos o COMMIT.
+
+6. **¿Cuántos candidatos hay que observar?**
+
+Ejemplo all-free K=201; medias sobre cinco redes por grupo:
+
+```text
+  treatment   m  balanced_accuracy  power    fpr
+   deepsets   5             0.7566 0.5688 0.0461
+   deepsets  20             0.9238 0.9000 0.0508
+   deepsets 100             0.9992 1.0000 0.0523
+   deepsets 500             1.0000 1.0000 0.0398
+e1-original   5             0.5828 0.1695 0.0461
+e1-original  20             0.7273 0.3250 0.0500
+e1-original 100             0.9352 0.8156 0.0578
+e1-original 500             0.9973 1.0000 0.0609
+ normalized   5             0.5363 0.0586 0.0453
+ normalized  20             0.6359 0.1023 0.0430
+ normalized 100             0.8727 0.6258 0.0492
+ normalized 500             0.9723 0.9711 0.0461
+transformer   5             0.8848 0.8109 0.0422
+transformer  20             0.9848 0.9938 0.0477
+transformer 100             1.0000 1.0000 0.0461
+transformer 500             1.0000 1.0000 0.0461
+```
+
+Son resultados del LRT plug-in con estimación, calibración y test independientes,
+sin observar r, logits o activaciones. La tasa FPR de 256 ensayos fluctúa; el
+nivel nominal .05 está garantizado marginalmente sobre calibración independiente,
+no para toda realización individual. No se recalibró después de ver el test.
+`sample-requirements.csv` conserva el primer m con potencia observada ≥.8 Y FPR
+observado ≤.05. No cumplir ese criterio conjunto puede deberse al FPR observado,
+aunque la potencia sea alta; no implica indistinguibilidad ni siempre falta de potencia.
+Los intervalos por red están en `distinguishability.csv`. No son certificados
+Bayes exactos de una ley neuronal desconocida.
+
+7. **¿Cómo depende de K y del patrón disponible?**
+
+Estos contrastes a m=2000 ilustran la dependencia del estado:
+
+```text
+  treatment             state  balanced_accuracy  power    fpr
+   deepsets  k201-ALTERNATING             1.0000 1.0000 0.0570
+   deepsets       k4-ALL_FREE             0.5387 0.0836 0.0492
+   deepsets k51-SINGLE-middle             0.5000 0.0000 0.0000
+   deepsets  k51-THREE-spread             0.9477 0.9086 0.0445
+e1-original  k201-ALTERNATING             1.0000 1.0000 0.0398
+e1-original       k4-ALL_FREE             0.5145 0.0562 0.0500
+e1-original k51-SINGLE-middle             0.5000 0.0000 0.0000
+e1-original  k51-THREE-spread             0.5008 0.0641 0.0406
+ normalized  k201-ALTERNATING             1.0000 1.0000 0.0414
+ normalized       k4-ALL_FREE             0.4949 0.0438 0.0516
+ normalized k51-SINGLE-middle             0.5000 0.0000 0.0000
+ normalized  k51-THREE-spread             0.5000 0.0539 0.0383
+transformer  k201-ALTERNATING             1.0000 1.0000 0.0602
+transformer       k4-ALL_FREE             0.5344 0.0727 0.0539
+transformer k51-SINGLE-middle             0.5000 0.0000 0.0000
+transformer  k51-THREE-spread             0.9762 0.9648 0.0500
+```
+
+En SINGLE-middle K=51, los 20 pares de los tres tratamientos seguros y
+E1 original tienen TV estimada 0.0000 y cota superior puntual máxima
+0.0242, menor que la tolerancia .05: equivalencia aproximada bajo
+ese criterio, no igualdad exacta. En algunos SINGLE-last del Transformer hay
+muchas propuestas prohibidas. `singleton-product-laws.csv` usa la fórmula exacta
+TV(P^m,Q^m)=1−(1−ε)^m en la masa verdadera desconocida ε; sus valores estimados
+incluyen intervalos binomiales simultáneos. Es un análisis analítico exploratorio,
+no nuevos ensayos empíricos B3. Cero observaciones no prueba probabilidad cero.
+
+8. **¿Más parecido a Luby significa más rápido?**
+
+No es una implicación matemática. El contraejemplo de leyes deterministas con
+idéntico TV/entropía tiene probabilidades de confirmar 2^(-K) o 1/2 según los
+solapamientos; la segunda familia es una construcción matemática por nodo, no
+una implementación determinista anónima de nodos inicialmente idénticos.
+En la clique all-free K=201, p=1/2 y COMMIT exacto, los valores plug-in son:
+
+```text
+    treatment  exact_progress  collision      tv
+     deepsets         0.27094    0.01858 0.16415
+  e1-original         0.29503    0.00598 0.06390
+         mean         0.29991    0.00514 0.04616
+   normalized         0.29938    0.00514 0.04644
+raw_endpoints         0.00029    0.24971 0.97942
+          sum         0.22728    0.18264 0.28860
+  transformer         0.23799    0.04751 0.29093
+```
+
+El uniforme exacto da 0.30383. RAW conserva unos cuatro colores efectivos y
+casi pierde progreso; Transformer es fácilmente distinguible, pero conserva
+progreso comparable aquí y colorea la cohorte. La mezcla 50:50 con uniforme
+está en `clique-progress.csv`. `heterogeneous-distribution-progress.csv` compara
+marginales y solapamientos en el MISMO estado completo. Las correlaciones de
+rollouts no establecen causalidad.
+
+La mayor discrepancia original de la fórmula motivó una réplica independiente,
+explícitamente post hoc (`progress-replication.json`). Se conservaron los 256
+ensayos originales y se añadieron 1.024; el SE mostrado cubre observaciones,
+con incertidumbre adicional en los marginales predictivos. No se presenta como
+una prueba de igualdad de las probabilidades empíricas y teóricas.
+
+9. **¿Qué está demostrado y qué sigue siendo empírico?**
+
+Demostrados bajo hipótesis explícitas: |A_v|≥t_v+1; seguridad del profesor exacto;
+confirmación ≥1/4 y cola n(3/4)^t; separación entre fidelidad y ley; equivalencia
+de kernels bajo igualdad conjunta de acciones; relación Bayes–TV y cotas producto;
+fórmula producto singleton; condiciones suficientes de progreso; transferencia
+de certificados MAX a listas heterogéneas. Se verificaron los hashes de los 20
+MAX principales y 1.280 testigos locales. Los contraejemplos concretos SUM/MEAN
+tienen intervalos en aritmética real y condicionalmente float32. Las hipótesis
+numéricas incluyen cotas de error afín, IEEE y ausencia de TF32/overflow.
+No hay demostración universal de progreso o terminación de las redes.
+
+10. **¿Cómo cambia la tesis del paper?**
+
+La generalización observada permite eliminar conocimiento global de Δ sin
+reentrenar tres de los tratamientos estudiados. La fidelidad al profesor y
+la uniformidad exacta de candidatos no son requisitos empíricos de ese éxito.
+Una política segura puede tolerar errores de propuestas gracias a COMMIT
+aprendido; eso no garantiza progreso en todos los estados. Las tasas finitas
+no identifican necesidad universal de MAX o de una arquitectura particular.
+
+Limitaciones: cinco redes por tratamiento; 76 especificaciones con 73 estructuras,
+controles ya examinados y familias deterministas; matriz finita de grados;
+K=501 es una sonda local, no un rollout de grado 500; estimación MC y LRT plug-in;
+estados autónomos seleccionados por regla fija, no muestreo uniforme del espacio
+de estados. El bootstrap de diferencias puede degenerar en cohortes sin fallos;
+se añaden límites conservadores por clusters y no se interpreta [0,0] como
+equivalencia poblacional. Los resultados exactos, estadísticos y exploratorios
+están separados. Se conservaron todos los negativos, sin optimizar pesos para ocultarlos.
+
+Reproducción y acceso: [entrada](../../LOCAL_PALETTES.md),
 [protocolo](../../docs/LOCAL_PALETTES_STATISTICAL_PROTOCOL.md),
-[teoría y pruebas](../../docs/LOCAL_PALETTES_AND_DISTRIBUTIONS_THEORY.md),
-[paper fuente](../../paper/ucgnn/main.tex). Los CSV, figuras y tablas se generan
-con `python -m dcl.localpalettes.finalize`; no se copiaron cifras manualmente.
+[teoría](../../docs/LOCAL_PALETTES_AND_DISTRIBUTIONS_THEORY.md),
+[manuscrito PDF](../../paper/ucgnn/main.pdf). Código fuente genera tablas y figuras
+desde los CSV y arrays archivados; los bancos completos de clasificación tienen
+hashes en `candidate-array-manifest.json`. Todos los cambios son locales.

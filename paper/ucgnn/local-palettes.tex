@@ -106,7 +106,8 @@ zero-shot local-list success is made before these results.}}
 \input{tables/local-palettes.tex}
 \caption{Frozen-checkpoint evaluation by palette regime. Counts include all
 five network seeds on shared graph--tape cases; they are not independent graph
-replicates. Rounds include the 256-round cutoff.}\label{tab:local-palettes}
+replicates. Rounds include the 256-round cutoff and improper completions;
+MEAN's termination time is not a speed comparison for successful proper coloring.}\label{tab:local-palettes}
 \end{table}}{}
 \IfFileExists{figures/local-palette-outcomes.pdf}{
 \begin{figure}[ht]\centering
@@ -182,7 +183,7 @@ from IID Monte Carlo; quadrature does not receive binomial intervals.
 
 Each network/state has 32,768 distribution-estimation draws and 8,192
 independent shared-r fidelity/test draws. For six prespecified contexts and
-all thirty networks, candidate-only likelihood-ratio tests use independent
+all thirty primary networks, candidate-only likelihood-ratio tests use independent
 fresh candidate samples at $m=1,5,20,100,500,2000$, 256 test trials per source,
 and 1,024 independent teacher calibration trials. Test trials use nested
 prefixes over $m$, so points on a curve are paired. The plug-in alternative
@@ -237,6 +238,9 @@ null likelihood is at least the alternative likelihood. The stated rule is
 therefore optimal, including the identical-law tie case.
 \end{proof}
 \IfFileExists{tables/singleton-results.tex}{\input{tables/singleton-results.tex}}{}
+
+A prospectively committed supplement applies the same design to the five
+original E1 checkpoints, producing 35 networks in the conditional-law diagnostics.
 
 \paragraph{Distribution and progress.}
 For exact COMMIT and conditionally private independent actions, formula~(1) in

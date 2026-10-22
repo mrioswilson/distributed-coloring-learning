@@ -113,3 +113,8 @@ Initial absolute-only checker output and tests blocked by an actively held GPU
 lock are preserved as diagnostics. They are superseded by the correct combined
 absolute/relative check, final trained-network verification and final test XML.
 No weights were changed to repair those verification issues.
+
+The secondary cyclic-teacher law is recorded as `cyclic_tv` and in the raw
+`cyclic_law` arrays. Its mass is the cyclic gap preceding each available color
+divided by K. For K=11 and A={1,6,10}, masses are {2/11,5/11,4/11}; a dedicated
+unit test verifies this different law. No new cyclic-teacher model was trained.

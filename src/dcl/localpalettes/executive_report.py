@@ -59,6 +59,8 @@ coloración final propia y autorizaciones contrarias a la regla exacta:
 un rollout correcto no certifica COMMIT. Los cuatro regímenes y todos los
 intervalos/contrastes están en `regime-summary.csv`, `paired-comparisons.csv`
 y `cluster-uncertainty.csv`. Rondas incluyen cutoff 256; no es timeout técnico.
+También incluyen terminaciones impropias: el tiempo de MEAN no debe interpretarse
+como velocidad de una coloración correcta.
 
 3. **¿Qué mecanismos explican las diferencias?**
 
