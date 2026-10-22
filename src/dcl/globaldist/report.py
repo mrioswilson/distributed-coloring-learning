@@ -256,7 +256,7 @@ positivity. Holm correction controls familywise error at $0.05$ across all
 '''
     section+=f"\nThe primary family rejected {int(p.reject_holm.sum())} of 795 hypotheses. "
     section+='; '.join(f"{NAMES[arch]}: {int(p[p.architecture==arch].reject_holm.sum())}/265" for arch in COLORS)+'.\n'
-    section+=f"All archived runs had status totals (valid, invalid, cutoff, technical) $({','.join(map(str,audit['statuses']))})$. Zero observed failures does not establish zero failure probability.\n"
+    section+=f"The audited queued runs had status totals (valid, invalid, cutoff, technical) $({','.join(map(str,audit['statuses']))})$. Zero observed failures does not establish zero failure probability.\n"
     section+=r'''
 \begin{center}
 \begin{tabular}{lrr}

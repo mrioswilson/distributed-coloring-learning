@@ -286,3 +286,75 @@ For the known localized D=200 alternative, the set 'center in {2,...,101}'
 attains balanced accuracy 149/199, approximately 0.7487. Thus the observed
 MMD sensitivity limitation is not an information-theoretic impossibility of
 distinguishing those two artificial generators when their laws are known.
+
+## H. Elementary concentration and multiplicity details
+
+For completeness, the concentration steps above can be derived without
+assuming a special infinite-dimensional theorem. On a finite space, take
+the columns of K^(1/2) as Euclidean feature vectors; their inner products
+are k and squared norms are one.
+
+**Bounded-variable exponential lemma.** If Z is in [a,b], let
+F(t)=log E exp(tZ). Its second derivative is the variance under exponential
+tilting, bounded by (b-a)^2/4: the squared distance from the interval midpoint
+is at most that number, and variance is no larger than the mean squared
+distance from any fixed point. Since F(0)=0 and F'(0)=EZ, integrating this
+second-derivative bound yields
+
+    E exp(t(Z-EZ)) <= exp(t^2(b-a)^2/8).
+
+The same integration applies to negative t. This is the usual bounded-variable
+exponential lemma, not a new result.
+
+**Bounded differences.** For independent X_1,...,X_m and a real function f
+whose value changes by at most c_i when only X_i changes, use the Doob
+martingale M_i=E[f|X_1,...,X_i]. Conditional on the past, the martingale
+difference has range length at most c_i: integrating over the independent
+remaining variables preserves the bounded difference as X_i varies.
+The preceding conditional exponential bound, iterated over i, gives
+
+    E exp(t(f-Ef)) <= exp(t^2 sum_i c_i^2/8).
+
+Chernoff's inequality and t=4u/sum_i c_i^2 give
+
+    Pr(f-Ef >= u) <= exp(-2u^2/sum_i c_i^2).
+
+For f=||mu_hat-mu|| and ||phi(x)||=1, c_i=2/m. Also, expanding the squared
+norm and using independence to cancel cross terms gives
+E||mu_hat-mu||^2=(E||phi||^2-||mu||^2)/m<=1/m. Jensen's inequality yields
+the stated expectation bound, and the bounded-difference tail yields the
+MMD confidence radius used in the code. Applying bounded differences to
+an empirical subset probability with c_i=1/m gives the Hoeffding bound used
+in the TV argument. Thus both reported concentration intervals follow from
+the displayed elementary argument.
+
+**Finite-space consistency.** Applying the same indicator bound to every
+point of the finite sample space gives convergence of empirical frequencies
+in probability (and almost surely by summability and Borel--Cantelli).
+MMD squared is a finite quadratic polynomial in those frequencies; its
+biased version converges to the population value, and the unbiased version
+differs by a term tending to zero. Conditional on a pooled finite sample,
+a uniformly permuted group's frequency at any point is hypergeometric,
+with variance at most 1/(4m); the complementary group has the analogous
+bound 1/(4l). Both groups therefore approach the pooled frequencies, uniformly
+in the underlying pooled composition, as m,l grow. Their permuted MMD squared
+tends to zero in probability. Under an alternative, the observed statistic
+tends to its strictly positive population value. The probability that a
+random permutation exceeds it tends to zero. For fixed B, a union bound
+shows that all B permutations fall below it with probability tending to one;
+the limiting Monte Carlo p is 1/(B+1). This gives consistency whenever the
+fixed test threshold exceeds that resolution. The primary B=19999 meets
+0.05/795. With B tending to infinity, Markov's inequality applied to the
+fraction of exceedances also gives consistency without needing every
+permutation to be small. A tie guard tending to zero does not change the
+positive-gap argument in ideal arithmetic.
+
+**Holm under arbitrary dependence.** Let m_0 be the number of true nulls in
+a family of M hypotheses. If any true null is rejected, consider the first
+true null in the ordered step-down procedure. At that point at least m_0
+hypotheses remain, so its p is at most alpha/m_0. Consequently the event of
+any false rejection is contained in {minimum true-null p <= alpha/m_0}.
+A union bound over the m_0 super-uniform true-null p-values bounds its
+probability by alpha. No independence across shared-graph or shared-teacher
+contrasts is required. This justifies the implemented cumulative-max adjusted
+p-values and the preserved 795-hypothesis family, including graph aliases.
