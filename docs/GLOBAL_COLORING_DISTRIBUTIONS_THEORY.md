@@ -210,3 +210,50 @@ that all vertices participate initially and each proposes x_v has probability
 2^(-n) product_v (d(v)+1)^(-1)>0. Since x is proper, all confirmations succeed
 in that first round. This proves positivity of every valid final coloring,
 not uniformity of those probabilities or full support for a learned policy.
+
+## G. Symmetry forces identical conditional solution laws on cliques
+
+This is a standard finite group-invariance argument, not an original theorem.
+Let a finite group H of vertex automorphisms preserve every local list, and
+suppose the round function is H-equivariant when colors and private uniforms
+are permuted together. Suppose private uniforms are iid across vertices and
+rounds, and the initial uncolored state is invariant. Induction on rounds
+shows that the trajectory law is H-invariant: the transformed uniforms have
+the same law, and equivariance transforms every successive state. The event
+E_R='valid completion by round R' is invariant. If Pr(E_R)>0, conditioning
+therefore leaves the output law H-invariant. The same argument holds for
+eventual valid completion by a countable union over R.
+
+If H acts transitively on C(G), all valid vectors have equal conditional
+probability: for x,y choose h with hx=y and use invariance. Their masses sum
+to one, so each is 1/|C(G)|. Vertex-transitivity alone is not sufficient;
+transitivity on the entire coloring space is the required hypothesis.
+
+For G=K_n and local lists C_v={0,...,n-1}, every proper coloring is a
+bijection from vertices to colors. The vertex automorphism group S_n acts
+transitively on these n! bijections. Consequently any such equivariant
+protocol, including Luby and each of the three selected shared-weight
+architectures, has conditional output law Uniform(C(K_n)). It need not have
+uniform proposals, equal round counts or equal success probability. Failure
+masses can distinguish unconditional laws even when conditional laws agree.
+
+For the selected architectures, shared row-wise MLPs, neighbor MAX, shared
+participation/commit rules and per-node palette attention all commute with
+vertex relabeling in real arithmetic. Positions c/(K_v-1) order colors but
+are not vertex identifiers. Permanent-state updates and simultaneous commit
+gating also commute with relabeling. Therefore the architectural symmetry
+condition holds for every fixed checkpoint in the ideal mathematical model;
+no training-seed mixture is needed. Floating-point batch kernels are audited
+numerically, not universally certified bit-for-bit equivariant on every
+possible input, so the ideal result must be distinguished from a numerical
+symmetry certificate for the particular hardware implementation.
+
+On an initially uncolored clique K_201, every node's first-message MAX is
+the pending-neighbor message. Its own palette is 201, so its proposal head
+has exactly the same deterministic first-stage input as the center of the
+archived all-free degree-200 star witness, regardless of its neighbors'
+palette lengths. Thus the earlier K=201 all-free proposal-law discrepancies
+apply to clique initial proposals too, while the conditional ideal complete
+law is nevertheless uniform by symmetry. This gives a precise mechanism
+by which proposal imitation and final-law equivalence diverge. It does not
+claim arbitrary graphs have uniform Luby laws; path3 is a counterexample.

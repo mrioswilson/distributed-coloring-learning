@@ -24,6 +24,18 @@ def test_all_fifteen_checkpoint_identities_actions_reset():
         assert torch.equal(old.candidate,new.candidate)
         assert torch.equal(old.participate,new.participate)
         assert torch.equal(old.commit_logit>0,new.commit_logit>0)
+        # Actual frozen coefficients: vertex equivariance on a legal partial clique.
+        ce=torch.as_tensor(edge_array(nx.complete_graph(5)))
+        cc=torch.tensor([-1,-1,0,-1,2]);cp=torch.full((5,),5)
+        crp=torch.tensor([.13,.39,.55,.77,.91]);crc=torch.tensor([.17,.31,.53,.72,.89])
+        order=torch.tensor([3,1,4,0,2]);inverse=order.argsort()
+        adapter=LocalPaletteAdapter(model)
+        base=adapter(cc,crp,crc,ce,cp)
+        perm=adapter(cc[order],crp[order],crc[order],inverse[ce],cp[order])
+        assert torch.equal(base.candidate,perm.candidate[inverse])
+        assert torch.equal(base.participate,perm.participate[inverse])
+        assert torch.equal(base.commit_logit>0,(perm.commit_logit>0)[inverse])
+        torch.testing.assert_close(base.candidate_logits,perm.candidate_logits[inverse],atol=3e-5,rtol=3e-5)
         g=small_graphs()[1]
         a=sample(g,model,s['label'],'integration-reset',8,batch_nodes=12)
         sample(small_graphs()[3],model,s['label'],'integration-interleave',2)

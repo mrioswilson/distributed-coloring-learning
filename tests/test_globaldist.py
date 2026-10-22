@@ -40,3 +40,9 @@ def test_statistic_matches_direct_unequal_samples():
     expected=(kx.sum()-len(x))/(len(x)*(len(x)-1))+(ky.sum()-len(y))/(len(y)*(len(y)-1))-2*kxy.mean()
     result=mmd_test(x,y,rng,B=9)
     assert abs(result['mmd2_unbiased']-expected)<1e-12
+
+def test_clique_symmetry_exact_teacher():
+    for g in small_graphs():
+        if g['id'] in ('edge','triangle'):
+            x,p,_,_=exact_teacher(g)
+            assert np.allclose(p,np.full(len(p),1/len(p)))

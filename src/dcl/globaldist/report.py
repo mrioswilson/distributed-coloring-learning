@@ -85,6 +85,8 @@ def figures(primary,tv):
 def report():
     p=pd.DataFrame(read(OUT/'primary.json'));tv=pd.read_csv(OUT/'small-tv.csv');audit=read(OUT/'audit.json');ctrl=read(OUT/'controls.json')
     figures(p,tv)
+    clique_ids=[g['id'] for g in read(OUT/'graphs.json') if len(g['edges'][0])==g['n']*(g['n']-1)]
+    clique_tests=p[p.graph.isin(clique_ids)];clique_tests.to_csv(OUT/'clique-symmetry-check.csv',index=False)
     p.groupby(['architecture','family','delta','n_vertices'],as_index=False).agg(tests=('p','size'),rejections=('reject_holm','sum'),median_empirical_mmd=('mmd_biased','median'),median_unbiased_mmd2=('mmd2_unbiased','median')).to_csv(OUT/'by-degree-family-size.csv',index=False)
     p.groupby(['architecture','training_seed'],as_index=False).agg(tests=('p','size'),rejections=('reject_holm','sum'),median_empirical_mmd=('mmd_biased','median'),median_unbiased_mmd2=('mmd2_unbiased','median')).to_csv(OUT/'by-training-seed.csv',index=False)
     # Descriptive controlled adjacent-degree changes, one graph per grid cell.
@@ -125,7 +127,7 @@ def report():
       '**P5. Does distinguishability increase with degree at fixed size and family?** Figure 2 and `controlled-degree-changes.csv` describe the fixed-n regular grids separately for every policy. We do not claim a universal monotone relationship: kernel geometry changes with the graph, only one graph is sampled per cell, and degree is not randomized independently of graph construction. Figure 2 and the adjacent changes use unbiased MMD-squared estimates to avoid a degree-dependent positive finite-sample bias of the nonnegative empirical norm; negative estimates are permitted. Descriptive signs and variability are retained rather than replacing them with an unplanned pooled regression.','',
       '**P6. How many independent complete colorings?** Primary detections use 250 per generator. Figure 3 and `power.csv` examine 100, 250, 500, 1000 and 2000 for three prespecified graphs and seed 41000 of each architecture. These are conditional empirical-bank power estimates at nominal alpha .05; their 30-trial intervals omit finite-bank uncertainty and do not estimate Holm-adjusted population power. They cannot justify a universal required sample size.','',
       '**P7. Variation among independent trainings:** Figure 6 and `by-training-seed.csv` show each of the five fixed policies separately. These are five independently trained functions, never a single mixed output distribution. Variation between policies remains distinct from Monte Carlo intervals within each policy. Shared graphs are blocks; no independent graph-by-seed population standard error is claimed.','',
-      '**P8. Different proposals but indistinguishable complete outputs?** Earlier proposal tests alone cannot answer this. This extension archives a contextual, explicitly post-hoc match between the previous all-free center law at K=201 and the identical initial degree-200 star, if available. Any nonrejection there means failure to detect a global difference at m=250, not equality or cancellation of all proposal differences. See `proposal-context.csv`; conditional proposals along entire trajectories were not exhaustively measured.','',
+      '**P8. Different proposals but indistinguishable complete outputs?** Yes for the ideal equivariant protocols on cliques: conditional on proper completion, vertex-permutation symmetry forces the uniform law on all n! valid colorings for every fixed checkpoint and for Luby. This is a mathematical sufficient-condition result, not an inference from nonrejection. Initially all-free K=201 proposal discrepancies also apply to any node of clique K201 because its deterministic MAX first-stage input matches the archived star-center witness. Floating-point implementation equivariance has numerical probes rather than a universal bitwise certificate. Earlier proposal tests alone cannot answer other graphs. This extension archives a contextual, explicitly post-hoc match between the previous all-free center law at K=201 and the identical initial degree-200 star, if available. Any nonrejection there means failure to detect a global difference at m=250, not equality or cancellation of all proposal differences. See `proposal-context.csv`; conditional proposals along entire trajectories were not exhaustively measured.','',
       '**P9. Structural explanations:** Figure 5 and `structural.json` report color count, class concentration/entropy, degree-wise color masses, nonadjacent co-color probabilities and partition diversity. Differences provide interpretable correlates, not causal explanations or a replacement for the labeled-vector test. Equal color-count laws would not imply equal complete laws. Partition encodings deliberately discard color names and are secondary.','',
       '**P10. Paper conclusions:** The provisional manuscript section reports exact teacher nonuniformity, precisely enumerated Holm rejections and negative-result limits. Observed differences show that imitation can produce different solution laws on these finite graphs. No observation proves universal inequality, equality, termination, monotonic degree dependence or equivalence over all graphs.','',
       '## Uncertainty and limitations','',
@@ -141,6 +143,7 @@ def report():
         context=p[p.graph=='star-d200'].merge(prior[['model','tv','tv_lower','tv_upper']],on='model',how='inner')
         context['prior_candidate_csv_sha256']=file_hash(old)
         context.to_csv(OUT/'proposal-context.csv',index=False)
+    lines += ['', f'Clique symmetry diagnostic: {int(clique_tests.reject_holm.sum())}/{len(clique_tests)} primary clique-entry/checkpoint tests reject after Holm. The mathematical symmetry result concerns ideal equivariant conditional laws; finite numerical probes and tests do not constitute a universal hardware-level symmetry certificate. All these cells are retained in clique-symmetry-check.csv.', '']
     lines += ['', '## Observed degree contrasts and structural diagnostics', '']
     dd=pd.DataFrame(differences)
     for (arch,n),a in dd.groupby(['architecture','n']):
@@ -188,6 +191,28 @@ No new training or safety shield was introduced. Private execution uniforms
 were independent between complete runs and generators; no global degree
 was supplied as an input feature. The teacher used float64 uniforms and
 networks their explicit float32 conversion, with TF32 disabled.
+
+\begin{proposition}[Clique symmetry]
+On $K_n$ with local lists $\{0,\ldots,n-1\}$, any vertex-equivariant
+randomized protocol with iid private node randomness has the uniform output
+law on the $n!$ proper colorings, conditional on positive-probability valid
+completion (including completion by a fixed cutoff).
+\end{proposition}
+\begin{proof}
+The uncolored initial state and private-randomness law are invariant under
+all vertex permutations. Equivariance preserves this invariance through
+every round. Conditioning on the invariant event of proper completion
+preserves invariance. Vertex permutations act transitively on proper
+colorings, which are bijections to the $n$ colors, so their probabilities
+are equal and sum to one.
+\end{proof}
+The selected shared-weight architectures are vertex-equivariant in real
+arithmetic, even though their proposal heads can prefer some color labels.
+Thus identical conditional clique laws can coexist with different proposal
+laws and different success or termination-time laws. This is an ideal
+symmetry argument; numerical equivariance is tested on finite probes, not
+certified for every hardware input. It establishes no uniformity on general
+graphs and no equality of unconditional laws when failure probabilities differ.
 
 Seven small labeled graphs permit exact rational computation of the teacher's
 absorbing law. For the three-vertex path with palettes $(2,3,2)$, its six
@@ -270,6 +295,8 @@ figure sources accompany this provisional section.
 Se completaron 795 contrastes preregistrados sobre distribuciones de coloraciones completas: {int(p.reject_holm.sum())} rechazaron igualdad con Holm al 5%. Se mantuvieron separados los quince checkpoints recientes y se usaron 250 ejecuciones independientes por algoritmo y grafo.
 
 '''+ '\n'.join(f"- {NAMES[a]}: {int(p[p.architecture==a].reject_holm.sum())}/265 contrastes rechazados." for a in COLORS)+f'''
+
+Una demostración por simetría establece igualdad de las leyes condicionadas al éxito en cliques para los protocolos ideales equivariantes, aun con propuestas diferentes.
 
 Se verificaron {audit['independent_run_seeds']:,} semillas distintas y {audit['banks']} bancos; estados [válidas, inválidas, cutoff, error] = {audit['statuses']}. Tiempo de proceso cargado: {audit['gpu_hours']:.3f}/12 horas. No hubo entrenamiento nuevo ni push.
 
