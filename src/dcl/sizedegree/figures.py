@@ -96,7 +96,7 @@ def main():
             ax.set(title=f'{NAMES[arch]}\nΔ={d}',xlabel='n' if i==2 else '',ylabel='P(color Δ occurs)' if j==0 else '')
             ax.tick_params(labelbottom=i==2)
             ax.set_title(f'{NAMES[arch]}\nΔ={d}',fontsize=13)
-            if j==0:ax.legend(fontsize=12)
+            if j==0:ax.legend(fontsize=13)
     fig.suptitle('5. Top-color appearance; simultaneous elementary-binomial CP envelopes')
     save(fig,'factorial-05-top-color')
 
@@ -114,7 +114,7 @@ def main():
                 ax.hist(v,bins=bins,density=True,histtype='step',lw=1.4 if label=='Luby' else .8,color='black' if label=='Luby' else SEEDCOLORS[k-1],label='Luby' if label=='Luby' else label[-5:])
             title=f'{NAMES[arch]}\n'+(f'New graph r{g["rep"]}' if g['stage']=='main' else 'Historical; fresh data')
             ax.set(title=title,xlabel='Distinct colors U' if i==2 else '',ylabel='Probability mass' if j==0 else '');ax.set_title(title,fontsize=12)
-            if j==0:ax.legend(fontsize=11,ncol=2)
+            if j==0:ax.legend(fontsize=13,ncol=2)
     fig.suptitle('6. Complete-coloring occupancy at n=512, Δ=100 (500 attempts per generator)')
     save(fig,'factorial-06-used-colors')
 
@@ -151,7 +151,7 @@ def main():
             ax.set(title=f'{NAMES[arch]}\nΔ={d}',xlabel='n' if i==2 else '',ylabel='Event A probability\ndifference' if j==0 else '')
             ax.tick_params(labelbottom=i==2)
             ax.set_title(f'{NAMES[arch]}\nΔ={d}',fontsize=13)
-            if j==0:ax.legend(fontsize=12,ncol=2)
+            if j==0:ax.legend(fontsize=13,ncol=2)
     fig.suptitle('7. All five checkpoints; faint points are individual graphs, lines are graph means')
     save(fig,'factorial-07-checkpoints')
 
@@ -181,11 +181,11 @@ def main():
                     lower.scatter(q['q_top']*(d+1),value,color=degreecolors[di],marker=markers[ni],s=20,alpha=.7)
         ax.axhline(1,color='black',ls='--',lw=.8,label='Uniform teacher');ax.set_xscale('log');ax.set_xticks(np.array(DS)+1,labels=np.array(DS)+1)
         ax.set(title=NAMES[arch],xlabel='Palette size K',ylabel='Initial q(top) / (1/K)')
-        if j==0:ax.legend(fontsize=11,ncol=2)
+        if j==0:ax.legend(fontsize=13,ncol=2)
         lower.axhline(0,color='.5',lw=.6);lower.set(xlabel='Initial q(top) / (1/K)',ylabel='Final top-appearance\nprobability difference',ylim=(-1.05,1.05))
     handles=[Line2D([0],[0],marker='o',ls='',color=c,label=f'Δ={d}') for c,d in zip(degreecolors,DS)]
     handles += [Line2D([0],[0],marker=m,ls='',color='.3',label=f'n={n}') for m,n in zip(markers,NS)]
-    fig.legend(handles=handles,loc='outside lower center',ncol=8,fontsize=11)
+    fig.legend(handles=handles,loc='outside lower center',ncol=8,fontsize=13)
     fig.suptitle('9. Candidate quadrature and independent final samples: association, not causal identification')
     save(fig,'factorial-09-candidates-and-global-law')
 
@@ -197,8 +197,8 @@ def main():
             a=tr[(tr['graph']==target['id'])&(tr['model']==s['label'])]
             ax.plot(range(4),a[metrics].mean(),'o-',color=SEEDCOLORS[k],lw=1,ms=3,label=str(s['seed']))
             for x,metric in enumerate(metrics):ax.scatter(np.full(len(a),x),a[metric],s=8,alpha=.2,color=SEEDCOLORS[k])
-        ax.set(xticks=range(4),xticklabels=['Proposals','Teacher on\nsame states','COMMIT','Final class'],ylabel='Top-color fraction',title=NAMES[arch]);ax.tick_params(axis='x',labelsize=11)
-    axes[0].legend(fontsize=11)
+        ax.set(xticks=range(4),xticklabels=['Proposals','Teacher on\nsame states','COMMIT','Final class'],ylabel='Top-color fraction',title=NAMES[arch]);ax.tick_params(axis='x',labelsize=12)
+    axes[0].legend(fontsize=13)
     fig.suptitle('Read-only trajectory accounting: n=512, Δ=100, eight independent runs per checkpoint')
     save(fig,'factorial-10-proposal-commit-chain')
 
@@ -242,13 +242,13 @@ def main():
                 axes[1,j].scatter(xx,[r['intervention_tv_effect_lower'] for r in vals],s=25,color=graphcolors[gi])
             for ax in axes[:,j]:
                 ax.set(xticks=range(5),xticklabels=[s['seed'] for s in specs() if s['treatment']==arch],ylim=(-.025,1.025))
-                ax.tick_params(axis='x',rotation=30,labelsize=12)
+                ax.tick_params(axis='x',rotation=30,labelsize=13)
             axes[0,j].set_ylim(-.005,upper_max)
             axes[0,j].axhline(.05,color='black',ls='--',lw=.8)
             axes[0,j].set(title=NAMES[arch],ylabel='Upper TV bound:\nintervened vs Luby')
             axes[1,j].set(xlabel='Checkpoint seed',ylabel='Lower TV bound:\noriginal vs intervened')
         handles=[Line2D([0],[0],marker='o',ls='',color=graphcolors[i],label='Historical graph' if gid.startswith('historical-') else 'New graph r'+gid.rsplit('r',1)[-1]) for i,gid in enumerate(gids)]
-        fig.legend(handles=handles,loc='outside lower center',ncol=len(gids),fontsize=12)
+        fig.legend(handles=handles,loc='outside lower center',ncol=len(gids),fontsize=13)
         fig.suptitle('12. Exploratory candidate replacement; simultaneous 95% witness/coupling bounds')
         save(fig,'factorial-12-candidate-intervention')
     atomic_json(OUT/'figure-manifest.json',dict(required_figures=9,figures=[p.stem for p in sorted((OUT/'figures').glob('*.png'))],
