@@ -163,7 +163,16 @@ At an all-uncolored nonisolated vertex, MAX returns the same finite message
 type regardless of neighbor multiplicity. Thus at fixed $K$, the initial
 candidate function is independent of $n$ and the particular regular edge
 realization. This does not imply invariance of subsequent states or terminal
-laws. Ideal continuous teacher randomness also has global color-permutation
+laws. With independent initial candidates of law $q$, independent participation
+of probability $p$ and the exact conflict COMMIT rule, the unconditional first-round reference is
+\[
+ \Pr(v\text{ confirms }c)=p q_c(1-p q_c)^d.
+\]
+Every neighbor must avoid participating with candidate $c$. This nonlinear
+relation does not make different vertices' confirmations independent, and
+we do not assume the learned COMMIT head always equals that exact rule.
+The ideal teacher has $p=1/2$, $q_c=1/(d+1)$.
+Ideal continuous teacher randomness also has global color-permutation
 symmetry on regular graphs, implying a uniform single-vertex marginal and
 $E_L[U]=K P_L(T)$ conditional on the invariant completion event. It does not
 imply uniformity over proper colorings on arbitrary regular graphs. The ideal
@@ -304,8 +313,8 @@ nonrejections establish no approximate equivalence.
     Path('paper/ucgnn/factorial-size-degree.tex').write_text(text)
     abstract=f'''A subsequent size--degree factorial study uses three new regular graphs in
 each of sixteen cells, unchanged checkpoints and 500 testing attempts per
-generator. The smallest priority-case E1 occupancy-event TV lower bound over
-three new 512-node degree-100 graphs and five checkpoints is {tv:.3f}.
+generator. The smallest priority-case E1 TV lower bound from two preregistered
+events over three new 512-node degree-100 graphs and five checkpoints is {tv_both:.3f}.
 Simultaneous event contrasts separate structural changes from rejection rates,
 including a reduction of at least {reduction50:.3f} in E1's absolute top-color
 appearance difference from 128 to 1,024 vertices at degree 50. Size effects

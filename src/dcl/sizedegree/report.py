@@ -51,7 +51,7 @@ def main():
         method.append(f"| {NAMES[arch]} | {r['robust']}/{r['comparisons']} | {r['old']}/{r['comparisons']} | {r['robust_only']} | {r['old_only']} |")
     table=['| n | Δ=3 | Δ=10 | Δ=50 | Δ=100 |','|---:|---:|---:|---:|---:|']
     for n in NS:table.append('| '+str(n)+' | '+' | '.join(ci(cell('normalized',n,d)) for d in DS)+' |')
-    target_table=['| Grafo | P_L(A) | Rango P_E1(A) | Menor cota TV entre cinco E1 | V2 |','|---|---:|---:|---:|---:|']
+    target_table=['| Grafo | P_L(A) | Rango P_E1(A) | Menor cota TV de A entre cinco E1 | V2 |','|---|---:|---:|---:|---:|']
     target_both=[r for r in events if r['stratum']=='main' and r['n']==512 and r['delta']==100 and r['architecture']=='normalized']
     best_target_lower=min(max(q['tv_lower'] for q in target_both if q['graph']==r['graph'] and q['model']==r['model']) for r in target)
     for gid in sorted(set(r['graph'] for r in target)):
@@ -374,6 +374,15 @@ q_grid(top)={initial_s4:.6f} con K=101, pero el color máximo aparece con
 probabilidad media {final_s4:.3f} en sus coloraciones finales de los tres
 grafos nuevos n512-d100. La disponibilidad cambia durante las rondas; una
 masa inicial de cuadrícula nula no prueba ausencia en toda trayectoria.
+
+Una referencia de primera ronda, sin condicionar al éxito futuro, con
+participación p, propuestas independientes
+q_c y COMMIT exacto da P(v confirma c)=p q_c(1−p q_c)^Δ. Los vecinos deben
+evitar participar y proponer el mismo color. El profesor ideal tiene p=1/2 y
+q_c=1/(Δ+1). Es una relación no lineal entre propuestas y confirmaciones;
+las confirmaciones de vértices vecinos no son observaciones independientes.
+La fórmula no presupone que el COMMIT aprendido coincida en todos los estados
+con la regla exacta, ni se utilizó para modificar ninguna acción.
 
 Las trayectorias registran propuestas, participación, disponibilidad de
 referencia, COMMIT y clases finales sin modificar decisiones. Se observaron

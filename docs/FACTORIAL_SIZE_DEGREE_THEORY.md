@@ -53,6 +53,25 @@ fixed. Whether that produces top-color underuse is measured, not assumed.
 Candidate-grid probes compare every checkpoint on identical teacher states;
 the grids are approximations, with coarse/fine discrepancies reported.
 
+For a precise first-round reference, suppose participation has probability p,
+candidates are independently distributed as q across initially uncolored
+vertices, participation and candidate uniforms are independent, and COMMIT
+uses the exact conflict rule. On a d-regular graph,
+
+    Pr(v confirms color c in round1) = p q_c (1-p q_c)^d.
+
+The vertex must participate and choose c; independently each of its d
+neighbors must avoid the joint event of participating and choosing c.
+For the ideal teacher p=1/2 and q_c=1/(d+1). The expected first-round class
+size is n times this probability. Confirmations at different vertices are
+not independent, so this formula does not license an IID expression for
+global color absence. The function of q is also nonlinear because of
+conflicts. This is an exact-COMMIT reference, not a claim that a learned
+COMMIT head agrees on every state. No such rule is substituted into the
+actual original-policy or candidate-intervention rollout.
+This first-round calculation is unconditional on future proper completion;
+conditioning on that future event need not preserve the same formula.
+
 Even a fixed per-node bias can affect an entire-vector occupancy event
 differently at different n. In the **independent categorical occupancy toy**,
 if a color has probability q, the probability it is absent is (1-q)^n.
