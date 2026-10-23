@@ -52,6 +52,8 @@ def main():
     table=['| n | Δ=3 | Δ=10 | Δ=50 | Δ=100 |','|---:|---:|---:|---:|---:|']
     for n in NS:table.append('| '+str(n)+' | '+' | '.join(ci(cell('normalized',n,d)) for d in DS)+' |')
     target_table=['| Grafo | P_L(A) | Rango P_E1(A) | Menor cota TV entre cinco E1 | V2 |','|---|---:|---:|---:|---:|']
+    target_both=[r for r in events if r['stratum']=='main' and r['n']==512 and r['delta']==100 and r['architecture']=='normalized']
+    best_target_lower=min(max(q['tv_lower'] for q in target_both if q['graph']==r['graph'] and q['model']==r['model']) for r in target)
     for gid in sorted(set(r['graph'] for r in target)):
         rows=[r for r in target if r['graph']==gid];p=[r['probability_model'] for r in rows]
         reject=sum(r['reject'] for r in primary if r['graph']==gid and r['architecture']=='normalized')
@@ -154,11 +156,13 @@ ejemplos originales y antes de cualquier muestra intervenida. Conserva el
 único evento elegido por el procedimiento original en cada una de las 60
 celdas; no lo cambia usando la intervención. Reestima sus probabilidades en
 el holdout original y combina la cota TV(original,Luby) con la cota de
-acoplamiento TV(I,Luby), mediante la desigualdad triangular.
+acoplamiento TV(I,Luby), mediante la desigualdad triangular. Evalúa además
+el mismo evento bajo I y obtiene una cota directa TV(original,I). Ambas
+cotas pertenecen a esta misma familia simultánea, por lo que se toma su máximo.
 
 {chr(10).join(st)}
 
-Las 300 probabilidades (cinco por celda) tienen cobertura simultánea al menos
+Las 360 probabilidades (seis por celda) tienen cobertura simultánea al menos
 95% mediante CP y unión de eventos. Ésta es una familia distinta de la tabla
 anterior: no se toma el máximo entre sus cotas ni se afirma cobertura conjunta
 95% sobre ambas familias. La figura 12 utiliza este suplemento. No se añadieron
@@ -271,6 +275,11 @@ fue **{min(r['tv_lower'] for r in target):.3f}**. Sus probabilidades E1 variaron
 entre {min(r['probability_model'] for r in target):.3f} y {max(r['probability_model'] for r in target):.3f}.
 La figura 7 conserva las diferencias entre checkpoints; cinco entrenamientos
 no constituyen una muestra grande de todas las redes que podrían entrenarse.
+Al utilizar ambos eventos preregistrados A y T, la menor cota inferior de TV
+entre las quince parejas grafo/checkpoint es {best_target_lower:.3f}. Elegir
+el mayor límite de los dos eventos conserva la cobertura simultánea de su
+familia. La intensidad varía entre checkpoints, aunque la diferencia no se
+limita a s41000.
 
 {join(replicas)}
 
@@ -455,6 +464,8 @@ checkpoints históricos, 500 intentos por generador más 125 de holdout.
 
 En los tres grafos nuevos n512-d100, la menor cota TV del evento preregistrado
 U≤100 entre las quince comparaciones E1 fue {min(r['tv_lower'] for r in target):.3f}.
+Conservando A y T, las quince parejas tienen TV≥{best_target_lower:.3f}, con
+la cobertura simultánea de los eventos preregistrados.
 La respuesta al tamaño depende del grado y del evento. A grado 50, las bandas
 simultáneas respaldan que |D_T| cae al menos {top_reduction_lower:.3f} entre
 n128 y n1024. A grado 100, D_A cambia {ci(next(r for r in fc if r['group']=='normalized' and r['event']=='used_le_delta' and r['contrast']=='n512-n256|d100'))}

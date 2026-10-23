@@ -12,6 +12,8 @@ def make_paper():
         r=next(r for r in fc if r['group']==arch and r['event']=='used_le_delta' and r['contrast']=='full-corners')
         interactions.append(f"{NAMES[arch]} & {r['estimate']:+.3f} & [{r['ci'][0]:+.3f}, {r['ci'][1]:+.3f}] \\\\")
     tv=min(r['tv_lower'] for r in target)
+    both=[r for r in events if r['stratum']=='main' and r['n']==512 and r['delta']==100 and r['architecture']=='normalized']
+    tv_both=min(max(q['tv_lower'] for q in both if q['graph']==r['graph'] and q['model']==r['model']) for r in target)
     def effect(group,event,name):
         r=next(r for r in fc if r['group']==group and r['event']==event and r['contrast']==name)
         return f"{r['estimate']:+.3f} [{r['ci'][0]:+.3f}, {r['ci'][1]:+.3f}]"
@@ -135,6 +137,9 @@ Archived historical data exactly reproduce .008 versus 1.000 for $U\\le100$
 in \\texttt{{normalized-s41000}} on the original graph. They are never pooled
 with new outcomes. Across the three new $n=512,d=100$ graphs and five E1
 checkpoints, the smallest simultaneous event-TV lower bound is {tv:.3f}.
+Using both preregistered events, every one of these fifteen pairs has TV at
+least {tv_both:.3f}; maximizing two bounds from their same simultaneous family
+preserves its coverage. The effect is heterogeneous across checkpoints.
 Figures~\\ref{{fig:factorial-used}}--\\ref{{fig:factorial-replication}}
 retain occupancy distributions, all five training replicas and the independent
 replication on the original edge list. Leave-one-graph/checkpoint ranges are
@@ -249,8 +254,9 @@ or separate degree from palette causality.
 A separate supplementary addendum was recorded after original witness
 examples were inspected but before any intervention sample. It retains the
 single honestly selected original event for each of all sixty cells and
-uses its original independent holdout. Simultaneous CP bounds on 300 event,
-mismatch and success probabilities, followed by the triangle inequality,
+uses its original independent holdout. Simultaneous CP bounds on 360 event,
+mismatch and success probabilities, followed by direct fixed-event comparison
+under the intervened policy and the triangle inequality,
 give positive lower bounds on $\\operatorname{{TV}}(P_M,P_I)$ in
 {sw['effect_positive']}/{sw['cells_completed']} cells. The simultaneous
 coverage is at least .95 for this supplementary family; it is separate from
