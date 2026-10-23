@@ -43,6 +43,8 @@ def main():
     def count(arch,kind,event='used_le_delta'):
         rows=[r for r in fc if r['group']==arch and r['event']==event and r['kind']==kind]
         return sum(r['ci'][0]>0 for r in rows),sum(r['ci'][1]<0 for r in rows)
+    ca=cell('normalized',128,50,'uses_top_color')['ci'];cb=cell('normalized',1024,50,'uses_top_color')['ci']
+    top_reduction_lower=max(0.,max(0.,ca[0],-ca[1])-max(abs(cb[0]),abs(cb[1])))
     method=['| Arquitectura | V2 | MMD antiguo | Sólo V2 | Sólo MMD |','|---|---:|---:|---:|---:|']
     for arch in ARCHES:
         r=next(r for r in s['counts'] if r['architecture']==arch and r['stratum']=='main')
@@ -237,6 +239,10 @@ El evento T aporta información distinta. A grado 50, su diferencia pasó de
 se atenúa en ese régimen. A grado 100, el cambio de A entre n256 y n512 es
 {ci(next(r for r in fc if r['group']=='normalized' and r['event']=='used_le_delta' and r['contrast']=='n512-n256|d100'))}.
 Estos comportamientos dependen del observable y no ordenan las TV completas.
+De las bandas simultáneas de las dos celdas se deduce conservadoramente una
+reducción de al menos {top_reduction_lower:.3f} en |D_T| entre n128 y n1024
+a grado 50, para esta cohorte fija. Es una implicación de las bandas ya
+registradas; no es una comparación de TV entre espacios de distinta dimensión.
 
 ## P2. ¿Aumenta con el grado a tamaño fijo?
 
@@ -449,8 +455,16 @@ checkpoints históricos, 500 intentos por generador más 125 de holdout.
 
 En los tres grafos nuevos n512-d100, la menor cota TV del evento preregistrado
 U≤100 entre las quince comparaciones E1 fue {min(r['tv_lower'] for r in target):.3f}.
-Los efectos por tamaño y grado se informan con intervalos simultáneos; no se
-deduce una ley monótona de TV. Grado y paleta siguen confundidos.
+La respuesta al tamaño depende del grado y del evento. A grado 50, las bandas
+simultáneas respaldan que |D_T| cae al menos {top_reduction_lower:.3f} entre
+n128 y n1024. A grado 100, D_A cambia {ci(next(r for r in fc if r['group']=='normalized' and r['event']=='used_le_delta' and r['contrast']=='n512-n256|d100'))}
+entre n256 y n512. Estos cambios en probabilidades no ordenan las TV
+completas. Las cinco E1 difieren considerablemente y se mantienen separadas.
+Grado y paleta siguen confundidos.
+
+Los testigos independientes muestran también diferencias en propiedades que
+el uso total de colores puede ocultar. Las definiciones, probabilidades e
+intervalos de los ejemplos E1, DeepSets y Transformer aparecen en el informe.
 {iv_short}
 
 Auditoría: {a['new_algorithm_seeds']:,} semillas nuevas sin solapamiento;

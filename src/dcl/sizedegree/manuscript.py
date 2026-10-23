@@ -15,6 +15,8 @@ def make_paper():
     def effect(group,event,name):
         r=next(r for r in fc if r['group']==group and r['event']==event and r['contrast']==name)
         return f"{r['estimate']:+.3f} [{r['ci'][0]:+.3f}, {r['ci'][1]:+.3f}]"
+    ci50=[next(r['ci'] for r in fc if r['group']=='normalized' and r['event']=='uses_top_color' and r['contrast']==f'n{n}-d50') for n in (128,1024)]
+    reduction50=max(0.,max(0.,ci50[0][0],-ci50[0][1])-max(map(abs,ci50[1])))
     text=r'''\section{How Graph Size and Degree Affect Distributional Generalization}
 \label{sec:factorial}
 \paragraph{Motivation and controlled design.}
@@ -109,6 +111,10 @@ Already at $n=128,d=100$, the top-appearance difference is
 risk difference of {effect('normalized','used_le_delta','n128-d100')}.
 The two observables therefore supply different information; an uninformative
 missing-color event is not evidence of equal complete laws.
+The simultaneous cell bands imply a reduction of at least {reduction50:.3f}
+in the absolute top-appearance risk difference between 128 and 1,024 vertices
+at degree 50. This conservative deduction orders that fixed-cohort observable,
+not the unknown complete-law TV distances.
 
 \\begin{{table}}[t]
 \\centering\\small
@@ -295,7 +301,9 @@ each of sixteen cells, unchanged checkpoints and 500 testing attempts per
 generator. The smallest priority-case E1 occupancy-event TV lower bound over
 three new 512-node degree-100 graphs and five checkpoints is {tv:.3f}.
 Simultaneous event contrasts separate structural changes from rejection rates,
-while degree remains confounded with local palette size.
+including a reduction of at least {reduction50:.3f} in E1's absolute top-color
+appearance difference from 128 to 1,024 vertices at degree 50. Size effects
+therefore depend on the regime; degree remains confounded with palette size.
 '''
     Path('paper/ucgnn/tables/factorial-abstract.tex').write_text(abstract)
     path=Path('paper/ucgnn/main.tex');source=path.read_text()
