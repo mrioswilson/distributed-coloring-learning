@@ -4,6 +4,7 @@ No historical p-value is replaced. New comparisons have separately declared
 families and explicit scope; unavailable Pedro checkpoints are never imputed.
 """
 import argparse
+import csv
 import itertools
 import json
 from pathlib import Path
@@ -15,6 +16,7 @@ from scipy.stats import beta
 from dcl.behavior_statistics import kernel_test, holm_adjust, write_csv
 from dcl.globaldist.core import graph_record
 from dcl.integration.study import OUT as STUDY_OUT
+from dcl.integration.native_statistics import joint_test as native_joint_test
 from dcl.multiteacher.programs import named_seed
 from dcl.robustdist.controls import draw
 from dcl.robustdist.stats import joint_test
@@ -104,22 +106,34 @@ def independent_power():
     write_csv(OUT / "independent-power.csv", summary)
 
 
-def new_study_statistics():
-    """Unchanged V2 on each new teacher's corresponding reference law."""
+def new_study_statistics(incremental=False):
+    """Declared-alphabet V2 on each new teacher's corresponding reference law."""
     OUT.mkdir(parents=True, exist_ok=True)
     config = json.loads(Path("configs/integration-balanced.json").read_text())
     graphs = {g["id"]: g for g in json.loads((STUDY_OUT / "graphs.json").read_text())}
-    functional = json.loads((STUDY_OUT / "functional.json").read_text())
+    if (STUDY_OUT / "functional.json").exists():
+        functional = json.loads((STUDY_OUT / "functional.json").read_text())
+    elif incremental:
+        with (STUDY_OUT / "functional.csv").open() as handle:
+            functional = list(csv.DictReader(handle))
+        for row in functional:
+            row["seed"] = None if row["seed"] == "" else int(row["seed"])
+    else:
+        raise RuntimeError("Complete functional banks required, or use --incremental to cache completed tests")
     references = {(r["teacher"], r["graph"]): r for r in functional if r["architecture"] == "exact"}
     rows = []
     for record in functional:
         if record["architecture"] == "exact":
             continue
-        path = OUT / "new-study-tests" / f"{record['teacher']}__{record['graph']}__{record['label']}.json"
-        if path.exists():
-            rows.append(json.loads(path.read_text())); continue
         ref = references[record["teacher"], record["graph"]]
         assert file_hash(ref["bank"]) == ref["sha256"] and file_hash(record["bank"]) == record["sha256"]
+        path = OUT / "new-study-tests" / f"{record['teacher']}__{record['graph']}__{record['label']}.json"
+        if path.exists():
+            cached = json.loads(path.read_text())
+            assert all(cached[k] == record[k] for k in ("teacher", "architecture", "seed", "graph"))
+            assert cached["teacher_bank_sha256"] == ref["sha256"] and cached["model_bank_sha256"] == record["sha256"]
+            assert cached["valid_teacher"] == int(ref["successes"]) and cached["valid_model"] == int(record["successes"])
+            rows.append(cached); continue
         a, b = dict(np.load(ref["bank"], allow_pickle=False)), dict(np.load(record["bank"], allow_pickle=False))
         x, y = a["colors"][a["status"] == 0], b["colors"][b["status"] == 0]
         meta = graphs[record["graph"]]
@@ -127,14 +141,14 @@ def new_study_statistics():
         # expects the same symmetric directed-edge serialization as earlier.
         edges = np.asarray(meta["edges"], int).reshape(-1, 2)
         directed = np.concatenate((edges, edges[:, ::-1]), axis=0).T.tolist()
-        g = dict(id=record["graph"], n=meta["n"], degrees=meta["degrees"], edges=directed)
+        g = dict(id=record["graph"], n=meta["n"], degrees=meta["degrees"], edges=directed, palette_size=4)
         result = dict(teacher=record["teacher"], architecture=record["architecture"], seed=record["seed"],
                       graph=record["graph"], valid_teacher=len(x), valid_model=len(y),
                       teacher_bank_sha256=ref["sha256"], model_bank_sha256=record["sha256"])
         if min(len(x), len(y)) < 4:
             result.update(testable=False, p=1., reason="Fewer than four valid completed rows; equality is not inferred.")
         else:
-            stat = joint_test(x, y, g, seed_rng("new-study-v2", record["teacher"], record["graph"], record["label"]),
+            stat = native_joint_test(x, y, g, seed_rng("new-study-v2", record["teacher"], record["graph"], record["label"]),
                               B=config["permutations"])
             result.update(testable=True, p=stat["p"], statistic=stat["statistics"]["omnibus"],
                           selection=stat["selection_per_class"], evaluation=stat["evaluation_per_class"])
@@ -142,18 +156,26 @@ def new_study_statistics():
         if len(rows) % 25 == 0:
             print("new global tests", len(rows), flush=True)
     planned = len(config["teachers"]) * len(config["architectures"]) * len(config["seeds"]) * len(config["graphs_for_evaluation"])
+    if incremental and len(rows) < planned:
+        atomic_json(OUT / "new-study-progress.json", dict(completed=len(rows), planned=planned,
+                    final_family_adjustment=False, note="Completed-cell cache only; no partial Holm conclusions."))
+        return
     assert len(rows) == planned
     for r, adjusted in zip(rows, holm_adjust([r["p"] for r in rows])):
         r.update(p_holm=float(adjusted), reject=bool(adjusted <= .05))
     atomic_json(OUT / "new-study-global.json", dict(family_size=planned, B=config["permutations"],
+        instrument="Audited V2 with an explicit global-K4 histogram allocator; original degrees, witness definitions and permutation procedure retained.",
         estimand="Labeled complete-coloring law conditional on proper native completion; each teacher has its own exact reference. p=1 for unavailable tests is bookkeeping, never equality evidence.", comparisons=rows))
     write_csv(OUT / "new-study-global.csv", rows)
+    atomic_json(OUT / "new-study-progress.json", dict(completed=len(rows), planned=planned,
+                final_family_adjustment=True, note="All planned cases assembled; full-family Holm completed."))
 
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(); p.add_argument("stage", choices=("matched", "power", "new-study"))
     p.add_argument("--archive-root", default="/workspaces/AlgoLearning/ucgnn-size-degree-study")
+    p.add_argument("--incremental", action="store_true")
     args = p.parse_args(); torch.set_num_threads(1)
     if args.stage == "matched": matched_archives(args.archive_root)
     elif args.stage == "power": independent_power()
-    else: new_study_statistics()
+    else: new_study_statistics(args.incremental)

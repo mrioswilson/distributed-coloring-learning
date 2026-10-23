@@ -68,3 +68,10 @@ observation/model families. No universal architectural minimality is claimed.
 Exact checkpoint-level reproduction of Pedro remains separately incomplete
 until his original weights and raw banks are accessible. New successful
 training cannot substitute for those missing artifacts.
+
+Implementation addendum, 23 October 2026: the first native path call exposed
+the historical V2 allocator's local-list assumption before any path p-value
+was produced. `DECLARED_ALPHABET_ADDENDUM.md` records the explicit K=4 adapter,
+saved failure, regression checks and unchanged frozen historical source.
+This documented change qualifies the prospective phrase “unchanged V2” above;
+the new native finite-power behavior is not inherited from old validation.

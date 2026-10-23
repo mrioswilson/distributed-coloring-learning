@@ -1,6 +1,8 @@
 import networkx as nx
 import numpy as np
 import pytest
+from collections import Counter
+from itertools import permutations
 
 from dcl.multiteacher.programs import ColoringProgram, TEACHERS, teacher_choices
 
@@ -20,3 +22,18 @@ def test_jp_round_cap_is_not_a_deterministic_termination_guarantee():
         p.apply(state, teacher_choices(state, p.neighbors, "JP"))
     assert p.failure == "incomplete" and p.steps == 128
     assert (p.colors < 0).sum() == 1
+
+
+def test_uncapped_jp_and_random_order_greedy_have_same_enumerated_output_law():
+    graph = nx.path_graph(4)
+    laws = {name: Counter() for name in ("JP", "GREEDY")}
+    for ids in permutations(range(4)):
+        for name in laws:
+            p = ColoringProgram(graph, name, 1)
+            p.ids = np.array(ids)
+            p.order = np.argsort(p.ids)
+            while not p.finished:
+                state = p.snapshot()
+                p.apply(state, teacher_choices(state, p.neighbors, name))
+            laws[name][tuple(p.colors)] += 1
+    assert laws["JP"] == laws["GREEDY"]

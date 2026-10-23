@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspaces/AlgoLearning/ucgnn-scientific-integration/src/dcl/integration/statistics_audit.py", line 173, in <module>
+    else: new_study_statistics(args.incremental)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/AlgoLearning/ucgnn-scientific-integration/src/dcl/integration/statistics_audit.py", line 146, in new_study_statistics
+    stat = joint_test(x, y, g, seed_rng("new-study-v2", record["teacher"], record["graph"], record["label"]),
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/AlgoLearning/ucgnn-scientific-integration/src/dcl/robustdist/stats.py", line 158, in joint_test
+    begin=time.monotonic();F,K,m,n,families,desc=prepare(x,y,g)
+                                                 ^^^^^^^^^^^^^^
+  File "/workspaces/AlgoLearning/ucgnn-scientific-integration/src/dcl/robustdist/stats.py", line 137, in prepare
+    desc=fit_features(a,b,g);F=evaluate(desc,z,g)
+         ^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/AlgoLearning/ucgnn-scientific-integration/src/dcl/robustdist/stats.py", line 103, in fit_features
+    s,names=structural(z,g)
+            ^^^^^^^^^^^^^^^
+  File "/workspaces/AlgoLearning/ucgnn-scientific-integration/src/dcl/robustdist/stats.py", line 51, in structural
+    for i,row in enumerate(z):counts[i]=np.bincount(row,minlength=K)
+                              ~~~~~~^^^
+ValueError: could not broadcast input array from shape (4,) into shape (3,)

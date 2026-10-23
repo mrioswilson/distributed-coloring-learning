@@ -39,3 +39,19 @@ The first two analyses isolate procedure differences on matched rows. Only
 access to Pedro's exact weights and raw banks can establish which procedure
 would change the decisions of his original reported experiments. The new
 balanced study is separately sourced and cannot silently fill that gap.
+
+Implementation addendum, 23 October 2026: native global K=4 on paths exposed
+the original local-list histogram allocator. The explicitly scoped repair
+is documented in `DECLARED_ALPHABET_ADDENDUM.md`; the frozen original source
+remains unchanged. The matched archival and known-law crosschecks above
+continue to call that original implementation directly.
+
+Executed matched-bank command (from the integration repository):
+
+```bash
+python -m dcl.integration.statistics_audit matched --archive-root /workspaces/AlgoLearning/ucgnn-size-degree-study
+```
+
+For another checkout, restore the historical factorial archive at a separate
+root containing its `data/` and exported `results/` hierarchy, and supply that
+root instead. It must contain the exact bank hashes recorded in the output.
