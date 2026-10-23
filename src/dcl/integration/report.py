@@ -182,7 +182,7 @@ def run(figures_only=False):
     values=dict(NEW_FUNCTIONAL_TABLE=counts,NEW_RESULTS_PARAGRAPH=result_text,BASELINE_INTERPRETATION=baseline,
                 NEW_GLOBAL_PARAGRAPH=global_text,NEW_GLOBAL_TABLE=global_table,EVIDENCE_TABLE=evidence,REFERENCES=references(template))
     supplement=Path("results/sample-complexity/paper-section.md")
-    values["SAMPLE_COMPLEXITY_SECTION"]=supplement.read_text() if supplement.exists() else "The prospective supervision study is specified in docs/SAMPLE_COMPLEXITY_PROTOCOL.md; confirmed results are not yet available."
+    values["SAMPLE_COMPLEXITY_SECTION"]=(supplement.read_text().rstrip()+"\n\n") if supplement.exists() else "The prospective supervision study is specified in docs/SAMPLE_COMPLEXITY_PROTOCOL.md; confirmed results are not yet available."
     if supplement.exists(): values["REFERENCES"]=references(template+supplement.read_text())
     sc_summary=Path("results/sample-complexity/summary.json")
     if sc_summary.exists():
