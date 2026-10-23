@@ -1,0 +1,110 @@
+{
+  "accounting": {
+    "budget": 10000,
+    "by_component": {
+      "confirmation": 3157,
+      "linial_point": 528,
+      "participation": 3157,
+      "proposal": 3157
+    },
+    "data_sha256": "ede26ceff6aca4e145b76111b5dae30aafc90128734a79c278a83f00cac563e8",
+    "dataset_cache_bytes": 24262800,
+    "dataset_manifest_sha256": "4f84fa62a13f99413c8bb6d54012fa3a755f160ee34c58e1e73cb0170af8d3b8",
+    "distinct_global_states": 289,
+    "distinct_local_states": 3685,
+    "examples": 3685,
+    "independent_trajectories": 20,
+    "last_trajectory": 19,
+    "prefix_sha256": "23496438172f995e34b64fd93a5804e579dde34e142c51d940428f6c7328285e",
+    "queries": 9999,
+    "training_graphs": 20,
+    "unique_stored_bytes": 13487100
+  },
+  "acquired_examples_ever_used": 3663,
+  "checkpoint": "data/sample-complexity-v1/capacity-grid/be_base_d3/s83102/b10000/final.pt",
+  "checkpoint_sha256": "cda3cbd034198e25e2ce36d959db3e0ad3fc9ac7c24a11668db08839d995e6c9",
+  "component_presentations": {
+    "confirmation": 16000,
+    "linial_point": 16000,
+    "participation": 16000,
+    "proposal": 16000
+  },
+  "cpu_seconds": 2.4381207819999986,
+  "development": {
+    "complete": true,
+    "executions": 28,
+    "failures": {
+      "invariant": 28
+    },
+    "lower_one_sided_95": null,
+    "mean_native_steps": 1.0714285714285714,
+    "pass_all": false,
+    "success_rate": 0.0,
+    "successes": 0
+  },
+  "development_seconds": 0.030592955998145044,
+  "device": "cpu",
+  "effective_passes": 8.683853459972863,
+  "epochs": null,
+  "fidelity": {
+    "action_correct": 246,
+    "action_fidelity": 0.9609375,
+    "action_total": 256,
+    "by_phase": {
+      "4": [
+        48,
+        56
+      ],
+      "5": [
+        198,
+        200
+      ]
+    },
+    "complete_transitions": 9,
+    "identical_transitions": 5,
+    "transition_fidelity": 0.5555555555555556
+  },
+  "flops_estimate": null,
+  "flops_note": "Not measured; time and updates retained separately, no FLOP comparability claim",
+  "gpu_seconds": 0.0,
+  "history": [
+    {
+      "loss": 2.2320103645324707,
+      "update": 100
+    },
+    {
+      "loss": 1.682863473892212,
+      "update": 200
+    },
+    {
+      "loss": 1.2117712497711182,
+      "update": 300
+    },
+    {
+      "loss": 1.1971811056137085,
+      "update": 400
+    },
+    {
+      "loss": 0.8882541656494141,
+      "update": 500
+    }
+  ],
+  "identity": {
+    "architecture": "small",
+    "batch": 64,
+    "budget": 10000,
+    "lr": 0.001,
+    "seed": 83102,
+    "teacher": "BE_BASE_D3",
+    "updates": 500
+  },
+  "initial_hash": "0c444f80766bb94053640b013d3adfba4eafc42164c298a1461d106cf189042d",
+  "optimization": "Adam; cyclic phase strata, root bundles sampled with replacement; no full epochs",
+  "parameter_updates": 500,
+  "parameters": 1560,
+  "peak_rss_bytes": 3380850688,
+  "per_example_visit_hash": "46a8f4106a8df8d6124f2dfed45d688262a1a359328139d6f618042711c62745",
+  "repeated_example_presentations": 28337,
+  "training_seconds": 2.4449330730130896,
+  "weights_hash": "1bde2c3dae19b6aba03c06b714ba28c764ffba43db26a14f6ff39ec8d1239607"
+}

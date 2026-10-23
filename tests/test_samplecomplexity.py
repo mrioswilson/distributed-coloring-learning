@@ -8,13 +8,14 @@ import pytest
 import torch
 
 from dcl.multiteacher.model import encode_roots
-from dcl.multiteacher.programs import ColoringProgram, TEACHERS, teacher_choices, LINIAL, DETECT
+from dcl.multiteacher.programs import ColoringProgram, Choices, TEACHERS, teacher_choices, LINIAL, DETECT, KW, REPAIR
 from dcl.multiteacher_e1.experiment import predictions
 from dcl.samplecomplexity.data import acquire, load, components
 from dcl.samplecomplexity.evaluation import evaluate
 from dcl.samplecomplexity.model import relational_arrays
 from dcl.samplecomplexity.protocol import (cases, five_seed_gate, freeze, horizon, passed_run, summarize_runs, source_hashes)
 from dcl.samplecomplexity.training import initialize, passive_loss, train
+from dcl.samplecomplexity.full_fidelity import next_values
 
 
 @pytest.fixture
@@ -195,3 +196,39 @@ def test_frozen_objects_cannot_be_replaced(tmp_path):
     freeze(tmp_path/"frozen.json",dict(budget=1000))
     freeze(tmp_path/"frozen.json",dict(budget=1000))
     with pytest.raises(RuntimeError): freeze(tmp_path/"frozen.json",dict(budget=3000))
+
+
+def test_transition_fidelity_allows_redundant_kw_write_that_preserves_state():
+    p=ColoringProgram(nx.star_graph(3),"BE_BASE_D3",1)
+    p.phase=KW;p.bound=49;p.aux=np.array([39,36,37,38])
+    state=p.snapshot();exact=teacher_choices(state,p.neighbors,"BE_BASE_D3")
+    other=Choices(np.array([4,0,0,0]),np.zeros(4,int),np.zeros(4,bool))
+    meta=np.column_stack((state.colors,state.aux,np.full(4,state.field),(state.bound-1-state.aux)*4))
+    a,b=copy.deepcopy(p),copy.deepcopy(p);a.apply(state,exact);b.apply(state,other)
+    assert not np.array_equal(exact.color,other.color)
+    assert np.array_equal(a.aux,b.aux)
+    assert np.array_equal(next_values(KW,(exact.color,exact.auxiliary,exact.mark),meta),
+                          next_values(KW,(other.color,other.auxiliary,other.mark),meta))
+
+
+def test_transition_fidelity_allows_noop_when_gm_repair_keeps_old_color():
+    p=ColoringProgram(nx.empty_graph(1),"SPECULATIVE_GM",1)
+    p.phase=REPAIR;p.repair_queue=np.array([0]);p.colors[0]=0;p.marks[0]=True
+    state=p.snapshot();exact=teacher_choices(state,p.neighbors,"SPECULATIVE_GM")
+    other=Choices(np.zeros(1,int),np.zeros(1,int),np.zeros(1,bool))
+    meta=np.array([[0,0,13,0]])
+    a,b=copy.deepcopy(p),copy.deepcopy(p);a.apply(state,exact);b.apply(state,other)
+    assert exact.color[0]==1 and other.color[0]==0
+    assert np.array_equal(a.colors,b.colors) and a.failure==b.failure
+    assert np.array_equal(next_values(REPAIR,(exact.color,exact.auxiliary,exact.mark),meta),
+                          next_values(REPAIR,(other.color,other.auxiliary,other.mark),meta))
+
+
+def test_transition_fidelity_decodes_linial_point_in_actual_prime_field():
+    p=ColoringProgram(nx.empty_graph(1),"BE_BASE_D3",1)
+    p.index=1;p.aux=np.array([3])
+    state=p.snapshot();assert state.field==7
+    choice=Choices(np.zeros(1,int),np.array([2*13+3]),np.zeros(1,bool))
+    predicted=next_values(LINIAL,(choice.color,choice.auxiliary,choice.mark),np.array([[-1,3,7,0]]))
+    p.apply(state,choice)
+    assert p.aux[0]==predicted[0]==17

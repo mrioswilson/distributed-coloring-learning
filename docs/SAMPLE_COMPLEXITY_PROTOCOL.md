@@ -112,6 +112,13 @@ development and final case under these deadlines before preregistration closes.
 A failed exact tape stops the protocol: it cannot be replaced by a successful
 one. All native steps and within-teacher comparisons to the exact program are
 retained. Cross-teacher native step counts are not uniform communication costs.
+Every learned core has two graph-exchange stages per native step. A native JP,
+BE, greedy, or individual GM schedule step needs one neighbor-state read under
+this reset-state interpretation, whereas the three trial teachers use two
+stages. `native-efficiency.json` retains the native-step ratio and this nominal
+stage multiplier separately. These are not measurements of transmitted bits,
+network latency or asynchronous complexity; supplied scheduler/arithmetic setup
+is not free learned computation.
 
 ## Optimization and supervised budgets
 
@@ -208,6 +215,16 @@ results and exact-teacher efficiency are distinct outcomes. Nonmonotonicity
 and right-censored, unachieved protocol thresholds remain visible. Five seeds
 provide limited information about the distribution of possible trainings.
 
+The original training log's action-fidelity diagnostic uses at most 256 root
+decisions from the beginning of development teacher trajectories. It is not
+balanced across all families or late KW bounds. A separate post hoc full audit
+(`full_fidelity`) covers every root and transition of all 28 frozen development
+teacher trajectories for every primary checkpoint. It updates no weights and
+uses no final data. Its transition metric compares actual updated state values:
+different native actions can leave the same state after a redundant GM repair
+or KW write. The original prefix action-identical transition proxy remains
+preserved in logs; reported complete fidelity curves use the full audit.
+
 ## Separate interactive and distributional experiments
 
 The one-aggregation DAgger-like control uses NORMALIZED LUBY/JP/BE, B=3,000,
@@ -264,7 +281,7 @@ For a new scientific replication, use the documented Torch/NumPy environment
 and an isolated checkout/namespace:
 
 ```bash
-python scripts/replicate-sample-complexity.py --directory /absolute/path/to/new-replication --namespace independent-replication-01
+python scripts/replicate-sample-complexity.py --directory /absolute/path/to/new-replication --namespace independent-replication-01 --seed-offset 100000
 ```
 
 The wrapper preserves the published checkout and frozen exports. It runs the
@@ -283,6 +300,8 @@ PYTHONPATH=src python -m dcl.samplecomplexity.optimization
 PYTHONPATH=src python -m dcl.samplecomplexity.capacity
 PYTHONPATH=src python -m dcl.samplecomplexity.law
 PYTHONPATH=src python -m dcl.samplecomplexity.diagnostics
+PYTHONPATH=src python -m dcl.samplecomplexity.full_fidelity
+PYTHONPATH=src python -m dcl.samplecomplexity.failure_witnesses
 python scripts/estimate-sample-complexity-flops.py
 PYTHONPATH=src python -m dcl.samplecomplexity.report
 ```

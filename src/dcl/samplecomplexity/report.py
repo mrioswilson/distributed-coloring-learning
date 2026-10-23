@@ -28,6 +28,9 @@ def markdown_table(headers,rows):
 def figures(records,config):
     outputs={};folder=OUT/"figures";folder.mkdir(parents=True,exist_ok=True)
     colors=plt.get_cmap("tab10").colors
+    full_path=OUT/"full-fidelity.json"
+    full_rows=read(full_path)["rows"] if full_path.exists() else []
+    full_lookup={(r["teacher"],r["architecture"],r["seed"],r["budget"]):r for r in full_rows}
     for regime in ("A","B"):
         teachers=[t for t in config["teachers"] if REGIME[t]==regime]
         for metric in ("success","failures","fidelity","rounds"):
@@ -40,7 +43,7 @@ def figures(records,config):
                         x=[r["identity"]["budget"] for r in rs]
                         if metric=="success": y=[r["development"]["success_rate"] for r in rs]
                         elif metric=="failures": y=[r["development"]["executions"]-r["development"]["successes"] for r in rs]
-                        elif metric=="fidelity": y=[r["fidelity"]["action_fidelity"] for r in rs]
+                        elif metric=="fidelity": y=[full_lookup.get((t,a,s,r["identity"]["budget"]),r["fidelity"])["action_fidelity"] for r in rs]
                         else: y=[r["development"]["mean_native_steps"] for r in rs]
                         ax.plot(x,y,marker=("o","s","^","x","+")[si],ls="-",lw=1,ms=4,color=colors[si],label=str(s))
                     ax.set_xscale("log");ax.grid(alpha=.2)
@@ -65,8 +68,53 @@ def figures(records,config):
                 if metric=="success":
                     shutil.copyfile(path,Path("paper/ucgnn/figures")/f"sample-{path.name}")
             plt.close(fig)
-    atomic_json(OUT/"figure-manifest.json",dict(files=outputs,training_sha256=file_hash(OUT/"training.json")))
+    atomic_json(OUT/"figure-manifest.json",dict(files=outputs,training_sha256=file_hash(OUT/"training.json"),
+                                              full_fidelity_sha256=file_hash(full_path) if full_path.exists() else None))
     return outputs
+
+
+def capacity_figure(records,config):
+    path=OUT/"capacity/training.json"
+    if not path.exists():return
+    small=read(path);teachers=list(dict.fromkeys(r["identity"]["teacher"] for r in small))
+    fig,axes=plt.subplots(len(teachers),2,figsize=(8,7.5),sharex=True,squeeze=False)
+    colors=plt.get_cmap("tab10").colors
+    for i,t in enumerate(teachers):
+        for j,(label,source,arch) in enumerate((("E1 NORMALIZED",records,"normalized"),("Small E1",small,"small"))):
+            ax=axes[i,j]
+            for k,seed in enumerate(config["seeds"]):
+                curve=sorted([r for r in source if (r["identity"]["teacher"],r["identity"]["architecture"],r["identity"]["seed"])==(t,arch,seed)],key=lambda r:r["identity"]["budget"])
+                ax.plot([r["identity"]["budget"] for r in curve],[r["development"]["success_rate"] for r in curve],
+                        marker=("o","s","^","x","+")[k],lw=1,ms=4,color=colors[k],label=str(seed))
+            ax.set_xscale("log");ax.set_ylim(-.025,1.045);ax.axhline(1,color="black",ls="--",lw=.8)
+            ax.set_xticks(config["grid"],labels=("1k","3k","10k","30k","100k","300k","1m"),fontsize=7)
+            ax.yaxis.set_major_formatter(PercentFormatter(1));ax.grid(alpha=.2)
+            if i==0:ax.set_title(label)
+            if j==0:ax.set_ylabel(t+"\nDevelopment success")
+            if i==len(teachers)-1:ax.set_xlabel("Acquired label budget B (log)")
+    h,l=axes[0,0].get_legend_handles_labels();fig.legend(h,l,loc="lower center",ncol=5,title="Training seed")
+    fig.tight_layout(rect=(0,.09,1,1));manifest=read(OUT/"figure-manifest.json")
+    for ext in ("png","pdf"):
+        target=OUT/"figures"/f"capacity-comparison.{ext}";fig.savefig(target,dpi=160,bbox_inches="tight")
+        manifest["files"][str(target)]=file_hash(target)
+    manifest["small_training_sha256"]=file_hash(path);atomic_json(OUT/"figure-manifest.json",manifest);plt.close(fig)
+
+
+def model_inventory(records,controls):
+    entries=[]
+    combined=records+[r["record"] for r in controls]
+    for t,arch in sorted({(r["identity"]["teacher"],r["identity"]["architecture"]) for r in combined}):
+        r=next(r for r in combined if (r["identity"]["teacher"],r["identity"]["architecture"])==(t,arch))
+        entries.append(dict(teacher=t,architecture=arch,parameters=r["parameters"],regime=REGIME[t],
+                    hidden_message_dimensions=[8,4] if arch=="small" else [64,32],
+                    graph_aggregation="MAX",graph_exchange_stages=2,
+                    received_information_erased=arch=="no_communication",
+                    palette_representation={"deepsets":"Shared phi, mean palette context, ordered color position",
+                                            "transformer":"Two-head within-palette attention, ordered color position"}.get(arch,"Normalized ordered availability prefixes"),
+                    coded_rules="Pending/write permissions, phase/scheduler/bound transitions, palette alphabet, termination checks; BE polynomial/option decoder and auxiliary-target comparison",
+                    learned_actions="Participation, proposal and confirmation; Linial point or GM conflict mark in corresponding phases",
+                    inference_cost_source="Training/control development_seconds; native-efficiency.json for main candidate policies; partial profiler estimates for main architectures only"))
+    atomic_json(OUT/"model-inventory.json",entries)
 
 
 def analyze(records,certs,config):
@@ -140,13 +188,18 @@ def efficiency(certifications):
             actual=read(OUT/"final"/c["teacher"].lower()/c["architecture"]/f"s{seed}.json")
             exact={r["case_id"]:r for r in read(OUT/"exact"/c["teacher"].lower()/f"final-s{seed}.json")}
             good=[r for r in actual if r["terminal_correct"] and r["invariants"] and r["no_cutoff"] and r["no_technical_error"]]
+            exact_stages=2 if c["teacher"] in ("LUBY","JOHANSSON","COLOR_TRIALS") else 1
+            ratio=float(np.mean([r["native_steps"]/exact[r["case_id"]]["native_steps"] for r in good])) if good else None
             rows.append(dict(teacher=c["teacher"],architecture=c["architecture"],seed=int(seed),
                     budget=c["candidate_budget"],executions=len(actual),successful=len(good),
                     mean_attempted_native_steps=float(np.mean([r["native_steps"] for r in actual])),
                     exact_mean_native_steps=float(np.mean([exact[r["case_id"]]["native_steps"] for r in actual])),
-                    success_conditional_mean_paired_step_ratio=float(np.mean([r["native_steps"]/exact[r["case_id"]]["native_steps"] for r in good])) if good else None,
+                    success_conditional_mean_paired_step_ratio=ratio,
+                    neural_graph_exchange_stages_per_step=2,
+                    exact_nominal_exchange_stages_per_step=exact_stages,
+                    nominal_exchange_stage_ratio=2/exact_stages*ratio if ratio is not None else None,
                     measured_cohort_wall_seconds=c["per_seed"][seed]["seconds"],
-                    scope="Within-teacher native steps; failed attempted cost retained separately; wall time includes feature encoder/interpreter"))
+                    scope="Within-teacher native steps; nominal stages assume reset-state neighbor reads, not actual network measurements. Scheduler/arithmetic setup remains supplied. Failed attempted cost retained separately; wall time includes feature encoder/interpreter"))
     atomic_json(OUT/"native-efficiency.json",rows)
     return rows
 
@@ -175,7 +228,7 @@ def control_table(controls,records,config):
                           ("capacity_or_communication","no_communication"),("interactive","normalized")):
             group=[r["record"] for r in controls if r["kind"]==kind and r["record"]["identity"]["teacher"]==t and r["record"]["identity"]["architecture"]==arch]
             values.append(f"{sum(r['development']['pass_all'] for r in group)}/5" if len(group)==5 else "missing")
-        rows.append([t,*values])
+        rows.append(["BE (D3)" if t=="BE_BASE_D3" else t,*values])
     return markdown_table(["Teacher","Passive E1 500 updates","Passive E1 1,500 updates","Small 500","No messages 500","Interactive 500 total"],rows)
 
 
@@ -185,6 +238,30 @@ def optimization_table():
     results=read(path)["arms"];ts=list(dict.fromkeys(r["teacher"] for r in results))
     return markdown_table(["Teacher","500 updates, B=3,000","1,500 updates, B=3,000"],
              [[t,*[f"{r['status']} ({r['seeds_pass']}/5)" for u in (500,1500) for r in results if r["teacher"]==t and r["updates"]==u]] for t in ts])
+
+
+def structural_witness_text():
+    path=OUT/"structural-failure-witnesses.json"
+    if not path.exists():return ""
+    witness=read(path);groups=witness["final_failure_summary"]
+    failed_seeds={f["seed"] for g in groups for f in g["failures"]}
+    if not groups or not all(g["failed_cases"] and g["all_pending_isolated"] for g in groups):return ""
+    bad=[w for w in witness["singleton_witnesses"] if w["seed"] in failed_seeds and not w["singleton_success"]]
+    if not bad:return ""
+    acquired=sorted({w["acquired_isolated_assign_bundles"] for w in bad})
+    presented=sorted({w["presented_isolated_assign_bundles"] for w in bad})
+    missing=sorted({w["isolated_vertices_in_development_suite"] for w in bad})
+    describe=lambda values:str(values[0]) if len(values)==1 else f"{values[0]}–{values[-1]}"
+    decision=("an incorrect confirmation rejecting assignment despite positive participation" if all(
+              w["trace"][0]["participation"][0] and w["trace"][0]["commit_logit"][0]<0 for w in bad) else "an erroneous WAIT in the assignment phase")
+    counts=", ".join(f"{g['architecture']}: {g['failed_cases']}" for g in groups)
+    return (f"The GM confirmation failures ({counts}) leave only isolated vertices uncolored and occur in training seed(s) {', '.join(map(str,sorted(failed_seeds)))}. "
+            f"A post hoc singleton witness using the frozen candidate weights reproduces {decision}, while the exact teacher succeeds. "
+            f"The cached prefix contains {describe(acquired)} isolated-assignment bundles (three component labels per bundle), "
+            f"and the exact recorded minibatch order presents them {describe(presented)} times; "
+            f"the affected seed's development suite contains {describe(missing)} isolated vertices. This identifies a rare-state fit defect missed by development coverage. "
+            "It does not show an absence of ID information or prove a universal capacity limitation. The diagnostic changes no model, budget, primary classification or final tape. "
+            "Full traces and presentation-count checks are in structural-failure-witnesses.json.\n\n")
 
 
 def paper_section(rows,records,controls,config):
@@ -294,7 +371,10 @@ def questions(rows,records,controls,config):
     text+="**P1. How much Luby supervision?**\n\n"+"; ".join(status("LUBY",a) for a in NAMES)+". These are acquired component-label budgets under the frozen optimization/selection procedure, not trajectories or gradient updates.\n\n"
     text+="**P2. How does the budget change across teachers?**\n\n"+primary_table(rows)+"\nRegimes A/B must be interpreted separately; exact counts, per-seed component queries, failures and CPU costs are in `results-table.json`/`.csv`.\n\n"
     text+="**P3. Which information adaptations are required?**\n\nJP/GM receive edge order signs; BE receives auxiliary colors, phase/bound/target, local polynomial evaluation and raw equality relations; GM/greedy retain external scheduling. Luby/Johansson/ColorTrials use the anonymous regime. The full sufficiency/indistinguishability analysis is in `docs/TEACHER_MODEL_INFORMATION_COMPATIBILITY.md`.\n\n"
-    text+="**P4. Do adaptations resolve earlier JP/BE failures?**\n\n"+"; ".join(status(t,a) for t in ("JP","BE_BASE_D3") for a in NAMES)+". These statements concern the new complete training/interface package. The previous integrated 70-model cohort already had numeric IDs and BE helpers. There is no matched raw-ID ablation at identical data/loss/updates, so a change cannot be attributed uniquely to the adapter. BE's arithmetic remains supplied.\n\n"
+    text+="**P4. Do adaptations resolve earlier JP/BE failures?**\n\n"
+    for t in ("JP","BE_BASE_D3"):text+=t+": "+"; ".join(status(t,a) for a in NAMES)+".\n\n"
+    text+="These statements concern the new complete training/interface package. The previous integrated 70-model cohort already had numeric IDs and BE helpers. There is no matched raw-ID ablation at identical data/loss/updates, so a change cannot be attributed uniquely to the adapter. BE's arithmetic remains supplied. The additional fixed-label optimized BE point is reported separately in P8.\n\n"
+    text+=structural_witness_text()
     if (OUT/"difficult-teacher-diagnostics.json").exists():
         diagnostics=read(OUT/"difficult-teacher-diagnostics.json");stages=Counter()
         for r in diagnostics["autonomous_failures"]:
@@ -313,12 +393,23 @@ def questions(rows,records,controls,config):
     text+="**P7. Are smaller models more sample efficient?**\n\nAt the same B=3,000 and 500 updates, these development-only controls compare matched label prefixes:\n\n"+control_table(controls,records,config)+"\n"
     if (OUT/"capacity/certification.json").exists():
         small=read(OUT/"capacity/certification.json")
-        text+="The separate small-model seven-budget grid has independent final confirmation:\n\n"+markdown_table(["Teacher","Parameters","Small validated B*","Seeds PASS"],
-                     [[r["teacher"],r["parameters"],f"{r['validated_budget']:,}" if r["validated_budget"] is not None else "NOT CERTIFIED through 1,000,000",f"{r['seeds_pass']}/5"] for r in small])+"\n"
+        text+="The separate small-model seven-budget grid has independently frozen confirmation batteries:\n\n"+markdown_table(["Teacher","Parameters","Small validated B*","Seeds confirmed","Final attempted"],
+                     [[r["teacher"],r["parameters"],f"{r['validated_budget']:,}" if r["validated_budget"] is not None else "NOT CERTIFIED through 1,000,000",f"{r['seeds_pass']}/5",r["final_attempted"]] for r in small])+"\nA missing development candidate means no student final was attempted; 0/5 confirmed does not mean five observed final failures.\n\n"
     text+="Small-model conclusions apply to these matched training budgets and independent finite final batteries. Only one no-message budget is tested. Neither experiment establishes theoretical minimality.\n\n"
+    text+="The unsmoothed per-seed capacity comparison is exported as `results/sample-complexity/figures/capacity-comparison.png` and `.pdf`.\n\n"
     text+="**P8. What changes with fixed labels and more optimization?**\n\nCompare the 500/1,500-update columns above, with identical labels and initialization per seed. The complete control records retain per-seed development success and time. Improvements identify a finite optimization-budget sensitivity, not a universal explanation of every failure. No extra teacher query is charged for replay.\n\n"
     text+="An additional exploratory protocol compares the same two frozen arms on independent, paired final batteries, after checking identical label-prefix and initialization hashes:\n\n"+optimization_table()+"\nThese are fixed-budget validations, not new B* minima; they do not replace primary statuses.\n\n"
+    if (OUT/"optimization-confirmation/results.json").exists():
+        arms=read(OUT/"optimization-confirmation/results.json")["arms"]
+        be=[r for r in arms if r["teacher"]=="BE_BASE_D3"]
+        text+="For BE, the paired fixed-label control changes the number of fully successful seeds from "+str(next(r["seeds_pass"] for r in be if r["updates"]==500))+"/5 to "+str(next(r["seeds_pass"] for r in be if r["updates"]==1500))+"/5 with more updates. This demonstrates optimization-budget sensitivity at those fixed labels, without estimating a minimum label budget for 1,500 updates.\n\n"
     text+="**P9. Does interactive supervision help?**\n\nThe last column uses the same maximum B=3,000 and 500 total updates, with one 1,500-label passive / 1,500-label admissible on-policy aggregation. All seeds and failed acquisition trajectories are retained. Adam resets at aggregation; this control does not isolate distribution choice from every optimizer-history effect. It is development-only and supports no final-certification or general DAgger efficiency claim.\n\n"
+    comparisons=[]
+    for t in config["optimization_control_teachers"]:
+        passive=sum(r["development"]["pass_all"] for r in records if (r["identity"]["teacher"],r["identity"]["architecture"],r["identity"]["budget"])==(t,"normalized",3000))
+        interactive=sum(r["record"]["development"]["pass_all"] for r in controls if r["kind"]=="interactive" and r["record"]["identity"]["teacher"]==t)
+        comparisons.append(f"{t}: interactive {interactive}/5 versus passive {passive}/5")
+    text+="Observed development-perfect seed counts are "+"; ".join(comparisons)+". These fixed-point observations do not establish a universal modality ranking.\n\n"
     law=read(OUT/"law/results.json") if (OUT/"law/results.json").exists() else None
     text+="**P10. Does functional 100% imply action, time or global-law fidelity?**\n\nNo. The functional gate constrains validity, invariants and completion; it does not require matching teacher choices, native step counts or probabilities of each complete coloring. These are separate measured outcomes. "
     if law:
@@ -327,6 +418,8 @@ def questions(rows,records,controls,config):
         text+=f"The independent exploratory law supplement has {law['testable']}/210 testable hypotheses and {law['rejections']} Holm rejections; {conditional} rejections concern policies in functionally certified packages. Comparisons condition on successful rows; nonrejection never establishes equality."
     else: text+="The independent law supplement is not complete; no new-cohort law conclusion is asserted."
     text+="\n\n**P11. What is robust across all five seeds?**\n\n"+", ".join(f"{r['teacher']}/{r['architecture']} at {r['validated_budget']:,}" for r in rows if r["status"]=="PASS")+". This is robustness across these five trainings and batteries, not a guarantee for unseen initializations or all graphs. Every policy retains its own 1,000-run uncertainty statement.\n\n"
+    if (OUT/"full-fidelity.json").exists():
+        text+="The separate full-fidelity audit covers every root and every transition of all 28 development teacher trajectories per seed, including late KW stages. Its actual-state transition equality allows redundant actions that leave state unchanged. Original 256-decision prefix diagnostics remain in training logs and are not treated as a complete phase/family audit.\n\n"
     text+="**P12. What belongs in the main paper and appendix?**\n\nMain text: information regimes, query unit, strict five-seed gate, teacher-specific horizons, primary B* table, unsmoothed success curves, and concise fixed-label/interactive controls. Appendix and repository: all per-seed/per-budget counts, phase fidelity, native-step curves, checkpoint/data manifests, negative trajectories, source/RNG hashes, law-test details and resource/replay audits. No censored or missing cell is filled by extrapolation.\n"
     return text
 
@@ -400,6 +493,9 @@ separate verified runtime archive. `docs/SAMPLE_COMPLEXITY_RESULTS.md` answers
 P1–P12 using those actual observations. The study's NOT CERTIFIED thresholds
 are censored under its finite optimizer/selection procedure, not proof of an
 intrinsic monotone sample requirement or mathematical impossibility.
+The separate `results/sample-complexity/evidence-ledger.json` maps the new claim
+groups to exact source/result hashes; the original integration ledger retains
+its historical twelve claim groups.
 
 With zero failures in one policy's 1,000 independent executions the one-sided
 95% lower bound is 0.9970087504549047. Under fixed heterogeneous strata the
@@ -474,6 +570,15 @@ It validates fixed optimizer/label points and never changes the primary
 certification, nominates a new primary budget or retrofits an earlier final
 battery. Its six arm-level results are reported separately.
 
+A separate complete common-state fidelity audit reuses all 28 frozen
+development teacher trajectories per seed for every primary checkpoint. It
+uses no final data or training updates. The original 256-decision prefix
+metrics remain in logs; their action-identical transition proxy is not an
+if-and-only-if state equality measure. The full audit compares the actual
+updated state channel, accounting for field-specific Linial decoding and
+redundant KW/GM repair writes; three interpreter-based regression tests check
+these cases. Reported fidelity curves use the full audit when available.
+
 """
     return text
 
@@ -490,20 +595,23 @@ def run():
         keys=["teacher","architecture","regime","status","validated_budget","candidate_budget","seeds_pass","final_attempted",
               "max_budget_evaluated","native_parameters","total_training_seconds","total_cpu_seconds","gpu_seconds","dominant_profiled_flops_estimate","final_failures",
               "development_perfect_seeds","actual_queries_by_budget"]
-        writer=csv.DictWriter(f,fieldnames=keys);writer.writeheader()
+        writer=csv.DictWriter(f,fieldnames=keys,lineterminator="\n");writer.writeheader()
         for r in rows: writer.writerow({k:json.dumps(r[k],sort_keys=True) if isinstance(r[k],dict) else r[k] for k in keys})
     figures(records,config)
+    capacity_figure(records,config)
+    model_inventory(records,controls)
     section=paper_section(rows,records,controls,config)
+    section+=structural_witness_text()
     law=read(OUT/"law/results.json") if (OUT/"law/results.json").exists() else None
     if law:
         section+=f"The independent exploratory coloring-law supplement tests 210 fixed teacher/checkpoint/graph hypotheses using the audited native K4 robust instrument, split selection/evaluation rows, 9,999 permutations and Holm over the complete family. {law['testable']} comparisons are testable and {law['rejections']} reject. Untestable comparisons retain p=1; conservative futility also cannot create rejection. These are conditional-on-success laws on two fixed small graphs, not equality guarantees or an additional functional PASS condition.\n\n"
     if (OUT/"capacity/certification.json").exists():
         small=read(OUT/"capacity/certification.json")
-        section+="The small-model supplement repeats all seven budgets for three representative teachers and uses independent final tapes under the same five-seed gate:\n\n"+markdown_table(["Teacher","Small parameters","Small validated B*","Seeds PASS"],
-                   [[r["teacher"],r["parameters"],f"{r['validated_budget']:,}" if r["validated_budget"] else "NOT CERTIFIED",f"{r['seeds_pass']}/5"] for r in small])+"\nThis permits finite empirical supervision comparisons with the larger E1, while establishing neither universal minimality nor the behavior of all possible small networks.\n\n"
+        section+="The small-model supplement repeats all seven budgets for three representative teachers and freezes independent final tapes under the same five-seed gate:\n\n"+markdown_table(["Teacher","Small parameters","Small validated B*","Seeds confirmed","Final attempted"],
+                   [[r["teacher"],r["parameters"],f"{r['validated_budget']:,}" if r["validated_budget"] else "NOT CERTIFIED",f"{r['seeds_pass']}/5",r["final_attempted"]] for r in small])+"\nWithout a common development candidate no student final is attempted. These outcomes establish neither universal minimality nor the behavior of all possible small networks.\n\n"
     if (OUT/"optimization-confirmation/results.json").exists():
         section+="The additional fixed-label optimization protocol freezes both existing optimizer arms for all three control teachers and evaluates them on new paired final batteries. It checks identical label-prefix and initialization hashes and changes no primary outcome:\n\n"+optimization_table()+"\nA PASS here validates the fixed B=3,000/optimizer point only; it is not a new grid minimum or a retry of the primary confirmation.\n\n"
-    (OUT/"paper-section.md").write_text(section)
+    (OUT/"paper-section.md").write_text(section.rstrip()+"\n")
     Path("docs/SAMPLE_COMPLEXITY_RESULTS.md").write_text(questions(rows,records,controls,config))
     audit=Path("docs/PAPER_SCIENTIFIC_AUDIT.md")
     original=audit.read_text().split("<!-- BEGIN_SAMPLE_COMPLEXITY_AUDIT -->")[0].rstrip()
@@ -513,8 +621,22 @@ def run():
                 final_executions=sum(s["executions"] for r in rows for s in r["per_seed"].values()),
                 confirmed_packages=[dict(teacher=r["teacher"],architecture=r["architecture"],budget=r["validated_budget"]) for r in rows if r["status"]=="PASS"],
                 regression_count=sum(len(r["regressions"]) for r in rows),controls=len(controls),
+                full_fidelity_checkpoints=len(read(OUT/"full-fidelity.json")["rows"]) if (OUT/"full-fidelity.json").exists() else None,
                 scope="Strict finite native benchmark; no universal correctness, minimality, monotonicity, or distributional equivalence claim."))
     print(json.dumps(read(OUT/"summary.json")),flush=True)
+    claims=[
+      ("SC01","Acquisition and replay are distinct costs","Stored root-component labels, not epochs or independent root replicas",["training.json","design.json"]),
+      ("SC02","Teacher-specific information is explicit","Interface sufficiency is not fixed-width representability",["preregistration.json","model-inventory.json"]),
+      ("SC03","Strict five-seed functional classification","Finite frozen native benchmark, no universal guarantee",["certification.json","frozen-candidates.json"]),
+      ("SC04","Fixed-label optimization confirmation","Additional independent fixed point, not a new primary B*",["optimization-confirmation/results.json","optimization-confirmation/frozen-plan.json"]),
+      ("SC05","GM rare-state witness","Post hoc frozen-model diagnosis, no repair or budget retry",["structural-failure-witnesses.json"]),
+      ("SC06","Individual supervision curves can regress","No monotonic threshold or optimizer-independent sample bound",["results-table.json","figure-manifest.json"]),
+      ("SC07","Small-model grid remains separately scoped","No candidate is not five observed final failures; no minimality theorem",["capacity/training.json","capacity/certification.json"]),
+      ("SC08","New coloring-law results are separate","Conditional on success; nonrejection is not equality",["law/results.json","law/frozen-plan.json"]),
+      ("SC09","Complete action and actual-transition audit","Every development teacher trajectory, no final data or parameter updates",["full-fidelity.json"])]
+    ledger=[dict(id=k,claim=claim,boundary=boundary,sources=[dict(path=str(OUT/p),sha256=file_hash(OUT/p)) for p in paths if (OUT/p).exists()])
+            for k,claim,boundary,paths in claims]
+    atomic_json(OUT/"evidence-ledger.json",ledger)
 
 
 if __name__=="__main__": run()

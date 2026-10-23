@@ -1,0 +1,110 @@
+{
+  "accounting": {
+    "budget": 30000,
+    "by_component": {
+      "confirmation": 9509,
+      "linial_point": 1472,
+      "participation": 9509,
+      "proposal": 9509
+    },
+    "data_sha256": "ede26ceff6aca4e145b76111b5dae30aafc90128734a79c278a83f00cac563e8",
+    "dataset_cache_bytes": 24262800,
+    "dataset_manifest_sha256": "4f84fa62a13f99413c8bb6d54012fa3a755f160ee34c58e1e73cb0170af8d3b8",
+    "distinct_global_states": 743,
+    "distinct_local_states": 10981,
+    "examples": 10981,
+    "independent_trajectories": 50,
+    "last_trajectory": 49,
+    "prefix_sha256": "3788e80ae31c96981ec849f5e3507c356d802bd41f73fd80efe32286595b634f",
+    "queries": 29999,
+    "training_graphs": 50,
+    "unique_stored_bytes": 40190460
+  },
+  "acquired_examples_ever_used": 9183,
+  "checkpoint": "data/sample-complexity-v1/capacity-grid/be_base_d3/s83102/b30000/final.pt",
+  "checkpoint_sha256": "03bf792af7fcb0f0fd4b0a662a9e1ef5598233ddff94918b17de3136632f9dde",
+  "component_presentations": {
+    "confirmation": 16000,
+    "linial_point": 16000,
+    "participation": 16000,
+    "proposal": 16000
+  },
+  "cpu_seconds": 2.4097351320000016,
+  "development": {
+    "complete": true,
+    "executions": 28,
+    "failures": {
+      "invariant": 28
+    },
+    "lower_one_sided_95": null,
+    "mean_native_steps": 1.0714285714285714,
+    "pass_all": false,
+    "success_rate": 0.0,
+    "successes": 0
+  },
+  "development_seconds": 0.03040641499683261,
+  "device": "cpu",
+  "effective_passes": 2.9141243966851835,
+  "epochs": null,
+  "fidelity": {
+    "action_correct": 246,
+    "action_fidelity": 0.9609375,
+    "action_total": 256,
+    "by_phase": {
+      "4": [
+        48,
+        56
+      ],
+      "5": [
+        198,
+        200
+      ]
+    },
+    "complete_transitions": 9,
+    "identical_transitions": 5,
+    "transition_fidelity": 0.5555555555555556
+  },
+  "flops_estimate": null,
+  "flops_note": "Not measured; time and updates retained separately, no FLOP comparability claim",
+  "gpu_seconds": 0.0,
+  "history": [
+    {
+      "loss": 2.237802028656006,
+      "update": 100
+    },
+    {
+      "loss": 1.7469520568847656,
+      "update": 200
+    },
+    {
+      "loss": 1.333305835723877,
+      "update": 300
+    },
+    {
+      "loss": 1.0197135210037231,
+      "update": 400
+    },
+    {
+      "loss": 0.6200499534606934,
+      "update": 500
+    }
+  ],
+  "identity": {
+    "architecture": "small",
+    "batch": 64,
+    "budget": 30000,
+    "lr": 0.001,
+    "seed": 83102,
+    "teacher": "BE_BASE_D3",
+    "updates": 500
+  },
+  "initial_hash": "0c444f80766bb94053640b013d3adfba4eafc42164c298a1461d106cf189042d",
+  "optimization": "Adam; cyclic phase strata, root bundles sampled with replacement; no full epochs",
+  "parameter_updates": 500,
+  "parameters": 1560,
+  "peak_rss_bytes": 3380850688,
+  "per_example_visit_hash": "1a683371911288322499757de6e32d5704e0b3af9a72056fe4cffc3c0881bc9c",
+  "repeated_example_presentations": 22817,
+  "training_seconds": 2.4163066059118137,
+  "weights_hash": "8b624c5afc44c0d6801eb3e30fff9130365ad4840b10840c31dec6d3701fb133"
+}

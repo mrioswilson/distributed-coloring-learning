@@ -45,7 +45,7 @@ where used. High-degree native support is not implied by historical Luby data.
 |---|---|---|
 | LUBY | Participate with probability 1/2; uniform available color; reject equal neighboring offers | Two exchanges per trial |
 | JOHANSSON | Always-active random-color trial | Common four-color lists |
-| JP | Pending strict ID maxima take first available color | Fixed ID order; operational cap 128 |
+| JP | Pending strict ID maxima take first available color | Fixed ID order; historical cap 128, new supervision deadline n |
 | COLOR_TRIALS | Strict per-color discrete preference winners | Repeated subroutine with known degree bound |
 | BE_BASE_D3 | Two Linial reductions, then 13 KW reductions to four colors | Polynomial arithmetic and phase clock; degree-three base case |
 | SPECULATIVE_GM | Four-block speculative first fit and serial conflict repair | Supplied schedules; temporary conflicts allowed |
@@ -119,6 +119,9 @@ numerical differences.
 The [information audit](docs/TEACHER_MODEL_INFORMATION_COMPATIBILITY.md),
 [frozen protocol](docs/SAMPLE_COMPLEXITY_PROTOCOL.md), and
 [P1–P12 results](docs/SAMPLE_COMPLEXITY_RESULTS.md) define the new central study.
+The [data dictionary](docs/SAMPLE_COMPLEXITY_DATA_DICTIONARY.md) and
+[new evidence ledger](results/sample-complexity/evidence-ledger.json) map
+query units, raw schemas, hashes and claim boundaries.
 It uses seven teachers, three palette architectures, all seven supervision
 budgets from 1,000 to 1,000,000 and five independent training seeds: 735 fresh
 main trainings. A query is one acquired node/state/action-component label;
@@ -142,6 +145,7 @@ and raw development rows from the [study release](https://github.com/mrioswilson
 ```bash
 python scripts/fetch-sample-complexity.py
 python scripts/verify-sample-complexity.py --runtime
+python scripts/replay-sample-complexity-cell.py --teacher LUBY --architecture normalized --seed 83101 --budget 1000
 ```
 
 The fetcher verifies archive/member hashes and refuses conflicting files.
@@ -156,7 +160,7 @@ with the same installed Python environment:
 ```bash
 python scripts/replicate-sample-complexity.py \
   --directory /absolute/path/to/new-replication \
-  --namespace independent-replication-01
+  --namespace independent-replication-01 --seed-offset 100000
 ```
 
 This preserves the published cohort and runs the full sequence below in the
@@ -174,6 +178,8 @@ PYTHONPATH=src python -m dcl.samplecomplexity.optimization
 PYTHONPATH=src python -m dcl.samplecomplexity.capacity
 PYTHONPATH=src python -m dcl.samplecomplexity.law
 PYTHONPATH=src python -m dcl.samplecomplexity.diagnostics
+PYTHONPATH=src python -m dcl.samplecomplexity.full_fidelity
+PYTHONPATH=src python -m dcl.samplecomplexity.failure_witnesses
 python scripts/estimate-sample-complexity-flops.py
 PYTHONPATH=src python -m dcl.samplecomplexity.report
 python scripts/verify-sample-complexity.py --runtime

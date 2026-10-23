@@ -1,0 +1,111 @@
+{
+  "accounting": {
+    "budget": 30000,
+    "by_component": {
+      "confirmation": 7770,
+      "conflict_mark": 6690,
+      "participation": 7770,
+      "proposal": 7770
+    },
+    "data_sha256": "1923e66e838eda21c2b3753ea864a17ccb0cd3edc5024e041931586dfff1126c",
+    "dataset_cache_bytes": 37117477,
+    "dataset_manifest_sha256": "43eaedfed3705ed0085cb0c6c06ec56134c88926061ffc726568f47bd8b1b551",
+    "distinct_global_states": 4421,
+    "distinct_local_states": 14460,
+    "examples": 14460,
+    "independent_trajectories": 450,
+    "last_trajectory": 449,
+    "prefix_sha256": "53ef4724f040b857505afd56eb7be38f6522c5127a54c3c5d1c988d240c40a08",
+    "queries": 30000,
+    "training_graphs": 450,
+    "unique_stored_bytes": 52923600
+  },
+  "acquired_examples_ever_used": 11701,
+  "checkpoint_sha256": "6d66a1b320c19776885585f7fcf6f0cf1a061234fbed2c185e1d3329d9f962f0",
+  "component_presentations": {
+    "confirmation": 21312,
+    "conflict_mark": 10688,
+    "participation": 21312,
+    "proposal": 21312
+  },
+  "cpu_seconds": 4.132631446000005,
+  "development": {
+    "complete": true,
+    "executions": 28,
+    "failures": {},
+    "lower_one_sided_95": 0.8985342644272752,
+    "mean_native_steps": 18.714285714285715,
+    "pass_all": true,
+    "success_rate": 1.0,
+    "successes": 28
+  },
+  "development_seconds": 0.2756373359588906,
+  "device": "cpu",
+  "effective_passes": 2.2130013831258646,
+  "epochs": null,
+  "fidelity": {
+    "action_correct": 256,
+    "action_fidelity": 1.0,
+    "action_total": 256,
+    "by_phase": {
+      "1": [
+        136,
+        136
+      ],
+      "2": [
+        112,
+        112
+      ],
+      "3": [
+        8,
+        8
+      ]
+    },
+    "complete_transitions": 70,
+    "identical_transitions": 70,
+    "transition_fidelity": 1.0
+  },
+  "flops_estimate": null,
+  "flops_note": "Not measured; time and updates retained separately, no FLOP comparability claim",
+  "gpu_seconds": 0.0,
+  "history": [
+    {
+      "loss": 0.6779961585998535,
+      "update": 100
+    },
+    {
+      "loss": 0.043543580919504166,
+      "update": 200
+    },
+    {
+      "loss": 0.00841426569968462,
+      "update": 300
+    },
+    {
+      "loss": 0.002780650742352009,
+      "update": 400
+    },
+    {
+      "loss": 0.001361375325359404,
+      "update": 500
+    }
+  ],
+  "identity": {
+    "architecture": "transformer",
+    "batch": 64,
+    "budget": 30000,
+    "lr": 0.001,
+    "seed": 83101,
+    "teacher": "SPECULATIVE_GM",
+    "updates": 500
+  },
+  "initial_hash": "ebe60a71cec181ac2fc0bfc023091c40a62554f97591d85b58b70ecfdb5c85e5",
+  "optimization": "Adam; cyclic phase strata, root bundles sampled with replacement; no full epochs",
+  "parameter_updates": 500,
+  "parameters": 20356,
+  "peak_rss_bytes": 5931794432,
+  "per_example_visit_hash": "711a363465b896eb28a4be350bccdf527ce8a44e3ace977c555748d3a8efba04",
+  "repeated_example_presentations": 20299,
+  "training_seconds": 4.143128563999198,
+  "weights_hash": "0ebc6b5e28681ce5413cba08766757e55caa11a22f03781d0e94e827941bcfe7"
+}

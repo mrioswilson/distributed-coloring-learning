@@ -1,0 +1,110 @@
+{
+  "accounting": {
+    "budget": 100000,
+    "by_component": {
+      "confirmation": 31701,
+      "linial_point": 4896,
+      "participation": 31701,
+      "proposal": 31701
+    },
+    "data_sha256": "ede26ceff6aca4e145b76111b5dae30aafc90128734a79c278a83f00cac563e8",
+    "dataset_cache_bytes": 24262800,
+    "dataset_manifest_sha256": "4f84fa62a13f99413c8bb6d54012fa3a755f160ee34c58e1e73cb0170af8d3b8",
+    "distinct_global_states": 2470,
+    "distinct_local_states": 36597,
+    "examples": 36597,
+    "independent_trajectories": 165,
+    "last_trajectory": 164,
+    "prefix_sha256": "ce9be57a58e3c0f3e7b258041f975894ac2fef7b478f066ea396271a84f1b79f",
+    "queries": 99999,
+    "training_graphs": 165,
+    "unique_stored_bytes": 133945020
+  },
+  "acquired_examples_ever_used": 17230,
+  "checkpoint": "data/sample-complexity-v1/capacity-grid/be_base_d3/s83102/b100000/final.pt",
+  "checkpoint_sha256": "fd023d75d2fd9026418ead116ac0468218f37dedd86770912cdf7b24d084e4f7",
+  "component_presentations": {
+    "confirmation": 16000,
+    "linial_point": 16000,
+    "participation": 16000,
+    "proposal": 16000
+  },
+  "cpu_seconds": 2.4208187760000044,
+  "development": {
+    "complete": true,
+    "executions": 28,
+    "failures": {
+      "invariant": 28
+    },
+    "lower_one_sided_95": null,
+    "mean_native_steps": 1.0714285714285714,
+    "pass_all": false,
+    "success_rate": 0.0,
+    "successes": 0
+  },
+  "development_seconds": 0.030560286017134786,
+  "device": "cpu",
+  "effective_passes": 0.8743886110883405,
+  "epochs": null,
+  "fidelity": {
+    "action_correct": 246,
+    "action_fidelity": 0.9609375,
+    "action_total": 256,
+    "by_phase": {
+      "4": [
+        48,
+        56
+      ],
+      "5": [
+        198,
+        200
+      ]
+    },
+    "complete_transitions": 9,
+    "identical_transitions": 5,
+    "transition_fidelity": 0.5555555555555556
+  },
+  "flops_estimate": null,
+  "flops_note": "Not measured; time and updates retained separately, no FLOP comparability claim",
+  "gpu_seconds": 0.0,
+  "history": [
+    {
+      "loss": 2.2584338188171387,
+      "update": 100
+    },
+    {
+      "loss": 1.7658551931381226,
+      "update": 200
+    },
+    {
+      "loss": 1.4419795274734497,
+      "update": 300
+    },
+    {
+      "loss": 1.0220935344696045,
+      "update": 400
+    },
+    {
+      "loss": 0.7379403114318848,
+      "update": 500
+    }
+  ],
+  "identity": {
+    "architecture": "small",
+    "batch": 64,
+    "budget": 100000,
+    "lr": 0.001,
+    "seed": 83102,
+    "teacher": "BE_BASE_D3",
+    "updates": 500
+  },
+  "initial_hash": "0c444f80766bb94053640b013d3adfba4eafc42164c298a1461d106cf189042d",
+  "optimization": "Adam; cyclic phase strata, root bundles sampled with replacement; no full epochs",
+  "parameter_updates": 500,
+  "parameters": 1560,
+  "peak_rss_bytes": 3380850688,
+  "per_example_visit_hash": "138b9001276224fe28b55b3ab7dc1470f699f5339f9aa1b977f900db98661885",
+  "repeated_example_presentations": 14770,
+  "training_seconds": 2.428076967014931,
+  "weights_hash": "e85c2add56d4414052635fc188429f4b9a16ea041a801969a016fb771475adcf"
+}

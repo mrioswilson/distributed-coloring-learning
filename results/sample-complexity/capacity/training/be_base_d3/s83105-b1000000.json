@@ -1,0 +1,110 @@
+{
+  "accounting": {
+    "budget": 1000000,
+    "by_component": {
+      "confirmation": 317061,
+      "linial_point": 48816,
+      "participation": 317061,
+      "proposal": 317061
+    },
+    "data_sha256": "c7430793a9096a45394ecacf17e8b36108d6eeaeb2320095354f10ff0f2f8c04",
+    "dataset_cache_bytes": 24269682,
+    "dataset_manifest_sha256": "b525b022ed95123227bc1bff98550be4c19cdb32271c646e3c55fdd46e3427c0",
+    "distinct_global_states": 24425,
+    "distinct_local_states": 365877,
+    "examples": 365877,
+    "independent_trajectories": 1629,
+    "last_trajectory": 1628,
+    "prefix_sha256": "047fb0ba909466b734b3b8f619c01937a9f10b571f4b13a10d72f7437e93b50a",
+    "queries": 999999,
+    "training_graphs": 1623,
+    "unique_stored_bytes": 1339109820
+  },
+  "acquired_examples_ever_used": 29220,
+  "checkpoint": "data/sample-complexity-v1/capacity-grid/be_base_d3/s83105/b1000000/final.pt",
+  "checkpoint_sha256": "55bf9670466576cc998d5c53cd56ad7258f43c5564677050e6e2b512b42dd087",
+  "component_presentations": {
+    "confirmation": 16000,
+    "linial_point": 16000,
+    "participation": 16000,
+    "proposal": 16000
+  },
+  "cpu_seconds": 2.325976295000004,
+  "development": {
+    "complete": true,
+    "executions": 28,
+    "failures": {
+      "invariant": 28
+    },
+    "lower_one_sided_95": null,
+    "mean_native_steps": 1.5357142857142858,
+    "pass_all": false,
+    "success_rate": 0.0,
+    "successes": 0
+  },
+  "development_seconds": 0.0531336129643023,
+  "device": "cpu",
+  "effective_passes": 0.08746108664933844,
+  "epochs": null,
+  "fidelity": {
+    "action_correct": 250,
+    "action_fidelity": 0.9765625,
+    "action_total": 256,
+    "by_phase": {
+      "4": [
+        50,
+        56
+      ],
+      "5": [
+        200,
+        200
+      ]
+    },
+    "complete_transitions": 9,
+    "identical_transitions": 8,
+    "transition_fidelity": 0.8888888888888888
+  },
+  "flops_estimate": null,
+  "flops_note": "Not measured; time and updates retained separately, no FLOP comparability claim",
+  "gpu_seconds": 0.0,
+  "history": [
+    {
+      "loss": 2.0067455768585205,
+      "update": 100
+    },
+    {
+      "loss": 1.7072248458862305,
+      "update": 200
+    },
+    {
+      "loss": 1.4374126195907593,
+      "update": 300
+    },
+    {
+      "loss": 0.7547844052314758,
+      "update": 400
+    },
+    {
+      "loss": 0.6586685180664062,
+      "update": 500
+    }
+  ],
+  "identity": {
+    "architecture": "small",
+    "batch": 64,
+    "budget": 1000000,
+    "lr": 0.001,
+    "seed": 83105,
+    "teacher": "BE_BASE_D3",
+    "updates": 500
+  },
+  "initial_hash": "d02283c41c4737fb08b07633cc816d2e97fbe83dcab8ba15a55edc11b12efc20",
+  "optimization": "Adam; cyclic phase strata, root bundles sampled with replacement; no full epochs",
+  "parameter_updates": 500,
+  "parameters": 1560,
+  "peak_rss_bytes": 3493060608,
+  "per_example_visit_hash": "8dc1eddfe971951748e5c0ddc0098d92cf4291a19bfe439c53508b6a366f021a",
+  "repeated_example_presentations": 2780,
+  "training_seconds": 2.333451434969902,
+  "weights_hash": "0eaaf8ac3da80972550899e4caa82867f3a097c732585e14d30aa4383870b019"
+}

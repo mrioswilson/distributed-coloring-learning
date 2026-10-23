@@ -1,0 +1,29 @@
+{
+  "main_preregistration_sha256": "911a154450ea475c746e44152c70a750efd2f6b1f448e80e963a21566e168f0f",
+  "plan": {
+    "architecture": "small",
+    "final_runs": 1000,
+    "grid": [
+      1000,
+      3000,
+      10000,
+      30000,
+      100000,
+      300000,
+      1000000
+    ],
+    "namespace": "20261023-sc-small-independent-final-v1",
+    "protocol": "sample-complexity-small-supplement-v1",
+    "reuse": "The B=3000 small control is reused by its checkpoint hash; all other budgets start from fresh initialization",
+    "selection": "First common perfect development budget; independent supplemental final tapes; no final-guided retry",
+    "teachers": [
+      "LUBY",
+      "JP",
+      "BE_BASE_D3"
+    ],
+    "updates": 500,
+    "workers": 3
+  },
+  "scope": "Exploratory small-grid supplement, frozen before any small-model final results",
+  "source_sha256": "11001d53cb5f8ada874e61c063834df534b626621ad438a117f46c33eb15ef7e"
+}

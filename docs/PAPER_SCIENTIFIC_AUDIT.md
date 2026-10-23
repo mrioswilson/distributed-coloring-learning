@@ -374,3 +374,158 @@ the central conclusion rather than merely add more runs.
 Reproducible material and publication manifests are linked from the README.
 The final Git/release verification is recorded separately so this scientific
 assessment does not infer completion from an engineering milestone.
+
+<!-- BEGIN_SAMPLE_COMPLEXITY_AUDIT -->
+## Sample complexity and learnability: independent audit extension
+
+The new study contains 735 controlled-budget fresh main trainings,
+21 teacher/architecture packages and five training replicas per package.
+16 packages nominated one development-selected frozen candidate;
+12 achieved the strict five-seed PASS. This section supersedes no
+historical result and makes no previous checkpoint a query-controlled training.
+
+### Observation, information, data and optimization audit
+
+An observation is an acquired node/state/action-component label. Normal phases
+count participation, proposal and teacher confirmation separately; BE Linial
+point and GM conflict mark count separately in their phases. Root identities,
+trajectory clusters, native step, global state hashes, component counts,
+cache/prefix hashes, distinct observations, trajectories, graphs, bytes,
+presentations and unused labels are exported. Simulator computations are a
+separate cost and are not silently called supervised labels. A max-budget
+library is cached once per teacher/seed; policies access only their prefix.
+Optimization replays stored labels and never acquires counterfactual targets.
+
+The information audit is `docs/TEACHER_MODEL_INFORMATION_COMPATIBILITY.md`.
+Regime A is anonymous; regime B retains each native program's IDs/auxiliary
+colors/phases/scheduler. All three architectures receive the same observations.
+JP/GM use explicit relative order; BE's finite-field arithmetic is supplied,
+with learned point/recolor decisions. No exact availability, eligibility,
+winning color, student conflict mark or safety shield enters inference.
+The anonymous two-node JP counterexample proves an insufficiency of a particular
+interface, not a failure of neural learning generally. Interface sufficiency
+does not establish fixed-width universal representability.
+
+All seven query budgets through 1,000,000 are evaluated from fresh seed-matched
+initialization at 500 Adam updates, batch 64 and lr .001. Phase-stratified
+sampling is fixed before results; sampling with replacement has effective
+passes and no literal epoch count. Five seeds control initialization, data
+generation and batch order; saved Python/NumPy/Torch states permit audit.
+Fixed-label 1,500-update, small/no-message and one-aggregation interactive
+controls are exploratory and use development only. Interactive queries require
+proper native states and retain failed learner acquisition trajectories.
+
+### Evaluation, results, failures and statistical evidence
+
+Training n=8–24, development n=28/36 and final n=32/48/64 have disjoint graph
+sizes and independent namespaces/tapes. Seven native-valid families include
+symmetry and four-color-necessary K4 unions. Every graph/ID/tape and deadline
+was fixed and exact-teacher-validated before student confirmation. Sequential,
+priority, randomized and algebraic native steps have distinct semantics;
+within-teacher time ratios are meaningful, cross-teacher raw-round rankings
+are not. The previous common 128-step cutoff is not reused as a universal rule.
+
+Each final policy must complete all 1,000 preregistered executions with proper
+palette-valid terminal coloring, all native invariants, no technical error,
+no cutoff and no incorrect terminal state. Missing/duplicate case IDs fail.
+GM's temporary conflicts are legal; BE auxiliary improperness is a failure.
+Unsafe predictions are applied and recorded, without repair or tape replacement.
+PASS requires conjunction across all five independent trainings. The consumed
+attempt marker and frozen five checkpoint hashes prevent final-guided retries.
+No candidate and failed confirmation remain distinct NOT CERTIFIED states.
+
+Primary tables and full per-seed query/failure/compute fields are
+`results/sample-complexity/results-table.json` and `.csv`. Raw final/exact
+executions, batteries, training/control records, regressions and figure hashes
+are versioned; full teacher caches/checkpoints/development rows are in the
+separate verified runtime archive. `docs/SAMPLE_COMPLEXITY_RESULTS.md` answers
+P1–P12 using those actual observations. The study's NOT CERTIFIED thresholds
+are censored under its finite optimizer/selection procedure, not proof of an
+intrinsic monotone sample requirement or mathematical impossibility.
+The separate `results/sample-complexity/evidence-ledger.json` maps the new claim
+groups to exact source/result hashes; the original integration ledger retains
+its historical twelve claim groups.
+
+With zero failures in one policy's 1,000 independent executions the one-sided
+95% lower bound is 0.9970087504549047. Under fixed heterogeneous strata the
+zero-failure arithmetic–geometric-mean argument bounds their allocation-weighted
+mean. No policy receives an n=5,000 interval by pooling training replicas.
+These are not simultaneous confidence guarantees over all tested cells.
+Five seeds limit inference about the distribution of possible trainings.
+Correlated trajectory roots are never counted as independent training replicas.
+
+### Does 100% Empirical Success Mean the Algorithm Has Been Learned?
+
+It means that these five frozen policies completed these finite independent
+benchmark batteries without a recorded functional failure. Conditional on the
+declared distribution/independence assumptions it also supports the separate
+per-policy statistical statements. It does not prove identity to the teacher,
+all-input correctness, termination on every random tape, matching complexity,
+exact solution-law equality or architectural minimality. A different proper
+policy can choose different actions and a different output law while passing.
+Nonrejection of a robust distribution test is not evidence of exact equality.
+
+Mathematical guarantees would require an explicit domain and computation model,
+formal equivalence or verified safety/progress predicates on every reachable
+local state, sound composition across graph nodes and rounds, treatment of
+real/finite precision boundaries and supplied arithmetic/schedulers, and a
+termination argument valid under the specified randomness. A finite discrete
+domain could support exhaustive verified state enumeration; unbounded domains
+need symbolic invariants and a transfer theorem. Learning-theoretic guarantees
+also need justified coverage/complexity/stability assumptions and a proof for
+the actual algorithm. Convergence or the finite curves supply none of these
+automatically.
+For randomized anonymous teachers, a valid finite tape can keep symmetric
+vertices waiting or colliding in proposals for the entire deadline; universal
+finite-deadline termination on every tape is generally false even for the exact
+teacher. A mathematical theorem must specify almost-sure termination, an
+explicit tail probability, or additional deterministic progress assumptions.
+
+### Threats, causal limits and interpretation
+
+Teacher-specific extra information and coded schedulers mean regimes are
+different learning problems. Changes from historical JP/BE also change the
+loss and controlled data/optimizer budget; an improved package does not isolate
+the causal effect of relational IDs. BE arithmetic and greedy/GM scheduling
+remain supplied. The no-message ablation changes available information and
+must not be labeled a pure parameter-count intervention. Greater B at fixed
+updates can increase unused data and cause regressions. The control changes
+only updates at one B and cannot exclude every representational/generalization
+failure. One interactive aggregation has limited coverage and an Adam reset.
+Development contains 28 cases per seed, so candidate screening can be weak;
+the independent final gate explicitly tests that uncertainty. Graph sizes,
+families, finite ID space, finite tapes and only five training replicas bound
+all conclusions. Native K4/degree-three results do not certify arbitrary local
+palettes, degree 200 or high-degree BE recursion. CPU/GPU time and parameter
+counts remain separate. Full FLOPs are unmeasured; the post hoc profiler
+estimate in `flops-estimates.json` counts supported dense forward/backward
+arithmetic by phase and excludes encoder, optimizer and uncounted
+elementwise/reduction operations. It is not total hardware FLOPs.
+
+The robust coloring-law supplement has its own fixed plan, independent banks,
+teacher-specific reference and native K4 allocator. It conditions on successful
+rows, retains functional failure counts, fixes the selection/evaluation split
+before permutations and adjusts over all 210 hypotheses, with untestable cells
+set to p=1. Conservative futility cannot create a rejection. It is exploratory
+and never enters the functional gate or checkpoint selection. Historical law
+results are not substituted for new policy evidence.
+
+The fixed-label optimization confirmation is an additional exploratory protocol
+documented after development controls. It freezes both 500/1,500-update arms
+for all three preselected teachers, checks equal label-prefix/initialization
+hashes and uses a new independent final namespace with matched cases across
+arms. Its one-attempt markers and every individual outcome are retained.
+It validates fixed optimizer/label points and never changes the primary
+certification, nominates a new primary budget or retrofits an earlier final
+battery. Its six arm-level results are reported separately.
+
+A separate complete common-state fidelity audit reuses all 28 frozen
+development teacher trajectories per seed for every primary checkpoint. It
+uses no final data or training updates. The original 256-decision prefix
+metrics remain in logs; their action-identical transition proxy is not an
+if-and-only-if state equality measure. The full audit compares the actual
+updated state channel, accounting for field-specific Linial decoding and
+redundant KW/GM repair writes; three interpreter-based regression tests check
+these cases. Reported fidelity curves use the full audit when available.
+
+<!-- END_SAMPLE_COMPLEXITY_AUDIT -->

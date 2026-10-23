@@ -1,0 +1,110 @@
+{
+  "accounting": {
+    "budget": 100000,
+    "by_component": {
+      "confirmation": 31701,
+      "linial_point": 4896,
+      "participation": 31701,
+      "proposal": 31701
+    },
+    "data_sha256": "d38470739f7a61230cb54597663115e0bdc522ccc2a8dcb05e039f3a650952ec",
+    "dataset_cache_bytes": 24270313,
+    "dataset_manifest_sha256": "b2ae9e8bd1882b7b0a29149b5c563e368010fdf872f4cbbd689756d98dc27191",
+    "distinct_global_states": 2470,
+    "distinct_local_states": 36597,
+    "examples": 36597,
+    "independent_trajectories": 165,
+    "last_trajectory": 164,
+    "prefix_sha256": "20a4cd3c589f890e0847e41623d33e659d2bbb1ae1315a5a4086a685fa9ab80e",
+    "queries": 99999,
+    "training_graphs": 165,
+    "unique_stored_bytes": 133945020
+  },
+  "acquired_examples_ever_used": 17175,
+  "checkpoint": "data/sample-complexity-v1/capacity-grid/be_base_d3/s83104/b100000/final.pt",
+  "checkpoint_sha256": "30c6298a8956fca19bf0469d7b886ed90a3d8e0ed0e93e4e6e8973a7e7762458",
+  "component_presentations": {
+    "confirmation": 16000,
+    "linial_point": 16000,
+    "participation": 16000,
+    "proposal": 16000
+  },
+  "cpu_seconds": 2.3692426499999897,
+  "development": {
+    "complete": true,
+    "executions": 28,
+    "failures": {
+      "invariant": 28
+    },
+    "lower_one_sided_95": null,
+    "mean_native_steps": 1.4642857142857142,
+    "pass_all": false,
+    "success_rate": 0.0,
+    "successes": 0
+  },
+  "development_seconds": 0.0515856210840866,
+  "device": "cpu",
+  "effective_passes": 0.8743886110883405,
+  "epochs": null,
+  "fidelity": {
+    "action_correct": 242,
+    "action_fidelity": 0.9453125,
+    "action_total": 256,
+    "by_phase": {
+      "4": [
+        43,
+        56
+      ],
+      "5": [
+        199,
+        200
+      ]
+    },
+    "complete_transitions": 9,
+    "identical_transitions": 6,
+    "transition_fidelity": 0.6666666666666666
+  },
+  "flops_estimate": null,
+  "flops_note": "Not measured; time and updates retained separately, no FLOP comparability claim",
+  "gpu_seconds": 0.0,
+  "history": [
+    {
+      "loss": 2.2853176593780518,
+      "update": 100
+    },
+    {
+      "loss": 1.8845714330673218,
+      "update": 200
+    },
+    {
+      "loss": 1.636218786239624,
+      "update": 300
+    },
+    {
+      "loss": 1.1307966709136963,
+      "update": 400
+    },
+    {
+      "loss": 0.9209939241409302,
+      "update": 500
+    }
+  ],
+  "identity": {
+    "architecture": "small",
+    "batch": 64,
+    "budget": 100000,
+    "lr": 0.001,
+    "seed": 83104,
+    "teacher": "BE_BASE_D3",
+    "updates": 500
+  },
+  "initial_hash": "c42b9cc71698147a65a01ceb7ba29752d2c23f51f1f387621d8d62fbcdd1b8f9",
+  "optimization": "Adam; cyclic phase strata, root bundles sampled with replacement; no full epochs",
+  "parameter_updates": 500,
+  "parameters": 1560,
+  "peak_rss_bytes": 3419578368,
+  "per_example_visit_hash": "70eef1ab19f71ea4b89ca7ec36fd923b1239a1323ec4d5fa85bbf1f5a1b0c556",
+  "repeated_example_presentations": 14825,
+  "training_seconds": 2.3778257339727134,
+  "weights_hash": "79a46072ef2cc477814c4039ae338c3e5784afc3f7b287f2bd447c96173724c7"
+}

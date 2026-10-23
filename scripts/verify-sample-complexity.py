@@ -156,6 +156,25 @@ def main():
     if args.runtime and (out/"runtime-manifest.json").exists():
         for entry in read(out/"runtime-manifest.json")["files"]:
             assert Path(entry["path"]).stat().st_size==entry["bytes"] and file_hash(entry["path"])==entry["sha256"]
+    if (out/"full-fidelity.json").exists():
+        full=read(out/"full-fidelity.json")
+        assert file_hash("src/dcl/samplecomplexity/full_fidelity.py")==full["source_sha256"]
+        assert len(full["rows"])==len(records)
+        lookup={tuple(r["identity"][k] for k in ("teacher","architecture","seed","budget")):r for r in records}
+        for r in full["rows"]:
+            key=tuple(r[k] for k in ("teacher","architecture","seed","budget"))
+            assert r["checkpoint_sha256"]==lookup[key]["checkpoint_sha256"]
+            assert 0<=r["action_correct"]<=r["action_total"] and 0<=r["identical_transitions"]<=r["transitions"]
+            assert r["action_fidelity"]==r["action_correct"]/r["action_total"]
+            assert r["transition_fidelity"]==r["identical_transitions"]/r["transitions"]
+        if args.runtime:
+            for b in full["banks"]: assert file_hash(root/"full-fidelity"/b["teacher"].lower()/f"s{b['seed']}"/"teacher-states.npz")==b["sha256"]
+    if (out/"structural-failure-witnesses.json").exists():
+        witness=read(out/"structural-failure-witnesses.json")
+        assert file_hash("src/dcl/samplecomplexity/failure_witnesses.py")==witness["source_sha256"]
+    if (out/"evidence-ledger.json").exists():
+        for claim in read(out/"evidence-ledger.json"):
+            for s in claim["sources"]:assert file_hash(s["path"])==s["sha256"]
     result=dict(passed=True,trainings=len(records),acquired_queries=acquired,
                 exact_executions=exact_executions,final_student_executions=final_executions,
                 status_counts=dict(Counter(c["status"] for c in certifications)),controls=len(controls),
