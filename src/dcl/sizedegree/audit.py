@@ -55,6 +55,7 @@ def main():
     mechanism_errors=np.zeros(2,np.int64)
     for t in mq['tasks']:
         path=ROOT/'mechanism'/f'{t["id"]}.npz';assert file_hash(path)==t['sha256']
+        assert t['source_sha256']==file_hash('src/dcl/sizedegree/mechanism.py')
         with np.load(path) as a:
             newseeds.append(a['seeds']);mechanism_errors+=a['observer_errors'].sum((0,1))
             label='Luby' if t['model'] is None else t['model']['label'];g=gs[t['graph']]
@@ -78,8 +79,28 @@ def main():
     ipath=ROOT/'candidate-intervention/queue.json'
     if ipath.exists():
         iq=read(ipath)
+        for prefix,module,document in [
+            ('protocol','intervention','FACTORIAL_CANDIDATE_INTERVENTION_PLAN.md'),
+            ('witness-addendum','intervention_witnesses','FACTORIAL_INTERVENTION_WITNESS_ADDENDUM.md')]:
+            record_name='protocol-commit.json' if prefix=='protocol' else prefix+'-commit.json'
+            plan_name='plan.json' if prefix=='protocol' else prefix+'.json'
+            record=read(OUT/'candidate-intervention'/record_name);plan=read(OUT/'candidate-intervention'/plan_name)
+            assert record['preexisting_intervention_banks']==0
+            source='src/dcl/sizedegree/'+module+'.py';doc='docs/'+document
+            assert file_hash(source)==plan['source_sha256']
+            assert file_hash(doc)==plan['plan_sha256' if prefix=='protocol' else 'document_sha256']
+            assert subprocess.check_output(['git','show',record['commit']+':'+source])==Path(source).read_bytes()
+            assert subprocess.check_output(['git','show',record['commit']+':'+doc])==Path(doc).read_bytes()
+            committed=datetime.fromisoformat(subprocess.check_output(['git','show','-s','--format=%cI',record['commit']],text=True).strip())
+            assert datetime.fromisoformat(iq['created'])>committed
+        resource_path=OUT/'candidate-intervention/resource-freeze.json'
+        resource=read(resource_path) if resource_path.exists() else None
         for t in iq.get('pilot_tasks',[])+iq.get('tasks',[]):
             if t['status']!='complete':continue
+            if t['phase']=='confirm':
+                assert resource is not None
+                assert t['m']==resource['pairs_per_cell']
+                assert datetime.fromisoformat(t['completed'])>datetime.fromisoformat(resource['created'])
             path=Path(t['file']);assert file_hash(path)==t['sha256']
             g=gs[t['graph']];label=t['model']['label']
             with np.load(path) as c:

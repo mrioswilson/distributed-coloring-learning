@@ -61,12 +61,21 @@ original independent two-sample tests. A coupling can bound TV from above
 for this intervened policy only; it does not establish equivalence for the
 unmodified checkpoint. Missing or budget-skipped cells remain explicit.
 
+The separate `FACTORIAL_INTERVENTION_WITNESS_ADDENDUM.md` uses the original
+honest held-out event for every one of the same sixty cells. It was specified
+after original witness examples were inspected but before any paired data,
+at commit `e7291b9fd0b0641647671880a2ce4e5359a85472`. Its coupling and effect
+bounds share a new 95% simultaneous family of 300 probabilities. This is
+explicitly separate from the earlier event-effect family. No additional
+simulations or changes to the original frozen tests are involved.
+
 ## Reproduction and derived outputs
 
 After all sampling and contrast jobs complete:
 
 ```bash
 $PYTHON -m dcl.sizedegree.intervention analyze
+$PYTHON -m dcl.sizedegree.intervention_witnesses analyze
 $PYTHON -m dcl.sizedegree.precision
 $PYTHON -m dcl.sizedegree.capacity
 $PYTHON -m dcl.sizedegree.exploratory

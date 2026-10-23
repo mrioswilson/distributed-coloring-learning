@@ -9,6 +9,16 @@ ARCHES=('normalized','deepsets','transformer')
 NAMES=dict(normalized='E1 NORMALIZED',deepsets='DeepSets',transformer='LocalPaletteTransformer')
 def ci(r):return f"{r['estimate']:+.3f} [{r['ci'][0]:+.3f}, {r['ci'][1]:+.3f}]"
 
+def witness_label(e):
+    if e['kind']=='threshold':return f"color del vértice {e['ids'][0]} ≤ {e['threshold']:.6g}"
+    if e['kind'] in ('structural','structural_threshold'):
+        threshold=e.get('threshold',e.get('event_threshold'))
+        return f"{e['name']} ≤ {threshold:.8g}"
+    if e['kind']=='categorical':
+        count=sum(value>0 for value in e['scores'])
+        return f"patrón en vértices {e['ids']} entre {count} tuplas seleccionadas"
+    return e['kind']
+
 def intervention_summary():
     path=OUT/'candidate-intervention/results.json'
     if not path.exists():return None
@@ -51,10 +61,17 @@ def main():
             corner=next(r for r in rows if r['contrast']=='full-corners')
             interactions.append(f"- {NAMES[arch]}, {'A' if event=='used_le_delta' else 'T'}: {sum(r['significant'] for r in rows)}/10 interacciones; cuatro esquinas {ci(corner)}.")
     witnesses=[]
+    examples=[]
     for arch in ARCHES:
         rows=[r for r in w if r['stratum']=='main' and r['architecture']==arch and r['reject']]
         kinds={name:sum(r['witness_name']==name for r in rows) for name in set(r['witness_name'] for r in rows)}
         witnesses.append(f"- {NAMES[arch]}: {len(rows)} testigos; "+', '.join(f'{k} ({v})' for k,v in sorted(kinds.items(),key=lambda x:-x[1])[:8])+'.')
+        candidates=[r for r in w if r['stratum']=='main' and r['architecture']==arch]
+        if candidates:examples.append(max(candidates,key=lambda r:r['tv_lower']))
+    atomic_json(OUT/'representative-heldout-witnesses.json',examples)
+    witness_examples=[]
+    for r in examples:
+        witness_examples.append(f"- **{NAMES[r['architecture']]}**, `{r['graph']} / {r['model']}`: evento «{witness_label(r['event'])}». Holdout Luby={r['count_Luby']}/{r['n_Luby']}={r['probability_Luby']:.3f}; red={r['count_model']}/{r['n_model']}={r['probability_model']:.3f}; diferencia {r['difference']:+.3f}, intervalo simultáneo [{r['ci'][0]:+.3f},{r['ci'][1]:+.3f}], TV≥{r['tv_lower']:.3f}.")
     color=pd.read_csv(OUT/'color-usage.csv');lookup={(r.graph,r.model,int(r.color)):r for r in color.itertuples()};cr=[]
     for r in target:
         candidates=[]
@@ -72,6 +89,8 @@ def main():
     for spec in [r for r in specs() if r['treatment']=='normalized']:
         rows=initial[initial['model']==spec['label']]
         pt.append(f"| {spec['label']} | {rows[rows['delta']==50].iloc[0]['q_top']:.6f} | {rows[rows['delta']==100].iloc[0]['q_top']:.6f} |")
+    initial_s4=initial[(initial['model']=='normalized-s41004')&(initial['delta']==100)].iloc[0]['q_top']
+    final_s4=np.mean([r['probability_model'] for r in events if r['stratum']=='main' and r['n']==512 and r['delta']==100 and r['model']=='normalized-s41004' and r['event']=='uses_top_color'])
     th=[r for r in events if r['stratum']=='historical-replication' and r['architecture']=='normalized' and r['event']=='used_le_delta']
     replicas=['| Checkpoint E1 | Media P_E1(A), 3 grafos | Rango entre grafos | Menor cota TV de A |',
               '|---|---:|---:|---:|']
@@ -118,10 +137,42 @@ es distinto de identificar mediación completa o separar grado de paleta.
 Estos resultados no cambian ninguna de las 720 hipótesis originales.
 '''
         iv_short=f"La intervención separada en candidatos respaldó un efecto sobre la ley completa en {iv['effects']}/{iv['cells']} celdas y TV(I,Luby)≤0,05 en {iv['equivalent']}/{iv['cells']}."
+    supplement=OUT/'candidate-intervention/witness-effects.json'
+    if supplement.exists() and read(supplement)['rows']:
+        sw=read(supplement);st=['| Arquitectura | Celdas | Efecto TV(original,I)>0 | Mayor cota inferior del efecto |',
+                              '|---|---:|---:|---:|']
+        for arch in ARCHES:
+            rr=[r for r in sw['rows'] if r['architecture']==arch]
+            if rr:st.append(f"| {NAMES[arch]} | {len(rr)}/20 | {sum(r['intervention_tv_effect_lower']>0 for r in rr)} | {max(r['intervention_tv_effect_lower'] for r in rr):.3f} |")
+        iv_text+=f'''
+### Suplemento exploratorio con los testigos originales
+
+El addendum `{sw['addendum_commit']}` se registró después de inspeccionar
+ejemplos originales y antes de cualquier muestra intervenida. Conserva el
+único evento elegido por el procedimiento original en cada una de las 60
+celdas; no lo cambia usando la intervención. Reestima sus probabilidades en
+el holdout original y combina la cota TV(original,Luby) con la cota de
+acoplamiento TV(I,Luby), mediante la desigualdad triangular.
+
+{chr(10).join(st)}
+
+Las 300 probabilidades (cinco por celda) tienen cobertura simultánea al menos
+95% mediante CP y unión de eventos. Ésta es una familia distinta de la tabla
+anterior: no se toma el máximo entre sus cotas ni se afirma cobertura conjunta
+95% sobre ambas familias. La figura 12 utiliza este suplemento. No se añadieron
+simulaciones ni se modificaron los 720 contrastes principales. Las celdas con
+cota cero se conservan y no prueban ausencia de efecto.
+'''
+        iv_short+=f" La familia suplementaria de testigos respaldó un efecto en {sw['effect_positive']}/{sw['cells_completed']} celdas, con su propia cobertura simultánea del 95%."
     models=read(OUT/'exploratory-binomial-models.json');predict=[]
     for arch in ARCHES:
         rows=sorted([r for r in models if r['architecture']==arch and r['event']=='used_le_delta'],key=lambda r:r['mean_heldout_cross_entropy'])
         predict.append(f"- {NAMES[arch]}: `{rows[0]['form']}`, pérdida por ejecución {rows[0]['mean_heldout_cross_entropy']:.5f}; se archivan las seis formas y los tres folds.")
+    prediction_table=['| Forma predictiva para A | E1 | DeepSets | Transformer |',
+                      '|---|---:|---:|---:|']
+    for form in ('size','degree','ratio','density','additive','interaction'):
+        vals=[next(r for r in models if r['architecture']==arch and r['event']=='used_le_delta' and r['form']==form) for arch in ARCHES]
+        prediction_table.append('| '+form+' | '+' | '.join(f"{r['mean_heldout_cross_entropy']:.5f}"+(' (no convergió)' if not r['converged'] else '') for r in vals)+' |')
     np_,nm=count('normalized','size');dp,dm=count('normalized','degree');join=lambda x:'\n'.join(x)
     text=f'''# Tamaño, grado y generalización distribucional: estudio factorial
 
@@ -252,6 +303,19 @@ validaron en las 125 reservadas. En la cohorte principal:
 
 {join(witnesses)}
 
+Ejemplos con las mayores cotas inferiores dentro de cada arquitectura:
+
+{join(witness_examples)}
+
+`used_colors` es U; `mean_color` es el promedio de las etiquetas numéricas;
+`class_entropy` es −Σp_c log(p_c), sin normalizar. Las definiciones completas,
+incluidas las tuplas categóricas si se seleccionan, están en
+`representative-heldout-witnesses.json`. Primero se eligió un evento por
+contraste usando las 500 muestras principales; después se estimó en el
+holdout. Elegir estos ejemplos entre los 855 testigos no invalida sus cotas
+CP simultáneas sobre esa familia. No prueban que una sola propiedad explique
+todas las diferencias de una arquitectura ni identifican una causa.
+
 Los eventos por color se midieron todos prospectivamente con una familia CP
 simultánea separada. El mayor testigo de color seleccionado en el objetivo
 fue `{best['graph']} / {best['model']}`, «aparece el color {best['color']}»:
@@ -290,6 +354,12 @@ la reducción MAX de tipos de mensaje hace que, a K fijo, la función de
 candidatos no dependa de n ni del grafo regular. Las comprobaciones numéricas
 de esa invariancia fueron {s['initial_invariance_all']}.
 
+Un contraejemplo al uso aislado del estado inicial es `normalized-s41004`:
+q_grid(top)={initial_s4:.6f} con K=101, pero el color máximo aparece con
+probabilidad media {final_s4:.3f} en sus coloraciones finales de los tres
+grafos nuevos n512-d100. La disponibilidad cambia durante las rondas; una
+masa inicial de cuadrícula nula no prueba ausencia en toda trayectoria.
+
 Las trayectorias registran propuestas, participación, disponibilidad de
 referencia, COMMIT y clases finales sin modificar decisiones. Se observaron
 {a['mechanism_unsafe_commits']} COMMIT inseguros en esos diagnósticos. La cadena
@@ -312,8 +382,13 @@ pérdida predictiva fue:
 
 {join(predict)}
 
+{join(prediction_table)}
+
 Se presentan todas las formas, sin convertir la selección predictiva en una
 hipótesis causal confirmada ni en una escala universal de discrepancia.
+La razón n/K y la densidad están ligadas por el propio diseño; una pequeña
+diferencia de predicción no identifica una variable causal única. Los
+coeficientes, convergencia y pérdidas de cada fold están archivados.
 
 ## Auditoría y recursos
 

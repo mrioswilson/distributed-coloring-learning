@@ -210,7 +210,10 @@ def main():
 
     intervention_path=OUT/'candidate-intervention/results.json'
     if intervention_path.exists() and read(intervention_path).get('rows'):
-        rows=read(intervention_path)['rows'];gids=sorted(set(r['graph'] for r in rows))
+        rows=read(intervention_path)['rows']
+        supplement=OUT/'candidate-intervention/witness-effects.json'
+        if supplement.exists() and read(supplement).get('rows'):rows=read(supplement)['rows']
+        gids=sorted(set(r['graph'] for r in rows))
         graphcolors=plt.get_cmap('tab10')(np.arange(len(gids)))
         offsets=np.linspace(-.24,.24,len(gids))
         fig,axes=plt.subplots(2,3,figsize=(12,6.8),layout='constrained')
@@ -230,7 +233,7 @@ def main():
             axes[1,j].set(xlabel='Checkpoint seed',ylabel='Lower TV bound: original vs intervened')
         handles=[Line2D([0],[0],marker='o',ls='',color=graphcolors[i],label='Historical graph' if gid.startswith('historical-') else 'New graph r'+gid.rsplit('r',1)[-1]) for i,gid in enumerate(gids)]
         fig.legend(handles=handles,loc='outside lower center',ncol=len(gids),fontsize=8)
-        fig.suptitle('12. Exploratory candidate replacement; simultaneous bounds, independent of original tests')
+        fig.suptitle('12. Exploratory candidate replacement; simultaneous 95% witness/coupling bounds')
         save(fig,'factorial-12-candidate-intervention')
     atomic_json(OUT/'figure-manifest.json',dict(required_figures=9,figures=[p.stem for p in sorted((OUT/'figures').glob('*.png'))],
                                                supplementary_occupancy_pages=16,generated=now()))

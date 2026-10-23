@@ -169,6 +169,46 @@ measuring every color permits simultaneous rather than naive selected-color
 intervals. A small normalized occupancy-mean difference can coexist with a
 large discrepancy of an occupancy-tail event.
 '''
+    target_graph=next(g for g in graphs() if g['stage']=='main' and g['n']==512 and g['delta']==100 and g['rep']==0)
+    probe=read(OUT/'candidate-probes'/f"{target_graph['id']}__normalized-s41004.json")
+    initial_s4=next(r['q_top'] for r in probe['probes'] if r['round']==0)
+    final_s4=[r['probability_model'] for r in events if r['stratum']=='main' and r['n']==512 and r['delta']==100 and r['model']=='normalized-s41004' and r['event']=='uses_top_color']
+    text+=f'''
+The distinction between initial proposals and terminal laws is quantitative:
+for E1 \\texttt{{normalized-s41004}}, the initial 4,096-point top-color mass
+at $K=101$ is {initial_s4:.6f}, yet the mean final top-color appearance across
+the three new priority graphs is {sum(final_s4)/len(final_s4):.3f}.
+Availability changes along a trajectory; a zero initial grid mass cannot
+certify absence in every later state.
+'''
+    representatives=read(OUT/'representative-heldout-witnesses.json')
+    for r in representatives:
+        e=r['event']
+        if e['kind'] not in ('structural','structural_threshold'):continue
+        name=e['name'].replace('_',r'\_');threshold=e.get('threshold',e.get('event_threshold'))
+        text+=f'''
+For an illustrative {NAMES[r['architecture']]} checkpoint
+\\texttt{{{r['model'].replace('_', chr(92)+'_')}}} on $n={r['n']},d={r['delta']}$,
+the held-out event \\texttt{{{name}}}$\\le {threshold:.8g}$ has probabilities
+{r['probability_Luby']:.3f} versus {r['probability_model']:.3f}, risk difference
+{r['difference']:+.3f} with simultaneous interval
+[{r['ci'][0]:+.3f},{r['ci'][1]:+.3f}], giving TV at least {r['tv_lower']:.3f}.
+'''
+    text+=r'''
+Here mean color uses the numeric labels and class entropy uses natural logs.
+Each witness was selected only on the main bank and measured on the independent
+125-run holdout. Simultaneous exact-binomial bounds over the entire 855-witness
+family allow choosing these examples after measurement. They illustrate
+different observable discrepancies; they are not universal explanatory or
+causal rankings of features.
+
+For heterogeneous prefix lists, every completed assignment obeys
+$U\le\min_t[t+\#\{v:d(v)\ge t\}]$. Five of the eight secondary graphs
+therefore force $U\le d$ under every generator (for example $U\le44$ on the
+1,024-node degree-100 graph). Agreement on that event has no discriminating
+content in these cells; the full test, top-color event and other profiles
+remain informative targets. Irregular results are not pooled with regulars.
+'''
     iv=intervention_summary()
     if iv and iv['cells']:
         text+=f'''
@@ -195,6 +235,21 @@ A large coupling upper bound does not prove residual discrepancy, since
 the coupling need not be optimal. This controlled computational intervention
 addresses the candidate channel; it does not identify complete mediation
 or separate degree from palette causality.
+'''
+        supplement=OUT/'candidate-intervention/witness-effects.json'
+        if supplement.exists() and read(supplement)['rows']:
+            sw=read(supplement)
+            text+=f'''
+A separate supplementary addendum was recorded after original witness
+examples were inspected but before any intervention sample. It retains the
+single honestly selected original event for each of all sixty cells and
+uses its original independent holdout. Simultaneous CP bounds on 300 event,
+mismatch and success probabilities, followed by the triangle inequality,
+give positive lower bounds on $\\operatorname{{TV}}(P_M,P_I)$ in
+{sw['effect_positive']}/{sw['cells_completed']} cells. The simultaneous
+coverage is at least .95 for this supplementary family; it is separate from
+the preceding event-effect family, and no joint .95 guarantee is claimed
+over their union. No new simulations or event reselection are involved.
 '''
     text+=f'''
 The final ledger charged {a['gpu_process_hours']:.3f} of 12 GPU-process hours,
@@ -230,7 +285,7 @@ nonrejections establish no approximate equivalence.
       ('08-target-replication','replication','Independent priority-case E1 replications, without pooling historical outcomes.'),
       ('09-candidates-and-global-law','candidates','Same-state candidate quadrature and independent final samples: association does not identify causality.')]
     if iv and iv['cells']:
-        captions.append(('12-candidate-intervention','intervention','Separate exploratory candidate-channel intervention on four priority graphs. Upper coupling bounds concern the intervened policy versus Luby; lower effect bounds concern the original versus intervened policy. All original-policy tests remain separate.'))
+        captions.append(('12-candidate-intervention','intervention','Separate exploratory candidate-channel intervention on four priority graphs. The supplementary witness/coupling family gives simultaneous 95 percent upper bounds for intervened versus Luby and lower effect bounds for original versus intervened. All original-policy tests remain separate.'))
     for name,label,caption in captions:
         text+='\n\\begin{figure}[p]\n\\centering\n\\includegraphics[width=\\linewidth]{figures/factorial-'+name+'.pdf}\n\\caption{'+caption+'}\n\\label{fig:factorial-'+label+'}\n\\end{figure}\n'
     text+='\n\\clearpage\n'
