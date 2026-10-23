@@ -1,0 +1,134 @@
+[
+  {
+    "checkpoint": "Five seeds per primary architecture; final model specifications and 85-checkpoint archive",
+    "claim": "Full-budget functional extrapolation",
+    "configuration": "docs/UCGNN_PAPER_PROTOCOL.md and src/dcl/paperstudy/config.py",
+    "evidence_and_confidence": "Reported archive plus immutable artifact manifests; finite cohort only",
+    "experiment": "paper-study",
+    "id": "C01",
+    "limitations": "Reported archive plus immutable artifact manifests; finite cohort only",
+    "source_file": "results/ucgnn-paper-study/FINAL_REPORT.md",
+    "source_sha256": "d175e89c8aadee5a0c5b41e08683047d2f1868fda2c00e5bd446a2eaf42c7805"
+  },
+  {
+    "checkpoint": "35 unavailable original weight digests in PEDRO_SOURCE_MANIFEST.json",
+    "claim": "Native teacher comparison",
+    "configuration": "configs/multiteacher_e1/comparison.json",
+    "evidence_and_confidence": "Published aggregate evidence; original raw/weight reproduction incomplete",
+    "experiment": "Pedro native",
+    "id": "C02",
+    "limitations": "Published aggregate evidence; original raw/weight reproduction incomplete",
+    "source_file": "results/multiteacher-e1/2026-10-22/architecture-comparison.csv",
+    "source_sha256": "e4af406e2f53a091183e6cc5794bec4f629101993b9e9ddadc076a383b66a9a2"
+  },
+  {
+    "checkpoint": "Five missing retrained E1 digests; manifest.json",
+    "claim": "Pedro E1 output-law findings",
+    "configuration": "configs/e1_behavior/retrained.json",
+    "evidence_and_confidence": "0/100 reported rejections; coupling certificates reported, raw verification pending",
+    "experiment": "Pedro behavior",
+    "id": "C03",
+    "limitations": "0/100 reported rejections; coupling certificates reported, raw verification pending",
+    "source_file": "results/e1-retrained/2026-10-21/distribution-tests.csv",
+    "source_sha256": "7e9336db7ec6b9fae6295b2ce7605f58b41858007bb9371110c542fc027112e2"
+  },
+  {
+    "checkpoint": "No trained checkpoint",
+    "claim": "Teacher correctness",
+    "configuration": "src/dcl/multiteacher/programs.py",
+    "evidence_and_confidence": "Conditional proofs plus 1,442 finite-domain runs; no universal learned-policy inference",
+    "experiment": "Exact native rules",
+    "id": "C04",
+    "limitations": "Conditional proofs plus 1,442 finite-domain runs; no universal learned-policy inference",
+    "source_file": "docs/integration/TEACHER_CORRECTNESS_AUDIT.md",
+    "source_sha256": "80db5188975050b4e94bb9b3bbf9435e4028fd3cf783fbcf89b965036811b132"
+  },
+  {
+    "checkpoint": "Our s41000 frozen models; every raw bank digest recorded",
+    "claim": "Matched full-law comparison",
+    "configuration": "docs/integration/STATISTICAL_CROSSCHECK_PROTOCOL.md",
+    "evidence_and_confidence": "Original V2 statistics replayed; exploratory historical reanalysis",
+    "experiment": "Six archived banks",
+    "id": "C05",
+    "limitations": "Original V2 statistics replayed; exploratory historical reanalysis",
+    "source_file": "results/integration/statistics/matched-archives.json",
+    "source_sha256": "9a42c667668ee5c0e65813eebec765ea64bf9afe4fab66a6e785c1477d4cb3d8"
+  },
+  {
+    "checkpoint": "No model; independent synthetic whole-vector laws",
+    "claim": "Known-law sensitivity gap",
+    "configuration": "docs/integration/STATISTICAL_CROSSCHECK_PROTOCOL.md",
+    "evidence_and_confidence": "20 trials per law/size; pointwise CP; no universal power conclusion",
+    "experiment": "Fresh independent control",
+    "id": "C06",
+    "limitations": "20 trials per law/size; pointwise CP; no universal power conclusion",
+    "source_file": "results/integration/statistics/independent-power.json",
+    "source_sha256": "8b71e496fe957d35b975e18f9b64bc4f0d2ab29950e017138444c9d90cc7a27d"
+  },
+  {
+    "checkpoint": "results/integration/multiteacher/frozen-checkpoints.json",
+    "claim": "Balanced multiple-teacher learning",
+    "configuration": "configs/integration-balanced.json",
+    "evidence_and_confidence": "Fresh banks, two initializations, short budget; fixed graphs, not population rankings",
+    "experiment": "New 70-model cohort",
+    "id": "C07",
+    "limitations": "Fresh banks, two initializations, short budget; fixed graphs, not population rankings",
+    "source_file": "results/integration/multiteacher/functional.json",
+    "source_sha256": "bbbf10e4e834a921fd43a2501a9ae1d2d40ef9870e9a1fa4dfc93e0637407130"
+  },
+  {
+    "checkpoint": "Each checkpoint uses its own teacher reference",
+    "claim": "New conditional global laws",
+    "configuration": "docs/integration/DECLARED_ALPHABET_ADDENDUM.md",
+    "evidence_and_confidence": "350 planned Holm comparisons; untestable cells distinct from equality",
+    "experiment": "New native K4 cohort",
+    "id": "C08",
+    "limitations": "350 planned Holm comparisons; untestable cells distinct from equality",
+    "source_file": "results/integration/statistics/new-study-global.json",
+    "source_sha256": "7e63743cc087b1375d56f3a4c7c07ecf752618d9d475dcfa33706f86be41b7de"
+  },
+  {
+    "checkpoint": "15 epoch120 models, seeds41000\u201341004",
+    "claim": "Size/degree observable effects",
+    "configuration": "docs/FACTORIAL_SIZE_DEGREE_PROTOCOL.md",
+    "evidence_and_confidence": "1,800 simultaneous fixed-cohort contrasts; degree and palette confounded",
+    "experiment": "Historical factorial",
+    "id": "C09",
+    "limitations": "1,800 simultaneous fixed-cohort contrasts; degree and palette confounded",
+    "source_file": "results/ucgnn-size-degree/factorial-contrasts.json",
+    "source_sha256": "98590d8f6ba1f31a3d5adb4d125277ebf2c8c414960d97086ea54e0b72179ff6"
+  },
+  {
+    "checkpoint": "No model",
+    "claim": "Input guard repair",
+    "configuration": "tests/test_integration_teachers.py",
+    "evidence_and_confidence": "21 failures before, pass after; no supported historical result invalidated",
+    "experiment": "New regression",
+    "id": "C10",
+    "limitations": "21 failures before, pass after; no supported historical result invalidated",
+    "source_file": "results/integration/teacher-guard-before.xml",
+    "source_sha256": "34cce443bab0db92fb3bf9a0ff0a3a4081ec641a23d7adedcfa1e097cbc70feb"
+  },
+  {
+    "checkpoint": "All new weights/raw banks unchanged",
+    "claim": "Declared alphabet repair",
+    "configuration": "src/dcl/integration/native_statistics.py",
+    "evidence_and_confidence": "Failed before path p-value; exact matching-alphabet replay and null regression",
+    "experiment": "New integration compatibility",
+    "id": "C11",
+    "limitations": "Failed before path p-value; exact matching-alphabet replay and null regression",
+    "source_file": "results/integration/statistics/global-alphabet-before.txt",
+    "source_sha256": "2e2975ca80ab02f182a8a1d546acdea97df59617f062e2d8240987bb2f13d68b"
+  },
+  {
+    "checkpoint": "No checkpoint for mathematical examples; small/no-message empirical controls separately",
+    "claim": "Architecture necessity limits",
+    "configuration": "docs/integration/TEACHER_CORRECTNESS_AUDIT.md",
+    "evidence_and_confidence": "Scoped information arguments and finite sufficiency, no global minimality theorem",
+    "experiment": "Specified observations",
+    "id": "C12",
+    "limitations": "Scoped information arguments and finite sufficiency, no global minimality theorem",
+    "source_file": "paper/PAPER_DRAFT.md",
+    "source_sha256": null
+  }
+]

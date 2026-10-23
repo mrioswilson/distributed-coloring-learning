@@ -1,0 +1,180 @@
+{
+  "actual_m_Luby": 500,
+  "actual_m_model": 500,
+  "architecture": "deepsets",
+  "checkpoint_sha256": "2d7a1fdfccbf5979553bf5f2f75eb5782a85e69ba915bd40f22c8961862acf3e",
+  "delta": 2,
+  "explanation": {
+    "ci_Luby": [
+      0.3125981805475403,
+      0.5731005324104549
+    ],
+    "ci_model": [
+      0.3536557563291652,
+      0.6158637517548555
+    ],
+    "count_Luby": 110,
+    "count_model": 121,
+    "difference": 0.043999999999999984,
+    "difference_ci": [
+      -0.2194447760812897,
+      0.30326557120731523
+    ],
+    "event": {
+      "family": "interaction",
+      "ids": [
+        0,
+        1,
+        2
+      ],
+      "keys": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          1,
+          2,
+          1
+        ]
+      ],
+      "kind": "categorical",
+      "scores": [
+        0.3589743589743589,
+        -0.091743119266055,
+        -0.03773584905660374,
+        0.20408163265306126,
+        -0.18181818181818185,
+        0.07291666666666666,
+        -0.3809523809523809,
+        0.3409090909090909
+      ]
+    },
+    "n_Luby": 250,
+    "n_model": 250,
+    "p": 0.369724575487965,
+    "probability_Luby": 0.44,
+    "probability_model": 0.484,
+    "selection": "primary data only; estimation on final reserved 250 runs; simultaneous CP bounds over 1590 probabilities"
+  },
+  "family": "path",
+  "graph": "path4",
+  "graph_sha256": "c495215a6641e2ffa32599b2aa0f388170083d2afa34d715918a7baef4f39c9c",
+  "model": "deepsets-s41004",
+  "n": 4,
+  "old": {
+    "B": 19999,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "multi_max": 1.0,
+      "multi_softmax": 1.0,
+      "old_hamming": 1.0
+    },
+    "permutations_used": 128,
+    "seconds": 0.029422609019093215,
+    "statistics": {
+      "multi_max": 0.7761772485854304,
+      "multi_softmax": 0.7761772485854304,
+      "old_hamming": 0.0008300632816957698
+    }
+  },
+  "old_empirical_mmd": 0.049807471095268424,
+  "old_mmd2_unbiased": 0.0008300632816957698,
+  "old_p": 1.0,
+  "old_p_kind": "conservative_futility",
+  "old_p_lower_bound": 0.00105,
+  "old_permutations_used": 128,
+  "old_population_mmd_ci95": [
+    0.0,
+    0.3821947749585821
+  ],
+  "p": 1.0,
+  "p_kind": "conservative_futility",
+  "p_lower_bound": 0.00105,
+  "permutations_used": 640,
+  "robust": {
+    "B": 19999,
+    "evaluation_per_class": [
+      250,
+      250
+    ],
+    "exceedances": [
+      66,
+      247,
+      400,
+      21,
+      321,
+      253
+    ],
+    "p": 1.0,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "interaction": 1.0,
+      "local": 1.0,
+      "omnibus": 1.0,
+      "split_global": 1.0,
+      "split_multiscale": 1.0,
+      "structural": 1.0
+    },
+    "permutations_used": 640,
+    "seconds": 0.05054086504969746,
+    "selection_per_class": [
+      250,
+      250
+    ],
+    "statistics": {
+      "interaction": 0.7811065361065348,
+      "local": 1.4724150272947236,
+      "omnibus": 2.490219730081705,
+      "split_global": -0.05631179124644853,
+      "split_multiscale": 1.0162237372094578,
+      "structural": 2.490219730081705
+    }
+  },
+  "statistic": 2.490219730081705,
+  "statuses_Luby": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "statuses_model": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "total_per_generator": 500,
+  "training_seed": 41004
+}

@@ -1,0 +1,96 @@
+{
+  "actual_m_Luby": 250,
+  "actual_m_model": 250,
+  "architecture": "transformer",
+  "checkpoint_sha256": "20ede5e425b53ae3a91d5286079201551a36c5ab5dd37133d8ff9617015bb99b",
+  "delta": 3,
+  "family": "star",
+  "graph": "star3",
+  "graph_sha256": "f884f4b69d8c5b48152a4cac90386ff8e8959ceef7bd5a263d6941b98f0fd5d5",
+  "model": "transformer-s41003",
+  "n": 4,
+  "old": {
+    "B": 19999,
+    "p_kind": "plus_one",
+    "p_values": {
+      "multi_max": 5e-05,
+      "multi_softmax": 5e-05,
+      "old_hamming": 5e-05
+    },
+    "permutations_used": 19999,
+    "seconds": 0.5839892419753596,
+    "statistics": {
+      "multi_max": 8.140076460588512,
+      "multi_softmax": 8.140076460588512,
+      "old_hamming": 0.015124489029528121
+    }
+  },
+  "old_empirical_mmd": 0.13526471434992385,
+  "old_mmd2_unbiased": 0.015124489029528121,
+  "old_p": 5e-05,
+  "old_p_kind": "plus_one",
+  "old_p_lower_bound": 5e-05,
+  "old_permutations_used": 19999,
+  "old_population_mmd_ci95": [
+    0.0,
+    0.605331347434049
+  ],
+  "p": 1.0,
+  "p_kind": "conservative_futility",
+  "p_lower_bound": 0.00105,
+  "permutations_used": 2048,
+  "robust": {
+    "B": 19999,
+    "evaluation_per_class": [
+      125,
+      125
+    ],
+    "exceedances": [
+      56,
+      89,
+      174,
+      21,
+      30,
+      47
+    ],
+    "p": 1.0,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "interaction": 1.0,
+      "local": 1.0,
+      "omnibus": 1.0,
+      "split_global": 1.0,
+      "split_multiscale": 1.0,
+      "structural": 1.0
+    },
+    "permutations_used": 2048,
+    "seconds": 0.04954280494712293,
+    "selection_per_class": [
+      125,
+      125
+    ],
+    "statistics": {
+      "interaction": 2.0248950739904874,
+      "local": 2.3898147644742536,
+      "omnibus": 2.921995208397401,
+      "split_global": 2.392600603534863,
+      "split_multiscale": 2.6045721222676255,
+      "structural": 2.921995208397401
+    }
+  },
+  "statistic": 2.921995208397401,
+  "statuses_Luby": [
+    250,
+    0,
+    0,
+    0
+  ],
+  "statuses_model": [
+    250,
+    0,
+    0,
+    0
+  ],
+  "total_per_generator": 250,
+  "training_seed": 41003
+}

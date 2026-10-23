@@ -35,6 +35,16 @@ data/raw/
 *.swp
 *~
 
+# Downloaded local document compiler; source and release hashes are recorded.
+.tools/
+
+# LaTeX intermediate files (retain generated paper PDF and reproducible figures)
+paper/ucgnn/*.aux
+paper/ucgnn/*.bbl
+paper/ucgnn/*.blg
+paper/ucgnn/*.out
+paper/ucgnn/*.synctex.gz
+
 # Generated Python packaging metadata
 *.egg-info/
 
@@ -46,9 +56,18 @@ data/raw/
 # Reproducible study runtime (plans and source remain versioned)
 data/m6study*/
 
+# Universal Color GNN runtime (plans and source remain versioned)
+data/ucgnn*/
+
 # Native multi-teacher comparison runtime
 data/multiteacher*/
 
 # E1 behavior comparison and reproduction runtime
 data/e1-behavior*/
 data/e1-retrained*/
+
+# Independent integration runtime; reviewed outcomes are exported to results/.
+data/integration*/
+
+# PDF review renders are reproducible from the published PDF and build script.
+results/integration/paper-review/

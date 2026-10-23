@@ -1,0 +1,100 @@
+{
+  "experiments": [
+    {
+      "batch_size": 128,
+      "checkpoint_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80,
+        100,
+        120
+      ],
+      "degrees": [
+        3,
+        10
+      ],
+      "epochs": 120,
+      "family": "REGULAR",
+      "fixed_neighbor_probability": 0.17,
+      "graphs_per_degree": [
+        800,
+        800
+      ],
+      "hidden_dim": 64,
+      "lr": 0.001,
+      "max_rounds": 256,
+      "message_dim": 32,
+      "method": "COUNTERFACTUAL",
+      "n": 40,
+      "name": "E2F",
+      "protocol": "ucgnn-v1",
+      "seed": 0,
+      "simultaneous_probability": 0.04,
+      "tapes": 3,
+      "val_every": 10,
+      "val_graphs_per_degree": 100,
+      "val_rollouts": 4,
+      "val_sizes": [
+        40,
+        160
+      ],
+      "variant": "NORMALIZED",
+      "warmup": 10
+    },
+    {
+      "batch_size": 128,
+      "checkpoint_epochs": [
+        10,
+        20,
+        40,
+        60,
+        80,
+        100,
+        120
+      ],
+      "degrees": [
+        3,
+        5,
+        8,
+        10
+      ],
+      "epochs": 120,
+      "family": "REGULAR",
+      "fixed_neighbor_probability": 0.17,
+      "graphs_per_degree": [
+        800,
+        800,
+        800,
+        800
+      ],
+      "hidden_dim": 64,
+      "lr": 0.001,
+      "max_rounds": 256,
+      "message_dim": 32,
+      "method": "COUNTERFACTUAL",
+      "n": 40,
+      "name": "E3F",
+      "protocol": "ucgnn-v1",
+      "seed": 0,
+      "simultaneous_probability": 0.04,
+      "tapes": 3,
+      "val_every": 10,
+      "val_graphs_per_degree": 50,
+      "val_rollouts": 4,
+      "val_sizes": [
+        40,
+        160
+      ],
+      "variant": "NORMALIZED",
+      "warmup": 10
+    }
+  ],
+  "ids": [
+    "e2f-normalized-counterfactual-s00-4d6f2c87ba57",
+    "e3f-normalized-counterfactual-s00-e0ec18f6ca08"
+  ],
+  "name": "secondary-full-budget",
+  "protocol": "ucgnn-v1"
+}

@@ -1,0 +1,361 @@
+{
+  "upstream_commit": "6836d85566d94710ef5bdea05e10702252520702",
+  "remote": "https://github.com/mrioswilson/distributed-coloring-learning.git",
+  "commits": [
+    "6836d85566d94710ef5bdea05e10702252520702 Pedro Montealegre 2026-10-22T23:42:46+00:00 Compare seven coloring teachers with E1 and add PDF report",
+    "80f486ebaeb269f094c1f267326a4628ee57b359 Pedro Montealegre 2026-10-22T11:30:44+00:00 Publish five new E1 replicas and Luby behavior comparisons",
+    "fc756cef06d1d1ba9bf41bd3b73c4d727d188e7a Pedro Montealegre 2026-10-21T09:57:08+00:00 Compare GNN learning across seven coloring teachers"
+  ],
+  "inspected_after_first_push": true,
+  "source_hashes": {
+    "configs/e1_behavior/retrained.json": "848dbefc33c587af71baf86826f6e06a32b56de08ced6c67cf9c19d435bbe098",
+    "configs/multiteacher/comparison.json": "c5a5bcbc07f7f73e116ef37656834f340987b890a64104271ab67f4eaa8aaaec",
+    "configs/multiteacher_e1/comparison.json": "4a6bf027af4aa2612c2b709fbd7ddcd6b040a001b816be869b85e99a698bd205",
+    "docs/MULTITEACHER_E1.md": "e7ddc84f1975691bd1d11f82212cc1ce43ca230825cca65f535c5a35658af37e",
+    "src/dcl/behavior_statistics.py": "1a55cd160ec7870ef37f0ea858280574593bba4b1cd2a4a7cd4911a58624003c",
+    "src/dcl/e1_behavior.py": "f9ab89e07c8c9e4337a391d82b457d664f4b91eb4d7d071275f2ed7d4194e86a",
+    "src/dcl/e1_replication.py": "f3637495b304c95c87fbb515a01772914fb9984f70d21411005cded127e2766f",
+    "src/dcl/multiteacher/__init__.py": "1e8301a2d7f3488eec7d20a1bcbbbb0174987db5fa73a7a0a20fc47d8650863a",
+    "src/dcl/multiteacher/data.py": "9ada4791717f415b7d6158b91dd7fece7601768f0560dc9e5dd605512a6b28de",
+    "src/dcl/multiteacher/experiment.py": "70de36f09f4c162592a631a1964322834808bebca10cfaa3c136947b2af9b684",
+    "src/dcl/multiteacher/model.py": "df8d7d3506ff7d20cbc70f340f6198cac6c675fca39397675a29e7eb207e0a64",
+    "src/dcl/multiteacher/programs.py": "3cd83e39e888b0f4428fcfecfb2c1760c4bc26e0d8d7182ece9ad4d35788d9d9",
+    "src/dcl/multiteacher_e1/__init__.py": "ece488ebd65a08328dd1eca11897e66bae1423d23a720fdda6b72ad30b3bd452",
+    "src/dcl/multiteacher_e1/experiment.py": "9fbdbcd456dda64ce608863a326a738383ecb5ea8efee892de413ec1f677af46",
+    "src/dcl/multiteacher_e1/model.py": "5b8bf097adb75c6f19cddd64414566f98c7f6a9274e7f2d1b44317ddbb84258d",
+    "src/dcl/multiteacher_e1/supervision.py": "edb6cac308b9dd09a8f542d76528ce286f2ff5dc1d1840bb8b6f7c33f9380450"
+  },
+  "independent_tests_original": {
+    "passed": 309,
+    "seconds": 52.39
+  },
+  "availability": {
+    "source_and_tables": true,
+    "original_runtime_directory_exists": false,
+    "original_checkpoint_matches": 0,
+    "needed_checkpoints": [
+      {
+        "cohort": "Pedro independently retrained E1",
+        "teacher": "LUBY",
+        "seed": 0,
+        "original_path": "/workspace/distributed-coloring-learning/data/e1-retrained-20261021/runs/e1-normalized-counterfactual-s00-90d67ee02dc0/epoch-120.pt",
+        "sha256": "9c461de4f96937faaaa4153c398e7f4516ccda7adb6a039a4e85f20e94b7f716",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro independently retrained E1",
+        "teacher": "LUBY",
+        "seed": 1,
+        "original_path": "/workspace/distributed-coloring-learning/data/e1-retrained-20261021/runs/e1-normalized-counterfactual-s01-c9fdd8747c6c/epoch-120.pt",
+        "sha256": "c9e86e000f16d5fed1b624b24b0a0b6af2021ec03d39fc2cd155d327e535b8a3",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro independently retrained E1",
+        "teacher": "LUBY",
+        "seed": 2,
+        "original_path": "/workspace/distributed-coloring-learning/data/e1-retrained-20261021/runs/e1-normalized-counterfactual-s02-1db86150aab5/epoch-120.pt",
+        "sha256": "ae9fc3b297e9830e3d4c22aaf977c7656092d36eca26da8300a01f7031d5d860",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro independently retrained E1",
+        "teacher": "LUBY",
+        "seed": 3,
+        "original_path": "/workspace/distributed-coloring-learning/data/e1-retrained-20261021/runs/e1-normalized-counterfactual-s03-8892b5b12af8/epoch-120.pt",
+        "sha256": "6826fe4a4956897fb4cf2ce425f1a686a085671ea03d8b3263b763017979a162",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro independently retrained E1",
+        "teacher": "LUBY",
+        "seed": 4,
+        "original_path": "/workspace/distributed-coloring-learning/data/e1-retrained-20261021/runs/e1-normalized-counterfactual-s04-80469181a736/epoch-120.pt",
+        "sha256": "ceec13862a7f7e116beaa47c6a21aac8b8c7806eaaefed50f183a5072f2f1a03",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "LUBY",
+        "seed": 0,
+        "original_path": "runs/luby/s0/step-017760.pt",
+        "sha256": "8cd52e29e60da99a76d5273266e9a0b63f4302f8bd660bcb8a34335201d36453",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "LUBY",
+        "seed": 1,
+        "original_path": "runs/luby/s1/step-017760.pt",
+        "sha256": "cf4660a83706dd85c24659e756b165f5514783e015b72121c54d6ba7d3bd9374",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "LUBY",
+        "seed": 2,
+        "original_path": "runs/luby/s2/step-017760.pt",
+        "sha256": "4e798c207486de1ba3b51226b706a4a521d4e814ec243feb880b34f9370467ee",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "LUBY",
+        "seed": 3,
+        "original_path": "runs/luby/s3/step-017760.pt",
+        "sha256": "d801332658246556a38f6f0069a0d8ed13bbead94580d2c54b4c31150eaf6aaf",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "LUBY",
+        "seed": 4,
+        "original_path": "runs/luby/s4/step-017760.pt",
+        "sha256": "0852ac629e2af7ed1bc9c3660f57d0f1123988446e92325ab64398fd0366b1dd",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "JOHANSSON",
+        "seed": 0,
+        "original_path": "runs/johansson/s0/step-017760.pt",
+        "sha256": "c9683d7196d4bb458112adf1aa90f88eaca1d65907839dd003178b994de5a67e",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "JOHANSSON",
+        "seed": 1,
+        "original_path": "runs/johansson/s1/step-017760.pt",
+        "sha256": "2d1571526b34bafc9e3c3d5fe0a3ee4c05040a5f8c28067c857b7cf1ab0b0367",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "JOHANSSON",
+        "seed": 2,
+        "original_path": "runs/johansson/s2/step-017760.pt",
+        "sha256": "a6116135f1b1b5060a55d697851c71ee2b4bfe23a58c0cb3f027fd5493e81fb9",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "JOHANSSON",
+        "seed": 3,
+        "original_path": "runs/johansson/s3/step-017760.pt",
+        "sha256": "33cfffb6afc1f68c4fd3b1b5bf9ed436be470d416f1aecb989d1ac50c5ce5ceb",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "JOHANSSON",
+        "seed": 4,
+        "original_path": "runs/johansson/s4/step-017760.pt",
+        "sha256": "22351c4f7586de10781b15d6422694c99cec9debecbc817e1d1dd864633af5de",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "JP",
+        "seed": 0,
+        "original_path": "runs/jp/s0/step-017760.pt",
+        "sha256": "8b34897f2671eaab8065ed52b2c5afd615a4d7d2881512d970da727ccb0df764",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "JP",
+        "seed": 1,
+        "original_path": "runs/jp/s1/step-017760.pt",
+        "sha256": "7969edce6f19c56c63111d0c4d9e0d2ea92780793123296d8f57ea4a78859ab9",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "JP",
+        "seed": 2,
+        "original_path": "runs/jp/s2/step-017760.pt",
+        "sha256": "0463d24919cfd3197b5a705cb00d004baba45b9053396c068affdb02db441149",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "JP",
+        "seed": 3,
+        "original_path": "runs/jp/s3/step-017760.pt",
+        "sha256": "e1f60cb13030b24ccf8e57f776748ad4e7e8017ce747e55ecf1c3593c9714d54",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "JP",
+        "seed": 4,
+        "original_path": "runs/jp/s4/step-017760.pt",
+        "sha256": "35dd04f96110308b41c01e21d291409bc04d92006c0812621d296cd92a707848",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "COLOR_TRIALS",
+        "seed": 0,
+        "original_path": "runs/color_trials/s0/step-017760.pt",
+        "sha256": "567e52458354ca69c8ad63ea752042dc5ed38a5ffe469ea01b66e36edd86bbc2",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "COLOR_TRIALS",
+        "seed": 1,
+        "original_path": "runs/color_trials/s1/step-017760.pt",
+        "sha256": "042719c3fac98fea91a9fc8e1bc002f629f1d0d066d1ad0dacb1abc74eea2436",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "COLOR_TRIALS",
+        "seed": 2,
+        "original_path": "runs/color_trials/s2/step-017760.pt",
+        "sha256": "6b818f1d6dd9d624bb5e7f5fec64a9310d5f6db65a5e998074662f189b16d9a9",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "COLOR_TRIALS",
+        "seed": 3,
+        "original_path": "runs/color_trials/s3/step-017760.pt",
+        "sha256": "83fed9846f40a5aba2895b45e1b114d6d81a8b139db6dfbf58eb88f1177b05ff",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "COLOR_TRIALS",
+        "seed": 4,
+        "original_path": "runs/color_trials/s4/step-017760.pt",
+        "sha256": "e0fbcf35aa443ca4d26fd35a3f099359b8925e71cbfe9d628881c2c315c42732",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "BE_BASE_D3",
+        "seed": 0,
+        "original_path": "runs/be_base_d3/s0/step-017760.pt",
+        "sha256": "d4b9e289b9de930b6d7b44959fb5a7aadd4f21844306689fe4f5df21e6eb4af0",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "BE_BASE_D3",
+        "seed": 1,
+        "original_path": "runs/be_base_d3/s1/step-017760.pt",
+        "sha256": "1130cf982bc36e8be54d8b2ed5a5a9ebe79f5792fcddbb65656b1291a5e3d8c8",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "BE_BASE_D3",
+        "seed": 2,
+        "original_path": "runs/be_base_d3/s2/step-017760.pt",
+        "sha256": "08e6bb71b9ab730fede7a660ca130cd901cb239b80de646489e1575462817519",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "BE_BASE_D3",
+        "seed": 3,
+        "original_path": "runs/be_base_d3/s3/step-017760.pt",
+        "sha256": "2cc6dc3268cdc6614c7de90d5108c6c3565e50bf6b6dcc1c35e22f81b525021b",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "BE_BASE_D3",
+        "seed": 4,
+        "original_path": "runs/be_base_d3/s4/step-017760.pt",
+        "sha256": "a412b12e4864fb1b56d1b6ebee3098d85d7321d8f1d2090dcf8d9d25e83009f9",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "SPECULATIVE_GM",
+        "seed": 0,
+        "original_path": "runs/speculative_gm/s0/step-017760.pt",
+        "sha256": "b6ba0e51027dfabafa85588a60363ce650b55cc6ba103b133a02450fefe700ff",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "SPECULATIVE_GM",
+        "seed": 1,
+        "original_path": "runs/speculative_gm/s1/step-017760.pt",
+        "sha256": "b148d7abac72d9a4159a792445f0b0bf33464e0e3741a4019bf2a93fe02e4ee4",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "SPECULATIVE_GM",
+        "seed": 2,
+        "original_path": "runs/speculative_gm/s2/step-017760.pt",
+        "sha256": "2db632228e47f325dbf1a15cab12ef9dbd99817118cf345b9332ea9f01898f0a",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "SPECULATIVE_GM",
+        "seed": 3,
+        "original_path": "runs/speculative_gm/s3/step-017760.pt",
+        "sha256": "afaeff75147858f6172457d92532bb03e6a8f797e35ac38e7a2e2b8f9e1625fd",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "SPECULATIVE_GM",
+        "seed": 4,
+        "original_path": "runs/speculative_gm/s4/step-017760.pt",
+        "sha256": "255d4566314cb4fbca86d4fe6f1a2815eda58893d3df6e9297869709fee7f966",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "GREEDY",
+        "seed": 0,
+        "original_path": "runs/greedy/s0/step-017760.pt",
+        "sha256": "40da3bfadfccce212e86102ee4104d4da7beea76e3be369da00f4142a6e5c4b2",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "GREEDY",
+        "seed": 1,
+        "original_path": "runs/greedy/s1/step-017760.pt",
+        "sha256": "e1bf82b4d1cada22622ec03c6b1a09284b085fbb8928478d3597b642aa747669",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "GREEDY",
+        "seed": 2,
+        "original_path": "runs/greedy/s2/step-017760.pt",
+        "sha256": "767991bdf6bae05f4d6ac52b15bf5d0c81adc2684f10d2e71fe0cb28ea314119",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "GREEDY",
+        "seed": 3,
+        "original_path": "runs/greedy/s3/step-017760.pt",
+        "sha256": "b56f64805c804728155f0679736b71b925f6485374ab946c0d1f4cec61278bc4",
+        "matching_local_weight": false
+      },
+      {
+        "cohort": "Pedro native E1",
+        "teacher": "GREEDY",
+        "seed": 4,
+        "original_path": "runs/greedy/s4/step-017760.pt",
+        "sha256": "d7695aff6bb658313e54cc070a7a24bb6e458efc071dfc4c6eeeedb406350adc",
+        "matching_local_weight": false
+      }
+    ],
+    "raw_banks": "Not tracked in origin/main; original runtime archive not present in this workspace. Exact model-level numerical reproduction remains unavailable."
+  },
+  "integration_policy": "Preserve original branch and historical results; modifications are separate integration commits. Native degree-three experiments retain global K=4 and their declared supplied schedules."
+}

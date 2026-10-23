@@ -1,0 +1,372 @@
+{
+  "architecture": "deepsets",
+  "checkpoint_seed": 41004,
+  "checkpoint_sha256": "2d7a1fdfccbf5979553bf5f2f75eb5782a85e69ba915bd40f22c8961862acf3e",
+  "completion_p": 1.0,
+  "delta": 3,
+  "empirical_biased_mmd": 0.04467124030841039,
+  "family": "irregular",
+  "graph": "secondary-irregular-n1024-d3-r0",
+  "graph_sha256": "e7a3e742550b12e0c97d032c167a81ede54d912c8410cbe5c351b2a831c82145",
+  "m_Luby": 500,
+  "m_model": 500,
+  "m_planned": 500,
+  "model": "deepsets-s41004",
+  "n": 1024,
+  "old": {
+    "B": 19999,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "multi_max": 1.0,
+      "multi_softmax": 1.0,
+      "old_hamming": 1.0
+    },
+    "permutations_used": 128,
+    "seconds": 2.2493753359885886,
+    "statistics": {
+      "multi_max": 0.4593150734555523,
+      "multi_softmax": 0.4593150734555523,
+      "old_hamming": 4.878536002972389e-05
+    }
+  },
+  "old_mmd2_unbiased": 4.878536002972389e-05,
+  "old_p": 1.0,
+  "old_p_lower_bound": 0.00105,
+  "p": 1.0,
+  "p_lower_bound": 0.00105,
+  "population_mmd_ci95": [
+    0.0,
+    0.3770585441717241
+  ],
+  "rep": 0,
+  "rho": 256.0,
+  "robust": {
+    "B": 19999,
+    "evaluation_per_class": [
+      250,
+      250
+    ],
+    "exceedances": [
+      62,
+      1075,
+      21,
+      1257,
+      752,
+      544
+    ],
+    "p": 1.0,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "interaction": 1.0,
+      "local": 1.0,
+      "omnibus": 1.0,
+      "split_global": 1.0,
+      "split_multiscale": 1.0,
+      "structural": 1.0
+    },
+    "permutations_used": 1280,
+    "seconds": 1.937843610998243,
+    "selection_per_class": [
+      250,
+      250
+    ],
+    "statistics": {
+      "interaction": 2.9363391844049938,
+      "local": 0.9176307521300895,
+      "omnibus": 2.9363391844049938,
+      "split_global": 0.07950567163551345,
+      "split_multiscale": 0.6173158328526209,
+      "structural": 0.28362787274191886
+    }
+  },
+  "status_Luby": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "status_model": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "stratum": "secondary",
+  "structural": [
+    {
+      "difference": 0.0,
+      "mean_Luby": 3.998,
+      "mean_model": 3.998,
+      "metric": "used_colors",
+      "normalized_wasserstein": 0.0,
+      "wasserstein_ci95": [
+        0.0,
+        0.13239375566353392
+      ]
+    },
+    {
+      "difference": 0.0,
+      "mean_Luby": 2.998,
+      "mean_model": 2.998,
+      "metric": "maximum_color",
+      "normalized_wasserstein": 0.0,
+      "wasserstein_ci95": [
+        0.0,
+        0.13239375566353392
+      ]
+    },
+    {
+      "difference": 0.0,
+      "mean_Luby": 0.9995,
+      "mean_model": 0.9995,
+      "metric": "palette_fraction",
+      "normalized_wasserstein": 0.0,
+      "wasserstein_ci95": [
+        0.0,
+        0.13239375566353392
+      ]
+    },
+    {
+      "difference": 0.00013476562499997735,
+      "mean_Luby": 0.340044921875,
+      "mean_model": 0.3401796875,
+      "metric": "largest_class_fraction",
+      "normalized_wasserstein": 0.0001816406250000001,
+      "wasserstein_ci95": [
+        0.0,
+        0.13257539628853393
+      ]
+    },
+    {
+      "difference": 6.161871341603398e-05,
+      "mean_Luby": 0.8083394754896469,
+      "mean_model": 0.8084010942030629,
+      "metric": "entropy_normalized",
+      "normalized_wasserstein": 0.00017860828400450052,
+      "wasserstein_ci95": [
+        0.0,
+        0.13257236394753844
+      ]
+    },
+    {
+      "difference": -0.0005361328124999787,
+      "mean_Luby": 0.5011018880208333,
+      "mean_model": 0.5005657552083334,
+      "metric": "mean_color_normalized",
+      "normalized_wasserstein": 0.000678059895833336,
+      "wasserstein_ci95": [
+        0.0,
+        0.13307181555936726
+      ]
+    },
+    {
+      "difference": -1.0827417469605471e-05,
+      "mean_Luby": 0.33074293300583263,
+      "mean_model": 0.330732105588363,
+      "metric": "nonedge_reuse",
+      "normalized_wasserstein": 4.109062318865597e-05,
+      "wasserstein_ci95": [
+        0.0,
+        0.13243484628672259
+      ]
+    }
+  ],
+  "witness": {
+    "ci": [
+      -0.4058091050447972,
+      0.3188685176732819
+    ],
+    "ci_Luby": [
+      0.26306587454808567,
+      0.6282518642597952
+    ],
+    "ci_model": [
+      0.22244275921499795,
+      0.5819343922213676
+    ],
+    "count_Luby": 55,
+    "count_model": 49,
+    "difference": -0.04799999999999999,
+    "event": {
+      "family": "interaction",
+      "ids": [
+        3,
+        4,
+        6
+      ],
+      "keys": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          2
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          1,
+          2,
+          2
+        ],
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          1
+        ],
+        [
+          2,
+          0,
+          2
+        ],
+        [
+          2,
+          1,
+          0
+        ],
+        [
+          2,
+          1,
+          1
+        ],
+        [
+          2,
+          1,
+          2
+        ],
+        [
+          2,
+          2,
+          0
+        ],
+        [
+          2,
+          2,
+          1
+        ],
+        [
+          2,
+          2,
+          2
+        ]
+      ],
+      "kind": "categorical",
+      "scores": [
+        0.16,
+        -0.3181818181818182,
+        -0.08695652173913043,
+        0.6666666666666667,
+        0.07142857142857142,
+        -0.1363636363636364,
+        0.0,
+        -0.09523809523809525,
+        0.10714285714285711,
+        0.4999999999999999,
+        -0.25,
+        0.0,
+        -0.588235294117647,
+        0.30769230769230765,
+        0.5625,
+        0.0,
+        -0.17391304347826086,
+        0.18749999999999994,
+        -0.49999999999999994,
+        -0.19047619047619047,
+        0.0,
+        0.14999999999999997,
+        -0.03846153846153843,
+        0.6153846153846153,
+        0.34782608695652173,
+        -0.6875,
+        0.10526315789473682
+      ]
+    },
+    "n_Luby": 125,
+    "n_model": 125,
+    "p": 0.5212455454811528,
+    "probability_Luby": 0.44,
+    "probability_model": 0.392,
+    "tv_lower": 0.0
+  }
+}

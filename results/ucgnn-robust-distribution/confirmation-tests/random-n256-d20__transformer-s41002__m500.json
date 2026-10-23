@@ -1,0 +1,126 @@
+{
+  "actual_m_Luby": 500,
+  "actual_m_model": 500,
+  "architecture": "transformer",
+  "checkpoint_sha256": "53676b2ca9826e3d3dd0a5a89f24da5dfd993f8975c4d1cece81e966d7d3a3d9",
+  "delta": 20,
+  "explanation": {
+    "ci_Luby": [
+      0.8481440336883661,
+      0.9819964816647277
+    ],
+    "ci_model": [
+      0.04605086660090679,
+      0.21506154601295993
+    ],
+    "count_Luby": 234,
+    "count_model": 28,
+    "difference": -0.8240000000000001,
+    "difference_ci": [
+      -0.935945615063821,
+      -0.6330824876754062
+    ],
+    "event": {
+      "column": 2,
+      "event_threshold": 2.9204434055418966,
+      "family": "structural",
+      "kind": "structural",
+      "name": "class_entropy"
+    },
+    "n_Luby": 250,
+    "n_model": 250,
+    "p": 1.9806708409857916e-87,
+    "probability_Luby": 0.936,
+    "probability_model": 0.112,
+    "selection": "primary data only; estimation on final reserved 250 runs; simultaneous CP bounds over 1590 probabilities"
+  },
+  "family": "random",
+  "graph": "random-n256-d20",
+  "graph_sha256": "a46916efad60da1d3733c58b1dbf263091583afeb9c26e596b89b5923a73d563",
+  "model": "transformer-s41002",
+  "n": 256,
+  "old": {
+    "B": 19999,
+    "p_kind": "plus_one",
+    "p_values": {
+      "multi_max": 5e-05,
+      "multi_softmax": 5e-05,
+      "old_hamming": 5e-05
+    },
+    "permutations_used": 19999,
+    "seconds": 1.6993432140443474,
+    "statistics": {
+      "multi_max": 97.95227950937924,
+      "multi_softmax": 97.95227950937924,
+      "old_hamming": 0.00800031421166969
+    }
+  },
+  "old_empirical_mmd": 0.10198259370302244,
+  "old_mmd2_unbiased": 0.00800031421166969,
+  "old_p": 5e-05,
+  "old_p_kind": "plus_one",
+  "old_p_lower_bound": 5e-05,
+  "old_permutations_used": 19999,
+  "old_population_mmd_ci95": [
+    0.0,
+    0.4343698975663361
+  ],
+  "p": 5e-05,
+  "p_kind": "plus_one",
+  "p_lower_bound": 5e-05,
+  "permutations_used": 19999,
+  "robust": {
+    "B": 19999,
+    "evaluation_per_class": [
+      250,
+      250
+    ],
+    "exceedances": [
+      0,
+      0,
+      2095,
+      0,
+      0,
+      0
+    ],
+    "p": 5e-05,
+    "p_kind": "plus_one",
+    "p_values": {
+      "interaction": 0.1048,
+      "local": 5e-05,
+      "omnibus": 5e-05,
+      "split_global": 5e-05,
+      "split_multiscale": 5e-05,
+      "structural": 5e-05
+    },
+    "permutations_used": 19999,
+    "seconds": 1.1249468630412593,
+    "selection_per_class": [
+      250,
+      250
+    ],
+    "statistics": {
+      "interaction": 2.2122379993091985,
+      "local": 21.02774811932172,
+      "omnibus": 37.26890333882815,
+      "split_global": 37.26890333882815,
+      "split_multiscale": 21.22486300672983,
+      "structural": 18.962463257731546
+    }
+  },
+  "statistic": 37.26890333882815,
+  "statuses_Luby": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "statuses_model": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "total_per_generator": 500,
+  "training_seed": 41002
+}

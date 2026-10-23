@@ -1,0 +1,325 @@
+{
+  "candidate_intervention": {
+    "approximately_equivalent": 0,
+    "cells": 60,
+    "positive_effect_lower_bounds": 40,
+    "status": "complete"
+  },
+  "counts": [
+    {
+      "architecture": "normalized",
+      "both": 5,
+      "comparisons": 5,
+      "old": 5,
+      "old_only": 0,
+      "robust": 5,
+      "robust_only": 0,
+      "stratum": "historical-replication"
+    },
+    {
+      "architecture": "deepsets",
+      "both": 5,
+      "comparisons": 5,
+      "old": 5,
+      "old_only": 0,
+      "robust": 5,
+      "robust_only": 0,
+      "stratum": "historical-replication"
+    },
+    {
+      "architecture": "transformer",
+      "both": 5,
+      "comparisons": 5,
+      "old": 5,
+      "old_only": 0,
+      "robust": 5,
+      "robust_only": 0,
+      "stratum": "historical-replication"
+    },
+    {
+      "architecture": "normalized",
+      "both": 49,
+      "comparisons": 240,
+      "old": 49,
+      "old_only": 0,
+      "robust": 115,
+      "robust_only": 66,
+      "stratum": "main"
+    },
+    {
+      "architecture": "deepsets",
+      "both": 121,
+      "comparisons": 240,
+      "old": 121,
+      "old_only": 0,
+      "robust": 170,
+      "robust_only": 49,
+      "stratum": "main"
+    },
+    {
+      "architecture": "transformer",
+      "both": 174,
+      "comparisons": 240,
+      "old": 174,
+      "old_only": 0,
+      "robust": 180,
+      "robust_only": 6,
+      "stratum": "main"
+    },
+    {
+      "architecture": "normalized",
+      "both": 0,
+      "comparisons": 40,
+      "old": 0,
+      "old_only": 0,
+      "robust": 7,
+      "robust_only": 7,
+      "stratum": "secondary"
+    },
+    {
+      "architecture": "deepsets",
+      "both": 21,
+      "comparisons": 40,
+      "old": 21,
+      "old_only": 0,
+      "robust": 26,
+      "robust_only": 5,
+      "stratum": "secondary"
+    },
+    {
+      "architecture": "transformer",
+      "both": 33,
+      "comparisons": 40,
+      "old": 33,
+      "old_only": 0,
+      "robust": 37,
+      "robust_only": 4,
+      "stratum": "secondary"
+    }
+  ],
+  "created": "2026-10-23T12:59:03.067963+00:00",
+  "holdout_witnesses_of_primary_rejections": 332,
+  "initial_invariance_all": true,
+  "initial_invariance_checks": 60,
+  "interactions": [
+    {
+      "architecture": "normalized",
+      "contrasts": 10,
+      "event": "used_le_delta",
+      "full_corners": {
+        "bounds_conflict": false,
+        "ci": [
+          0.4793800242237743,
+          0.6991423055237838
+        ],
+        "coefficients": {
+          "1024,100": 1,
+          "1024,3": -1,
+          "128,100": -1,
+          "128,3": 1
+        },
+        "contrast": "full-corners",
+        "cp_ci": [
+          0.4793800242237743,
+          0.6991423055237838
+        ],
+        "estimand": "equal-weight fixed graph/checkpoint cohort risk-difference contrast",
+        "estimate": 0.6033333333333333,
+        "event": "used_le_delta",
+        "group": "normalized",
+        "hoeffding_radius": 0.13785539425678278,
+        "kind": "interaction",
+        "sensitivity_range": [
+          0.5041666666666667,
+          0.7476666666666665
+        ],
+        "significant": true
+      },
+      "significant": 2
+    },
+    {
+      "architecture": "normalized",
+      "contrasts": 10,
+      "event": "uses_top_color",
+      "full_corners": {
+        "bounds_conflict": false,
+        "ci": [
+          -0.1310553942567828,
+          0.14465539425678275
+        ],
+        "coefficients": {
+          "1024,100": 1,
+          "1024,3": -1,
+          "128,100": -1,
+          "128,3": 1
+        },
+        "contrast": "full-corners",
+        "cp_ci": [
+          -0.21075784081472243,
+          0.22058973551309452
+        ],
+        "estimand": "equal-weight fixed graph/checkpoint cohort risk-difference contrast",
+        "estimate": 0.006799999999999973,
+        "event": "uses_top_color",
+        "group": "normalized",
+        "hoeffding_radius": 0.13785539425678278,
+        "kind": "interaction",
+        "sensitivity_range": [
+          -0.07433333333333314,
+          0.0693333333333333
+        ],
+        "significant": false
+      },
+      "significant": 1
+    },
+    {
+      "architecture": "deepsets",
+      "contrasts": 10,
+      "event": "used_le_delta",
+      "full_corners": {
+        "bounds_conflict": false,
+        "ci": [
+          -0.09395508286136067,
+          0.0973696480661691
+        ],
+        "coefficients": {
+          "1024,100": 1,
+          "1024,3": -1,
+          "128,100": -1,
+          "128,3": 1
+        },
+        "contrast": "full-corners",
+        "cp_ci": [
+          -0.09395508286136067,
+          0.0973696480661691
+        ],
+        "estimand": "equal-weight fixed graph/checkpoint cohort risk-difference contrast",
+        "estimate": 0.0014666666666666717,
+        "event": "used_le_delta",
+        "group": "deepsets",
+        "hoeffding_radius": 0.13785539425678278,
+        "kind": "interaction",
+        "sensitivity_range": [
+          0.00016666666666670382,
+          0.0020000000000000018
+        ],
+        "significant": false
+      },
+      "significant": 1
+    },
+    {
+      "architecture": "deepsets",
+      "contrasts": 10,
+      "event": "uses_top_color",
+      "full_corners": {
+        "bounds_conflict": false,
+        "ci": [
+          -0.031055394256783053,
+          0.2446553942567825
+        ],
+        "coefficients": {
+          "1024,100": 1,
+          "1024,3": -1,
+          "128,100": -1,
+          "128,3": 1
+        },
+        "contrast": "full-corners",
+        "cp_ci": [
+          -0.0815064610573275,
+          0.2890721884271092
+        ],
+        "estimand": "equal-weight fixed graph/checkpoint cohort risk-difference contrast",
+        "estimate": 0.10679999999999973,
+        "event": "uses_top_color",
+        "group": "deepsets",
+        "hoeffding_radius": 0.13785539425678278,
+        "kind": "interaction",
+        "sensitivity_range": [
+          0.019500000000000073,
+          0.13933333333333314
+        ],
+        "significant": false
+      },
+      "significant": 0
+    },
+    {
+      "architecture": "transformer",
+      "contrasts": 10,
+      "event": "used_le_delta",
+      "full_corners": {
+        "bounds_conflict": false,
+        "ci": [
+          0.09324960770436783,
+          0.2991048604085769
+        ],
+        "coefficients": {
+          "1024,100": 1,
+          "1024,3": -1,
+          "128,100": -1,
+          "128,3": 1
+        },
+        "contrast": "full-corners",
+        "cp_ci": [
+          0.09324960770436783,
+          0.2991048604085769
+        ],
+        "estimand": "equal-weight fixed graph/checkpoint cohort risk-difference contrast",
+        "estimate": 0.20079999999999998,
+        "event": "used_le_delta",
+        "group": "transformer",
+        "hoeffding_radius": 0.13785539425678278,
+        "kind": "interaction",
+        "sensitivity_range": [
+          0.007333333333333358,
+          0.251
+        ],
+        "significant": true
+      },
+      "significant": 3
+    },
+    {
+      "architecture": "transformer",
+      "contrasts": 10,
+      "event": "uses_top_color",
+      "full_corners": {
+        "bounds_conflict": false,
+        "ci": [
+          -0.04318872759011638,
+          0.23252206092344918
+        ],
+        "coefficients": {
+          "1024,100": 1,
+          "1024,3": -1,
+          "128,100": -1,
+          "128,3": 1
+        },
+        "contrast": "full-corners",
+        "cp_ci": [
+          -0.08396131155133735,
+          0.2678561276397963
+        ],
+        "estimand": "equal-weight fixed graph/checkpoint cohort risk-difference contrast",
+        "estimate": 0.0946666666666664,
+        "event": "uses_top_color",
+        "group": "transformer",
+        "hoeffding_radius": 0.13785539425678278,
+        "kind": "interaction",
+        "sensitivity_range": [
+          -0.02783333333333321,
+          0.12683333333333313
+        ],
+        "significant": false
+      },
+      "significant": 0
+    }
+  ],
+  "planned_confirmation_runs": 570000,
+  "positive_event_tv_bounds": 262,
+  "significant_holdout_witnesses": 332,
+  "statuses_confirmation": [
+    570000,
+    0,
+    0,
+    0
+  ]
+}

@@ -91,6 +91,8 @@ class ColoringProgram:
     def __init__(self, graph, teacher, tape_seed, max_rounds=128):
         if teacher not in TEACHERS:
             raise ValueError("Unknown teacher")
+        if graph.is_directed() or graph.is_multigraph() or nx.number_of_selfloops(graph):
+            raise ValueError("A simple undirected loop-free graph is required")
         n = len(graph)
         if set(graph) != set(range(n)) or not n or n > ID_SPACE:
             raise ValueError("Contiguous labels and 1..65536 vertices are required")

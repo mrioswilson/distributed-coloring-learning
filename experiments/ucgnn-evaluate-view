@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Evaluate one frozen checkpoint on the M6B final cohort, sizes in increasing order.
+# Usage (inside the container): experiments/ucgnn-evaluate-view CHECKPOINT VIEW DEGREE...
+set -euo pipefail
+checkpoint=$1; view=$2; shift 2
+for sizes in "40 160 640" "2560 10240" "40960"; do
+    experiments/ucgnn evaluate --checkpoint "$checkpoint" --view "$view" --degrees "$@" \
+        --sizes $sizes --split final_test --namespace 20261014 --teacher-rounds
+done

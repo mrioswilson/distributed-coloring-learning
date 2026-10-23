@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Evaluate one frozen checkpoint on the preregistered extra-degree cohort
+# (Delta = 4, 6, 7, 12, 15; never used for training by any model).
+# Usage (inside the container): experiments/ucgnn-evaluate-extra CHECKPOINT VIEW
+set -euo pipefail
+checkpoint=$1; view=$2
+experiments/ucgnn evaluate --checkpoint "$checkpoint" --view "$view" --degrees 4 6 7 12 15 \
+    --sizes 40 160 640 --counts 50 50 50 --split ucgnn_extra --namespace 20261019 --teacher-rounds
+experiments/ucgnn evaluate --checkpoint "$checkpoint" --view "$view" --degrees 4 6 7 12 15 \
+    --sizes 2560 10240 --counts 20 10 --split ucgnn_extra --namespace 20261019 --teacher-rounds

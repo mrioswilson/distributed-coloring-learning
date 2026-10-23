@@ -1,0 +1,57 @@
+{
+  "D": 200,
+  "case": "marginal",
+  "classifier": {
+    "balanced_accuracy": 0.472,
+    "ci95": [
+      0.37013397020038247,
+      0.575577721141706
+    ],
+    "evaluation_per_class": 125,
+    "method": "logistic_L2_0.1",
+    "p": 0.844337562791684,
+    "train_per_class": 93,
+    "validation_accuracy": 0.4375,
+    "validation_per_class": 32
+  },
+  "effect": 0.6,
+  "global_statistics": {
+    "multi_max": 0.12968437646486164,
+    "multi_softmax": -0.016132302944930954,
+    "old_hamming": -3.20868502028393e-05
+  },
+  "id": "sensitivity2-marginal-D200-e0.6-m250-t8",
+  "kind": "known difference",
+  "m": 250,
+  "omnibus_seconds": 0.23576918395701796,
+  "omnibus_statistics": {
+    "interaction": 0.9609440425914366,
+    "local": 0.3802528761961031,
+    "omnibus": 1.0127393670836649,
+    "split_global": 0.4629134611276179,
+    "split_multiscale": 0.22322274158337307,
+    "structural": 1.0127393670836649
+  },
+  "p_values": {
+    "classifier": 0.844337562791684,
+    "interaction": 0.795,
+    "local": 0.99,
+    "multi_max": 0.47,
+    "multi_softmax": 0.48,
+    "multinomial": 1.0,
+    "old_hamming": 0.52,
+    "omnibus": 0.98,
+    "omnibus_v1": 0.07,
+    "split_global": 0.165,
+    "split_multiscale": 0.97,
+    "structural": 0.64
+  },
+  "quadratic_seconds": 0.11511781206354499,
+  "raw_file": "data/ucgnn-robust-distribution/benchmark/sensitivity2-marginal-D200-e0.6-m250-t8.npz",
+  "raw_sha256": "b29d080bd37c14260f2add8d4ebb381f02f2c9ef981da36aa85a4cc7a1e67ca6",
+  "seconds": 0.8531846549594775,
+  "stage": "sensitivity2",
+  "support_note": "up to 2^200 leaf vectors; no repeats needed",
+  "trial": 8,
+  "tv": 0.09999999999999998
+}

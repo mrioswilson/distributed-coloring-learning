@@ -1,0 +1,168 @@
+{
+  "actual_m_Luby": 500,
+  "actual_m_model": 500,
+  "architecture": "deepsets",
+  "checkpoint_sha256": "2968345009b97829e72fd6f9a984fef57fc81162242c6972f44e706003ec3fd7",
+  "delta": 2,
+  "explanation": {
+    "ci_Luby": [
+      0.36883094625019763,
+      0.6311690537497794
+    ],
+    "ci_model": [
+      0.3879829141784453,
+      0.650117692775759
+    ],
+    "count_Luby": 125,
+    "count_model": 130,
+    "difference": 0.020000000000000018,
+    "difference_ci": [
+      -0.24318613957133406,
+      0.2812867465255614
+    ],
+    "event": {
+      "family": "interaction",
+      "ids": [
+        0,
+        1,
+        2
+      ],
+      "keys": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          1,
+          2,
+          1
+        ]
+      ],
+      "kind": "categorical",
+      "scores": [
+        0.020202020202020218,
+        -0.09523809523809526,
+        -0.05063291139240511,
+        -0.025862068965517206,
+        0.06578947368421048,
+        0.08219178082191778
+      ]
+    },
+    "n_Luby": 250,
+    "n_model": 250,
+    "p": 0.7205008665263399,
+    "probability_Luby": 0.5,
+    "probability_model": 0.52,
+    "selection": "primary data only; estimation on final reserved 250 runs; simultaneous CP bounds over 1590 probabilities"
+  },
+  "family": "path",
+  "graph": "path3",
+  "graph_sha256": "b69fdb93d9f821aefdd20d254015fab6c689cbacf281256e3c56555f6cf12da6",
+  "model": "deepsets-s41001",
+  "n": 3,
+  "old": {
+    "B": 19999,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "multi_max": 1.0,
+      "multi_softmax": 1.0,
+      "old_hamming": 1.0
+    },
+    "permutations_used": 128,
+    "seconds": 0.031785036087967455,
+    "statistics": {
+      "multi_max": -1.040080051128811,
+      "multi_softmax": -1.040080051128811,
+      "old_hamming": -0.0012216222669685362
+    }
+  },
+  "old_empirical_mmd": 0.01687517677889007,
+  "old_mmd2_unbiased": -0.0012216222669685362,
+  "old_p": 1.0,
+  "old_p_kind": "conservative_futility",
+  "old_p_lower_bound": 0.00105,
+  "old_permutations_used": 128,
+  "old_population_mmd_ci95": [
+    0.0,
+    0.3492624806422037
+  ],
+  "p": 1.0,
+  "p_kind": "conservative_futility",
+  "p_lower_bound": 0.00105,
+  "permutations_used": 128,
+  "robust": {
+    "B": 19999,
+    "evaluation_per_class": [
+      250,
+      250
+    ],
+    "exceedances": [
+      109,
+      128,
+      118,
+      78,
+      118,
+      112
+    ],
+    "p": 1.0,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "interaction": 1.0,
+      "local": 1.0,
+      "omnibus": 1.0,
+      "split_global": 1.0,
+      "split_multiscale": 1.0,
+      "structural": 1.0
+    },
+    "permutations_used": 128,
+    "seconds": 0.029560753027908504,
+    "selection_per_class": [
+      250,
+      250
+    ],
+    "statistics": {
+      "interaction": 0.4417534620268119,
+      "local": 0.26947098185063767,
+      "omnibus": 0.9000903736104914,
+      "split_global": -0.9461184128370663,
+      "split_multiscale": 0.34965134395138947,
+      "structural": 0.9000903736104914
+    }
+  },
+  "statistic": 0.9000903736104914,
+  "statuses_Luby": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "statuses_model": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "total_per_generator": 500,
+  "training_seed": 41001
+}

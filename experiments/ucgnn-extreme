@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# Local only. Runtime/checkpoints are never uploaded by this wrapper.
+set -euo pipefail
+repo=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+cd "$repo"
+export PYTHONPATH="$repo/src${PYTHONPATH:+:$PYTHONPATH}"
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+python_bin=${UCGNN_PYTHON:-/workspaces/AlgoLearning/distributed-coloring-learning/.venv/bin/python}
+study_root=${UCGNN_EXTREME_ROOT:-$repo/data/ucgnn-extreme}
+historical_root=/workspaces/AlgoLearning/distributed-coloring-learning/data/ucgnn
+config=$repo/configs/ucgnn/extreme-v1.json
+command=${1:-status}
+if (($#)); then shift; fi
+mkdir -p "$study_root/logs"
+case "$command" in
+  audit)
+    CUDA_VISIBLE_DEVICES='' "$python_bin" -u -m dcl.extreme.audit --historical "$historical_root" --output "$study_root/audit" "$@"
+    CUDA_VISIBLE_DEVICES='' "$python_bin" -u -m dcl.extreme.audit --historical "$historical_root" --output "$study_root/audit" --extend-exclusions
+    ;;
+  validate-cpu)
+    CUDA_VISIBLE_DEVICES='' "$python_bin" -u -m dcl.extreme.validation --root "$study_root" --config "$config" --device cpu --pilot "$@"
+    ;;
+  diagnose-cpu)
+    CUDA_VISIBLE_DEVICES='' "$python_bin" -u -m dcl.extreme.diagnostics --root "$study_root" --device cpu "$@"
+    ;;
+  run)
+    "$python_bin" -u -m dcl.extreme.coordinator --root "$study_root" --config "$config" --resume "$@" 2>&1 |
+      tee -a "$study_root/logs/coordinator-$(date -u +%Y%m%dT%H%M%SZ).log"
+    ;;
+  start)
+    if tmux has-session -t '=ucgnn-extrapolation' 2>/dev/null; then
+      echo 'La sesión ucgnn-extrapolation ya existe. Use status o tmux attach.'
+    else
+      tmux new-session -d -s ucgnn-extrapolation -c "$repo" bash "$repo/experiments/ucgnn-extreme" run "$@"
+      echo 'Coordinador iniciado en tmux: ucgnn-extrapolation'
+    fi
+    ;;
+  stop)
+    touch "$study_root/STOP"
+    echo 'Parada solicitada entre grafos; los resultados completados se conservan.'
+    ;;
+  status)
+    "$python_bin" - "$study_root" <<'PY'
+from collections import Counter
+import json
+from pathlib import Path
+import sys
+root=Path(sys.argv[1])
+for name in ('status.json','budget.json'):
+    p=root/name
+    print(name, p.read_text() if p.exists() else 'no iniciado')
+for directory in ('results','cpu-pilot'):
+    counts=Counter(json.loads(p.read_text()).get('status') for p in (root/directory).glob('*.json'))
+    print(directory,dict(counts))
+print('Logs:',root/'logs')
+print('Informe:',root/'report/INFORME.md')
+PY
+    ;;
+  report)
+    exec "$python_bin" -m dcl.extreme.report --root "$study_root" "$@"
+    ;;
+  *) echo "Uso: $0 {audit|validate-cpu|diagnose-cpu|start|run|status|stop|report}" >&2; exit 2 ;;
+esac

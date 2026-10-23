@@ -1,0 +1,594 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,booktabs,graphicx,xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\setlength{\emergencystretch}{2em}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newcommand{\todo}[1]{\par\noindent\textcolor{red}{\textbf{TODO:} #1}\par}
+\newcommand{\amax}{\operatorname{MAX}}
+\newcommand{\ind}{\mathbf{1}}
+\title{Learning Degree-Generalizable Distributed Graph Coloring}
+\author{Research manuscript --- authors to be specified}
+\date{October 2026 --- preregistered experimental study}
+\begin{document}
+\maketitle
+\begin{abstract}
+Can a learned distributed algorithm operate at graph degrees and palette
+sizes absent from training? We study synchronous $(\Delta+1)$-coloring using
+a shared node--color network, Universal Color GNN (UCGNN). Its parameter count
+is independent of the palette, while its local computation and communication
+costs grow with it. Historical experiments with five networks trained only on
+degree-three, 40-node graphs recorded 8,629 successful extreme-study executions,
+with unequal coverage across degrees. These observations motivate a preregistered
+mechanism study rather than a universal-correctness claim. We isolate prefix
+normalization at fixed tensor shapes and initialization, compare MAX with SUM
+and MEAN, and implement prefix-free DeepSets and local palette attention.
+Across five new training seeds per primary architecture, NORMALIZED,
+DeepSets and local palette attention each completed all 1,520 held-out
+graph--tape evaluations, including degree 200 and 640-node graphs. Thus the
+original ordered prefixes are not necessary in this experiment. The isolated
+raw-endpoint control lost progress in 346 evaluations; SUM stalled in 1,196,
+while MEAN produced 839 improper final colorings. A finite-type reduction
+and interval certificates characterize the MAX COMMIT channel. A separate
+diffuse-component condition yields a conditional progress bound even when
+some colors have large probability. Neither finite success nor local safety
+certifies universal termination of a learned policy.
+\IfFileExists{tables/local-abstract.tex}{\input{tables/local-abstract.tex}}{}
+\IfFileExists{tables/global-abstract.tex}{\input{tables/global-abstract.tex}}{}
+\IfFileExists{tables/robust-abstract.tex}{\input{tables/robust-abstract.tex}}{}
+\IfFileExists{tables/factorial-abstract.tex}{\input{tables/factorial-abstract.tex}}{}
+\end{abstract}
+
+\section{Introduction}
+Classical distributed algorithms specify computations that apply to whole
+families of graphs. A learned implementation must additionally select a
+representation whose behavior remains meaningful when neighborhood size
+changes. Neural algorithmic reasoning investigates learning executable
+computations and their transfer across inputs \citep{velickovic2021nar};
+the CLRS benchmark makes this challenge experimentally accessible
+\citep{velickovic2022clrs}. Architectural alignment can affect extrapolation,
+but expressivity and training success do not by themselves establish
+out-of-distribution correctness \citep{xu2021extrapolate}.
+
+We ask: \emph{Which architectural mechanisms enable learned distributed
+algorithms to generalize beyond the graph degrees and palette sizes observed
+during training?} Our case study uses anonymous synchronous nodes, private
+randomness, two neighbor communications per protocol round, and permanent
+color decisions. We study a valid coloring with a prescribed palette, rather
+than optimizing the chromatic number. Local neural computations are simulated
+on a GPU; we do not claim a network-deployed distributed implementation.
+
+The historical UCGNN result is striking but insufficient to identify causes:
+five networks trained with four colors produced proper colorings at much
+larger palettes, while exact candidate imitation degraded. A historical raw
+prefix variant concentrated proposals and stalled, but also changed the scorer
+dimension and initialization. Its failure cannot isolate normalization.
+Similarly, correct ordinary rollouts can hide an unsafe authorization rule
+when candidate selection rarely exposes conflicts.
+
+Our contribution is an auditable mechanism study: (i) tensor-, data- and
+tape-matched endpoint interventions, (ii) five-seed aggregation and palette
+controls, including successful prefix-free attention, (iii) independent graph
+evaluation with shared-instance statistical accounting, and (iv) separate
+conditional arguments for safety and progress. The outcomes support
+normalization and multiplicity control for this training procedure, while
+refuting a need for the original prefix mechanism within the tested family.
+We make no claim that UCGNN is inherently superior to attention, or that these
+architectural ingredients are necessary for every learnable coloring policy.
+
+\paragraph{Related work.}
+Message-passing GNNs and distributed local algorithms share locality
+constraints, although identifiers, message sizes, synchrony and stopping
+rules matter \citep{suomela2013local,sato2019approximation,loukas2020depth}.
+Flood and Echo Net aligns propagation with a distributed execution pattern
+\citep{mathys2023flood}; work on asynchronous GNN inference emphasizes that
+synchronous performance does not imply asynchronous robustness
+\citep{solodova2025hogwild}. Distributed scheduling with learned embeddings
+followed by a greedy solver is a different interface from learning the
+entire local decision policy \citep{zhao2020scheduling}.
+GNN coloring work has studied decision classification and extraction of
+constructive solutions \citep{lemos2019coloring}; this does not constitute
+anonymous synchronous protocol execution under our observation constraints.
+Transformer length generalization depends on the learned computation and
+input representation \citep{zhou2023algorithms,kazemnejad2023position}.
+Finally, imitation learning faces policy-induced distribution shift
+\citep{ross2011dagger}; targeted intervention can expose confounded decision
+rules \citep{dehaan2019causal}. Our counterfactual proposal supervision is
+specified below and should not be equated with either of these algorithms.
+
+\section{Problem and Distributed Model}
+Let $G=(V,E)$ be a finite simple undirected graph, $N=|V|$, with maximum degree
+at most a declared $\Delta$. Nodes share the palette $\{0,\ldots,K-1\}$,
+$K=\Delta+1$, and maintain $q_v\in\{-1,0,\ldots,K-1\}$, where $-1$ is pending.
+No unique node identifier enters the policy. Colors have common names and
+an order, so color permutation invariance is not assumed. Each round draws
+independent $r_v^p,r_v^c\sim U[0,1)$ even for fixed nodes.
+After a first neighbor communication the node selects participation $B_v$
+and a candidate $C_v$. A second communication permits a learned COMMIT
+decision $J_v$. Participating pending nodes with $J_v=1$ fix $C_v$ permanently.
+
+The teacher's available set and decisions are
+\begin{align}
+A_v&=\{c:\forall u\in N(v),q_u\ne c\},& k_v&=|A_v|,\\
+B_v^*&=\ind[q_v=-1]\ind[r_v^p<1/2],&
+C_v^*&=A_v[\lfloor r_v^c k_v\rfloor],
+\end{align}
+where $A_v$ is sorted. The teacher confirms only if no fixed neighbor has the
+candidate and no participating pending neighbor proposes it. We call this
+the random-trial teacher; historical code sometimes uses ``Luby'' as shorthand.
+Exact availability and conflict checks supply labels or observe completed
+model decisions; they never enter learned inference as a shield.
+
+\section{Supervised Learning of Distributed Coloring}
+Each training example is a round from a teacher trajectory, including the
+current partial coloring and its two private draws. The loss is
+\[
+\mathcal L=\mathcal L_{\rm participate}+\mathcal L_{\rm candidate}
+ +\tfrac12\mathcal L_{\rm commit,own}+\tfrac12\mathcal L_{\rm commit,cf}.
+\]
+Participation and COMMIT use binary cross-entropy; the candidate uses
+cross-entropy over the public palette. During ten warmup epochs COMMIT sees
+teacher proposals. Thereafter it sees hard own proposals and intervened
+proposals with recomputed exact authorization labels. Interventions include
+proposing a fixed neighbor's color and equal simultaneous neighboring offers;
+their frozen probabilities are 0.17 and 0.04. Only proposals are intervened
+upon: permanent colors and the observation interface remain unchanged.
+Hard proposals prevent the COMMIT losses from updating candidate or
+participation modules. Own-only replaces the counterfactual half by own
+proposals, preserving the total loss weighting.
+
+M6B uses the earlier M4B neural architecture specialized to a fixed palette.
+With its reference dimensions it has $385K+7427$ parameters. Changing $K$
+changes input and output matrices, so these checkpoints are evaluated only
+at compatible degrees, without undocumented padding or adaptation.
+
+\section{Universal Color GNN}
+For every pair $(v,c)$ define $u_v=\ind[q_v=-1]$ and $o_{vc}=\ind[q_v=c]$.
+Shared learned MLPs construct the first message and state:
+\[
+m^1_{vc}=\phi_1([u_v,o_{vc}]),\qquad
+h_{vc}=\psi_1([u_v,\amax_{w\in N(v)}m^1_{wc}]).
+\]
+Both have 32-dimensional nonnegative outputs. Empty-neighborhood aggregation
+is zero. Learned availability and ordered endpoints are
+\begin{align}
+\alpha_{vc}&=\sigma(a^\top h_{vc}+b),&
+S_{vc}&=\sum_{j<c}\alpha_{vj},&D_v&=\max(\sum_j\alpha_{vj},0.5),\\
+L_{vc}&=S_{vc}/D_v,&U_{vc}&=(S_{vc}+\alpha_{vc})/D_v,\\
+s_{vc}&=F([h_{vc},\alpha_{vc},L_{vc},U_{vc},r_v^c]).
+\end{align}
+The candidate is the maximizing palette slot; there is no exact mask of
+occupied colors. The availability scores need not be calibrated probabilities
+or an integer count. Prefix accumulation and normalization are incorporated
+operations, while availability, scoring and authorization are learned.
+
+For the second communication let
+\[
+f_{vc}=[u_v,o_{vc},B_v,\ind[C_v=c]],\qquad
+z_{vc}=\psi_2([f_{vc},\amax_{w\in N(v)}\phi_2(f_{wc})]).
+\]
+The COMMIT head reads only $z_{vC_v}$ and the own participation/pending/offer
+bits. The original model has 16,035 trainable parameters independent of $K$.
+The implemented messages contain $32K$ floats per directed edge per stage;
+constant parameter count is not constant communication or memory cost.
+
+\section{Prospective Experimental Protocol}
+The protocol was locally committed as \texttt{023deaf} before new training or
+confirmatory test generation. Primary treatments are NORMALIZED, raw endpoints,
+SUM, MEAN, DeepSets and LocalPaletteTransformer. The raw-endpoint control
+changes only $(L,U)$ to $(S,S+\alpha)$ in the same four extra scorer inputs.
+It shares every initial tensor, example, minibatch order, counterfactual tape,
+optimizer and update count with NORMALIZED within a training seed. SUM and
+MEAN replace the neighbor reduction in both stages, without extra scaling
+for SUM; MEAN uses actual in-degree and zero for an isolated node.
+
+Training uses 800 regular graphs with $N=40$, $\Delta=3$, three tapes, Adam
+learning rate $10^{-3}$, batch size 128 and 120 epochs. New training seeds
+are 41000--41004. Seed 41000 is the full-budget pilot and counts as the first
+replicate. Promotion requires final training-degree validation accuracies
+of at least 0.98 participation, 0.90 candidate and 0.95 own-COMMIT, with finite
+training throughout. Failed pilots are retained without repeated tuning.
+Promotion decisions precede the confirmatory test. Epoch 120 is primary;
+validation-best is a separately labeled selection policy.
+
+The independent namespace 202610210211 fixes 304 graph--tape cases per model:
+degrees 3,5,10,15,20,50,100,200, regular/irregular/heterogeneous families,
+$N=160$ (400 at degree 200), size checks at $N=640$, cliques and circulant
+bipartite stress graphs. Each random core cell contains eight graphs; size
+cells contain four. A clique's three tapes are not three independent graphs.
+Every paired model uses the same instances and tapes, with a 256-round cap.
+Failures do not stop other evaluations or truncate a rollout at its first
+unsafe action. Technical OOM and timeout remain distinct from wrong coloring.
+
+We report fixed-network Clopper--Pearson intervals per random-graph stratum,
+all seed rates, and paired hierarchical bootstrap differences across training
+seeds and graph identities. Correlated executions on shared graphs are not
+pooled as independent Bernoulli trials. Computational limits are an 8\,GiB
+RTX 4060, one GPU worker, a 4\,GiB allocator cap, and 36 accumulated active
+GPU-process hours. Source hashes, optimizer/RNG checkpoints and atomic per-case
+records support recovery. The full preregistration specifies the remaining
+metrics and resource rules.
+All 157 scheduled tasks completed in 6.172 accumulated GPU-process hours,
+well below the 36-hour ceiling. The release contains 32 new training runs,
+85 checkpoint views, 18,363 graph evaluations and 3,520 controlled progress
+rollouts. There were no evaluation OOMs, timeouts or unexecuted planned cells.
+The 32 runs comprise 30 primary networks and two one-seed auxiliary pilots;
+validation-selected views do not count as additional independent networks.
+At eight random graphs per core stratum, an all-success fixed-network cell
+still has a Clopper--Pearson lower bound of only about 0.631. Empirical
+bootstrap intervals can be degenerate when all observed differences agree;
+this does not establish population certainty or equivalence.
+
+\section{Degree and Size Generalization: Historical Evidence}
+\IfFileExists{tables/historical.tex}{\input{tables/historical.tex}}{\todo{Generate the historical table from audited CSV.}}
+Five historical E1 networks trained solely at degree three recorded
+8,629/8,629 successes in the extreme study, on 1,765 distinct graphs with
+unequal coverage across degree, size and seed. The maximum degree 500 was
+exploratory with sparse coverage, not a balanced five-network test at that
+degree. Historical E2 and E3 each had five independent training networks;
+A1 and C1 each had one. These already observed cohorts are motivation and
+historical evidence, not untouched architecture-selection tests.
+
+E1-0's exact candidate fidelity can collapse while valid coloring remains
+successful. In a historical all-free $K=201$ controlled sweep it agreed with
+the teacher at only 5/1,001 uniform-grid draws while using 199 colors. Thus
+candidate identity and diversity are different endpoints. Historical A1's
+all-free $K=101$ law placed mass on only four colors. Reconstructed failures
+showed extremely slow progress with no unsafe commits, localizing a
+functional failure without isolating which architectural change caused it.
+\IfFileExists{figures/historical-proposals.pdf}{\begin{figure}[t]\centering
+\includegraphics[width=.94\linewidth]{figures/historical-proposals.pdf}
+\caption{Historical candidate distributions, generated from saved per-color CSVs.
+These descriptive observations do not isolate the effect of normalization.}
+\end{figure}}{}
+\paragraph{Independent new cohort.}
+Each of five new NORMALIZED, DeepSets and Transformer networks completed
+304/304 evaluations with no exact-rule-violating COMMIT, across all three
+random families, size checks and structured graphs. Historical E1 also
+completed 1,520/1,520 new-cohort executions. The 15 M6B specialists, five
+at each compatible degree 3, 5 and 10, completed 555/555 compatible tests;
+their fixed-palette heads were not evaluated at unseen degrees.
+They were trained at their evaluation degree, unlike the universal models'
+degree-transfer setting.
+\IfFileExists{figures/degree-transfer.pdf}{\begin{figure}[t]\centering
+\includegraphics[width=.94\linewidth]{figures/degree-transfer.pdf}
+\caption{Core-tier proper completion by 256 rounds. Lines average five
+independently trained networks; individual seed rates are overlaid. All
+architectures use the same graphs and tapes.}
+\label{fig:transfer}\end{figure}}{}
+
+\section{Architectural Ablations}
+\IfFileExists{tables/overall.tex}{\input{tables/overall.tex}}{\todo{Generate primary outcome table.}}
+\IfFileExists{tables/confirmatory.tex}{\input{tables/confirmatory.tex}}{\todo{Awaiting confirmatory architectural ablation results.}}
+All five normalization pairs passed the complete tensor, data, minibatch,
+counterfactual-tape and update-count audit. Raw endpoints completed
+1,174/1,520 executions, with five-network rates ranging from 0.766 to 0.780,
+and left nodes pending in 346 capped runs. No unsafe COMMIT was observed.
+At all-free $K=201$, its effective support was only 4.00--4.05 colors, versus
+193.1--199.5 for NORMALIZED. This isolated intervention supports a beneficial
+normalization effect under the fixed procedure; it does not establish that
+all raw parameterizations must fail.
+
+SUM completed 324/1,520 tests, with no completion at any tested degree at
+least 10. Its 1,196 failures reached the round cap without an unsafe COMMIT.
+The multiplicity probe showed rejection of conflict-free proposals after
+duplicating an ordinary neighbor type eight times, for all five networks.
+MEAN completed 681/1,520; every node eventually fixed a color, but 839 final
+states were improper. Its COMMIT heads missed single conflict messages
+diluted by eight ordinary messages in all five networks. Both aggregations
+learned the degree-three teacher well. These observations separate
+over-rejection from unsafe acceptance and support the importance of
+multiplicity control in these models. Since both communication stages were
+changed together, the graph ablation alone does not identify which stage
+caused every error.
+
+The separately selected validation-best checkpoints retain the same
+qualitative pattern on 960 core executions per primary treatment:
+NORMALIZED, DeepSets and Transformer each 960/960, raw 799/960,
+SUM 255/960 and MEAN 494/960. Selection did not use held-out degrees.
+
+\section{Transformer and Other Baselines}
+LocalPaletteTransformer keeps shared local graph communication and the
+COMMIT pathway, replacing the prefix scorer by a 16-dimensional, two-head
+within-node self-attention block with feedforward width 32 and zero dropout
+\citep{vaswani2017attention}. It receives functional positions
+$c/\max(K-1,1)$ and $1/K$, not learned absolute position embeddings or original
+prefixes. Its parameter count is 16,995. The DeepSets control uses a shared
+16-dimensional mean-pooled palette context \citep{zaheer2017sets}, functional
+positions and 17,907 parameters. Attention can have quadratic palette cost;
+a technical resource limit must not be called a coloring failure.
+All six seed-41000 pilots reached epoch 120 and passed the prespecified local
+learning gate. Candidate validation fidelity was 0.9971 for NORMALIZED,
+0.9850 for raw endpoints, 0.9983 for SUM and MEAN, 0.9948 for DeepSets and
+0.9957 for the Transformer; own-proposal COMMIT fidelity was 1.0 for each.
+These are in-degree validation measurements, not degree-transfer results.
+In a separate inference-only resource check, all six models fit at
+$N=640$, $\Delta=200$ and $K=201$. The Transformer used approximately
+532\,MiB of peak allocated CUDA memory for one round; this establishes
+technical feasibility for this configuration only.
+Both prefix-free controls also completed all 205 degree-200 evaluations
+across five seeds and all strata. This directly answers the palette transfer
+question affirmatively for $K=11,21,51,101,201$ on the stated cohort.
+However, attention was less uniform and slower on large cliques:
+at all-free $K=201$ its effective support ranged from 57.3 to 112.9 colors,
+with largest grid masses 0.126--0.243. On the degree-200 clique its mean
+termination time was 30 rounds, versus 14.33 for NORMALIZED and 21.47 for
+DeepSets (five networks, three shared tapes each; descriptive means).
+DeepSets' effective support was 128.6--174.2. Exact teacher-candidate fidelity
+was low for these successful policies; fidelity is not a coloring guarantee.
+Small numbers of forbidden proposals occurred for two Transformer seeds and
+one DeepSets seed, but their certified COMMIT channels rejected them.
+\IfFileExists{figures/candidate-diversity.pdf}{\begin{figure}[t]\centering
+\includegraphics[width=.94\linewidth]{figures/candidate-diversity.pdf}
+\caption{All-free candidate laws from 2,049 midpoint draws. Lines are
+five-network means; shaded bands show seed ranges, not confidence intervals.
+The largest atom alone does not capture the diffuse tail.}
+\label{fig:diversity}\end{figure}}{}
+\IfFileExists{tables/resources.tex}{\input{tables/resources.tex}}{}
+These are architectural controls, not a claim that the only possible
+prefix-free model has been tested. Without positions or another symmetry
+breaker, identical available slots receive identical scores under an invariant
+pooled context, preventing general ordered-teacher imitation.
+
+\section{Understanding Learned Policies}
+\subsection{Selection and held-out prediction}
+The prospective diagnostic freezes a monotone rank calibration of historical
+E1-0 on all-free $K=101$ before evaluating $K=17,63,251,997$ and low, high,
+scattered, alternating and extreme availability patterns. It reports rank
+errors, forbidden proposals, total variation from uniform, entropy, effective
+colors, maximum mass and pair collisions. Boundary-neighbor float32 probes
+are separate from the midpoint grid used for distribution estimates.
+The CPU float32 diagnostic, prospectively authorized in addendum
+\texttt{8c69168}, evaluated 120 configured states with 2,049 midpoint draws
+each. Equivalent all-free configurations occur under multiple pattern names;
+these are not 120 independent random states. No forbidden candidate was
+observed on these grids. The frozen empirical predictor's mean per-state rank
+error was 0.569; 10 configurations at $K=997$ exceeded two, with a worst
+per-state mean of 4.761. Thus its approximation deteriorates at the largest
+palette despite a small pooled mean. We retain these negative cases.
+
+Two secondary analytic predictors were also frozen before held-out inspection.
+The context-conditioned predictor uses a finite catalog of neighbor-type
+contexts calibrated at $K=101$. It achieved mean rank error 0.075 and worst
+per-state mean 0.236, with individual grid rank error at most one. This is
+finite empirical evidence for a context-dependent deformed quantile, not an
+exact algorithmic identity or a guarantee over all availability patterns.
+Specifically, fix the learned free-color context $h_s,\alpha_s$ and set both
+endpoints to a continuous coordinate $t$. The one-hidden-layer scorer becomes
+\[
+f_s(t,r)=b_0+\sum_j v_j\operatorname{ReLU}(B_{sj}+A_jt+R_jr).
+\]
+Its smallest continuous maximizer $g_s(r)$ is found among $0,1$ and the
+in-range breakpoints $-(B_{sj}+R_jr)/A_j$ for $A_j\ne0$. Predicting rank
+$\lfloor k g_s(r)\rfloor$, clipped to the available range, removes the
+empirical calibration grid's quantization. The four contexts encode presence
+of pending and fixed neighbors. This is a weight-derived predictor, evaluated
+numerically in float64; replacing finite-width intervals and neglecting
+forbidden-color availability mass are approximations, not a convergence
+theorem. The single global-context predictor remains separately reported.
+\IfFileExists{figures/candidate-predictions.pdf}{\begin{figure}[t]\centering
+\includegraphics[width=.8\linewidth]{figures/candidate-predictions.pdf}
+\caption{Frozen E1-0 candidate predictions from saved CSVs. Solid lines show
+mean per-state rank error; dotted lines show the worst per-state mean.
+Primary and secondary predictors remain separately identified.}
+\end{figure}}{}
+
+\subsection{A sufficient condition for progress}
+Condition on a proper state. Let $U_v$ be the pending neighbors. With private
+independent participation/candidate draws within and across nodes, and exact
+conflict rejection,
+\begin{equation}\label{eq:progress}
+\Pr(v\text{ confirms}\mid\text{state})
+=p_v\sum_{c\in A_v}q_v(c)\prod_{u\in U_v}(1-p_uq_u(c)).
+\end{equation}
+Confirmation events of neighboring nodes need not be independent.
+
+\begin{proposition}\label{prop:progress}
+Suppose $0<p_{\min}\le p_u\le p_{\max}<1$, exact conflict rejection and the
+independence assumptions of (\ref{eq:progress}) hold. If
+$\operatorname{supp}(q_v)\subseteq A_v$ and
+$\max_c q_v(c)\le\beta/k_v$, then
+\[
+\Pr(v\text{ confirms}\mid\text{state})\ge
+p_v(1-p_{\max})^{\beta |U_v|/k_v}\ge p_{\min}(1-p_{\max})^\beta.
+\]
+\end{proposition}
+\begin{proof}
+Properness and $K\ge\Delta+1$ imply $k_v\ge |U_v|+1$.
+For $0\le x\le p_{\max}$, concavity gives
+$\log(1-x)\ge x\log(1-p_{\max})/p_{\max}$.
+Set $\Lambda_c=\sum_{u\in U_v}p_uq_u(c)$ and
+$a=\log(1-p_{\max})/p_{\max}<0$. The product in
+(\ref{eq:progress}) is at least $\exp(a\Lambda_c)$. Jensen's inequality gives
+$\sum_cq_v(c)e^{a\Lambda_c}\ge e^{a\sum_cq_v(c)\Lambda_c}$.
+Moreover,
+$\sum_cq_v(c)\Lambda_c\le (\beta/k_v)\sum_up_u
+\le\beta p_{\max}|U_v|/k_v$.
+Since $a<0$, substitution proves the first bound; $|U_v|/k_v\le1$ proves
+the second.
+\end{proof}
+If these hypotheses hold uniformly at every reachable state for every pending
+node, $\rho=p_{\min}(1-p_{\max})^\beta$ gives
+$\Pr(T>t)\le\min\{1,N(1-\rho)^t\}$ by conditional iteration and union bound.
+We have not established the uniform candidate hypotheses for any learned
+checkpoint. In contrast, proposing one common deterministic color on an
+all-free $K$-clique with independent participation $1/2$ is safe but has
+mean time $2^K/K$ until the first confirmation. Uniform \emph{marginals}
+with a shared candidate draw have the same failure of progress, showing why
+conditional independence matters.
+
+\begin{corollary}[A diffuse allowed component]
+Retain properness, exact rejection, independent private draws and the
+participation bounds. If $S_v\subseteq A_v$ has mass
+$\eta_v=\sum_{c\in S_v}q_v(c)>0$ and $q_v(c)\le\beta/k_v$ on $S_v$, then
+\[
+\Pr(v\text{ confirms}\mid\text{state})\ge
+p_v\eta_v(1-p_{\max})^{\beta|U_v|/(\eta_vk_v)}.
+\]
+If $\eta_v\ge\eta>0$ uniformly, this is at least
+$p_{\min}\eta(1-p_{\max})^{\beta/\eta}$.
+\end{corollary}
+\begin{proof}
+Drop terms outside $S_v$ in (\ref{eq:progress}) and normalize the retained
+weights to $q_v(c)/\eta_v$. The same log-chord and Jensen inequalities give
+$p_v\eta_v\exp(a\sum_{c\in S_v}q_v(c)\Lambda_c/\eta_v)$.
+Its averaged load is at most
+$\beta p_{\max}|U_v|/(\eta_vk_v)$, proving the first inequality.
+Use $|U_v|/k_v\le1$ and monotonicity of
+$x(1-p_{\max})^{\beta/x}$ for $x>0$ for the second.
+\end{proof}
+This post-result mathematical extension permits a heavy atom outside $S_v$,
+and even forbidden mass rejected by COMMIT. It helps distinguish a
+concentrated policy with a diffuse tail from one supported on four colors.
+It remains a sufficient condition; grid measurements do not establish it
+uniformly for a learned network.
+
+\paragraph{Controlled states.}
+Eleven prespecified representative checkpoints underwent 20 proper partial
+states with 16 common tapes each. NORMALIZED, DeepSets and Transformer each
+completed 320/320, versus raw 224/320 and SUM 64/320. MEAN completed 152/320
+properly; historical A1 completed all 320 but needed up to 159 rounds.
+First-round safe proposal counts tracked the independent-choice expression,
+while SUM could reject abundant safe proposals and MEAN could confirm unsafe
+ones. These distinguish candidate quality from learned authorization.
+\IfFileExists{figures/progress-predictions.pdf}{\begin{figure}[t]\centering
+\includegraphics[width=.94\linewidth]{figures/progress-predictions.pdf}
+\caption{Controlled first-round predictions, using midpoint-grid estimates
+of $p,q$, versus 16-tape averages. Safe proposals and actual confirmations
+coincide only for an exact COMMIT channel. States within a network are
+descriptive probes, not independent trained networks.}
+\label{fig:progress}\end{figure}}{}
+
+\subsection{Finite-type safety of COMMIT}
+\begin{proposition}\label{prop:safety}
+For a legal uncolored participating center with candidate $c$, nonnegative
+shared messages and MAX aggregation, the UCGNN COMMIT logit depends only on
+the set of six legal neighbor types in slot $c$. Correct strict signs on all
+64 type sets imply exact local conflict rejection for arbitrary degree and
+palette in real arithmetic.
+\end{proposition}
+\begin{proof}
+The legal types $[u,o,B,\mathrm{offer}]$ are
+\[
+(0,0,0,0),(0,1,0,0),(1,0,0,0),(1,0,0,1),(1,0,1,0),(1,0,1,1).
+\]
+Colored neighbors cannot participate or offer; pending neighbors do not own
+a fixed color. MAX is idempotent, so multiplicities disappear. The own
+candidate gather reads one slot, whose own features are $(1,0,1,1)$;
+other colors cannot alter that logit. Fixed and simultaneous conflicts
+correspond precisely to the second and sixth types. The 64 strict sign
+conditions therefore suffice. Other own states are prevented from execution
+by explicit protocol gating. All subsets are realizable by proper star states
+with a palette of at least seven colors.
+\end{proof}
+Induction then preserves properness, without proving progress or termination.
+All five historical E1 checkpoints now have interval-certified strict signs
+on all 64 sets, both for real weights and under the stated float32 affine-error
+model. Their real-arithmetic minimum signed margins range from 9.706 to
+13.547. Historical C1 and the new own-only seed-41000 checkpoint each have
+16 certified unsafe type sets. The new NORMALIZED, raw-endpoint, DeepSets and
+Transformer seed-41000 COMMIT channels also satisfy the certificate; this
+does not certify their candidate selection. SUM and MEAN lack this 64-set
+reduction, which is an applicability limitation rather than evidence of
+unsafe decisions. Complete arithmetic assumptions, per-mask intervals and
+checkpoint hashes accompany the certificate CSV and JSON records.
+The completed audit covers 39 checkpoints: 27 satisfy the real and conditional
+float32 exact-rule certificate, two own-only checkpoints fail, and ten
+SUM/MEAN checkpoints are outside its scope. Actual star-forward decisions
+agree with the type reduction in all 2,496 tests. All 1,856 applicable
+float32 logits lie within their error enclosures. The 27 certified models
+also preserve signs under the sampled $\pm10^{-6}$ pooled-message
+perturbations in float32 and float64; conservative real-arithmetic input
+radii are positive. This certifies a local rejection rule under the stated
+assumptions, without a global progress guarantee.
+\IfFileExists{tables/certificates.tex}{\input{tables/certificates.tex}}{}
+
+The new own-only pilot and historical C1 each completed 304/304 ordinary
+graph tests and 320/320 controlled progress rollouts despite their 16 unsafe
+type sets. Their proposals did not expose these errors. Counterfactual
+supervision therefore improves the learned off-trajectory COMMIT rule in
+these comparisons; ordinary successful execution alone cannot certify it.
+
+\paragraph{A structural limitation of MEAN.}
+Fix the active center's own features. Let $m_o,m_f$ be degree-independent
+messages for an ordinary neighbor and a fixed-color conflict, respectively,
+and $F$ the continuous post-aggregation COMMIT logit with no separate degree
+or palette input. This is the implemented per-slot interface.
+\begin{proposition}
+If $F(m_o)=\gamma>0$, MEAN accepts a conflicting legal star at some finite
+degree. Thus it cannot reproduce exact conflict rejection at all degrees
+while strictly accepting that conflict-free state.
+\end{proposition}
+\begin{proof}
+With $d$ ordinary leaves and one conflicting fixed leaf, the received mean is
+$x_d=(d m_o+m_f)/(d+1)\to m_o$. The center is pending and the fixed leaves
+are nonadjacent, so the partial state is proper with $K=d+2$.
+Continuity implies $F(x_d)\to\gamma>0$, hence eventual unsafe acceptance.
+For an $L$-Lipschitz classifier, it suffices that
+$d+1>L\|m_f-m_o\|_\infty/\gamma$.
+\end{proof}
+This is a local expressivity result under the stated interface, not a claim
+that the model reaches every such state. SUM has a contrasting construction:
+on legal types, $b(u,o,p,a)=o+\operatorname{ReLU}(p+a-1)$ is exactly the
+conflict bit, so $1/2-\sum_w b_w$ implements exact rejection. Its observed
+failure is therefore not an impossibility of representing this rule.
+
+\input{local-palettes}
+\input{global-distributions}
+\input{robust-distributions}
+\input{factorial-size-degree}
+
+\section{Discussion, Limitations and Future Work}
+Success on finite graphs is evidence about a specified distribution, rather
+than universal correctness. Five training networks permit only limited
+inference over initialization; small graph strata have wide confidence
+intervals. Shared graphs and repeated clique tapes must retain their
+dependence in analysis. The generic baselines retain UCGNN's graph-interface
+and safety pathway, so they do not test every possible end-to-end attention
+architecture. A fixed parameter count still permits costs that grow with
+$N$, $|E|$ and $K$.
+
+An exploratory alternative teacher starts at $\lfloor Kr_c\rfloor$ and scans
+cyclically to the first available color, keeping participation and rejection
+unchanged. Its candidate mass at $c$ is the cyclic gap preceding $c$ divided
+by $K$, usually different from uniform over available colors.
+A fresh seed-41005 pilot reached 0.9903 local candidate validation fidelity
+and completed 304/304 graph evaluations without unsafe COMMIT. On its own
+graph trajectories, cyclic-teacher candidate fidelity declined from 0.9911
+at degree 3 to 0.03975 at degree 200, while coloring remained successful.
+The new candidate law is thus learned in degree and transfers as a useful
+coloring policy, not as an exact high-degree implementation of that teacher.
+This single-seed study is exploratory. It uses newly generated cyclic
+teacher trajectories and differs in example/update counts from the main
+uniform-teacher comparisons. Separate CSV columns distinguish fidelity to
+the cyclic and uniform teachers; they must not be pooled.
+Teacher-free RL and supervised-to-RL fine-tuning ask separate questions;
+the accompanying design specifies rewards, private stochastic actions and
+a PPO-based comparison \citep{schulman2017ppo}, with no large RL run here.
+Asynchronous execution, compressed communication, certified candidate
+anti-concentration and larger independent cohorts remain future work.
+
+Our evidence refutes necessity of the original prefixes for the tested
+architecture family, and supports normalization and multiplicity control
+under one fixed degree-three training procedure. It does not establish
+necessity of MAX across all possible learned distributed algorithms, or
+that attention has equal population performance. Isolating the first and
+second communication reductions, studying more training procedures and
+certifying diffuse candidate mass are useful next experiments. Per-round
+records retain proposal support size, maximum mass and pair collisions;
+full candidate histograms are retained for controlled local grids, rather
+than every graph round. The code and fixed evaluation cohort remain
+available for replay and finer distributional diagnosis.
+
+\appendix
+\section{Training runs}
+\IfFileExists{tables/training.tex}{\input{tables/training.tex}}{}
+\input{local-palette-details}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}
