@@ -49,6 +49,33 @@ def main():
     for arch in ARCHES:
         r=next(r for r in s['counts'] if r['architecture']==arch and r['stratum']=='main')
         method.append(f"| {NAMES[arch]} | {r['robust']}/{r['comparisons']} | {r['old']}/{r['comparisons']} | {r['robust_only']} | {r['old_only']} |")
+    strata_tables={}
+    for stage in ('secondary','historical-replication'):
+        tt=['| Arquitectura | V2 | MMD antiguo |','|---|---:|---:|']
+        for arch in ARCHES:
+            r=next(r for r in s['counts'] if r['architecture']==arch and r['stratum']==stage)
+            tt.append(f"| {NAMES[arch]} | {r['robust']}/{r['comparisons']} | {r['old']}/{r['comparisons']} |")
+        strata_tables[stage]=tt
+    secondary_top=['| n | Δ | P_L(T) | D_T E1 | D_T DeepSets | D_T Transformer |',
+                   '|---:|---:|---:|---:|---:|---:|'];secondary_rows=[]
+    for g in sorted([g for g in graphs() if g['stage']=='secondary'],key=lambda g:(g['n'],g['delta'])):
+        cells=[];teacher=None
+        for arch in ARCHES:
+            rr=[r for r in events if r['graph']==g['id'] and r['architecture']==arch and r['event']=='uses_top_color']
+            assert len(rr)==5
+            if any(r['difference'] is None for r in rr):
+                cells.append('No estimable');continue
+            estimate=float(np.mean([r['difference'] for r in rr]));lo=float(np.mean([r['ci'][0] for r in rr]));hi=float(np.mean([r['ci'][1] for r in rr]));teacher=rr[0]['probability_Luby']
+            secondary_rows.append(dict(graph=g['id'],n=g['n'],delta=g['delta'],architecture=arch,
+                                       degree_mean=float(np.mean(g['degrees'])),degree_variance=g['degree_variance'],
+                                       probability_Luby=teacher,probability_model=float(np.mean([r['probability_model'] for r in rr])),
+                                       difference=estimate,ci=[lo,hi],confidence_at_least=.975,
+                                       interval_method='Linear image of the original simultaneous elementary CP family; shared teacher enters once'))
+            cells.append(f'{estimate:+.3f} [{lo:+.3f},{hi:+.3f}]')
+        teacher_text=f'{teacher:.3f}' if teacher is not None else 'No estimable'
+        secondary_top.append(f"| {g['n']} | {g['delta']} | {teacher_text} | "+' | '.join(cells)+' |')
+    atomic_json(OUT/'secondary-top-color-summary.json',secondary_rows)
+    pd.DataFrame(secondary_rows).to_csv(OUT/'secondary-top-color-summary.csv',index=False)
     table=['| n | Δ=3 | Δ=10 | Δ=50 | Δ=100 |','|---:|---:|---:|---:|---:|']
     for n in NS:table.append('| '+str(n)+' | '+' | '.join(ci(cell('normalized',n,d)) for d in DS)+' |')
     target_table=['| Grafo | P_L(A) | Rango P_E1(A) | Menor cota TV de A entre cinco E1 | V2 |','|---|---:|---:|---:|---:|']
@@ -229,6 +256,9 @@ ni se compara directamente con los 265 casos por arquitectura históricos.
 
 ## P1. ¿Aumenta la diferencia E1–Luby con n a grado fijo?
 
+No se establece un aumento general de la TV. Los efectos observables
+dependen del grado y del evento.
+
 Para A, los doce contrastes adyacentes de tamaño dieron **{np_} incrementos y
 {nm} decrementos** con intervalo simultáneo que excluye cero. Los efectos
 completos E1 se muestran abajo; las figuras incluyen además T, cada grafo y
@@ -250,6 +280,9 @@ registradas; no es una comparación de TV entre espacios de distinta dimensión.
 
 ## P2. ¿Aumenta con el grado a tamaño fijo?
 
+Se observan aumentos en algunos riesgos, sin identificar una ley monótona de
+TV ni separar causalmente grado y paleta.
+
 Para A, los doce contrastes adyacentes de grado dieron **{dp} incrementos y
 {dm} decrementos** respaldados simultáneamente. Todos los signos y no
 detecciones aparecen en `factorial-contrasts.csv` y en las figuras 2 y 4.
@@ -260,6 +293,10 @@ T tiene diferencia {ci(cell('normalized',128,100,'uses_top_color'))}. Que falte
 algún color bajo ambas leyes no implica que falten los mismos colores.
 
 ## P3. ¿Existe interacción entre n y Δ?
+
+Sí, para contrastes de probabilidades en esta cohorte. Por ejemplo, la
+interacción E1 de A entre n256/n512 y Δ50/Δ100 es
+{ci(next(r for r in fc if r['group']=='normalized' and r['event']=='used_le_delta' and r['contrast']=='n256:512-d50:100'))}.
 
 {join(interactions)}
 
@@ -311,6 +348,23 @@ constituyen evidencia de semejanza global. Se anotan expresamente y se
 conservan el omnibus, T y los demás perfiles; no se usa A para extrapolar una
 tendencia de regulares a esas celdas.
 
+### Estrato irregular separado
+
+{join(strata_tables['secondary'])}
+
+Holm se aplica a sus 120 hipótesis, separado de las 720 regulares. El evento
+T sigue siendo observable aun cuando A esté forzado. Las diferencias medias
+sobre los cinco checkpoints del mismo grafo son:
+
+{join(secondary_top)}
+
+Los intervalos proceden de las cotas CP elementales ya simultáneas: el profesor
+compartido se resta una vez. No son intervalos de una población de grafos o
+entrenamientos. La figura 11 muestra T y marca dónde las listas fuerzan A.
+El grado medio, varianza, histogramas y fracción cercana al máximo están en
+los metadatos archivados. Cambian también las paletas elegibles por vértice;
+estos ocho casos no identifican una tendencia universal del grado máximo.
+
 ## P7. ¿Qué propiedades finales distinguen las leyes?
 
 Los testigos adaptativos se eligieron sólo en las primeras 500 muestras y se
@@ -354,6 +408,11 @@ mismo grafo, las cinco E1 dieron probabilidades entre
 frente a {th[0]['probability_Luby']:.3f} de Luby. Los tres grafos nuevos se
 presentan arriba, y la matriz completa evita reducir la explicación a ese caso.
 No se mezcló ninguna observación histórica con las nuevas.
+
+Los quince contrastes del grafo histórico con datos nuevos, bajo su familia
+Holm separada, dieron:
+
+{join(strata_tables['historical-replication'])}
 
 ## P9. ¿Cómo se relacionan candidatos y leyes completas?
 

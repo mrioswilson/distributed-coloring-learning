@@ -212,14 +212,15 @@ def main():
             for j,d in enumerate(DS):
                 a=[g for g in secondary if g['n']==n and g['delta']==d]
                 if not a:continue
-                q,ql,qh=prob(labels,a,'used_le_delta');p,pl,ph=prob(['Luby'],a,'used_le_delta');z[i,j]=q-p
-                annotation='A ≡ 1\n(list bound)' if capacity_bound(a[0]['degrees'])['A_deterministically_true'] else f'{q-p:+.2f}\n[{ql-ph:+.2f}, {qh-pl:+.2f}]'
+                q,ql,qh=prob(labels,a,'uses_top_color');p,pl,ph=prob(['Luby'],a,'uses_top_color');z[i,j]=q-p
+                marker='†' if capacity_bound(a[0]['degrees'])['A_deterministically_true'] else ''
+                annotation=f'{q-p:+.2f}{marker}\n[{ql-ph:+.2f}, {qh-pl:+.2f}]'
                 ax.text(j,i,annotation,ha='center',va='center',fontsize=9,color='white' if abs(q-p)>.65 else 'black')
         im=ax.imshow(z,vmin=-1,vmax=1,cmap='RdBu_r',aspect='auto');ax.set(xticks=range(4),xticklabels=DS,yticks=range(len(sns)),yticklabels=sns,xlabel='Maximum degree Δ',ylabel='n',title=NAMES[arch])
         ax.set_title(NAMES[arch],fontsize=12);ax.tick_params(labelsize=10)
         ax.xaxis.label.set_size(11);ax.yaxis.label.set_size(11)
-    fig.colorbar(im,ax=axes,shrink=.85,label='Event probability difference')
-    fig.suptitle('Secondary irregular cohort: one graph × five checkpoints\nEvents forced by local lists are labeled explicitly',fontsize=12)
+    fig.colorbar(im,ax=axes,shrink=.85,label='P(model: color Δ occurs) - P(Luby: color Δ occurs)')
+    fig.suptitle('11. Secondary irregular cohort: top-color differences\n† Local lists force A ≡ 1; one graph × five checkpoints',fontsize=12)
     save(fig,'factorial-11-irregular-cohort')
 
     intervention_path=OUT/'candidate-intervention/results.json'

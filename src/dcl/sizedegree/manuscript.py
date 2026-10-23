@@ -229,6 +229,16 @@ therefore force $U\le d$ under every generator (for example $U\le44$ on the
 content in these cells; the full test, top-color event and other profiles
 remain informative targets. Irregular results are not pooled with regulars.
 '''
+    irregular_counts=[next(r for r in s['counts'] if r['stratum']=='secondary' and r['architecture']==arch) for arch in ARCHES]
+    text+='\nIn the separate 120-hypothesis irregular family, the V2/old-MMD rejection counts are '
+    text+='; '.join(f"{NAMES[r['architecture']]}: {r['robust']}/40 versus {r['old']}/40" for r in irregular_counts)+'. '
+    text+=r'''Figure~\ref{fig:factorial-irregular} reports top-color appearance differences,
+which retain information when missing-color occupancy is forced by the lists.
+Its fixed-checkpoint mean intervals are linear images of the original
+simultaneous elementary CP bounds; the shared teacher enters once. One graph
+per irregular cell limits generalization, and maximum degree does not specify
+its full palette-capacity profile.
+'''
     iv=intervention_summary()
     if iv and iv['cells']:
         text+=f'''
@@ -304,7 +314,8 @@ nonrejections establish no approximate equivalence.
       ('06-used-colors','used','Occupancy distributions on three new priority graphs and the historical graph with independent fresh data.'),
       ('07-checkpoints','checkpoints','All five checkpoints; faint points retain individual graph variation.'),
       ('08-target-replication','replication','Independent priority-case E1 replications, without pooling historical outcomes.'),
-      ('09-candidates-and-global-law','candidates','Same-state candidate quadrature and independent final samples: association does not identify causality.')]
+      ('09-candidates-and-global-law','candidates','Same-state candidate quadrature and independent final samples: association does not identify causality.'),
+      ('11-irregular-cohort','irregular','Separate irregular cohort: top-color appearance risk differences and simultaneous CP envelopes, averaged over the five fixed checkpoints. A dagger marks list profiles that force the missing-color event A to be true under every completed generator. All eight graphs are retained.')]
     if iv and iv['cells']:
         captions.append(('12-candidate-intervention','intervention','Separate exploratory candidate-channel intervention on four priority graphs. The supplementary witness/coupling family gives simultaneous 95 percent upper bounds for intervened versus Luby and lower effect bounds for original versus intervened. All original-policy tests remain separate.'))
     for name,label,caption in captions:
