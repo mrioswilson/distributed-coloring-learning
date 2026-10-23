@@ -59,7 +59,14 @@ time, trainable parameters and RNG states in the checkpoint. Sampling with
 replacement has no completed-epoch interpretation: `epochs=null` is explicit.
 Local-state identity includes the actual random inputs. Trajectories are
 correlation clusters; root labels are not independent experimental replicas.
-FLOPs are unmeasured and marked missing, never synthesized from time.
+Distinct-local-state counts refer to stored rooted observation tensors, rather
+than a minimal quotient after removing every feature ignored by a learned core.
+Full FLOPs are unmeasured and marked missing, never synthesized from time.
+A separate post hoc Torch profiler calibration estimates supported dominant
+forward/backward arithmetic by phase and exact update counts; it explicitly
+excludes encoder, interpreter, optimizer and unsupported elementwise/reduction
+operations. `flops-estimates.json` is an estimate of those operations, not a
+complete hardware instruction or total-FLOP measurement.
 
 ## Seeds, splits, families and independence
 
@@ -143,6 +150,10 @@ Final exact trajectories already checked during the resource adjustment are
 reused unchanged; no student had accessed any confirmation result. The final
 design and source/config hashes are frozen only after exact validation. Runtime
 and any resource-limit deviations must be disclosed in the results.
+This is a local prospective freeze with executable hash checks, not an
+independently timestamped external preregistration. The frozen artifacts were
+committed publicly after main training had started; that distinction is retained
+for audit rather than claiming an earlier external registration.
 
 ## Strict PASS and candidate selection
 
@@ -218,9 +229,36 @@ teacher-specific reference banks. Nonrejection never proves equality. No
 distributional conclusion for the new query-budgeted cohort is inferred from
 historical tests or from this functional confirmation.
 
+The separate `sample-complexity-law.json` supplement fixes two small graphs,
+128 independent trajectories per bank, 9,999 permutations and a complete
+210-hypothesis Holm family. Checkpoints are selected by first common perfect
+development budget, otherwise the maximum grid budget, without consulting final
+confirmation. The native K4 robust allocator and split selection/evaluation
+instrument are reused unchanged; fewer than four successful rows gives p=1.
+Futility sets all reported p-values to one unless the full permutation budget
+is completed. It cannot generate a rejection.
+
+The small-model supplement in `sample-complexity-capacity.json` tests all seven
+budgets for LUBY/JP/BE at the same 500 updates and five seeds. Its B=3,000
+checkpoints are the existing capacity controls, reused with their identities.
+Other budgets start afresh. It selects one development candidate per teacher
+and uses an independent namespace for supplemental 1,000-case-per-policy final
+batteries, validating those tapes with exact teachers first. It is exploratory,
+has separate frozen checkpoints/consumption markers and never revises a primary
+result or the main final battery.
+
 ## Reproduction
 
-From the repository root, in the documented Torch/NumPy environment:
+For a new scientific replication, use the documented Torch/NumPy environment
+and an isolated checkout/namespace:
+
+```bash
+python scripts/replicate-sample-complexity.py --directory /absolute/path/to/new-replication --namespace independent-replication-01
+```
+
+The wrapper preserves the published checkout and frozen exports. It runs the
+stages below in the **new** experiment. For the published cohort, fetch the
+runtime and run verification/reporting instead of overwriting pilot/design:
 
 ```bash
 python -m pytest -q tests/test_samplecomplexity.py
@@ -230,6 +268,10 @@ PYTHONPATH=src python -m dcl.samplecomplexity.runner validate
 PYTHONPATH=src python -m dcl.samplecomplexity.runner train
 PYTHONPATH=src python -m dcl.samplecomplexity.runner controls
 PYTHONPATH=src python -m dcl.samplecomplexity.runner confirm
+PYTHONPATH=src python -m dcl.samplecomplexity.capacity
+PYTHONPATH=src python -m dcl.samplecomplexity.law
+PYTHONPATH=src python -m dcl.samplecomplexity.diagnostics
+python scripts/estimate-sample-complexity-flops.py
 PYTHONPATH=src python -m dcl.samplecomplexity.report
 ```
 

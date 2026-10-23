@@ -97,6 +97,15 @@ LocalPaletteTransformer replaces that palette scorer with two-head attention
 within each node's palette; its graph communication remains learned messages.
 All three receive identical observations, native interpreters and losses.
 
+The original canonical E1 was anonymous. However, the **previous integrated
+70-model native cohort already had numeric ID differences for JP/GM, native
+phase/schedule context, and BE polynomial/equality helpers** through RootedE1.
+Those particular historical failures cannot accurately be described as
+training an entirely ID-blind JP or algebra-blind BE. The present sign adapter
+changes numerical representation/conditioning, and the present data/loss and
+optimization protocol also change. Its role is not evidence of a previously
+missing information bit in that integrated cohort.
+
 For JP and GM, `relational_arrays` maps ID channels so the inherited message
 code reads exactly −1/0/+1 comparisons. The transformation preserves every
 center-to-neighbor comparison in the first exchange and the root's neighbor

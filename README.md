@@ -12,8 +12,9 @@ Start with the [complete paper](paper/PAPER_DRAFT.md), its
 The [evidence ledger](results/integration/evidence-ledger.json) maps principal
 claims to code, configurations, checkpoint identities and evidence boundaries.
 
-Work is on `integration/scientific-audit-20261023`. Original branches and
-negative results remain preserved; main is not overwritten. The
+The integrated historical baseline is `integration/scientific-audit-20261023`.
+The query-budgeted study is on `research/sample-complexity-20261023`. Original
+branches and negative results remain preserved; main is not overwritten. The
 [preservation manifest](docs/integration/PRESERVATION_MANIFEST.md) and
 [recovery verification](docs/integration/RELEASE_ASSETS.json) identify the
 remote recovery point made before Pedro Montealegre's work was integrated.
@@ -25,6 +26,8 @@ remote recovery point made before Pedro Montealegre's work was integrated.
 3. How do these answers change across teachers?
 4. Which properties transfer across size, degree, palette and graph family?
 5. Can a functionally successful policy change the complete solution law?
+6. How many acquired teacher decisions allow all five independently trained
+   policies to complete a frozen benchmark with zero failures?
 
 The evidence supports the last separation on specified fixed cohorts. We do
 not infer equality from nonrejection, universal termination from testing, or
@@ -99,7 +102,7 @@ Dependency ranges support installation. Cross-platform bitwise training
 identity has not been established.
 
 ```bash
-git clone --branch integration/scientific-audit-20261023 https://github.com/mrioswilson/distributed-coloring-learning.git
+git clone --branch research/sample-complexity-20261023 https://github.com/mrioswilson/distributed-coloring-learning.git
 cd distributed-coloring-learning
 python -m venv .venv
 source .venv/bin/activate
@@ -110,6 +113,78 @@ Run subsequent commands from the repository root. The paper extra supplies
 Pandoc 3.9 and PDFium bindings. Tectonic is installed separately below; its
 first use may download TeX resources. Use recorded versions when examining
 numerical differences.
+
+## Sample complexity: strict five-seed benchmark
+
+The [information audit](docs/TEACHER_MODEL_INFORMATION_COMPATIBILITY.md),
+[frozen protocol](docs/SAMPLE_COMPLEXITY_PROTOCOL.md), and
+[P1–P12 results](docs/SAMPLE_COMPLEXITY_RESULTS.md) define the new central study.
+It uses seven teachers, three palette architectures, all seven supervision
+budgets from 1,000 to 1,000,000 and five independent training seeds: 735 fresh
+main trainings. A query is one acquired node/state/action-component label;
+replay is counted separately. Anonymous and extended information regimes are
+reported separately. A package is PASS only if **all five policies complete
+all 1,000 final executions each without failure**. High average success never
+substitutes for this gate. This finite empirical result is not universal
+correctness or a theoretical sample-complexity bound.
+
+To rebuild curves/tables and verify exported evidence without training:
+
+```bash
+PYTHONPATH=src python -m dcl.samplecomplexity.report
+python scripts/verify-sample-complexity.py
+python -m pytest -q tests/test_samplecomplexity.py
+```
+
+To restore the separate new caches, negative checkpoints, optimizer/RNG states
+and raw development rows from the [study release](https://github.com/mrioswilson/distributed-coloring-learning/releases/tag/sample-complexity-2026-10-23):
+
+```bash
+python scripts/fetch-sample-complexity.py
+python scripts/verify-sample-complexity.py --runtime
+```
+
+The fetcher verifies archive/member hashes and refuses conflicting files.
+These checkpoints live under `data/sample-complexity-v1/`, separate from the
+70 historical integration checkpoints. Primary raw final/exact execution rows,
+frozen batteries, individual training/control summaries and law banks are
+versioned under `results/sample-complexity/`.
+
+For a new independent experiment, create an isolated checkout and namespace
+with the same installed Python environment:
+
+```bash
+python scripts/replicate-sample-complexity.py \
+  --directory /absolute/path/to/new-replication \
+  --namespace independent-replication-01
+```
+
+This preserves the published cohort and runs the full sequence below in the
+new checkout. Do not rerun acquisition/design over the published frozen
+exports; use fetch/verify for that cohort. The stages, for a new experiment:
+
+```bash
+PYTHONPATH=src python -m dcl.samplecomplexity.runner pilot
+PYTHONPATH=src python -m dcl.samplecomplexity.runner design
+PYTHONPATH=src python -m dcl.samplecomplexity.runner validate
+PYTHONPATH=src python -m dcl.samplecomplexity.runner train
+PYTHONPATH=src python -m dcl.samplecomplexity.runner controls
+PYTHONPATH=src python -m dcl.samplecomplexity.runner confirm
+PYTHONPATH=src python -m dcl.samplecomplexity.capacity
+PYTHONPATH=src python -m dcl.samplecomplexity.law
+PYTHONPATH=src python -m dcl.samplecomplexity.diagnostics
+python scripts/estimate-sample-complexity-flops.py
+PYTHONPATH=src python -m dcl.samplecomplexity.report
+python scripts/verify-sample-complexity.py --runtime
+python scripts/build-integrated-paper.py
+```
+
+Completed frozen training/checkpoint results are reused, not renamed as fresh
+trainings. A consumed final attempt cannot rerun automatically. For a new
+scientific replication use an independent namespace/root and a new frozen
+confirmation battery; editing the consumed protocol is rejected. Model controls
+and the law supplement are separate exploratory analyses and never change the
+functional gate or choose a second final candidate.
 
 ## Quick reproduction from Git evidence
 

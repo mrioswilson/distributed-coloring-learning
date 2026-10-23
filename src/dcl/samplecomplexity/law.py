@@ -89,7 +89,8 @@ def run(root="data/sample-complexity-v1"):
             b=next((b for b in grid if sum(r["development"]["pass_all"] for r in rs if r["identity"]["budget"]==b)==5),max(grid))
             candidates.append(dict(teacher=t,architecture=a,budget=b))
     freeze(OUT/"frozen-plan.json",dict(plan=plan,selection=candidates,main_preregistration_sha256=file_hash("results/sample-complexity/preregistration.json"),
-               source_hashes={str(p):file_hash(p) for p in [Path(__file__),Path("src/dcl/integration/native_statistics.py"),Path("src/dcl/robustdist/stats.py")]},
+               source_hashes={str(p.relative_to(Path.cwd()) if p.is_absolute() else p):file_hash(p) for p in
+                              [Path(__file__),Path("src/dcl/integration/native_statistics.py"),Path("src/dcl/robustdist/stats.py")]},
                note="Separate exploratory supplement; independent of and unable to select final certification candidates"))
     torch.set_num_threads(1)
     for t in main["teachers"]:

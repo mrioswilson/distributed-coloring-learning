@@ -103,6 +103,18 @@ def test_interactive_labels_preserve_bad_trajectories_and_budget(config,tmp_path
 
 
 @pytest.mark.parametrize("teacher",TEACHERS)
+def test_autonomous_inference_never_queries_teacher(teacher,monkeypatch):
+    import dcl.samplecomplexity.evaluation as evaluation
+    calls=[]
+    def forbidden(*args,**kwargs):
+        calls.append(True);raise AssertionError("Oracle action requested during inference")
+    monkeypatch.setattr(evaluation,"teacher_choices",forbidden)
+    model=initialize(teacher,"normalized",501)
+    rows,_=evaluate(model,teacher,[(nx.path_graph(4),dict(case_id="no-oracle",tape_seed=501))])
+    assert not calls and rows[0]["no_technical_error"]
+
+
+@pytest.mark.parametrize("teacher",TEACHERS)
 def test_query_counts_all_phases_and_replay_acquires_nothing(config,tmp_path,teacher,monkeypatch):
     folder=tmp_path/teacher
     m=acquire(config,teacher,101,600,folder)
@@ -125,7 +137,8 @@ def test_query_counts_all_phases_and_replay_acquires_nothing(config,tmp_path,tea
 @pytest.mark.parametrize("architecture",["normalized","deepsets","transformer"])
 def test_order_preserving_ids_give_identical_policy_actions(teacher,architecture):
     p=ColoringProgram(nx.cycle_graph(8),teacher,19)
-    p.ids=np.array([1,3,5,7,9,11,13,15]); p.order=np.argsort(p.ids)
+    # Compress IDs monotonically so the native blocks/order remain valid.
+    p.ids=2*np.argsort(np.argsort(p.ids))+1
     state=p.snapshot(); arrays=encode_roots(state,p.neighbors,np.arange(8))
     state.ids=state.ids*100+13
     other=encode_roots(state,p.neighbors,np.arange(8))

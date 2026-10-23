@@ -8,6 +8,7 @@ import shutil
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.ticker import PercentFormatter
 import numpy as np
 
 from dcl.study.storage import atomic_json, file_hash
@@ -29,8 +30,8 @@ def figures(records,config):
     colors=plt.get_cmap("tab10").colors
     for regime in ("A","B"):
         teachers=[t for t in config["teachers"] if REGIME[t]==regime]
-        for metric in ("success","fidelity","rounds"):
-            fig,axes=plt.subplots(len(teachers),3,figsize=(13,2.6*len(teachers)),squeeze=False,sharex=True)
+        for metric in ("success","failures","fidelity","rounds"):
+            fig,axes=plt.subplots(len(teachers),3,figsize=(10,2.8*len(teachers)),squeeze=False,sharex=True)
             for i,t in enumerate(teachers):
                 for j,a in enumerate(config["architectures"]):
                     ax=axes[i,j]
@@ -38,18 +39,24 @@ def figures(records,config):
                         rs=sorted([r for r in records if (r["identity"]["teacher"],r["identity"]["architecture"],r["identity"]["seed"])==(t,a,s)],key=lambda r:r["identity"]["budget"])
                         x=[r["identity"]["budget"] for r in rs]
                         if metric=="success": y=[r["development"]["success_rate"] for r in rs]
+                        elif metric=="failures": y=[r["development"]["executions"]-r["development"]["successes"] for r in rs]
                         elif metric=="fidelity": y=[r["fidelity"]["action_fidelity"] for r in rs]
                         else: y=[r["development"]["mean_native_steps"] for r in rs]
-                        ax.plot(x,y,"o-",lw=1,ms=3,color=colors[si],label=str(s))
+                        ax.plot(x,y,marker=("o","s","^","x","+")[si],ls="-",lw=1,ms=4,color=colors[si],label=str(s))
                     ax.set_xscale("log");ax.grid(alpha=.2)
                     if metric=="success":
                         ax.axhline(1,color="black",ls="--",lw=.8);ax.set_ylim(-.025,1.045)
                     elif metric=="fidelity": ax.set_ylim(-.025,1.045)
-                    if i==0: ax.set_title(NAMES[a],fontsize=10)
-                    if j==0: ax.set_ylabel(t+"\n"+{"success":"Development success","fidelity":"Teacher-state action fidelity","rounds":"Native steps attempted"}[metric],fontsize=8)
-                    if i==len(teachers)-1: ax.set_xlabel("Maximum acquired component labels B (log)",fontsize=8)
+                    elif metric=="failures":
+                        ax.set_yscale("symlog",linthresh=1);ax.axhline(0,color="black",ls="--",lw=.8)
+                        ax.set_yticks([0,1,3,10,28],labels=["0","1","3","10","28"])
+                    if metric in ("success","fidelity"): ax.yaxis.set_major_formatter(PercentFormatter(1))
+                    ax.set_xticks(config["grid"],labels=("1k","3k","10k","30k","100k","300k","1m"),fontsize=7)
+                    if i==0: ax.set_title(NAMES[a],fontsize=11)
+                    if j==0: ax.set_ylabel(t+"\n"+{"success":"Development success","failures":"Failures (zero required)","fidelity":"Action fidelity","rounds":"Native steps attempted"}[metric],fontsize=10)
+                    if i==len(teachers)-1: ax.set_xlabel("Acquired label budget B (log)",fontsize=10)
             handles,labels=axes[0,0].get_legend_handles_labels()
-            fig.legend(handles,labels,loc="lower center",ncol=5,title="Independent training seed",fontsize=8)
+            fig.legend(handles,labels,loc="lower center",ncol=5,title="Independent training seed",fontsize=9)
             fig.suptitle(f"Regime {regime}: {metric}; five separate unsmoothed development curves",fontsize=11)
             fig.tight_layout(rect=(0,.085,1,.97))
             for ext in ("png","pdf"):
@@ -64,6 +71,7 @@ def figures(records,config):
 
 def analyze(records,certs,config):
     result=[]
+    flop_rows=read(OUT/"flops-estimates.json")["training"] if (OUT/"flops-estimates.json").exists() else []
     for c in certs:
         rs=[r for r in records if r["identity"]["teacher"]==c["teacher"] and r["identity"]["architecture"]==c["architecture"]]
         grid=sorted({r["identity"]["budget"] for r in rs})
@@ -83,8 +91,64 @@ def analyze(records,certs,config):
                  native_parameters=rs[0]["parameters"],total_training_seconds=sum(r["training_seconds"] for r in rs),
                  total_cpu_seconds=sum(r["cpu_seconds"] for r in rs),gpu_seconds=0.,final_failures=dict(final_failures),regressions=regressions,
                  first_individual_development_pass={str(s):next((r["identity"]["budget"] for r in sorted(rs,key=lambda r:r["identity"]["budget"]) if r["identity"]["seed"]==s and r["development"]["pass_all"]),None) for s in config["seeds"]})
+        row["dominant_profiled_flops_estimate"]=sum(f["dominant_profiled_flops_estimate"] for f in flop_rows if
+              f["teacher"]==c["teacher"] and f["architecture"]==c["architecture"]) if flop_rows else None
         result.append(row)
     return result
+
+
+def generalization(records,certifications,root=Path("data/sample-complexity-v1")):
+    """Export family/size/seed outcomes and matched exact-teacher time ratios."""
+    output=[]
+    for record in records:
+        i=record["identity"]
+        source=root/"runs"/i["teacher"].lower()/i["architecture"]/f"s{i['seed']}"/f"b{i['budget']}"/"development.json"
+        if not source.exists():
+            if (OUT/"generalization.json").exists(): return read(OUT/"generalization.json")
+            continue
+        rows=read(source)
+        exact={r["case_id"]:r for r in read(OUT/"exact"/i["teacher"].lower()/f"development-s{i['seed']}.json")}
+        for family,n in sorted({(r["family"],r["n"]) for r in rows}):
+            group=[r for r in rows if (r["family"],r["n"])==(family,n)]
+            good=[r for r in group if all(r[k] for k in ("proper","palette","invariants","terminated","no_technical_error","no_cutoff","terminal_correct"))]
+            output.append(dict(split="development",**i,family=family,n=n,executions=len(group),successes=len(good),
+                          failures=dict(Counter(r["failure"] for r in group if r not in good)),
+                          mean_attempted_steps=float(np.mean([r["native_steps"] for r in group])),
+                          successful_mean_step_ratio_to_matched_exact=float(np.mean([r["native_steps"]/exact[r["case_id"]]["native_steps"] for r in good])) if good else None,
+                          source_sha256=file_hash(source)))
+    for c in certifications:
+        for seed in c["per_seed"]:
+            source=OUT/"final"/c["teacher"].lower()/c["architecture"]/f"s{seed}.json"
+            rows=read(source);exact={r["case_id"]:r for r in read(OUT/"exact"/c["teacher"].lower()/f"final-s{seed}.json")}
+            for family,n in sorted({(r["family"],r["n"]) for r in rows}):
+                group=[r for r in rows if (r["family"],r["n"])==(family,n)]
+                good=[r for r in group if all(r[k] for k in ("proper","palette","invariants","terminated","no_technical_error","no_cutoff","terminal_correct"))]
+                output.append(dict(split="final",teacher=c["teacher"],architecture=c["architecture"],seed=int(seed),budget=c["candidate_budget"],
+                          family=family,n=n,executions=len(group),successes=len(good),
+                          failures=dict(Counter(r["failure"] for r in group if r not in good)),
+                          mean_attempted_steps=float(np.mean([r["native_steps"] for r in group])),
+                          successful_mean_step_ratio_to_matched_exact=float(np.mean([r["native_steps"]/exact[r["case_id"]]["native_steps"] for r in good])) if good else None,
+                          source_sha256=file_hash(source)))
+    atomic_json(OUT/"generalization.json",output)
+    return output
+
+
+def efficiency(certifications):
+    rows=[]
+    for c in certifications:
+        for seed in c["per_seed"]:
+            actual=read(OUT/"final"/c["teacher"].lower()/c["architecture"]/f"s{seed}.json")
+            exact={r["case_id"]:r for r in read(OUT/"exact"/c["teacher"].lower()/f"final-s{seed}.json")}
+            good=[r for r in actual if r["terminal_correct"] and r["invariants"] and r["no_cutoff"] and r["no_technical_error"]]
+            rows.append(dict(teacher=c["teacher"],architecture=c["architecture"],seed=int(seed),
+                    budget=c["candidate_budget"],executions=len(actual),successful=len(good),
+                    mean_attempted_native_steps=float(np.mean([r["native_steps"] for r in actual])),
+                    exact_mean_native_steps=float(np.mean([exact[r["case_id"]]["native_steps"] for r in actual])),
+                    success_conditional_mean_paired_step_ratio=float(np.mean([r["native_steps"]/exact[r["case_id"]]["native_steps"] for r in good])) if good else None,
+                    measured_cohort_wall_seconds=c["per_seed"][seed]["seconds"],
+                    scope="Within-teacher native steps; failed attempted cost retained separately; wall time includes feature encoder/interpreter"))
+    atomic_json(OUT/"native-efficiency.json",rows)
+    return rows
 
 
 def primary_table(rows,regime=None):
@@ -209,21 +273,217 @@ figure sources accompany this finite empirical statement.
     return text
 
 
+def questions(rows,records,controls,config):
+    def status(t,a):
+        r=next(r for r in rows if r["teacher"]==t and r["architecture"]==a)
+        return f"{NAMES[a]}: B*={r['validated_budget']:,}, 5/5 PASS" if r["status"]=="PASS" else f"{NAMES[a]}: NOT CERTIFIED, {r['seeds_pass']}/5 confirmed; protocol threshold unachieved through {r['max_budget_evaluated']:,}"
+    regressions=sum(len(r["regressions"]) for r in rows)
+    text="# Sample complexity results and required scientific questions\n\n"
+    text+="**P1. How much Luby supervision?**\n\n"+"; ".join(status("LUBY",a) for a in NAMES)+". These are acquired component-label budgets under the frozen optimization/selection procedure, not trajectories or gradient updates.\n\n"
+    text+="**P2. How does the budget change across teachers?**\n\n"+primary_table(rows)+"\nRegimes A/B must be interpreted separately; exact counts, per-seed component queries, failures and CPU costs are in `results-table.json`/`.csv`.\n\n"
+    text+="**P3. Which information adaptations are required?**\n\nJP/GM receive edge order signs; BE receives auxiliary colors, phase/bound/target, local polynomial evaluation and raw equality relations; GM/greedy retain external scheduling. Luby/Johansson/ColorTrials use the anonymous regime. The full sufficiency/indistinguishability analysis is in `docs/TEACHER_MODEL_INFORMATION_COMPATIBILITY.md`.\n\n"
+    text+="**P4. Do adaptations resolve earlier JP/BE failures?**\n\n"+"; ".join(status(t,a) for t in ("JP","BE_BASE_D3") for a in NAMES)+". These statements concern the new complete training/interface package. The previous integrated 70-model cohort already had numeric IDs and BE helpers. There is no matched raw-ID ablation at identical data/loss/updates, so a change cannot be attributed uniquely to the adapter. BE's arithmetic remains supplied.\n\n"
+    if (OUT/"difficult-teacher-diagnostics.json").exists():
+        diagnostics=read(OUT/"difficult-teacher-diagnostics.json");stages=Counter()
+        for r in diagnostics["autonomous_failures"]:
+            if r["teacher"]=="BE_BASE_D3":
+                for f in r["first_failure_phase"]: stages[f["phase"]]+=f["count"]
+        text+=f"Across all recorded BE development runs, first-failure counts by stage are {dict(stages)}. The separate common-state component audit at B=1,000,000 localizes agreement by phase and auxiliary-target sign; it does not identify a single causal failure mechanism.\n\n"
+    text+=f"**P5. Does training seed matter?**\n\nAll five curves are retained. There are {regressions} observed adjacent-budget success declines across individual seed curves; no monotonicity assumption is imposed. Per-cell `first_individual_development_pass`, `development_perfect_seeds` and final summaries expose variability, including when only a subset of seeds passes. Five seeds cannot characterize all possible training runs.\n\n"
+    winners=[]
+    for t in config["teachers"]:
+        good=[r for r in rows if r["teacher"]==t and r["status"]=="PASS"]
+        if good:
+            best=min(r["validated_budget"] for r in good)
+            winners.append(f"{t}: {', '.join(NAMES[r['architecture']] for r in good if r['validated_budget']==best)} at {best:,}")
+        else: winners.append(f"{t}: no certified ordering")
+    text+="**P6. Which architecture needs least supervision?**\n\n"+"; ".join(winners)+". Ties and unachieved thresholds prevent a universal ranking. Earlier budgets that failed development were not all final-confirmed.\n\n"
+    text+="**P7. Are smaller models more sample efficient?**\n\nAt the same B=3,000 and 500 updates, these development-only controls compare matched label prefixes:\n\n"+control_table(controls,records,config)+"\n"
+    if (OUT/"capacity/certification.json").exists():
+        small=read(OUT/"capacity/certification.json")
+        text+="The separate small-model seven-budget grid has independent final confirmation:\n\n"+markdown_table(["Teacher","Parameters","Small validated B*","Seeds PASS"],
+                     [[r["teacher"],r["parameters"],f"{r['validated_budget']:,}" if r["validated_budget"] is not None else "NOT CERTIFIED through 1,000,000",f"{r['seeds_pass']}/5"] for r in small])+"\n"
+    text+="Small-model conclusions apply to these matched training budgets and independent finite final batteries. Only one no-message budget is tested. Neither experiment establishes theoretical minimality.\n\n"
+    text+="**P8. What changes with fixed labels and more optimization?**\n\nCompare the 500/1,500-update columns above, with identical labels and initialization per seed. The complete control records retain per-seed development success and time. Improvements identify a finite optimization-budget sensitivity, not a universal explanation of every failure. No extra teacher query is charged for replay.\n\n"
+    text+="**P9. Does interactive supervision help?**\n\nThe last column uses the same maximum B=3,000 and 500 total updates, with one 1,500-label passive / 1,500-label admissible on-policy aggregation. All seeds and failed acquisition trajectories are retained. Adam resets at aggregation; this control does not isolate distribution choice from every optimizer-history effect. It is development-only and supports no final-certification or general DAgger efficiency claim.\n\n"
+    law=read(OUT/"law/results.json") if (OUT/"law/results.json").exists() else None
+    text+="**P10. Does functional 100% imply action, time or global-law fidelity?**\n\nNo. The functional gate constrains validity, invariants and completion; it does not require matching teacher choices, native step counts or probabilities of each complete coloring. These are separate measured outcomes. "
+    if law:
+        passed={(r["teacher"],r["architecture"],r["validated_budget"]) for r in rows if r["status"]=="PASS"}
+        conditional=sum(r["reject"] and (r["teacher"],r["architecture"],r["budget"]) in passed for r in law["rows"])
+        text+=f"The independent exploratory law supplement has {law['testable']}/210 testable hypotheses and {law['rejections']} Holm rejections; {conditional} rejections concern policies in functionally certified packages. Comparisons condition on successful rows; nonrejection never establishes equality."
+    else: text+="The independent law supplement is not complete; no new-cohort law conclusion is asserted."
+    text+="\n\n**P11. What is robust across all five seeds?**\n\n"+", ".join(f"{r['teacher']}/{r['architecture']} at {r['validated_budget']:,}" for r in rows if r["status"]=="PASS")+". This is robustness across these five trainings and batteries, not a guarantee for unseen initializations or all graphs. Every policy retains its own 1,000-run uncertainty statement.\n\n"
+    text+="**P12. What belongs in the main paper and appendix?**\n\nMain text: information regimes, query unit, strict five-seed gate, teacher-specific horizons, primary B* table, unsmoothed success curves, and concise fixed-label/interactive controls. Appendix and repository: all per-seed/per-budget counts, phase fidelity, native-step curves, checkpoint/data manifests, negative trajectories, source/RNG hashes, law-test details and resource/replay audits. No censored or missing cell is filled by extrapolation.\n"
+    return text
+
+
+def audit_section(rows,records,controls,config):
+    certified=sum(r["status"]=="PASS" for r in rows)
+    attempts=sum(r["final_attempted"] for r in rows)
+    text=f"""## Sample complexity and learnability: independent audit extension
+
+The new study contains {len(records)} controlled-budget fresh main trainings,
+21 teacher/architecture packages and five training replicas per package.
+{attempts} packages nominated one development-selected frozen candidate;
+{certified} achieved the strict five-seed PASS. This section supersedes no
+historical result and makes no previous checkpoint a query-controlled training.
+
+### Observation, information, data and optimization audit
+
+An observation is an acquired node/state/action-component label. Normal phases
+count participation, proposal and teacher confirmation separately; BE Linial
+point and GM conflict mark count separately in their phases. Root identities,
+trajectory clusters, native step, global state hashes, component counts,
+cache/prefix hashes, distinct observations, trajectories, graphs, bytes,
+presentations and unused labels are exported. Simulator computations are a
+separate cost and are not silently called supervised labels. A max-budget
+library is cached once per teacher/seed; policies access only their prefix.
+Optimization replays stored labels and never acquires counterfactual targets.
+
+The information audit is `docs/TEACHER_MODEL_INFORMATION_COMPATIBILITY.md`.
+Regime A is anonymous; regime B retains each native program's IDs/auxiliary
+colors/phases/scheduler. All three architectures receive the same observations.
+JP/GM use explicit relative order; BE's finite-field arithmetic is supplied,
+with learned point/recolor decisions. No exact availability, eligibility,
+winning color, student conflict mark or safety shield enters inference.
+The anonymous two-node JP counterexample proves an insufficiency of a particular
+interface, not a failure of neural learning generally. Interface sufficiency
+does not establish fixed-width universal representability.
+
+All seven query budgets through 1,000,000 are evaluated from fresh seed-matched
+initialization at 500 Adam updates, batch 64 and lr .001. Phase-stratified
+sampling is fixed before results; sampling with replacement has effective
+passes and no literal epoch count. Five seeds control initialization, data
+generation and batch order; saved Python/NumPy/Torch states permit audit.
+Fixed-label 1,500-update, small/no-message and one-aggregation interactive
+controls are exploratory and use development only. Interactive queries require
+proper native states and retain failed learner acquisition trajectories.
+
+### Evaluation, results, failures and statistical evidence
+
+Training n=8–24, development n=28/36 and final n=32/48/64 have disjoint graph
+sizes and independent namespaces/tapes. Seven native-valid families include
+symmetry and four-color-necessary K4 unions. Every graph/ID/tape and deadline
+was fixed and exact-teacher-validated before student confirmation. Sequential,
+priority, randomized and algebraic native steps have distinct semantics;
+within-teacher time ratios are meaningful, cross-teacher raw-round rankings
+are not. The previous common 128-step cutoff is not reused as a universal rule.
+
+Each final policy must complete all 1,000 preregistered executions with proper
+palette-valid terminal coloring, all native invariants, no technical error,
+no cutoff and no incorrect terminal state. Missing/duplicate case IDs fail.
+GM's temporary conflicts are legal; BE auxiliary improperness is a failure.
+Unsafe predictions are applied and recorded, without repair or tape replacement.
+PASS requires conjunction across all five independent trainings. The consumed
+attempt marker and frozen five checkpoint hashes prevent final-guided retries.
+No candidate and failed confirmation remain distinct NOT CERTIFIED states.
+
+Primary tables and full per-seed query/failure/compute fields are
+`results/sample-complexity/results-table.json` and `.csv`. Raw final/exact
+executions, batteries, training/control records, regressions and figure hashes
+are versioned; full teacher caches/checkpoints/development rows are in the
+separate verified runtime archive. `docs/SAMPLE_COMPLEXITY_RESULTS.md` answers
+P1–P12 using those actual observations. The study's NOT CERTIFIED thresholds
+are censored under its finite optimizer/selection procedure, not proof of an
+intrinsic monotone sample requirement or mathematical impossibility.
+
+With zero failures in one policy's 1,000 independent executions the one-sided
+95% lower bound is 0.9970087504549047. Under fixed heterogeneous strata the
+zero-failure arithmetic–geometric-mean argument bounds their allocation-weighted
+mean. No policy receives an n=5,000 interval by pooling training replicas.
+These are not simultaneous confidence guarantees over all tested cells.
+Five seeds limit inference about the distribution of possible trainings.
+Correlated trajectory roots are never counted as independent training replicas.
+
+### Does 100% Empirical Success Mean the Algorithm Has Been Learned?
+
+It means that these five frozen policies completed these finite independent
+benchmark batteries without a recorded functional failure. Conditional on the
+declared distribution/independence assumptions it also supports the separate
+per-policy statistical statements. It does not prove identity to the teacher,
+all-input correctness, termination on every random tape, matching complexity,
+exact solution-law equality or architectural minimality. A different proper
+policy can choose different actions and a different output law while passing.
+Nonrejection of a robust distribution test is not evidence of exact equality.
+
+Mathematical guarantees would require an explicit domain and computation model,
+formal equivalence or verified safety/progress predicates on every reachable
+local state, sound composition across graph nodes and rounds, treatment of
+real/finite precision boundaries and supplied arithmetic/schedulers, and a
+termination argument valid under the specified randomness. A finite discrete
+domain could support exhaustive verified state enumeration; unbounded domains
+need symbolic invariants and a transfer theorem. Learning-theoretic guarantees
+also need justified coverage/complexity/stability assumptions and a proof for
+the actual algorithm. Convergence or the finite curves supply none of these
+automatically.
+For randomized anonymous teachers, a valid finite tape can keep symmetric
+vertices waiting or colliding in proposals for the entire deadline; universal
+finite-deadline termination on every tape is generally false even for the exact
+teacher. A mathematical theorem must specify almost-sure termination, an
+explicit tail probability, or additional deterministic progress assumptions.
+
+### Threats, causal limits and interpretation
+
+Teacher-specific extra information and coded schedulers mean regimes are
+different learning problems. Changes from historical JP/BE also change the
+loss and controlled data/optimizer budget; an improved package does not isolate
+the causal effect of relational IDs. BE arithmetic and greedy/GM scheduling
+remain supplied. The no-message ablation changes available information and
+must not be labeled a pure parameter-count intervention. Greater B at fixed
+updates can increase unused data and cause regressions. The control changes
+only updates at one B and cannot exclude every representational/generalization
+failure. One interactive aggregation has limited coverage and an Adam reset.
+Development contains 28 cases per seed, so candidate screening can be weak;
+the independent final gate explicitly tests that uncertainty. Graph sizes,
+families, finite ID space, finite tapes and only five training replicas bound
+all conclusions. Native K4/degree-three results do not certify arbitrary local
+palettes, degree 200 or high-degree BE recursion. CPU/GPU time and parameter
+counts remain separate. Full FLOPs are unmeasured; the post hoc profiler
+estimate in `flops-estimates.json` counts supported dense forward/backward
+arithmetic by phase and excludes encoder, optimizer and uncounted
+elementwise/reduction operations. It is not total hardware FLOPs.
+
+The robust coloring-law supplement has its own fixed plan, independent banks,
+teacher-specific reference and native K4 allocator. It conditions on successful
+rows, retains functional failure counts, fixes the selection/evaluation split
+before permutations and adjusts over all 210 hypotheses, with untestable cells
+set to p=1. Conservative futility cannot create a rejection. It is exploratory
+and never enters the functional gate or checkpoint selection. Historical law
+results are not substituted for new policy evidence.
+
+"""
+    return text
+
+
 def run():
     records=read(OUT/"training.json");config=read(OUT/"design.json")["config"]
     certs=read(OUT/"certification.json")
     controls=read(OUT/"controls.json") if (OUT/"controls.json").exists() else []
     rows=analyze(records,certs,config)
+    generalization(records,certs)
+    efficiency(certs)
     atomic_json(OUT/"results-table.json",rows)
     with (OUT/"results-table.csv").open("w",newline="") as f:
         keys=["teacher","architecture","regime","status","validated_budget","candidate_budget","seeds_pass","final_attempted",
-              "max_budget_evaluated","native_parameters","total_training_seconds","total_cpu_seconds","gpu_seconds","final_failures",
+              "max_budget_evaluated","native_parameters","total_training_seconds","total_cpu_seconds","gpu_seconds","dominant_profiled_flops_estimate","final_failures",
               "development_perfect_seeds","actual_queries_by_budget"]
         writer=csv.DictWriter(f,fieldnames=keys);writer.writeheader()
         for r in rows: writer.writerow({k:json.dumps(r[k],sort_keys=True) if isinstance(r[k],dict) else r[k] for k in keys})
     figures(records,config)
     section=paper_section(rows,records,controls,config)
+    law=read(OUT/"law/results.json") if (OUT/"law/results.json").exists() else None
+    if law:
+        section+=f"The independent exploratory coloring-law supplement tests 210 fixed teacher/checkpoint/graph hypotheses using the audited native K4 robust instrument, split selection/evaluation rows, 9,999 permutations and Holm over the complete family. {law['testable']} comparisons are testable and {law['rejections']} reject. Untestable comparisons retain p=1; conservative futility also cannot create rejection. These are conditional-on-success laws on two fixed small graphs, not equality guarantees or an additional functional PASS condition.\n\n"
+    if (OUT/"capacity/certification.json").exists():
+        small=read(OUT/"capacity/certification.json")
+        section+="The small-model supplement repeats all seven budgets for three representative teachers and uses independent final tapes under the same five-seed gate:\n\n"+markdown_table(["Teacher","Small parameters","Small validated B*","Seeds PASS"],
+                   [[r["teacher"],r["parameters"],f"{r['validated_budget']:,}" if r["validated_budget"] else "NOT CERTIFIED",f"{r['seeds_pass']}/5"] for r in small])+"\nThis permits finite empirical supervision comparisons with the larger E1, while establishing neither universal minimality nor the behavior of all possible small networks.\n\n"
     (OUT/"paper-section.md").write_text(section)
+    Path("docs/SAMPLE_COMPLEXITY_RESULTS.md").write_text(questions(rows,records,controls,config))
+    audit=Path("docs/PAPER_SCIENTIFIC_AUDIT.md")
+    original=audit.read_text().split("<!-- BEGIN_SAMPLE_COMPLEXITY_AUDIT -->")[0].rstrip()
+    audit.write_text(original+"\n\n<!-- BEGIN_SAMPLE_COMPLEXITY_AUDIT -->\n"+audit_section(rows,records,controls,config)+"<!-- END_SAMPLE_COMPLEXITY_AUDIT -->\n")
     status_counts=Counter(r["status"] for r in rows)
     atomic_json(OUT/"summary.json",dict(trainings=len(records),status_counts=dict(status_counts),
                 final_executions=sum(s["executions"] for r in rows for s in r["per_seed"].values()),

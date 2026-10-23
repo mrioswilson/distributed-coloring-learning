@@ -181,6 +181,14 @@ def run(figures_only=False):
     template=Path("paper/PAPER_DRAFT.md.in").read_text()
     values=dict(NEW_FUNCTIONAL_TABLE=counts,NEW_RESULTS_PARAGRAPH=result_text,BASELINE_INTERPRETATION=baseline,
                 NEW_GLOBAL_PARAGRAPH=global_text,NEW_GLOBAL_TABLE=global_table,EVIDENCE_TABLE=evidence,REFERENCES=references(template))
+    supplement=Path("results/sample-complexity/paper-section.md")
+    values["SAMPLE_COMPLEXITY_SECTION"]=supplement.read_text() if supplement.exists() else "The prospective supervision study is specified in docs/SAMPLE_COMPLEXITY_PROTOCOL.md; confirmed results are not yet available."
+    if supplement.exists(): values["REFERENCES"]=references(template+supplement.read_text())
+    sc_summary=Path("results/sample-complexity/summary.json")
+    if sc_summary.exists():
+        sc=read(sc_summary)
+        values["SAMPLE_COMPLEXITY_ABSTRACT"]=(f"A separate controlled-supervision study trains {sc['trainings']} fresh policies across seven teachers, three architectures, seven label budgets and five training seeds. Its strict benchmark certifies {sc['status_counts'].get('PASS',0)} of 21 teacher/architecture packages only when all five policies complete 1,000 final executions each without failure. Explicit information regimes, nonmonotone per-seed curves and fixed-label optimization controls separate this finite empirical certification from universal correctness and theoretical sample-complexity claims.")
+    else: values["SAMPLE_COMPLEXITY_ABSTRACT"]="The prospective query-budgeted study is specified separately; no empirical certification is asserted before confirmation."
     text=template
     for key,value in values.items():text=text.replace("{{"+key+"}}",value)
     assert not re.search(r"\{\{[A-Z_]+\}\}",text)

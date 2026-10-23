@@ -33,7 +33,7 @@ source = (ROOT / "paper/PAPER_DRAFT.md").read_text()
 title, text = source.split("\n", 1)
 text = re.sub(r"<!-- BEGIN_MARKDOWN_REFERENCES -->[\s\S]*?<!-- END_MARKDOWN_REFERENCES -->", "", text)
 text = text.replace("ucgnn/figures/", "figures/")
-text = re.sub(r"(figures/integration-[a-z-]+)\.png", r"\1.pdf", text)
+text = re.sub(r"(figures/(?:integration|sample)-[a-z-]+)\.png", r"\1.pdf", text)
 protected = re.compile(r"(`[^`]*`|\$\$[\s\S]*?\$\$|\$[^$\n]*\$|https?://[^\s)]+)")
 parts = protected.split(text)
 for i in range(0, len(parts), 2):
@@ -77,6 +77,7 @@ renders.mkdir(exist_ok=True)
 selected = {0, 1, len(doc)-1, len(doc)-2}
 for i, page in enumerate(pages):
     if re.search(r"Figure\s+[1-4]:|Table\s+[1-7]\.", page): selected.add(i)
+    if re.search(r"How Much Supervision|supervision curves|Extended.interface supervision",page,re.IGNORECASE): selected.add(i)
 rendered = []
 for i in sorted(selected):
     path = renders / f"page-{i+1:02d}.png"
