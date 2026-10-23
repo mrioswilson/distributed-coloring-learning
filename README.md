@@ -170,6 +170,7 @@ PYTHONPATH=src python -m dcl.samplecomplexity.runner validate
 PYTHONPATH=src python -m dcl.samplecomplexity.runner train
 PYTHONPATH=src python -m dcl.samplecomplexity.runner controls
 PYTHONPATH=src python -m dcl.samplecomplexity.runner confirm
+PYTHONPATH=src python -m dcl.samplecomplexity.optimization
 PYTHONPATH=src python -m dcl.samplecomplexity.capacity
 PYTHONPATH=src python -m dcl.samplecomplexity.law
 PYTHONPATH=src python -m dcl.samplecomplexity.diagnostics

@@ -160,3 +160,26 @@ Even after information is sufficient, failure may reflect optimization,
 coverage, finite capacity or autonomous distribution shift. The fixed-label
 optimization and interactive controls address parts of this ambiguity; none
 isolates a cause universally.
+
+Two concrete distinctions prevent overextending relational-ID arguments:
+
+* On a two-node BE edge in the first F13 phase, IDs/auxiliary colors (1,2)
+  are different constant polynomials, so point 0 is valid. With (1,14), the
+  polynomials are 1 and 1+x; point 0 is blocked and the first valid point is 1.
+  Both assignments have the same strict ID order and valid unique bounded
+  IDs. Order comparisons alone therefore cannot determine BE's point action.
+  The regression test checks these actual teacher outputs.
+* For ColorTrials in the reset-state interface, consider a path v–u–w with
+  v,u pending, preferences at v (2,0,0,0), and at u (3,3,3,3). Changing w's
+  fixed color from 0 to 1 leaves v's one-hop pending/color/preference view
+  unchanged but changes whether u competes for color 0. The required choice
+  at v changes from 0 to 1. Availability from u's neighborhood must reach v;
+  the two graph exchanges supply it. This is an information-radius argument,
+  not a universal lower bound for protocols with different cached state.
+
+The interpreter supplies pending-node gating, scheduled write permissions,
+palette alphabets, phase/bound transitions, KW block decoding and termination
+checks. BE's auxiliary-target **comparison** is coded by the sign adapter;
+learning its arithmetic is not claimed. Learned heads still control whether
+to write and which point/color to choose. Checking a collision or invariant
+to record a failure never repairs or filters the predicted choice.

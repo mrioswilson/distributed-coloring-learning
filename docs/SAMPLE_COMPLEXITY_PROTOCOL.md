@@ -247,6 +247,17 @@ batteries, validating those tapes with exact teachers first. It is exploratory,
 has separate frozen checkpoints/consumption markers and never revises a primary
 result or the main final battery.
 
+After the development-only optimization control, an additional exploratory
+protocol (`sample-complexity-optimization.json`) freezes both existing 500- and
+1,500-update NORMALIZED checkpoints at B=3,000 for **all three** previously
+chosen control teachers and five seeds. It verifies identical initialization
+and label-prefix hashes, then uses a new independent final namespace. Both
+arms see the same 1,000 cases per seed, exact-validated first. All outcomes and
+paired seed summaries remain available. Its consumption markers allow one
+attempt; no weights, budgets, primary statuses or earlier final batteries are
+changed. A successful control validates that fixed optimizer/label point, not
+a newly estimated minimum B* or a repair of the primary certification.
+
 ## Reproduction
 
 For a new scientific replication, use the documented Torch/NumPy environment
@@ -268,6 +279,7 @@ PYTHONPATH=src python -m dcl.samplecomplexity.runner validate
 PYTHONPATH=src python -m dcl.samplecomplexity.runner train
 PYTHONPATH=src python -m dcl.samplecomplexity.runner controls
 PYTHONPATH=src python -m dcl.samplecomplexity.runner confirm
+PYTHONPATH=src python -m dcl.samplecomplexity.optimization
 PYTHONPATH=src python -m dcl.samplecomplexity.capacity
 PYTHONPATH=src python -m dcl.samplecomplexity.law
 PYTHONPATH=src python -m dcl.samplecomplexity.diagnostics

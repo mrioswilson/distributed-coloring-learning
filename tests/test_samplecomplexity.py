@@ -159,6 +159,17 @@ def test_anonymous_interface_cannot_distinguish_swapped_jp_ids():
     assert np.array_equal(state.colors,np.array([-1,-1]))
 
 
+def test_be_order_only_interface_is_insufficient_for_actual_polynomial_actions():
+    p=ColoringProgram(nx.path_graph(2),"BE_BASE_D3",1)
+    state=p.snapshot()
+    state.ids=np.array([1,2]);state.aux=state.ids.copy()
+    first=teacher_choices(state,p.neighbors,"BE_BASE_D3").auxiliary//13
+    state.ids=np.array([1,14]);state.aux=state.ids.copy()
+    second=teacher_choices(state,p.neighbors,"BE_BASE_D3").auxiliary//13
+    assert np.array_equal(first,np.array([0,0]))
+    assert np.array_equal(second,np.array([1,1]))
+
+
 def test_train_is_reproducible_from_fresh_initialization(config,tmp_path):
     acquire(config,"LUBY",42,300,tmp_path/"data")
     a=train(config,"LUBY","normalized",42,300,tmp_path/"data",tmp_path/"a",dev=False)

@@ -179,6 +179,14 @@ def control_table(controls,records,config):
     return markdown_table(["Teacher","Passive E1 500 updates","Passive E1 1,500 updates","Small 500","No messages 500","Interactive 500 total"],rows)
 
 
+def optimization_table():
+    path=OUT/"optimization-confirmation/results.json"
+    if not path.exists():return "Independent optimizer-control confirmation is not yet complete.\n"
+    results=read(path)["arms"];ts=list(dict.fromkeys(r["teacher"] for r in results))
+    return markdown_table(["Teacher","500 updates, B=3,000","1,500 updates, B=3,000"],
+             [[t,*[f"{r['status']} ({r['seeds_pass']}/5)" for u in (500,1500) for r in results if r["teacher"]==t and r["updates"]==u]] for t in ts])
+
+
 def paper_section(rows,records,controls,config):
     passed=[r for r in rows if r["status"]=="PASS"]
     attempted=sum(r["final_attempted"] for r in rows)
@@ -276,7 +284,11 @@ figure sources accompany this finite empirical statement.
 def questions(rows,records,controls,config):
     def status(t,a):
         r=next(r for r in rows if r["teacher"]==t and r["architecture"]==a)
-        return f"{NAMES[a]}: B*={r['validated_budget']:,}, 5/5 PASS" if r["status"]=="PASS" else f"{NAMES[a]}: NOT CERTIFIED, {r['seeds_pass']}/5 confirmed; protocol threshold unachieved through {r['max_budget_evaluated']:,}"
+        if r["status"]=="PASS":
+            q=list(r["actual_queries_by_budget"][str(r["validated_budget"])].values())
+            actual=str(min(q)) if min(q)==max(q) else f"{min(q)}–{max(q)}"
+            return f"{NAMES[a]}: B*={r['validated_budget']:,}, actual acquired labels {actual} per seed, 5/5 PASS"
+        return f"{NAMES[a]}: NOT CERTIFIED, {r['seeds_pass']}/5 confirmed; protocol threshold unachieved through {r['max_budget_evaluated']:,}"
     regressions=sum(len(r["regressions"]) for r in rows)
     text="# Sample complexity results and required scientific questions\n\n"
     text+="**P1. How much Luby supervision?**\n\n"+"; ".join(status("LUBY",a) for a in NAMES)+". These are acquired component-label budgets under the frozen optimization/selection procedure, not trajectories or gradient updates.\n\n"
@@ -305,6 +317,7 @@ def questions(rows,records,controls,config):
                      [[r["teacher"],r["parameters"],f"{r['validated_budget']:,}" if r["validated_budget"] is not None else "NOT CERTIFIED through 1,000,000",f"{r['seeds_pass']}/5"] for r in small])+"\n"
     text+="Small-model conclusions apply to these matched training budgets and independent finite final batteries. Only one no-message budget is tested. Neither experiment establishes theoretical minimality.\n\n"
     text+="**P8. What changes with fixed labels and more optimization?**\n\nCompare the 500/1,500-update columns above, with identical labels and initialization per seed. The complete control records retain per-seed development success and time. Improvements identify a finite optimization-budget sensitivity, not a universal explanation of every failure. No extra teacher query is charged for replay.\n\n"
+    text+="An additional exploratory protocol compares the same two frozen arms on independent, paired final batteries, after checking identical label-prefix and initialization hashes:\n\n"+optimization_table()+"\nThese are fixed-budget validations, not new B* minima; they do not replace primary statuses.\n\n"
     text+="**P9. Does interactive supervision help?**\n\nThe last column uses the same maximum B=3,000 and 500 total updates, with one 1,500-label passive / 1,500-label admissible on-policy aggregation. All seeds and failed acquisition trajectories are retained. Adam resets at aggregation; this control does not isolate distribution choice from every optimizer-history effect. It is development-only and supports no final-certification or general DAgger efficiency claim.\n\n"
     law=read(OUT/"law/results.json") if (OUT/"law/results.json").exists() else None
     text+="**P10. Does functional 100% imply action, time or global-law fidelity?**\n\nNo. The functional gate constrains validity, invariants and completion; it does not require matching teacher choices, native step counts or probabilities of each complete coloring. These are separate measured outcomes. "
@@ -452,6 +465,15 @@ set to p=1. Conservative futility cannot create a rejection. It is exploratory
 and never enters the functional gate or checkpoint selection. Historical law
 results are not substituted for new policy evidence.
 
+The fixed-label optimization confirmation is an additional exploratory protocol
+documented after development controls. It freezes both 500/1,500-update arms
+for all three preselected teachers, checks equal label-prefix/initialization
+hashes and uses a new independent final namespace with matched cases across
+arms. Its one-attempt markers and every individual outcome are retained.
+It validates fixed optimizer/label points and never changes the primary
+certification, nominates a new primary budget or retrofits an earlier final
+battery. Its six arm-level results are reported separately.
+
 """
     return text
 
@@ -479,6 +501,8 @@ def run():
         small=read(OUT/"capacity/certification.json")
         section+="The small-model supplement repeats all seven budgets for three representative teachers and uses independent final tapes under the same five-seed gate:\n\n"+markdown_table(["Teacher","Small parameters","Small validated B*","Seeds PASS"],
                    [[r["teacher"],r["parameters"],f"{r['validated_budget']:,}" if r["validated_budget"] else "NOT CERTIFIED",f"{r['seeds_pass']}/5"] for r in small])+"\nThis permits finite empirical supervision comparisons with the larger E1, while establishing neither universal minimality nor the behavior of all possible small networks.\n\n"
+    if (OUT/"optimization-confirmation/results.json").exists():
+        section+="The additional fixed-label optimization protocol freezes both existing optimizer arms for all three control teachers and evaluates them on new paired final batteries. It checks identical label-prefix and initialization hashes and changes no primary outcome:\n\n"+optimization_table()+"\nA PASS here validates the fixed B=3,000/optimizer point only; it is not a new grid minimum or a retry of the primary confirmation.\n\n"
     (OUT/"paper-section.md").write_text(section)
     Path("docs/SAMPLE_COMPLEXITY_RESULTS.md").write_text(questions(rows,records,controls,config))
     audit=Path("docs/PAPER_SCIENTIFIC_AUDIT.md")

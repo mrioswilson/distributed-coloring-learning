@@ -46,6 +46,6 @@ for t in config["teachers"]:
                                   phase_update_counts=counts,measured_cpu_seconds=r["cpu_seconds"]))
 atomic_json(out/"flops-estimates.json",dict(calibration=calibration,training=estimates,
      method="Torch CPU profiler with_flops on batch64 passive forward/backward; multiply by exact cyclic phase update counts",
-     limitations="Only profiler-supported matrix/conv arithmetic is counted. Elementwise, reductions, indexing, optimizer, encoder and interpreter are excluded. Linial uses pilot max-field batch as a conservative shape estimate. This is not total FLOPs or measured hardware instruction count.",
+     limitations="Only operator counts emitted by this Torch profiler are included (here addmm, mm, add and mul). Unreported operations, reductions, indexing, optimizer, encoder and interpreter are excluded. Linial uses pilot max-field batch as a conservative shape estimate. This is not total FLOPs or measured hardware instruction count.",
      hardware_time_is_separate=True))
 print(f"Exported {len(calibration)} phase calibrations and {len(estimates)} training estimates")
