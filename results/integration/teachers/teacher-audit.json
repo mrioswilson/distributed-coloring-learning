@@ -1,0 +1,106 @@
+{
+  "passed": true,
+  "finite_graph_domain": "Every unlabeled simple graph with 1..6 vertices and maximum degree <=3, two specified tapes each; not all IDs or tapes.",
+  "teachers": [
+    {
+      "teacher": "LUBY",
+      "graphs": 103,
+      "executions": 206,
+      "scalar_transition_comparisons": 893,
+      "cutoffs": 0
+    },
+    {
+      "teacher": "JOHANSSON",
+      "graphs": 103,
+      "executions": 206,
+      "scalar_transition_comparisons": 468,
+      "cutoffs": 0
+    },
+    {
+      "teacher": "JP",
+      "graphs": 103,
+      "executions": 206,
+      "scalar_transition_comparisons": 614,
+      "cutoffs": 0
+    },
+    {
+      "teacher": "COLOR_TRIALS",
+      "graphs": 103,
+      "executions": 206,
+      "scalar_transition_comparisons": 343,
+      "cutoffs": 0
+    },
+    {
+      "teacher": "BE_BASE_D3",
+      "graphs": 103,
+      "executions": 206,
+      "scalar_transition_comparisons": 3090,
+      "cutoffs": 0
+    },
+    {
+      "teacher": "SPECULATIVE_GM",
+      "graphs": 103,
+      "executions": 206,
+      "scalar_transition_comparisons": 1137,
+      "cutoffs": 0
+    },
+    {
+      "teacher": "GREEDY",
+      "graphs": 103,
+      "executions": 206,
+      "scalar_transition_comparisons": 1096,
+      "cutoffs": 0
+    }
+  ],
+  "same_tape_differentials": [
+    {
+      "graph": "path8",
+      "seed": 2026102303,
+      "rounds": 8,
+      "passed": true
+    },
+    {
+      "graph": "path8",
+      "seed": 2026102304,
+      "rounds": 5,
+      "passed": true
+    },
+    {
+      "graph": "star3",
+      "seed": 2026102303,
+      "rounds": 11,
+      "passed": true
+    },
+    {
+      "graph": "star3",
+      "seed": 2026102304,
+      "rounds": 3,
+      "passed": true
+    },
+    {
+      "graph": "clique4",
+      "seed": 2026102303,
+      "rounds": 11,
+      "passed": true
+    },
+    {
+      "graph": "clique4",
+      "seed": 2026102304,
+      "rounds": 3,
+      "passed": true
+    },
+    {
+      "graph": "cubic40",
+      "seed": 2026102303,
+      "rounds": 10,
+      "passed": true
+    },
+    {
+      "graph": "cubic40",
+      "seed": 2026102304,
+      "rounds": 10,
+      "passed": true
+    }
+  ],
+  "correctness_scope": "Scalar specifications agree on this finite domain. Universal guarantees require the separate conditional proofs; finite traces do not prove universal correctness."
+}
