@@ -1,0 +1,220 @@
+{
+  "config": {
+    "architectures": [
+      "normalized",
+      "deepsets",
+      "transformer"
+    ],
+    "batch_size": 64,
+    "confirmation_reserve_seconds": 1200,
+    "control_architectures": [
+      "small",
+      "no_communication"
+    ],
+    "control_budget": 3000,
+    "controls_reserve_seconds": 600,
+    "cost_safety_factor": 2.0,
+    "development_runs": 28,
+    "development_sizes": [
+      28,
+      36
+    ],
+    "fidelity_decisions": 256,
+    "final_runs": 1000,
+    "final_sizes": [
+      32,
+      48,
+      64
+    ],
+    "grid": [
+      1000,
+      3000,
+      10000,
+      30000,
+      100000,
+      300000,
+      1000000
+    ],
+    "lr": 0.001,
+    "main_grid_cap": 30000,
+    "namespace": "20261023-sc-independent-v1",
+    "optimization_control_teachers": [
+      "LUBY",
+      "JP",
+      "BE_BASE_D3"
+    ],
+    "optimization_control_updates": [
+      500,
+      1500
+    ],
+    "passive_loss": "Stored root participation, proposal, teacher confirmation; Linial point and GM mark in their phases. No counterfactual labels or optimizer-time teacher calls.",
+    "pilot_gpu_process_hours_max": 12,
+    "pilot_query_budget": 600,
+    "pilot_runs": 7,
+    "pilot_sizes": [
+      8,
+      12
+    ],
+    "pilot_updates": 12,
+    "protocol": "sample-complexity-native-v1",
+    "scope": "Native global four-color degree-three programs. CPU balanced finite resource study. Unexecuted grid budgets remain missing, never extrapolated.",
+    "seeds": [
+      83101,
+      83102,
+      83103,
+      83104,
+      83105
+    ],
+    "selection": "First common development-perfect grid budget; freeze five checkpoints; one final attempt per teacher/architecture; no final-guided retry",
+    "small_control_teachers": [
+      "LUBY",
+      "JP",
+      "BE_BASE_D3"
+    ],
+    "teachers": [
+      "LUBY",
+      "JOHANSSON",
+      "COLOR_TRIALS",
+      "JP",
+      "BE_BASE_D3",
+      "SPECULATIVE_GM",
+      "GREEDY"
+    ],
+    "training_sizes": [
+      8,
+      12,
+      16,
+      24
+    ],
+    "updates": 500,
+    "wall_budget_seconds": 5400,
+    "workers": 4
+  },
+  "device": "cpu",
+  "estimates": [
+    {
+      "estimated_dataset_disk_bytes": 1111705.4535336671,
+      "estimated_main_wall_seconds": 213.68103252838233,
+      "estimated_peak_dataset_ram_bytes": 6996266.666666666,
+      "estimated_total_seconds": 2013.6810325283823,
+      "maximum": 1000,
+      "supervisor_queries_acquired": 35000,
+      "trainings": 105
+    },
+    {
+      "estimated_dataset_disk_bytes": 3335116.3606010014,
+      "estimated_main_wall_seconds": 429.44276874423025,
+      "estimated_peak_dataset_ram_bytes": 20988800.0,
+      "estimated_total_seconds": 2229.4427687442303,
+      "maximum": 3000,
+      "supervisor_queries_acquired": 105000,
+      "trainings": 210
+    },
+    {
+      "estimated_dataset_disk_bytes": 11117054.535336671,
+      "estimated_main_wall_seconds": 655.6080233974059,
+      "estimated_peak_dataset_ram_bytes": 69962666.66666667,
+      "estimated_total_seconds": 2455.6080233974058,
+      "maximum": 10000,
+      "supervisor_queries_acquired": 350000,
+      "trainings": 315
+    },
+    {
+      "estimated_dataset_disk_bytes": 33351163.606010012,
+      "estimated_main_wall_seconds": 908.8224259876334,
+      "estimated_peak_dataset_ram_bytes": 209888000.0,
+      "estimated_total_seconds": 2708.8224259876333,
+      "maximum": 30000,
+      "supervisor_queries_acquired": 1050000,
+      "trainings": 420
+    },
+    {
+      "estimated_dataset_disk_bytes": 111170545.35336672,
+      "estimated_main_wall_seconds": 1266.072012951138,
+      "estimated_peak_dataset_ram_bytes": 699626666.6666666,
+      "estimated_total_seconds": 3066.0720129511383,
+      "maximum": 100000,
+      "supervisor_queries_acquired": 3500000,
+      "trainings": 525
+    },
+    {
+      "estimated_dataset_disk_bytes": 333511636.06010014,
+      "estimated_main_wall_seconds": 1893.8130792851634,
+      "estimated_peak_dataset_ram_bytes": 2098880000.0,
+      "estimated_total_seconds": 3693.8130792851634,
+      "maximum": 300000,
+      "supervisor_queries_acquired": 10500000,
+      "trainings": 630
+    },
+    {
+      "estimated_dataset_disk_bytes": 1111705453.533667,
+      "estimated_main_wall_seconds": 3561.905989351959,
+      "estimated_peak_dataset_ram_bytes": 6996266666.666666,
+      "estimated_total_seconds": 5361.905989351959,
+      "maximum": 1000000,
+      "supervisor_queries_acquired": 35000000,
+      "trainings": 735
+    }
+  ],
+  "git_commit": "a54a18e3aa98f6be60d13d31ec6e7288634b6806",
+  "gpu_process_hours": 0.0,
+  "grid": [
+    1000,
+    3000,
+    10000,
+    30000
+  ],
+  "pilot_sha256": "029a3d79f931583a7eff96e8202c36bb4666880acd92ede98b22c14a28124552",
+  "python": "3.11.2",
+  "selected": {
+    "estimated_dataset_disk_bytes": 33351163.606010012,
+    "estimated_main_wall_seconds": 908.8224259876334,
+    "estimated_peak_dataset_ram_bytes": 209888000.0,
+    "estimated_total_seconds": 2708.8224259876333,
+    "maximum": 30000,
+    "supervisor_queries_acquired": 1050000,
+    "trainings": 420
+  },
+  "selection": "Largest timing-feasible common prefix, capped prospectively; identical cells for all seven teachers, three architectures and five seeds.",
+  "source_hashes": {
+    "src/dcl/graphs.py": "1fc7322bf8696d61e23f9dc7e888aa1136d8809251877ba6284e1e16baae5662",
+    "src/dcl/integration/models.py": "8d8ee578033fc5fa5218144add2af0bfc24ee6db339005766fd924cf9d2af1af",
+    "src/dcl/multiteacher/__init__.py": "1e8301a2d7f3488eec7d20a1bcbbbb0174987db5fa73a7a0a20fc47d8650863a",
+    "src/dcl/multiteacher/data.py": "9ada4791717f415b7d6158b91dd7fece7601768f0560dc9e5dd605512a6b28de",
+    "src/dcl/multiteacher/experiment.py": "70de36f09f4c162592a631a1964322834808bebca10cfaa3c136947b2af9b684",
+    "src/dcl/multiteacher/model.py": "df8d7d3506ff7d20cbc70f340f6198cac6c675fca39397675a29e7eb207e0a64",
+    "src/dcl/multiteacher/programs.py": "ab51c32c445ea4b6f0afa784093ea52cb7338961b6b50815ce5b65cc9e67738b",
+    "src/dcl/multiteacher_e1/__init__.py": "ece488ebd65a08328dd1eca11897e66bae1423d23a720fdda6b72ad30b3bd452",
+    "src/dcl/multiteacher_e1/experiment.py": "9fbdbcd456dda64ce608863a326a738383ecb5ea8efee892de413ec1f677af46",
+    "src/dcl/multiteacher_e1/model.py": "5b8bf097adb75c6f19cddd64414566f98c7f6a9274e7f2d1b44317ddbb84258d",
+    "src/dcl/multiteacher_e1/supervision.py": "edb6cac308b9dd09a8f542d76528ce286f2ff5dc1d1840bb8b6f7c33f9380450",
+    "src/dcl/paperstudy/models.py": "0b4b12797d7cc969d63c7ffebc0966226dc6f254e079127e15c60bea8c8b7112",
+    "src/dcl/samplecomplexity/controls.py": "72118439e2e444570efb8217b1538f490532ef4ecd0add81267ac188e08bec43",
+    "src/dcl/samplecomplexity/data.py": "43ebeb40004704c14434ce852dcad790ca15515b3c100e609dc5150d1cfd4b00",
+    "src/dcl/samplecomplexity/evaluation.py": "1afd0dfb45f97047806641e7bb89645fec50569dbff134d59a0b257aa3481a5a",
+    "src/dcl/samplecomplexity/interactive.py": "4da8f024435116c76835912bf903283ea52cc519f25cd337a6f6daa31f3009a6",
+    "src/dcl/samplecomplexity/model.py": "1d0e7f3e2202e946c59823fbda335d420390d500cd76b5dc0c8e741a43af1999",
+    "src/dcl/samplecomplexity/protocol.py": "182a57e37288b424110d17c2481e25556f97991d0e7596b241da6a9b8b135003",
+    "src/dcl/samplecomplexity/runner.py": "17f57cb45312b6efbe4a8322a938496a088b3b83aea3457bc3c2704470499c12",
+    "src/dcl/samplecomplexity/training.py": "1887abf1beed8d88cfc1024fa1512a061993cd58af7ec6a250f0e13fe7669ec7",
+    "src/dcl/study/graphs.py": "9979cd184051eb230c4b1dfe3c3d68cf1f56741ec417dd8df4203456b9d9831a",
+    "src/dcl/study/storage.py": "236f57a82bfe4df1b0a49dd7d0925a2857485ee4fa55124b02da712ff22bf5b3",
+    "src/dcl/universal/__init__.py": "36c3af111b9699a625fa24f73e2e37ca0bc70d7b2dca9516252f966f16f12be6",
+    "src/dcl/universal/cli.py": "f503603e826b52f78a0b799390fb763e2efc0259b242a2ff4ce6e75ec4f0829e",
+    "src/dcl/universal/config.py": "d8811cf701064a2fcc88255730a59ed5e119884beefefdb3e14fae0b11011fdf",
+    "src/dcl/universal/data.py": "80e392fcb367324552f6d67bc5131b718473c6b6c87da784f5341201f3bef065",
+    "src/dcl/universal/diagnostics.py": "d43fb60f91dd3a9de2637cae62fcea0a87fe6dff56d7e5ee185582914e718c5f",
+    "src/dcl/universal/evaluation.py": "9b71cf84e412bf9a5861d9b05bc1f8b0e3a04d3101b1a5794aee723025f9da14",
+    "src/dcl/universal/model.py": "05cad8dcb3b73e853963fd5d46a859640edaec77f4d66c13661639ed04f7e685",
+    "src/dcl/universal/report.py": "8065ca062cc4e60d860149406a41cdb48a624b42685c3c68a10dcd55c9f41270",
+    "src/dcl/universal/rules.py": "af0c07bae78f997ebfcbe8823850709104e09ad474ae2111ce7714b9f72d7338",
+    "src/dcl/universal/train.py": "9a893ce438147c9667b4b2fcb28b78cfad452b2975d905d99c3f328d2148715c"
+  },
+  "versions": {
+    "matplotlib": "3.11.2",
+    "networkx": "3.6.1",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "torch": "2.11.0+cu128"
+  }
+}
