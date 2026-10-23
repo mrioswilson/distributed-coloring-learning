@@ -308,7 +308,7 @@ nonrejections establish no approximate equivalence.
     if iv and iv['cells']:
         captions.append(('12-candidate-intervention','intervention','Separate exploratory candidate-channel intervention on four priority graphs. The supplementary witness/coupling family gives simultaneous 95 percent upper bounds for intervened versus Luby and lower effect bounds for original versus intervened. All original-policy tests remain separate.'))
     for name,label,caption in captions:
-        text+='\n\\begin{figure}[p]\n\\centering\n\\includegraphics[width=\\linewidth]{figures/factorial-'+name+'.pdf}\n\\caption{'+caption+'}\n\\label{fig:factorial-'+label+'}\n\\end{figure}\n'
+        text+='\n\\begin{figure}[p]\n\\centering\n\\includegraphics[width=\\linewidth,height=.8\\textheight,keepaspectratio]{figures/factorial-'+name+'.pdf}\n\\caption{'+caption+'}\n\\label{fig:factorial-'+label+'}\n\\end{figure}\n'
     text+='\n\\clearpage\n'
     Path('paper/ucgnn/factorial-size-degree.tex').write_text(text)
     abstract=f'''A subsequent size--degree factorial study uses three new regular graphs in

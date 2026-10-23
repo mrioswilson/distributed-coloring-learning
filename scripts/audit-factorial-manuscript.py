@@ -48,6 +48,6 @@ result=dict(passed=False,text_checks_passed=True,visual_review_passed=False,
             earlier_assets_preserved=preserved,main_tex_restores_exactly=True,undefined_references=undefined,
             overfull_boxes=[line for line in log.splitlines() if 'Overfull' in line],renders=renders,
             source_hashes={str(p.relative_to(base)):sha(p) for p in sources},
-            note='Mark passed only after reviewing all changed text/tables and the eleven scientific figures; retain hashes.')
+            note='Mark passed only after reviewing all changed text/tables and all scientific figures; retain hashes.')
 (out/'manuscript-audit.json').write_text(json.dumps(result,indent=2)+'\n')
 print(json.dumps(dict(text_checks_passed=True,page_count=len(doc),renders=len(renders)),indent=2))
