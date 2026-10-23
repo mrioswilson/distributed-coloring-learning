@@ -204,3 +204,255 @@ python -m pip install -e '.[dev,study]'
 Para reproducir el entorno GPU usado en el estudio, seguir las [instrucciones de instalación CUDA](docs/M6STUDY.md#instalación-y-comprobaciones) y el [registro de versiones](requirements-m6study.lock). En una copia de trabajo sin otra cola GPU activa, las comprobaciones se ejecutan con `python -m pytest -q`.
 
 GitHub incluye código, planes, tablas, figuras y hashes. Los checkpoints y los resultados originales por grafo permanecen en el servidor, fuera de Git por su volumen. Reanudar la evaluación o regenerar el corte con [el exportador](experiments/export_m6study_results.py) requiere esos archivos originales; las tablas publicadas pueden consultarse directamente.
+
+## Comparación de siete maestros con fases nativas
+
+El [plan native-policy-v1](configs/multiteacher/comparison.json) añade los cinco
+maestros solicitados y vuelve a entrenar Luby/Johansson como controles comunes.
+Las reglas están separadas del aprendizaje en
+[programs.py](src/dcl/multiteacher/programs.py). El alcance es grafos simples no
+dirigidos de grado máximo tres,
+cuatro colores globales y etiquetas de vértices contiguas, con identificadores
+aleatorios distintos del universo 0..65535.
+
+| Maestro | Regla y alcance implementados |
+|---|---|
+| Luby | Participación 0,5, color libre uniforme, esperar ante propuesta vecina igual. |
+| Johansson | La misma regla de ensayo de color con participación 1. |
+| Jones–Plassmann | Versión sincrónica por prioridades fijas: máximos locales de identificador entre pendientes; menor color libre. |
+| ColorTrials, Schneider–Wattenhofer | Preferencia discreta por cada color libre; gana si supera estrictamente todas las preferencias vecinas de ese color. Conserva el menor color ganado y repite. |
+| Barenboim–Elkin, caso base Δ≤3 | Dos reducciones polinomiales de Linial desde los IDs, después reducción de Kuhn–Wattenhofer hasta cuatro colores. |
+| Especulativo, Gebremedhin–Manne | Cuatro bloques de orden aleatorio; asignación simultánea por posición, detección de choques entre vértices de la misma posición y reparación secuencial. |
+| Greedy secuencial | Un vértice por paso en orden de identificador creciente; menor color libre. |
+
+**Alcance de las atribuciones:** ColorTrials es la subrutina publicada repetida,
+con preferencias 0..3 usando la cota global de grado. No se implementa
+RankingTrials ni se atribuye a esta repetición la cota rápida del algoritmo
+completo de Schneider–Wattenhofer. En Δ=3, el esquema Delta-Color de
+Barenboim–Elkin entra en su caso base: se implementa esa rama con inicialización
+de Linial y reducción KW, sin la recursión defectiva para grados mayores ni la
+constante temporal de su inicialización más rápida. No son implementaciones
+generales de esos dos artículos.
+
+Fuentes primarias: [Jones–Plassmann](https://doi.org/10.1137/0914041),
+[Linial, sección 4, construcción geométrica](https://courses.csail.mit.edu/6.852/08/papers/Linial.pdf),
+[Schneider–Wattenhofer, ColorTrials](https://tik-old.ee.ethz.ch/file/22a700b74fc2f37acb56d690e62c86cf/podcfp107_schneider_188.pdf),
+[Barenboim–Elkin, versión 2, Algorithm 2](https://arxiv.org/pdf/0812.1379v2),
+[Kuhn–Wattenhofer, Theorem 5.1](https://ac.informatik.uni-freiburg.de/publications/publications/podc06.pdf)
+y [Gebremedhin–Manne, Algorithm 1](https://eecs.wsu.edu/~assefaw/publications/Concurrency12-2000.pdf).
+Las versiones consultadas se conservan en `references/` de la ejecución.
+
+Se usa una GNN común de dos rondas de mensajes, 36.719 parámetros y cabezas
+para color/WAIT, color auxiliar y marca de reparación. Aprende las elecciones
+locales dentro de los calendarios y fases suministrados por cada programa. Se
+proporcionan colores/IDs/sorteos, evaluaciones polinomiales y relaciones locales
+de igualdad; no se afirma que aprenda aritmética de cuerpos finitos. El greedy
+conserva su calendario centralizado. En ejecución aprendida se aplican las
+acciones sin consultar al maestro ni filtrar conflictos. La ausencia de oracle
+se verifica con una prueba que prohíbe invocar sus decisiones.
+Luby/Johansson/JP/ColorTrials tienen un límite de 128 pasos; una coloración
+incompleta cuenta como fallo. BE, GM y greedy recorren sus calendarios nativos.
+
+Presupuesto fijado antes del entrenamiento final: **cinco inicializaciones por
+maestro**, 800 grafos cúbicos N40, tres trayectorias por grafo, **17.760
+actualizaciones de 1.680 decisiones locales**: 29.836.800 decisiones supervisadas
+por modelo. Las cinco semillas comparten el mismo pool; miden variabilidad de
+inicialización/muestreo, no cinco muestras independientes de datos. Los grafos,
+tapes e inicializaciones se emparejan entre maestros. Las trayectorias nativas
+difieren; cada decisión habilitada tiene la misma probabilidad de muestreo.
+Hay 50 grafos nuevos de validación local y cuatro ejecuciones autónomas de
+seguimiento N40/160, comunes a todas las redes.
+
+Este presupuesto vuelve a la escala de exposición a nodos de M6B, pero la
+arquitectura, representación y pérdida directa son nuevas para admitir estados
+auxiliares y reparación. Los controles nuevos permiten comparar maestros bajo
+ese protocolo; no replican exactamente M6B ni el piloto Johansson anterior.
+Las curvas usan hitos 100/500/1000/4000/8000/17760 y muestran media y rango entre
+semillas, sin seleccionar checkpoints. El runner general admite tres procesos
+con dos hilos; la reanudación restaura optimizador y generadores.
+
+En esta máquina, el mmap sobre el disco compartido y la presión de memoria
+obligaron a reanudar en disco local. El driver operativo
+[run_multiteacher_threads.py](experiments/run_multiteacher_threads.py) comparte
+el intérprete entre hasta tres entrenamientos independientes, protegiendo inicialización
+y restauración del RNG. Se verificó igualdad bit a bit de pesos y muestreo frente
+a la ejecución serial, también al mezclar modelos nuevos y reanudados. Los
+modelos no usan azar de torch después de inicializarse. El plan científico,
+modelo, pérdida y presupuesto se conservan; los cambios de concurrencia y sus
+drivers quedan archivados con hashes. El prefijo del disco compartido se
+preserva en `data/multiteacher-virtiofs-prefix-20261019/`.
+Al coexistir pools grandes, el calendario
+[run_multiteacher_grouped.py](experiments/run_multiteacher_grouped.py) mantiene
+activas sólo réplicas del mismo maestro, con una barrera entre maestros. La
+prueba completa de14 modelos/168 evaluaciones conservó exactamente los pesos
+de la semilla0 para los siete maestros frente al calendario serial.
+Para greedy, [run_multiteacher_cached.py](experiments/run_multiteacher_cached.py)
+usa en RAM los mismos contextos de dos saltos, empaquetados por
+[rooted_multiteacher_cache.py](experiments/rooted_multiteacher_cache.py), sin
+cambiar muestreo ni tensores. Se verificaron los96.000 ejemplos completos,
+una actualización B1680 y la reanudación exacta; los14 modelos del control
+técnico coinciden bit a bit con la ejecución anterior. El pool original y los
+hashes de la caché se conservan para auditoría.
+
+Los 35 modelos se congelan en el último paso antes de generar el test común:
+396 casos por modelo, N40/160/640/2560/10240, REGULAR/IRREGULAR y controles
+PATH/CYCLE/K4. Son 13.860 ejecuciones GNN y 2.772 referencias exactas. Se verifica
+separación de grafos fuente/validación/test y se guardan las coloraciones completas.
+Los controles de grado menor siguen usando cuatro colores. Los pasos nativos
+secuenciales y paralelos no representan el mismo coste distribuido. Cinco
+semillas y cero fallos observados no demostrarían corrección universal.
+
+```bash
+.venv/bin/python -m pytest -q tests/test_multiteacher.py
+.venv/bin/python experiments/run_multiteacher.py --plan configs/multiteacher/comparison.json --root data/multiteacher-20261019
+.venv/bin/python experiments/analyze_multiteacher.py --root data/multiteacher-20261019
+```
+
+La raíz de resultados conserva fuentes, pools con hashes, checkpoints,
+congelación, evaluaciones y `summary.json`, `success-by-seed.csv`,
+`learning-curves.csv` y las curvas PNG/PDF. El intento técnico de verificación
+se guarda aparte en `data/multiteacher-technical-20261019/`. Revisión científica
+independiente pendiente.
+
+Una revisión previa al test detectó una entrada auxiliar no local: la posición
+en bloques especulativos estaba presente también en los otros maestros. Se
+restringió esa posición y su relación de igualdad a GM, con una prueba por
+maestro. El prefijo anterior se conserva íntegro como intento técnico en
+`data/multiteacher-global-slots-prefix-20261019/`; no había congelación ni test
+final. La comparación corregida regenera los pools y entrena todos los modelos
+desde cero con el mismo presupuesto y semillas.
+
+Entradas supervisadas almacenadas en el pool común (800 grafos ×3 trayectorias):
+
+| Maestro | Decisiones almacenadas | Pasos nativos medios por trayectoria N40 |
+|---|---:|---:|
+| Luby | 248.584 | 7,904 |
+| Johansson | 189.256 | 4,657 |
+| Jones–Plassmann | 256.080 | 5,939 |
+| ColorTrials repetido | 162.455 | 3,290 |
+| BE, caso base Δ≤3 | 1.440.000 | 15 |
+| Especulativo GM | 197.348 | 22,228 |
+| Greedy secuencial | 96.000 | 40 |
+
+Cada modelo recibe 29.836.800 extracciones con reposición de su pool. Estas
+entradas no son muestras estadísticamente independientes. Los pasos de esta
+tabla describen programas con distintos modelos de cómputo; no constituyen una
+comparación de velocidad distribuida. `paired-cost.csv` compara cada GNN con
+su maestro sobre exactamente los casos en que esa GNN tuvo éxito.
+
+La precisión local se desglosa por fase y se acompaña de la frecuencia de la
+etiqueta mayoritaria en cada fase de validación (`teacher-task-baselines.csv`).
+Eso permite distinguir progreso aprendido de una precisión alta obtenida
+simplemente esperando o dejando casi todas las marcas de reparación en cero.
+`learning-by-phase.csv` y sus figuras PNG/PDF muestran las fases auxiliares/KW
+de BE y las fases de GM; para la detección se usa F1 de las marcas positivas.
+
+**Resultado final, 20 de octubre de 2026.** Los 35 modelos completaron el
+presupuesto y quedaron congelados antes del test. Pasaron las 2.772
+referencias exactas; se evaluaron las 13.860 ejecuciones GNN restantes.
+La tabla muestra porcentajes de coloraciones completas correctas; la
+precisión local mide imitación en validación nueva REGULAR N40.
+
+| Maestro | Precisión local (%) | REGULAR N40 (%) | REGULAR N10240 (%) | IRREGULAR N10240 (%) | Éxitos GNN / 1.980 |
+|---|---:|---:|---:|---:|---:|
+| Luby | 98,936 | 100,00 | 76,67 | 20,00 | 1.857 |
+| Johansson | 98,272 | 100,00 | 93,33 | 53,33 | 1.919 |
+| Jones–Plassmann | 99,989 | 99,60 | 33,33 | 26,67 | 1.635 |
+| ColorTrials repetido | 100,000 | 100,00 | 100,00 | 100,00 | 1.980 |
+| BE, caso base Δ≤3 | 99,564 | 93,00 | 0,00 | 0,00 | 872 |
+| Especulativo GM | 99,995 | 100,00 | 100,00 | 100,00 | 1.975 |
+| Greedy secuencial | 100,000 | 100,00 | 100,00 | 60,00 | 1.842 |
+
+N40 contiene 50 grafos regulares por dos tapes y cinco inicializaciones
+(500 ejecuciones GNN). Cada celda N10240 contiene **tres grafos** por dos tapes
+y cinco inicializaciones (30 ejecuciones); no son 30 grafos independientes.
+Las curvas muestran el rango entre inicializaciones, no un intervalo de confianza.
+
+ColorTrials resolvió los cuatro casos de seguimiento en las cinco semillas
+desde el hito 500 (840.000 decisiones supervisadas/modelo), cuando la imitación
+local media todavía era 94,47 %. Al final alcanzó 100 % de imitación local y
+1.980/1.980 coloraciones válidas, incluidos PATH/CYCLE/K4. Este resultado
+finito favorece a ColorTrials repetido bajo este protocolo; no demuestra que
+la regla aprendida sea correcta para todos los grafos.
+
+Greedy llegó al 100 % de imitación local en las cinco semillas a 500 updates,
+pero falla al cambiar de topología: 100 % en todos los tamaños REGULAR frente
+a 60 % en IRREGULAR N10240 (rango entre semillas 0–100 %). Jones–Plassmann
+terminó con 99,989 % de imitación local, pero 288 ejecuciones incompletas y
+57 colisiones. Por tanto, una imitación casi perfecta sobre estados del
+maestro en grafos cúbicos pequeños no garantiza ejecución autónoma al escalar
+o cambiar de distribución.
+
+En BE, la fase auxiliar Linial terminó con 96,73 % de precisión local media
+y la reducción KW con 100 %. La precisión agregada 99,564 % oculta esa
+diferencia: la etiqueta mayoritaria de KW ya obtiene 94,47 %. Los fallos
+autónomos finales son 684 colisiones y 424 salidas de paleta; ninguno de los
+casos N10240 termina correctamente. El desglose identifica la fase con
+errores persistentes, sin establecer una causa única mediante una ablación.
+
+GM terminó con 100 % en asignación y detección locales (F1 de marcas positivas
+igual a 1) y 99,821 % en reparación. Sus cinco fallos finales pertenecen a la
+semilla3: tres tapes del K4 y dos casos IRREGULAR N160. Las 123 fallas de Luby,
+61 de Johansson y 138 de greedy son colisiones. No se aplicaron filtros de
+validez ni decisiones del maestro durante las ejecuciones GNN.
+
+Pasaron **75 pruebas dirigidas** de los módulos multiteacher/Johansson.
+La auditoría final comprobó los 36 fuentes congelados, 35 pesos, presupuestos
+e inicializaciones emparejadas, drivers operativos/caché y todos los archivos
+de pools. Son 800 grafos de entrenamiento, 50 de validación local y 197 de
+test, sin solapamiento; los cuatro grafos de seguimiento también se excluyen
+del test. Todas las coloraciones completas se verificaron contra las aristas
+y la paleta de cuatro colores. Revisión científica independiente pendiente.
+
+Artefactos finales: [comparación CSV](results/multiteacher/2026-10-20/comparison.csv),
+[informe JSON](results/multiteacher/2026-10-20/comparison.json),
+[curvas de aprendizaje](results/multiteacher/2026-10-20/learning-curves.png),
+[aprendizaje por fase](results/multiteacher/2026-10-20/learning-by-phase.png),
+[transferencia por tamaño](results/multiteacher/2026-10-20/success-by-size.png)
+y [resultados por semilla](results/multiteacher/2026-10-20/success-by-seed.csv).
+Las tres figuras también se entregan en PDF y sus valores en CSV/JSON.
+
+La [entrega compacta versionada](results/multiteacher/2026-10-20/manifest.json)
+conserva planes, hashes de modelos, tablas, curvas y procedencia. El archivo
+completo `data/multiteacher-20261019/` conserva datasets, pesos y coloraciones
+por vértice fuera de Git; se necesita ese archivo para repetir su auditoría
+completa. Los comandos anteriores permiten volver a ejecutar el protocolo.
+Los CSV versionados usan saltos de línea LF según `.gitattributes`; el
+manifiesto conserva tanto su hash versionado como el hash del archivo original.
+Los hashes de `analysis-provenance.json` corresponden al archivo original.
+
+## Cinco réplicas nuevas E1 frente a Luby
+
+La [entrega E1 del 21 de octubre de 2026](results/e1-retrained/2026-10-21/README.md)
+reúne código, configuración, procedencia, tablas y cuatro gráficos de cinco
+réplicas nuevas UniversalColorGNN NORMALIZED/COUNTERFACTUAL, de 16.035 parámetros.
+Son checkpoints nuevos a época 120, separados de los históricos no disponibles.
+Cada réplica logró 20.480/20.480 coloraciones correctas en los grafos aleatorios
+evaluados; ninguno de los 100 tests MMD detectó diferencias con Luby tras Holm.
+Se observan pequeñas diferencias locales: la ausencia de rechazo no demuestra
+equivalencia general. Revisión científica independiente pendiente.
+
+
+## Repetición de siete maestros con E1 — 22 de octubre de 2026
+
+Se repitió la comparación con el núcleo UniversalColorGNN NORMALIZED y
+entrenamiento contrafactual:16035 parámetros para Luby/Johansson/greedy;
+19396 con contexto nativo para JP/ColorTrials/BE/GM. Los35 modelos comparten
+los pools y presupuestos anteriores:800 grafos N40/Δ3, tres tapes,
+17760 actualizaciones de1680 decisiones y cinco inicializaciones por maestro.
+Se evalúan396 casos comunes por actor, hasta N10240, con16632 ejecuciones.
+
+Luby, Johansson, ColorTrials, BE y greedy logran1980/1980 éxitos cada uno;
+JP obtiene1631 y GM1951. Luby mejora respecto de1857 y Johansson de1919.
+JP empeora en los tamaños mayores aunque su tasa global sea parecida; GM
+registra29 ejecuciones incompletas. La comparación incluye cambios de
+representación y entrenamiento:en BE se aprende el punto y se suministra su
+valor polinomial. Es un seguimiento exploratorio sobre casos ya publicados.
+
+El [informe con curvas y límites](results/multiteacher-e1/2026-10-22/README.md),
+la [tabla antes/después](results/multiteacher-e1/2026-10-22/architecture-comparison.csv)
+y la [auditoría](results/multiteacher-e1/2026-10-22/audit.json) conservan los
+resultados de las cinco semillas y todos los fallos. El
+[protocolo](docs/MULTITEACHER_E1.md) y las
+[definiciones de métricas](docs/MULTITEACHER_E1_METRICAS.md) explican las adaptaciones.
+Los fuentes originales E1 y resultados anteriores se conservan íntegros.

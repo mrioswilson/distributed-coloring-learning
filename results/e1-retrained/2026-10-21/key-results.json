@@ -1,0 +1,135 @@
+{
+  "replicas": [
+    {
+      "seed": 0,
+      "successes": 20480,
+      "differences": [
+        0,
+        0
+      ],
+      "certificates": {
+        "labelled": 1,
+        "color_permutation": 2
+      }
+    },
+    {
+      "seed": 1,
+      "successes": 20480,
+      "differences": [
+        0,
+        0
+      ],
+      "certificates": {
+        "labelled": 0,
+        "color_permutation": 0
+      }
+    },
+    {
+      "seed": 2,
+      "successes": 20480,
+      "differences": [
+        0,
+        0
+      ],
+      "certificates": {
+        "labelled": 1,
+        "color_permutation": 1
+      }
+    },
+    {
+      "seed": 3,
+      "successes": 20480,
+      "differences": [
+        0,
+        0
+      ],
+      "certificates": {
+        "labelled": 8,
+        "color_permutation": 8
+      }
+    },
+    {
+      "seed": 4,
+      "successes": 20480,
+      "differences": [
+        0,
+        0
+      ],
+      "certificates": {
+        "labelled": 0,
+        "color_permutation": 0
+      }
+    }
+  ],
+  "summary": {
+    "cohort_origin": "newly-trained-replicas",
+    "different_after_holm": 0,
+    "experiment": "E1",
+    "graphs": 83,
+    "manifest_hash": "3ac285e9aaf0673dbf023dc0423d9ab775f1174b4ecd5aa84455f324bb9677b1",
+    "plan": {
+      "alpha": 0.05,
+      "batch_nodes": 4096,
+      "batch_tapes": 32,
+      "controls": true,
+      "degree": 3,
+      "graphs_per_family": [
+        [
+          8,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          40,
+          12
+        ],
+        [
+          160,
+          8
+        ],
+        [
+          640,
+          4
+        ]
+      ],
+      "kernel_scales": [
+        1.0,
+        4.0,
+        16.0
+      ],
+      "max_rounds": 256,
+      "namespace": 2026102103,
+      "num_colors": 4,
+      "permutations": 3999,
+      "protocol": "e1-luby-behavior-v1",
+      "replicas": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "samples": 256,
+      "tv_tolerance": 0.05
+    },
+    "primary_tests": 100,
+    "protocol": "e1-luby-behavior-v1",
+    "random_graph_equivalence_certificates": 21,
+    "review": "finite experimental evidence; independent scientific review pending",
+    "rollouts": 148736
+  },
+  "audit": {
+    "checked_utc": "2026-10-21T23:57:31.189757+00:00",
+    "checkpoints": 5,
+    "cohort_origin": "newly-trained-replicas",
+    "colorings_checked": 148736,
+    "complete": true,
+    "e1_scalar_replays": 415,
+    "independent_scientific_review": "pending",
+    "local_examples_replayed": 1612,
+    "teacher_scalar_replays": 332
+  }
+}
