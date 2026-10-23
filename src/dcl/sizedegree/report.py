@@ -408,6 +408,11 @@ mismo grafo, las cinco E1 dieron probabilidades entre
 frente a {th[0]['probability_Luby']:.3f} de Luby. Los tres grafos nuevos se
 presentan arriba, y la matriz completa evita reducir la explicación a ese caso.
 No se mezcló ninguna observación histórica con las nuevas.
+El sesgo no aparece por primera vez en n512: a grado100, T ya tiene
+diferencia {ci(cell('normalized',128,100,'uses_top_color'))} en n128, aunque
+A apenas separa esos bancos. La saturación de un evento puede ocultar una
+diferencia que otro evento sí muestra; el caso destacado por A no identifica
+por sí solo un umbral causal de tamaño.
 
 Los quince contrastes del grafo histórico con datos nuevos, bajo su familia
 Holm separada, dieron:
@@ -458,6 +463,13 @@ condicionales en los grafos y checkpoints indicados. Un no rechazo no prueba
 igualdad. La equivalencia TV≤0,05 en los 35 casos E1 pequeños anteriores
 conserva su alcance previo y no se extrapola a n≥128. No obtenemos una cota
 superior útil de TV a partir de MMD pequeña o medias similares.
+
+En los casos de cliques, la uniformidad condicional puede proceder de la
+equivarianza de vértices y de que toda coloración propia usa cada color una
+vez. Ese teorema puede coexistir con sesgos de candidatos. En regulares
+generales hay varios perfiles de clases de color y esa transitividad no
+está disponible. Ni la igualdad de un clique ni los otros casos pequeños
+estadísticamente próximos establecen generalización universal.
 
 Las seis formas binomiales exploratorias se compararon con interceptos de
 checkpoint y tres folds que dejan fuera grafos completos. Para A, la menor

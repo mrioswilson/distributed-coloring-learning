@@ -178,6 +178,12 @@ $E_L[U]=K P_L(T)$ conditional on the invariant completion event. It does not
 imply uniformity over proper colorings on arbitrary regular graphs. The ideal
 argument is distinct from a bitwise floating-point certificate.
 
+The earlier clique result instead uses transitivity of vertex permutations
+on the proper bijective colorings. Conditional uniformity there can coexist
+with nonuniform candidate proposals. General regular graphs admit multiple
+color-class profiles and lack that transitivity, so clique equality does
+not establish general complete-law transfer beyond those symmetry conditions.
+
 \paragraph{Exploration and limitations.}
 Six binomial predictor forms---size, degree/palette, $n/K$, density, additive
 and interaction---are compared with checkpoint intercepts and whole-graph

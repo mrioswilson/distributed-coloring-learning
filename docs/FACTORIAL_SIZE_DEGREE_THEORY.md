@@ -36,6 +36,18 @@ need not preserve all lists. The proof applies only to permutations stabilizing
 every local list. In particular, maximum-degree colors are available at fewer
 vertices. Regular and irregular results must therefore be stratified.
 
+The earlier clique theorem uses a different symmetry. Every proper coloring
+of K_n with its n-color local lists is a bijection, and vertex permutations
+act transitively on these n! labeled vectors. A vertex-equivariant protocol
+with IID vertex randomness therefore has the uniform law conditional on
+proper completion, whenever that event has positive probability. Its
+candidate-color distribution need not be uniform. On a general regular
+graph, the vertex action is not transitive on all proper colorings and
+multiple color-class profiles are possible. Equality on cliques can thus
+coexist with proposal bias that affects the completed law elsewhere. This
+argument retains the earlier theorem's precise equivariance assumptions;
+it does not turn a numerical nonrejection into an equality proof.
+
 ## Why proposals can have no n dependence while occupancy does
 
 All three studied policies use MAX neighbor aggregation. In the all-uncolored
