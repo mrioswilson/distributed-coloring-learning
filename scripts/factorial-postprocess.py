@@ -37,7 +37,7 @@ def run(phase,command,cwd=base):
 
 run('intervention-analysis',[sys.executable,'-m','dcl.sizedegree.intervention','analyze'])
 run('intervention-witnesses',[sys.executable,'-m','dcl.sizedegree.intervention_witnesses','analyze'])
-for module in ('precision','capacity','exploratory','audit','summaries','figures','report'):
+for module in ('precision','capacity','exploratory','audit','summaries','cdf_witnesses','figures','report'):
     run(module,[sys.executable,'-m','dcl.sizedegree.'+module])
 compiler='/workspaces/AlgoLearning/ucgnn-paper-study/.tools/tectonic'
 run('tex',[compiler,'--keep-logs','--keep-intermediates','main.tex'],base/'paper/ucgnn')

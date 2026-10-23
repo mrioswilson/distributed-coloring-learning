@@ -4,6 +4,14 @@ Worktree: `/workspaces/AlgoLearning/ucgnn-size-degree-study`.
 Branch: `research/ucgnn-size-degree`. No training and no remote push.
 The prior robust study remains unchanged in its own worktree.
 
+Completed: all 912 original banks, all 855 graph/checkpoint comparisons and
+all 60 exploratory intervention cells (1,000 independent pairs each).
+The original 570,000 attempts were proper completions, without invalid outputs,
+cutoffs or technical errors. The final resource ledger charges 10.184882 of 12
+GPU-process hours, including pilots and diagnostics. The end-to-end audit
+passes, and 43 distinct recorded unit checks pass. No further sampling is needed
+to reproduce the delivered results.
+
 The protocol was committed at `5633b547682b129bb0f0baa81f6ad9fe1012eb25`
 before generating confirmation banks. Read
 `docs/FACTORIAL_SIZE_DEGREE_PROTOCOL.md`, `results/ucgnn-size-degree/freeze.json`
@@ -84,9 +92,10 @@ $PYTHON -m dcl.sizedegree.capacity
 $PYTHON -m dcl.sizedegree.exploratory
 $PYTHON -m dcl.sizedegree.audit
 $PYTHON -m dcl.sizedegree.summaries
+$PYTHON -m dcl.sizedegree.cdf_witnesses
 $PYTHON -m dcl.sizedegree.figures
 $PYTHON -m dcl.sizedegree.report
-/workspaces/AlgoLearning/ucgnn-paper-study/.tools/tectonic paper/ucgnn/main.tex
+/workspaces/AlgoLearning/ucgnn-paper-study/.tools/tectonic --keep-logs --keep-intermediates paper/ucgnn/main.tex
 ```
 
 `results/ucgnn-size-degree/` contains all raw/adjusted p-values, events and
@@ -97,6 +106,15 @@ figures, additional diagnostics and a 16-page full-cohort occupancy PDF.
 The report explicitly answers P1–P10; the new provisional manuscript section
 preserves all historical sections. Full interpretation follows the completed
 audit, not an intermediate count of rejections.
+
+The original held-out explanation selector is preserved, including failures
+caused by categorical-pattern overfitting. A later exploratory supplement,
+`docs/FACTORIAL_EXPLORATORY_CDF_WITNESSES.md`, uses all625 original attempts
+and the seven already frozen scalar functions. Uniform DKW bands across all
+6,384 graph/generator/function CDFs permit metric and threshold selection
+with at least95% simultaneous coverage. This separate family is explicitly
+not independent confirmation; it changes no original p-value or intervention
+event. Figure13 shows illustrative selected events and their uniform bands.
 
 In a delivered archive, raw original algorithm banks, the new raw banks,
 all15 exact checkpoints, source history and document compiler are included.

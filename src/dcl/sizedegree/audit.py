@@ -16,11 +16,11 @@ from dcl.robustdist.confirmation import event_values
 from dcl.universal.rules import exact_commit_labels,available_matrix
 
 def main():
-    f=verify_frozen();record=read(OUT/'protocol-commit.json');commit=record['commit']
-    frozen_doc=subprocess.check_output(['git','show',commit+':docs/FACTORIAL_SIZE_DEGREE_PROTOCOL.md'])
+    f=verify_frozen();record=read(OUT/'protocol-commit.json');protocol_commit=record['commit']
+    frozen_doc=subprocess.check_output(['git','show',protocol_commit+':docs/FACTORIAL_SIZE_DEGREE_PROTOCOL.md'])
     import hashlib
     assert hashlib.sha256(frozen_doc).hexdigest()==f['protocol_sha256']
-    prereg=datetime.fromisoformat(subprocess.check_output(['git','show','-s','--format=%cI',commit],text=True).strip())
+    prereg=datetime.fromisoformat(subprocess.check_output(['git','show','-s','--format=%cI',protocol_commit],text=True).strip())
     assert record['confirmation_banks_before_freeze']==0
     assert file_hash(OUT/'validation.json')==f['validation_sha256']
     assert read(OUT/'validation.json')['passed']
@@ -169,7 +169,7 @@ def main():
     assert not any(r.get('bounds_conflict',False) for r in fc)
     budget=read(ROOT/'budget.json');assert budget['seconds']<=budget['limit']==43200. and budget['active_wall'] is None
     pd.DataFrame(manifests).to_csv(OUT/'sampling-manifest.csv',index=False)
-    result=dict(passed=True,updated=now(),protocol_commit=commit,graphs=graph_audit,
+    result=dict(passed=True,updated=now(),protocol_commit=protocol_commit,graphs=graph_audit,
                 banks=len(manifests),new_algorithm_seeds=len(new),distinct_old_seeds=len(np.unique(old)),old_banks_checked=oldbank_count,
                 distinct_transfer_test_seeds=len(auxiliary),overlap_seeds=0,statuses_main_and_pilots=allstatus.tolist(),
                 mechanism_forbidden_candidates=int(mechanism_errors[0]),mechanism_unsafe_commits=int(mechanism_errors[1]),

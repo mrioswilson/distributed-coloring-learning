@@ -149,8 +149,9 @@ Se reemplazó únicamente el canal de candidatos por la propuesta exacta local
 del profesor, sobre el estado de la política intervenida I. Se conservaron
 sus pesos, participación y COMMIT originales, sin escudo. El plan se versionó
 antes de obtener datos de esta intervención; su tamaño se eligió sólo por
-coste. Estado: `{iv['status']}`, {iv['cells']}/60 celdas, tres grafos nuevos
-n512-d100 y el histórico, con las quince redes.
+coste: 1.000 parejas independientes por celda. Estado: `{iv['status']}`,
+{iv['cells']}/60 celdas, tres grafos nuevos n512-d100 y el histórico,
+con las quince redes.
 
 {chr(10).join(iv_table)}
 
@@ -161,7 +162,9 @@ las cotas superiores de TV condicional. Cotas de eventos originales y nuevos
 dan los efectos inferiores TV(original,I), con cobertura conjunta al menos
 95%. Se observaron {iv['unsafe']} COMMIT inseguros, sin corregirlos.
 
-Un límite superior ≤0,05 respalda equivalencia aproximada sólo de I con Luby.
+Ninguna celda logró una cota superior ≤0,05: no se estableció recuperación
+aproximada de la ley de Luby. Una cota ≤0,05 habría respaldado equivalencia
+aproximada sólo de I con Luby.
 Un límite superior grande puede reflejar un acoplamiento poco ajustado; no
 demuestra discrepancia residual. El efecto controlado del canal de propuestas
 es distinto de identificar mediación completa o separar grado de paleta.
@@ -207,6 +210,57 @@ cota cero se conservan y no prueban ausencia de efecto.
         vals=[next(r for r in models if r['architecture']==arch and r['event']=='used_le_delta' and r['form']==form) for arch in ARCHES]
         prediction_table.append('| '+form+' | '+' | '.join(f"{r['mean_heldout_cross_entropy']:.5f}"+(' (no convergió)' if not r['converged'] else '') for r in vals)+' |')
     np_,nm=count('normalized','size');dp,dm=count('normalized','degree');join=lambda x:'\n'.join(x)
+    cdf=read(OUT/'exploratory-cdf-best-witnesses.json');cdf_summary=read(OUT/'exploratory-cdf-protocol-and-summary.json')
+    cdf_counts=['| Arquitectura | Cotas TV positivas / 240 | Entre rechazos globales V2 |','|---|---:|---:|']
+    for arch in ARCHES:
+        row=next(r for r in cdf_summary['counts'] if r['stratum']=='main' and r['architecture']==arch)
+        total=sum(r['reject'] for r in primary if r['architecture']==arch)
+        cdf_counts.append(f"| {NAMES[arch]} | {row['positive_tv_bounds']}/240 | {row['positive_for_global_rejections']}/{total} |")
+    cdf_target=[r for r in cdf if r['stratum']=='main' and r['architecture']=='normalized' and r['n']==1024 and r['delta']==50]
+    cdf_examples=[]
+    for label in ('normalized-s41000','normalized-s41003','normalized-s41004'):
+        r=next(r for r in cdf_target if r['graph'].endswith('r0') and r['model']==label)
+        cdf_examples.append(f"- `{label}`, evento `{r['metric']} ≤ {r['threshold']:.12g}`: Luby={r['count_Luby']}/625={r['probability_Luby']:.4f}, IC [{r['probability_ci_Luby'][0]:.4f},{r['probability_ci_Luby'][1]:.4f}]; E1={r['count_model']}/625={r['probability_model']:.4f}, IC [{r['probability_ci_model'][0]:.4f},{r['probability_ci_model'][1]:.4f}]. Diferencia {r['difference']:+.4f}, IC simultáneo [{r['ci'][0]:+.4f},{r['ci'][1]:+.4f}], TV≥{r['tv_lower']:.4f}.")
+    cdf_text=f'''### Explicación exploratoria con selección controlada
+
+El test global no garantiza que el único testigo elegido lo explique. En
+E1 n1024-d50, V2 rechazó las quince comparaciones; el selector original eligió
+tuplas categóricas para algunos checkpoints y su holdout no las validó. Por
+ejemplo, en r0/s41003 memorizó 500 tuplas distintas: el evento cubrió 250/250
+filas Luby y 0/250 de la red durante selección, 1/250 y 0/250 en evaluación,
+y 0/125 y 1/125 en reserva. El soporte grande produjo sobreajuste; la reserva
+independiente lo reveló correctamente. Esto limita al explicador, sin cambiar
+la calibración ni los valores-p del omnibus.
+
+Después de observar ese problema se añadió un análisis **exploratorio** sobre
+las siete funciones escalares congeladas antes del muestreo. Usa los 625
+intentos originales por banco y bandas DKW uniformes sobre todos los umbrales.
+La unión de 57 grafos × 16 generadores × 7 funciones = 6.384 CDF da cobertura
+simultánea al menos 95%; el profesor se cuenta una vez. Cada banda tiene radio
+0,09980 cuando N=625. Restarlas permite elegir función, umbral y caso tras
+observar los datos, sin usar un intervalo ingenuo del evento seleccionado.
+La garantía corresponde a **otra familia**, separada de los contrastes y
+testigos originales; no convierte este análisis en confirmación independiente
+ni aumenta retrospectivamente los rechazos originales.
+
+{join(cdf_counts)}
+
+En E1 n1024-d50 las quince cotas son positivas, con mínimo
+{min(r['tv_lower'] for r in cdf_target):.3f}, aunque A y T apenas separan los
+bancos en esa celda. En el mismo grafo r0, la figura 13 muestra:
+
+{join(cdf_examples)}
+
+Los umbrales impresos se redondean; los eventos exactos usan los valores de
+precisión completa de `exploratory-cdf-witnesses.json`.
+
+En estos grafos regulares, `entropy_normalized` es la entropía de clases
+dividida por log(K), y `mean_color_normalized` el color medio dividido por Δ.
+En irregulares, esta última función promedia c_v/max(1,d(v)). Las probabilidades,
+intervalos y eventos de los 855 casos y sus siete funciones se archivan,
+incluidas las cotas cero. No son una clasificación causal de propiedades ni
+cotas superiores de TV: estas proyecciones no son inyectivas.
+'''
     text=f'''# Tamaño, grado y generalización distribucional: estudio factorial
 
 Se completó la matriz principal de **16 celdas y 48 grafos regulares nuevos**,
@@ -398,6 +452,8 @@ reutilización entre no vecinos. Wasserstein sobre proyecciones normalizadas
 tiene bandas DKW puntuales descriptivas. Una media estructural próxima puede
 coexistir con una diferencia enorme en un evento de cola; esas proyecciones
 no identifican siempre la ley completa.
+
+{cdf_text}
 
 ## P8. ¿El caso n512-d100 es excepcional?
 

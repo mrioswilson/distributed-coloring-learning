@@ -19,7 +19,8 @@ def make_paper():
         return f"{r['estimate']:+.3f} [{r['ci'][0]:+.3f}, {r['ci'][1]:+.3f}]"
     ci50=[next(r['ci'] for r in fc if r['group']=='normalized' and r['event']=='uses_top_color' and r['contrast']==f'n{n}-d50') for n in (128,1024)]
     reduction50=max(0.,max(0.,ci50[0][0],-ci50[0][1])-max(map(abs,ci50[1])))
-    text=r'''\section{How Graph Size and Degree Affect Distributional Generalization}
+    text=r'''\clearpage
+\section{How Graph Size and Degree Affect Distributional Generalization}
 \label{sec:factorial}
 \paragraph{Motivation and controlled design.}
 The preceding robust study found an occupancy-event TV lower bound of .894
@@ -201,7 +202,7 @@ large discrepancy of an occupancy-tail event.
     final_s4=[r['probability_model'] for r in events if r['stratum']=='main' and r['n']==512 and r['delta']==100 and r['model']=='normalized-s41004' and r['event']=='uses_top_color']
     text+=f'''
 The distinction between initial proposals and terminal laws is quantitative:
-for E1 \\texttt{{normalized-s41004}}, the initial 4,096-point top-color mass
+for E1 checkpoint 41004, the initial 4,096-point top-color mass
 at $K=101$ is {initial_s4:.6f}, yet the mean final top-color appearance across
 the three new priority graphs is {sum(final_s4)/len(final_s4):.3f}.
 Availability changes along a trajectory; a zero initial grid mass cannot
@@ -245,6 +246,65 @@ simultaneous elementary CP bounds; the shared teacher enters once. One graph
 per irregular cell limits generalization, and maximum degree does not specify
 its full palette-capacity profile.
 '''
+    cdf=read(OUT/'exploratory-cdf-best-witnesses.json')
+    cdf_summary=read(OUT/'exploratory-cdf-protocol-and-summary.json')
+    cdf_rows=[]
+    for label in ('normalized-s41000','normalized-s41003','normalized-s41004'):
+        r=next(r for r in cdf if r['graph']=='main-regular-n1024-d50-r0' and r['model']==label)
+        metric=r'$H/\log K$' if r['metric']=='entropy_normalized' else r'$\bar c/d$'
+        cdf_rows.append(f"{label[-5:]} & {metric} & {r['threshold']:.8f} & {r['probability_Luby']:.4f} & {r['probability_model']:.4f} & {r['tv_lower']:.3f} \\\\")
+    explanatory_counts=[]
+    for arch in ARCHES:
+        r=next(r for r in cdf_summary['counts'] if r['stratum']=='main' and r['architecture']==arch)
+        total=sum(q['reject'] for q in tests['main'] if q['architecture']==arch)
+        explanatory_counts.append(f"{NAMES[arch]}: {r['positive_tv_bounds']}/240 overall, including {r['positive_for_global_rejections']}/{total} global rejections")
+    text+=r'''
+\paragraph{Exploratory explanations with simultaneous threshold selection.}
+The original single-event explanation selector can overfit categorical
+patterns even when an independently evaluated global statistic rejects.
+For E1 checkpoint 41003 on the 1,024-node degree-50 graph r0, it fitted 500
+distinct triples. Its event covered 250/250 teacher versus 0/250 model rows
+during selection, 1/250 versus 0/250 evaluation rows, and 0/125 versus 1/125
+reserved rows. The honest holdout correctly refused to validate that event.
+We preserve this failure and all original omnibus results.
+
+After inspecting it, we added an explicitly exploratory analysis using all 625
+original attempts and only the seven scalar functions frozen before sampling.
+For each of 57 graphs, 16 generators and 7 functions, the DKW radius is
+$\epsilon_N=\sqrt{\log(2\cdot6384/.05)/(2N)}$, clipped at 1. A union bound
+covers all 6,384 CDFs and all thresholds simultaneously with probability at
+least .95, with the shared teacher counted once. Subtracting clipped bands
+allows data-dependent choice of a predefined function and threshold without
+a naive selected-event interval. This is a new separate confidence family,
+not independent confirmation or a revision of the primary rejection counts.
+'''
+    text+='\nPositive full-law TV lower bounds in the main cohort are '+ '; '.join(explanatory_counts)+'.'
+    text+=f'''
+All fifteen E1 comparisons at $n=1024,d=50$ have positive bounds in this
+family, despite nearly uninformative missing-color and top-appearance events.
+Figure~\\ref{{fig:factorial-cdf}} and Table~\\ref{{tab:factorial-cdf}} give
+examples from the same graph r0. Normalized class entropy detects a strong
+checkpoint-specific shift, while numeric mean color also distinguishes two
+checkpoints for which the original categorical explanation failed.
+The individual CDF radius is .09980 at 625 valid runs; the report archives
+probability and difference bands for all seven metrics and all 855 comparisons,
+including zero bounds. Noninjective projections cannot establish equality
+or upper bounds on full-law TV.
+\\begin{{table}}[t]
+\\centering\\small
+\\begin{{tabular}}{{llrrrr}}
+\\toprule E1 seed & Metric $\\phi$ & Threshold $t$ & $P_L$ & $P_M$ & TV lower\\\\
+\\midrule
+{chr(10).join(cdf_rows)}
+\\bottomrule
+\\end{{tabular}}
+\\caption{{Exploratory events $\\phi(X)\\le t$ on the same $n=1024,d=50$
+graph r0. Probabilities use 625 valid runs per generator; TV lower bounds
+have simultaneous coverage at least .95 over the separate 6,384-CDF family.
+$H$ is class entropy, $K=51$, and $\\bar c$ is mean numeric color.}}
+\\label{{tab:factorial-cdf}}
+\\end{{table}}
+'''
     iv=intervention_summary()
     if iv and iv['cells']:
         text+=f'''
@@ -255,14 +315,15 @@ state. Learned participation, original COMMIT, checkpoints and cutoff are
 unchanged; no safety mask is added. Across {iv['cells']} of 60 planned cells
 (all checkpoints on three new priority graphs and the historical graph),
 the status is \\texttt{{{iv['status'].replace('_', chr(92)+'_')}}}.
-The sample count was selected exclusively from a separate timing pilot,
-within the same total GPU budget. These observations do not enter the
+The sample count of 1,000 independent pairs per cell was selected exclusively
+from a separate timing pilot, within the same total GPU budget. These observations do not enter the
 original 720 hypotheses.
 
 Common-random-number coupling, with independent pairs, gives simultaneous
 upper bounds on conditional TV between the intervened policy $I$ and Luby;
 paired outputs are never treated as independent two-sample observations.
-The bound is at most .05 in {iv['equivalent']}/{iv['cells']} cells.
+The bound is at most .05 in {iv['equivalent']}/{iv['cells']} cells; approximate
+restoration to the teacher law is therefore not established.
 Original and intervention event intervals jointly support a positive
 lower bound on $\\operatorname{{TV}}(P_M,P_I)$ in
 {iv['effects']}/{iv['cells']} cells, with coverage at least .95.
@@ -324,6 +385,7 @@ nonrejections establish no approximate equivalence.
       ('11-irregular-cohort','irregular','Separate irregular cohort: top-color appearance risk differences and simultaneous CP envelopes, averaged over the five fixed checkpoints. A dagger marks list profiles that force the missing-color event A to be true under every completed generator. All eight graphs are retained.')]
     if iv and iv['cells']:
         captions.append(('12-candidate-intervention','intervention','Separate exploratory candidate-channel intervention on four priority graphs. The supplementary witness/coupling family gives simultaneous 95 percent upper bounds for intervened versus Luby and lower effect bounds for original versus intervened. All original-policy tests remain separate.'))
+    captions.append(('13-exploratory-cdf-witnesses','cdf','Exploratory structural CDF witnesses on one fixed graph, with three E1 checkpoints shown separately. Shaded DKW bands cover all thresholds and all 6,384 predefined graph/generator/function CDFs simultaneously with probability at least .95. Dashed thresholds are selected within this covered family. All 625 original runs per law are used; this is not an independent confirmatory analysis.'))
     for name,label,caption in captions:
         text+='\n\\begin{figure}[p]\n\\centering\n\\includegraphics[width=\\linewidth,height=.8\\textheight,keepaspectratio]{figures/factorial-'+name+'.pdf}\n\\caption{'+caption+'}\n\\label{fig:factorial-'+label+'}\n\\end{figure}\n'
     text+='\n\\clearpage\n'

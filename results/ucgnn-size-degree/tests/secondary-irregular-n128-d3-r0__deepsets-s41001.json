@@ -1,0 +1,426 @@
+{
+  "architecture": "deepsets",
+  "checkpoint_seed": 41001,
+  "checkpoint_sha256": "2968345009b97829e72fd6f9a984fef57fc81162242c6972f44e706003ec3fd7",
+  "completion_p": 1.0,
+  "delta": 3,
+  "empirical_biased_mmd": 0.04212551167149282,
+  "family": "irregular",
+  "graph": "secondary-irregular-n128-d3-r0",
+  "graph_sha256": "bd67984e5a34017ae799a0c8dd3cdea80960ecfcad22ddf507a29503efa94af5",
+  "m_Luby": 500,
+  "m_model": 500,
+  "m_planned": 500,
+  "model": "deepsets-s41001",
+  "n": 128,
+  "old": {
+    "B": 19999,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "multi_max": 1.0,
+      "multi_softmax": 1.0,
+      "old_hamming": 1.0
+    },
+    "permutations_used": 128,
+    "seconds": 0.372535364003852,
+    "statistics": {
+      "multi_max": -0.9646686459156204,
+      "multi_softmax": -0.9646686459156204,
+      "old_hamming": -0.0001704949579066639
+    }
+  },
+  "old_mmd2_unbiased": -0.0001704949579066639,
+  "old_p": 1.0,
+  "old_p_lower_bound": 0.00105,
+  "p": 1.0,
+  "p_lower_bound": 0.00105,
+  "population_mmd_ci95": [
+    0.0,
+    0.3745128155348065
+  ],
+  "rep": 0,
+  "rho": 32.0,
+  "robust": {
+    "B": 19999,
+    "evaluation_per_class": [
+      250,
+      250
+    ],
+    "exceedances": [
+      128,
+      94,
+      92,
+      113,
+      122,
+      121
+    ],
+    "p": 1.0,
+    "p_kind": "conservative_futility",
+    "p_values": {
+      "interaction": 1.0,
+      "local": 1.0,
+      "omnibus": 1.0,
+      "split_global": 1.0,
+      "split_multiscale": 1.0,
+      "structural": 1.0
+    },
+    "permutations_used": 128,
+    "seconds": 0.4946618389803916,
+    "selection_per_class": [
+      250,
+      250
+    ],
+    "statistics": {
+      "interaction": 1.0307723035981542,
+      "local": 0.97575049949416,
+      "omnibus": 1.0307723035981542,
+      "split_global": -1.1631321596918467,
+      "split_multiscale": 0.22538377701171633,
+      "structural": 0.46880723093849536
+    }
+  },
+  "status_Luby": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "status_model": [
+    500,
+    0,
+    0,
+    0
+  ],
+  "stratum": "secondary",
+  "structural": [
+    {
+      "difference": 0.0259999999999998,
+      "mean_Luby": 3.656,
+      "mean_model": 3.682,
+      "metric": "used_colors",
+      "normalized_wasserstein": 0.006499999999999992,
+      "wasserstein_ci95": [
+        0.0,
+        0.1388937556635339
+      ]
+    },
+    {
+      "difference": 0.0259999999999998,
+      "mean_Luby": 2.656,
+      "mean_model": 2.682,
+      "metric": "maximum_color",
+      "normalized_wasserstein": 0.008666666666666658,
+      "wasserstein_ci95": [
+        0.0,
+        0.14106042233020058
+      ]
+    },
+    {
+      "difference": 0.00649999999999995,
+      "mean_Luby": 0.914,
+      "mean_model": 0.9205,
+      "metric": "palette_fraction",
+      "normalized_wasserstein": 0.006499999999999992,
+      "wasserstein_ci95": [
+        0.0,
+        0.1388937556635339
+      ]
+    },
+    {
+      "difference": 0.00010937500000002265,
+      "mean_Luby": 0.352953125,
+      "mean_model": 0.3530625,
+      "metric": "largest_class_fraction",
+      "normalized_wasserstein": 0.0006093750000000005,
+      "wasserstein_ci95": [
+        0.0,
+        0.13300313066353392
+      ]
+    },
+    {
+      "difference": 0.000400678768559648,
+      "mean_Luby": 0.8122511748593604,
+      "mean_model": 0.81265185362792,
+      "metric": "entropy_normalized",
+      "normalized_wasserstein": 0.0009773544905950754,
+      "wasserstein_ci95": [
+        0.0,
+        0.133371110154129
+      ]
+    },
+    {
+      "difference": 8.333333333343518e-05,
+      "mean_Luby": 0.5019973958333332,
+      "mean_model": 0.5020807291666667,
+      "metric": "mean_color_normalized",
+      "normalized_wasserstein": 0.0009270833333333346,
+      "wasserstein_ci95": [
+        0.0,
+        0.13332083899686725
+      ]
+    },
+    {
+      "difference": -6.250781347666434e-05,
+      "mean_Luby": 0.3303342917864733,
+      "mean_model": 0.3302717839729966,
+      "metric": "nonedge_reuse",
+      "normalized_wasserstein": 0.00022352794099262448,
+      "wasserstein_ci95": [
+        0.0,
+        0.13261728360452654
+      ]
+    }
+  ],
+  "witness": {
+    "ci": [
+      -0.40898903422846333,
+      0.30756418305327604
+    ],
+    "ci_Luby": [
+      0.242544930848313,
+      0.6053016278337515
+    ],
+    "ci_model": [
+      0.19631259360528816,
+      0.550109113901589
+    ],
+    "count_Luby": 52,
+    "count_model": 45,
+    "difference": -0.055999999999999994,
+    "event": {
+      "family": "interaction",
+      "ids": [
+        75,
+        82,
+        85
+      ],
+      "keys": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          2
+        ],
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          0,
+          2,
+          2
+        ],
+        [
+          0,
+          2,
+          3
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          2
+        ],
+        [
+          1,
+          0,
+          3
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          1,
+          2,
+          0
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          1,
+          2,
+          2
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          1
+        ],
+        [
+          2,
+          0,
+          2
+        ],
+        [
+          2,
+          0,
+          3
+        ],
+        [
+          2,
+          1,
+          0
+        ],
+        [
+          2,
+          1,
+          1
+        ],
+        [
+          2,
+          1,
+          2
+        ],
+        [
+          2,
+          1,
+          3
+        ],
+        [
+          2,
+          2,
+          0
+        ],
+        [
+          2,
+          2,
+          1
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          3
+        ]
+      ],
+      "kind": "categorical",
+      "scores": [
+        -0.25,
+        -0.2666666666666666,
+        0.36363636363636365,
+        -0.2222222222222222,
+        -0.2666666666666666,
+        -0.07142857142857142,
+        -0.36363636363636365,
+        0.5714285714285714,
+        0.0,
+        0.125,
+        -0.16666666666666666,
+        0.3157894736842105,
+        0.0,
+        -0.2857142857142857,
+        0.38888888888888884,
+        -0.10714285714285711,
+        0.125,
+        0.29999999999999993,
+        0.21428571428571425,
+        0.0,
+        0.6153846153846153,
+        -0.13333333333333333,
+        0.0,
+        0.17391304347826086,
+        0.2777777777777777,
+        -0.36363636363636365,
+        -0.4,
+        -0.07407407407407407,
+        -0.4999999999999999,
+        -0.5833333333333333,
+        -0.4166666666666667,
+        0.07407407407407407,
+        -0.16666666666666666,
+        0.35714285714285715,
+        -0.25,
+        0.0
+      ]
+    },
+    "n_Luby": 125,
+    "n_model": 125,
+    "p": 0.43621436338045955,
+    "probability_Luby": 0.416,
+    "probability_model": 0.36,
+    "tv_lower": 0.0
+  }
+}

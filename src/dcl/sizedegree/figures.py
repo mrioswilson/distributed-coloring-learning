@@ -22,6 +22,34 @@ def save(fig,name):
     shutil.copy2(directory/f'{name}.pdf',target/f'{name}.pdf')
     plt.close(fig)
 
+def cdf_figure():
+    """Show exploratory selected events with bands uniform over all thresholds."""
+    from .inference import measurements
+    records=read(OUT/'exploratory-cdf-best-witnesses.json')
+    gid='main-regular-n1024-d50-r0';g=next(g for g in graphs() if g['id']==gid)
+    labels=('normalized-s41000','normalized-s41003','normalized-s41004')
+    names=dict(entropy_normalized='Class entropy / log(K)',mean_color_normalized='Mean color / degree')
+    fig,axes=plt.subplots(3,1,figsize=(6.8,8.5),layout='constrained')
+    for ax,label in zip(axes,labels):
+        r=next(r for r in records if r['graph']==gid and r['model']==label)
+        arrays=[]
+        for who in ('Luby',label):
+            b=bank(who,gid);arrays.append(np.sort(measurements(b['colors'][b['status']==0],g)[r['metric']]))
+        values=np.unique(np.concatenate(arrays));span=max(float(np.ptp(values)),1e-6)
+        grid=np.r_[values[0]-.025*span,values,values[-1]+.025*span]
+        for x,color,name,eps in zip(arrays,('black',COLORS['normalized']),('Luby','E1'),(r['epsilon_Luby'],r['epsilon_model'])):
+            yy=np.searchsorted(x,grid,side='right')/len(x)
+            ax.step(grid,yy,where='post',color=color,label=name,lw=1.4)
+            ax.fill_between(grid,np.maximum(0,yy-eps),np.minimum(1,yy+eps),step='post',color=color,alpha=.12)
+        ax.axvline(r['threshold'],ls='--',color='#a23f18',lw=1)
+        ax.text(.98,.06,f"Selected t = {r['threshold']:.8g}\nP(L)={r['probability_Luby']:.3f}; P(E1)={r['probability_model']:.3f}\nFull-law TV lower bound: {r['tv_lower']:.3f}",
+                transform=ax.transAxes,ha='right',va='bottom',fontsize=10,bbox=dict(facecolor='white',alpha=.9,edgecolor='.8'))
+        ax.set(title=f"E1 checkpoint {label[-5:]}",xlabel=names.get(r['metric'],r['metric']),ylabel='Empirical CDF',ylim=(-.02,1.02),yticks=[0,.5,1])
+        ax.set_title(f"E1 checkpoint {label[-5:]}",fontsize=12);ax.tick_params(labelsize=10)
+        ax.xaxis.label.set_size(11);ax.yaxis.label.set_size(11);ax.legend(loc='upper left',fontsize=10)
+    fig.suptitle('13. Exploratory structural witnesses: n=1024, degree 50, graph r0\n95% simultaneous DKW bands over 6,384 CDFs; 625 runs per law',fontsize=11)
+    save(fig,'factorial-13-exploratory-cdf-witnesses')
+
 def main():
     verify_frozen()
     plt.rcParams.update({'font.size':13,'axes.spines.top':False,'axes.spines.right':False,'pdf.fonttype':42})
@@ -114,7 +142,8 @@ def main():
                 ax.hist(v,bins=bins,density=True,histtype='step',lw=1.4 if label=='Luby' else .8,color='black' if label=='Luby' else SEEDCOLORS[k-1],label='Luby' if label=='Luby' else label[-5:])
             title=f'{NAMES[arch]}\n'+(f'New graph r{g["rep"]}' if g['stage']=='main' else 'Historical; fresh data')
             ax.set(title=title,xlabel='Distinct colors U' if i==2 else '',ylabel='Probability mass' if j==0 else '');ax.set_title(title,fontsize=12)
-            if j==0:ax.legend(fontsize=13,ncol=2)
+    handles=[Line2D([0],[0],color='black',label='Luby')]+[Line2D([0],[0],color=SEEDCOLORS[i],label=str(41000+i)) for i in range(5)]
+    fig.legend(handles=handles,loc='outside lower center',ncol=6,fontsize=13)
     fig.suptitle('6. Complete-coloring occupancy at n=512, Δ=100 (500 attempts per generator)')
     save(fig,'factorial-06-used-colors')
 
@@ -151,7 +180,8 @@ def main():
             ax.set(title=f'{NAMES[arch]}\nΔ={d}',xlabel='n' if i==2 else '',ylabel='Event A probability\ndifference' if j==0 else '')
             ax.tick_params(labelbottom=i==2)
             ax.set_title(f'{NAMES[arch]}\nΔ={d}',fontsize=13)
-            if j==0:ax.legend(fontsize=13,ncol=2)
+    handles=[Line2D([0],[0],marker='o',color=SEEDCOLORS[i],label=str(41000+i)) for i in range(5)]
+    fig.legend(handles=handles,loc='outside lower center',ncol=5,fontsize=13)
     fig.suptitle('7. All five checkpoints; faint points are individual graphs, lines are graph means')
     save(fig,'factorial-07-checkpoints')
 
@@ -181,11 +211,12 @@ def main():
                     lower.scatter(q['q_top']*(d+1),value,color=degreecolors[di],marker=markers[ni],s=20,alpha=.7)
         ax.axhline(1,color='black',ls='--',lw=.8,label='Uniform teacher');ax.set_xscale('log');ax.set_xticks(np.array(DS)+1,labels=np.array(DS)+1)
         ax.set(title=NAMES[arch],xlabel='Palette size K',ylabel='Initial q(top) / (1/K)')
-        if j==0:ax.legend(fontsize=13,ncol=2)
         lower.axhline(0,color='.5',lw=.6);lower.set(xlabel='Initial q(top) / (1/K)',ylabel='Final top-appearance\nprobability difference',ylim=(-1.05,1.05))
-    handles=[Line2D([0],[0],marker='o',ls='',color=c,label=f'Δ={d}') for c,d in zip(degreecolors,DS)]
+    handles=[Line2D([0],[0],marker='o',color=SEEDCOLORS[i],label=str(41000+i)) for i in range(5)]
+    handles += [Line2D([0],[0],ls='--',color='black',label='Uniform teacher')]
+    handles += [Line2D([0],[0],marker='o',ls='',color=c,label=f'Δ={d}') for c,d in zip(degreecolors,DS)]
     handles += [Line2D([0],[0],marker=m,ls='',color='.3',label=f'n={n}') for m,n in zip(markers,NS)]
-    fig.legend(handles=handles,loc='outside lower center',ncol=8,fontsize=13)
+    fig.legend(handles=handles,loc='outside lower center',ncol=7,fontsize=11)
     fig.suptitle('9. Candidate quadrature and independent final samples: association, not causal identification')
     save(fig,'factorial-09-candidates-and-global-law')
 
@@ -197,8 +228,10 @@ def main():
             a=tr[(tr['graph']==target['id'])&(tr['model']==s['label'])]
             ax.plot(range(4),a[metrics].mean(),'o-',color=SEEDCOLORS[k],lw=1,ms=3,label=str(s['seed']))
             for x,metric in enumerate(metrics):ax.scatter(np.full(len(a),x),a[metric],s=8,alpha=.2,color=SEEDCOLORS[k])
-        ax.set(xticks=range(4),xticklabels=['Proposals','Teacher on\nsame states','COMMIT','Final class'],ylabel='Top-color fraction',title=NAMES[arch]);ax.tick_params(axis='x',labelsize=12)
-    axes[0].legend(fontsize=13)
+        ax.set(xticks=range(4),xticklabels=['Proposals','Teacher\nreference','COMMIT','Final\nclass'],ylabel='Top-color fraction',title=NAMES[arch]);ax.tick_params(axis='x',labelsize=11,labelrotation=20)
+        for tick in ax.get_xticklabels():tick.set_ha('right')
+    handles=[Line2D([0],[0],marker='o',color=SEEDCOLORS[i],label=str(41000+i)) for i in range(5)]
+    fig.legend(handles=handles,loc='outside lower center',ncol=5,fontsize=12)
     fig.suptitle('Read-only trajectory accounting: n=512, Δ=100, eight independent runs per checkpoint')
     save(fig,'factorial-10-proposal-commit-chain')
 
@@ -252,6 +285,7 @@ def main():
         fig.legend(handles=handles,loc='outside lower center',ncol=len(gids),fontsize=13)
         fig.suptitle('12. Exploratory candidate replacement; simultaneous 95% witness/coupling bounds')
         save(fig,'factorial-12-candidate-intervention')
+    cdf_figure()
     atomic_json(OUT/'figure-manifest.json',dict(required_figures=9,figures=[p.stem for p in sorted((OUT/'figures').glob('*.png'))],
                                                supplementary_occupancy_pages=16,generated=now()))
     print('Required figure pairs and exploratory supplements generated',flush=True)

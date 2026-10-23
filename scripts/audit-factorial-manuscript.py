@@ -7,6 +7,7 @@ import re
 import subprocess
 import sys
 import hashlib
+import unicodedata
 
 p=argparse.ArgumentParser();p.add_argument('--pdfium-root',type=Path);p.add_argument('--render-dir',type=Path,required=True);args=p.parse_args()
 if args.pdfium_root:sys.path.insert(0,str(args.pdfium_root))
@@ -26,7 +27,9 @@ source=(paper/'main.tex').read_text()
 restored=source.replace('\n\\input{factorial-size-degree}','').replace('\n\\IfFileExists{tables/factorial-abstract.tex}{\\input{tables/factorial-abstract.tex}}{}','')
 assert restored==original,'Changes to main.tex exceed the two intended new inputs'
 doc=pdfium.PdfDocument(str(paper/'main.pdf'));texts=[page.get_textpage().get_text_range() for page in doc]
-compact=lambda text:re.sub(r'\s+','',text).replace('-','')
+# PDFium represents some discretionary line-break hyphens as U+FFFE.
+# Normalize extracted text before matching the complete section heading.
+compact=lambda text:re.sub(r'\s+','',unicodedata.normalize('NFKC',text)).replace('-','').replace('\ufffe','').replace('\u00ad','')
 starts=[i for i,t in enumerate(texts) if 'HowGraphSizeandDegreeAffectDistributionalGeneralization' in compact(t)]
 assert starts
 alltext=compact('\n'.join(texts))

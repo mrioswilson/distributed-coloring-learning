@@ -268,3 +268,41 @@ where the event is forced by the local lists. Comparing its zeros with the
 regular matrix would otherwise confound a support restriction with algorithmic
 agreement. Maximum degree alone is not an effective global palette capacity
 in a heterogeneous family.
+
+## Exploratory CDF witnesses with uniform selection control
+
+This supplementary analysis was introduced after original outcomes and
+explanation failures were observed. It is separate from all preregistered
+families and retains the original tests and held-out witnesses unchanged.
+The seven scalar functions were already frozen before any confirmation.
+
+For each fixed graph, generator and scalar function phi, the accepted
+complete runs are i.i.d. from the conditional proper-completion law given
+their count N. DKW therefore bounds the entire empirical CDF with failure
+probability alpha_CDF=.05/6384 and radius
+
+    epsilon_N = min(1, sqrt(log(2/alpha_CDF)/(2N))).
+
+With N=0 the band is [0,1]. The number6384=57*16*7 counts the shared teacher
+once per graph/function. A union bound, requiring no independence between
+functions or comparisons, covers every CDF at every threshold with probability
+at least .95. Subtract clipped model and teacher bands to cover their event
+probability difference. This same coverage event implies a full-law TV lower
+bound for any selected metric, threshold, graph and checkpoint within this
+predefined collection, even if chosen after inspecting these observations.
+Use all625 original attempts per bank; no optional sample-size stopping occurs.
+
+This permits exploratory explanations with valid selection control, not
+independent confirmatory validation. It gives no .95 guarantee over its union
+with earlier CP or intervention families. Functions learned or added using
+these outcomes would require additional justification and are not included.
+Structural projections are noninjective, so failure to distinguish their CDFs
+cannot establish equality or a useful upper bound on full-vector TV. All
+seven metric results, including zero lower bounds, remain archived.
+
+At N=625 each CDF radius is .0998015 and an interior event-difference band
+has radius .199603. The actual E1 n1024-d50/r0 mean-color event for checkpoint
+41003 has probabilities230/625 versus394/625, an empirical gap .2624 and
+simultaneous TV lower bound .062797. Thus an explanation can survive this
+conservative selection correction when occupancy and the original selected
+categorical triple fail to explain the same global rejection.
