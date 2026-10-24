@@ -17,6 +17,12 @@ create new training replicas.
 
 ## Restore
 
+The publication authorized after the local scientific completion is available
+as the research prerelease `multiteacher-counterfactual-2026-10-24` on the
+repository's independent research branch. Its archive and asset SHA-256 files
+provide the complete runtime below; the historical source commit remains
+`2ba02700` in the preserved Git history.
+
 The delivery archive contains `source.bundle`, this entire runtime directory,
 an inventory with every file's SHA-256, and the current paper/report. A local
 Git clone from the bundle restores the complete source history, including

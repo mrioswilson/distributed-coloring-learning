@@ -28,6 +28,9 @@ PYTHONPATH=src python scripts/build-multicf-paper.py --compiler /path/to/verifie
 
 The full reproduction order, training/restart commands, frozen final-attempt
 rules and metadata erratum are in the new evidence directory's README.
+The [research prerelease](https://github.com/mrioswilson/distributed-coloring-learning/releases/tag/multiteacher-counterfactual-2026-10-24)
+supplies the full source-history bundle, runtime files, checkpoints, datasets
+and original M6 recovery artifacts, with SHA-256 manifests.
 The current PDF is 36 pages; `pre-counterfactual-main.{tex,pdf}` preserves
 the preceding integrated manuscript byte for byte. No historical result or
 unavailable Pedro checkpoint is replaced by these new trainings.

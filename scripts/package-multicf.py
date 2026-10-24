@@ -23,6 +23,13 @@ if __name__=="__main__":
     subprocess.run(["git","diff","--exit-code","HEAD","--"],cwd=ROOT,check=True,stdout=subprocess.DEVNULL)
     head=subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()
     branch=subprocess.check_output(["git","branch","--show-current"],cwd=ROOT,text=True).strip()
+    publication_path=ROOT/"configs/multiteacher-counterfactual-publication.json"
+    publication=json.loads(publication_path.read_text()) if publication_path.exists() else None
+    pushed=False
+    if publication:
+        remote=subprocess.check_output(["git","ls-remote","--heads","origin",branch],cwd=ROOT,text=True).split()
+        pushed=bool(remote and remote[0]==head)
+        if not pushed:raise RuntimeError("Authorized publication must push and verify this exact source commit before packaging")
     files=[p for p in sorted(RUNTIME.rglob("*")) if p.is_file() and p.name not in
            ("RUNTIME_MANIFEST.json","RUNTIME_FILES.sha256",".generation.lock") and p.suffix!=".pyc"]
     rows=[dict(path=str(p.relative_to(ROOT)),sha256=file_hash(p),bytes=p.stat().st_size) for p in files]
@@ -49,7 +56,8 @@ P1–P14 conserva todos los resultados negativos y distingue los protocolos.
 
 Código e historia Git completos: source.bundle, rama {branch}, commit {head}.
 Artículo actualizado:36 páginas. Suite completa:668 tests aprobados.
-No se hizo push.
+Publicación autorizada: {publication['branch_url'] if publication else 'entrega local'}.
+Paquete asociado: {publication['release_url'] if publication else 'archivo local'}.
 
 Para restaurar, extraiga este archivo en un directorio nuevo y ejecute:
 
@@ -70,7 +78,7 @@ M6 autenticados sí están copiados en historical-recovery/m6-originals/.
     delivery=dict(source_commit=head,branch=branch,source_bundle_sha256=file_hash(bundle),
         runtime_manifest_sha256=file_hash(RUNTIME/"RUNTIME_MANIFEST.json"),runtime_files=len(rows),
         runtime_bytes=sum(r["bytes"] for r in rows),paper_sha256=file_hash(pdf),report_sha256=file_hash(report),
-        no_push=True)
+        no_push=not pushed,git_push_verified=pushed,publication=publication)
     atomic_json(work/"DELIVERY_MANIFEST.json",delivery)
     archive=output/"Evidencia_reproducible.tar.gz"
     with tarfile.open(archive,"w:gz",compresslevel=4) as tar:

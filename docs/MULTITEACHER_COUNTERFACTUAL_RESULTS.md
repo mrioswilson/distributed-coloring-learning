@@ -388,7 +388,10 @@ almacenadas inconsistentes. Pasaron los 668 casos de la suite completa final.
 Las pruebas incluyen ausencia de consultas docentes en inferencia,
 reanudación exacta, diferenciales nativos, intervenciones y testigos de
 información. Los pesos, Adam, RNG, visitas, datos, presupuestos, fallos y
-manifiestos permanecen en el directorio de resultados nuevo. No se hizo push.
+manifiestos permanecen en el directorio de resultados nuevo. La publicación
+posteriormente autorizada corresponde a la rama
+`research/counterfactual-multiteacher-learning` y al paquete reproducible
+de la prerelease `multiteacher-counterfactual-2026-10-24`.
 
 La revisión de antecedentes consulta [DAgger](https://proceedings.mlr.press/v15/ross11a.html)
 y [CLRS](https://arxiv.org/abs/2205.15659). El trabajo reciente de
