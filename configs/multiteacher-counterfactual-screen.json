@@ -1,0 +1,10 @@
+{
+  "amendment": "multiteacher-counterfactual-development-screen-v1",
+  "scope": "Local prospective amendment recorded before any new final confirmation and before running the additional development screen.",
+  "development_runs": 300,
+  "prefix_already_observed": 60,
+  "selection": "For each treatment/native-budget/teacher/architecture, examine checkpoints in ascending update order; require all five seeds perfect on the expanded 300-case development suite; freeze first common perfect checkpoint. Preserve all failed screens. No final rows enter screening or training.",
+  "reason": "Sixty cases per policy have limited ability to reveal rare failures; use more development before the once-only independent 1000-case final.",
+  "unchanged": "Training banks, weights, update curves, final graph/tape namespace, final 1000 cases and strict five-seed gate.",
+  "resource_concurrency": "Two bounded queues may overlap at three one-thread CPU workers each (six workers maximum, of 16 logical CPUs); the resource snapshot retained at launch had 16 GiB available RAM. No external training processes were observed."
+}
