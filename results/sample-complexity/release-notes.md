@@ -36,7 +36,7 @@ representability or a theoretical sample-complexity bound. The law supplement
 has zero Holm rejections among 210 testable hypotheses; nonrejection does not
 establish equality of coloring distributions.
 
-Validation: 597 tests passed, all exact-teacher batteries passed their frozen
+Validation: 601 tests passed, all exact-teacher batteries passed their frozen
 horizons, runtime/source/checkpoint hashes passed verification, the 30-page
 paper compiled and was visually reviewed, and a fresh numerical training
 replay reproduced the original weights exactly without new teacher queries.
@@ -44,3 +44,16 @@ replay reproduced the original weights exactly without new teacher queries.
 Restore with `python scripts/fetch-sample-complexity.py`, then run
 `python scripts/verify-sample-complexity.py --runtime`. See the README and
 `docs/SAMPLE_COMPLEXITY_RESULTS.md` for reproduction commands and answers P1–P12.
+
+The October 24 recovery-helper update adds bounded HTTP ranges, 30-second
+socket timeouts, retry limits and an optional persistent archive cache.
+Its [source commit](https://github.com/mrioswilson/distributed-coloring-learning/commit/e21cd75092fbaeb402b75054db72d1c1743f41d6)
+and standalone `fetch-sample-complexity.py` release asset support recovery after
+a stalled connection. The scientific source tag and all scientific artifacts
+retain their original hashes.
+
+Clean-copy recovery passed: an independent public Git clone restored and
+verified all 3,004 released runtime files and 921 checkpoints. Report replay
+reproduced nine PNG figures, tables, reports and manuscript text byte for byte;
+a fresh training replay reproduced the original model weights. See the
+[publication verification receipt](https://github.com/mrioswilson/distributed-coloring-learning/blob/research/sample-complexity-20261023/results/sample-complexity/publication-verification.json).

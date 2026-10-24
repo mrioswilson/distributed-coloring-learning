@@ -149,6 +149,11 @@ python scripts/replay-sample-complexity-cell.py --teacher LUBY --architecture no
 ```
 
 The fetcher verifies archive/member hashes and refuses conflicting files.
+It downloads bounded HTTP ranges with a 30-second socket timeout and retries.
+Add `--archive /absolute/path/sample-complexity-runtime.tar.gz` to retain a
+partial archive across interrupted invocations and resume it on the next run.
+Publication digests and the clean-copy recovery checks are recorded in
+[publication-verification.json](results/sample-complexity/publication-verification.json).
 These checkpoints live under `data/sample-complexity-v1/`, separate from the
 70 historical integration checkpoints. Primary raw final/exact execution rows,
 frozen batteries, individual training/control summaries and law banks are
