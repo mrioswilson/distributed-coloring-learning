@@ -1,0 +1,756 @@
+{
+  "config": {
+    "accounting": "Base labels plus all acquired fixed-bank counterfactual labels plus distinct own-proposal queries when used; presentations, visited labels, updates, simulation, CPU/wall time separate. No sample-efficiency attribution across unequal query/update budgets.",
+    "architectures": [
+      "normalized",
+      "deepsets",
+      "transformer"
+    ],
+    "batch_size": 64,
+    "checkpoints": [
+      500,
+      1500,
+      4000
+    ],
+    "development_runs": 60,
+    "development_sizes": [
+      28,
+      36
+    ],
+    "device": "cpu",
+    "final_runs": 1000,
+    "final_sizes": [
+      32,
+      48,
+      64
+    ],
+    "historical_reference": "12/21 primary PASS unchanged. New certifications are separate evidence and are not retroactive replacements.",
+    "log_every": 100,
+    "lr": 0.001,
+    "namespace": "20261024-multicf-independent-v1",
+    "native_budget": 3000,
+    "pilot_runs": 10,
+    "pilot_sizes": [
+      28
+    ],
+    "protocol": "multiteacher-counterfactual-v1",
+    "save_every": 250,
+    "seeds": [
+      94101,
+      94102,
+      94103,
+      94104,
+      94105
+    ],
+    "selection": "Within a method and native-label budget, first common development-perfect checkpoint; five hashes frozen before an independent, once-only final battery. New methods after final failures require a new namespace. No PASS inferred from development.",
+    "teachers": [
+      "LUBY",
+      "JOHANSSON",
+      "COLOR_TRIALS",
+      "JP",
+      "BE_BASE_D3",
+      "SPECULATIVE_GM",
+      "GREEDY"
+    ],
+    "training_sizes": [
+      8,
+      12,
+      16,
+      24
+    ],
+    "transfer_runs": 60,
+    "transfer_sizes": [
+      128,
+      256,
+      512
+    ],
+    "updates": 4000,
+    "warmup_updates": 100,
+    "workers": 3
+  },
+  "screening_sha256": "7b65283fc4c613b29282adc31367e1ab2e072f7ee4d8465a4626aada63bfbf1e",
+  "script_sha256": "c5d8d949f22f4301a78682c6ac2f96bb76b67aa7a0e03699eabb685176257c17",
+  "selections": [
+    {
+      "architecture": "normalized",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94101/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94101,
+          "sha256": "651934b47b8825dee89837b08e199a8b4d51b7d85e73902c96e8f9e218d10975"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94102/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94102,
+          "sha256": "edb2fa0b8a0e37bf514736ea0a41a789e6a050359bb70a8eeb65d8119851bb5d"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94103/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94103,
+          "sha256": "a4c5d79c0f8c27327405cd49c8d7b05e75aa260388c740863b12ded9bc836eb7"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94104/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94104,
+          "sha256": "7557559870dcc2ee6a81852ba9b5a2c30937b2f0326ac52ab69d80483141aae9"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94105/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94105,
+          "sha256": "70ebfd53b77b6d13a00be046227ffc5cc2a372d44d3c7b359f80a7358c778a05"
+        }
+      ],
+      "method": "counterfactual",
+      "name": "be_base_d3-normalized-b3000-coverage1-alternate0-counterfactual",
+      "screening_cases_per_seed": 300,
+      "teacher": "BE_BASE_D3",
+      "update": 1500
+    },
+    {
+      "architecture": "normalized",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94101/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94101,
+          "sha256": "1bd6839a02209f177a508cb0665a42a0d1281732e69f5d670e60943be45de262"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94102/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94102,
+          "sha256": "38aff2abe13f0b8f308c46a9a75f53fd2d16226cef8b10f4635a73db226d7c1c"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94103/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94103,
+          "sha256": "ee69e7fa378ee2b75fb4ebef7b7964b3d877ebf7a583712d9c10a880a4e2973f"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94104/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94104,
+          "sha256": "ae2852c65dcc1bf3030876b2f0545660229a78c5ffdfda5da0cc794f62de0bfa"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94105/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94105,
+          "sha256": "e25bf93a9c8d0247d0367b82f53ff3a90587dc7ee8b808d84c8873dd1849777e"
+        }
+      ],
+      "method": "matched",
+      "name": "be_base_d3-normalized-b3000-coverage1-alternate0-matched",
+      "screening_cases_per_seed": 300,
+      "teacher": "BE_BASE_D3",
+      "update": 1500
+    },
+    {
+      "architecture": "normalized",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94101/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94101,
+          "sha256": "acbd00f9b392da37c64ae4fa88a165fc33a589405ed03d09098c95c8b53b93ea"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94102/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94102,
+          "sha256": "7ffe0b33f29bb01fcc4c021366b2cfce995c183539d1a78d680352f09a96ecdd"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94103/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94103,
+          "sha256": "a6aad063be9388536daaba1ca07f751d45ee7937b3cb394d740e3fff38bf13e4"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94104/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94104,
+          "sha256": "d281000aead8b66cd29f546811de22b67d9f5658788f013a7b44f5b68a6553fa"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94105/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94105,
+          "sha256": "125b692acf851a898ce9607cf28272407eb8125d30dd8dd75584e84d693d75be"
+        }
+      ],
+      "method": "passive",
+      "name": "be_base_d3-normalized-b3000-coverage1-alternate0-passive",
+      "screening_cases_per_seed": 300,
+      "teacher": "BE_BASE_D3",
+      "update": 1500
+    },
+    {
+      "architecture": "deepsets",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94101/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94101,
+          "sha256": "9744bee7c0f84cc1f39622d9b9697a93bf58ae52471c497b8f989ef60105416e"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94102/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94102,
+          "sha256": "8711a5e2132b7a469eee7c443e5090377c73c3db013215d5deacc7e5d310a075"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94103/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94103,
+          "sha256": "f873e40135d19a8e288637f5d0dbc2dfb6c751cb75ebbf199090a67161a16ab1"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94104/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94104,
+          "sha256": "af7be9ed0ec90350868145b0cd543cd34432ab29548bd43476d667e5bbbbbd6b"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94105/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94105,
+          "sha256": "3a4818b3d8e418f883ef33bc090b66e47f4ddc491ffa198e2d74197973d209df"
+        }
+      ],
+      "method": "counterfactual",
+      "name": "be_base_d3-deepsets-b3000-coverage1-alternate0-counterfactual",
+      "screening_cases_per_seed": 300,
+      "teacher": "BE_BASE_D3",
+      "update": 1500
+    },
+    {
+      "architecture": "deepsets",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94101/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94101,
+          "sha256": "9e30664494c9dd8dd697237b1cfe125db56c4c38ac44ff5f0f7fda3378a0259d"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94102/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94102,
+          "sha256": "30bb0cabc35b6c3298fc8d6292dd708ae453f1d0426461fb41336ca9fc18d5d5"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94103/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94103,
+          "sha256": "2a833d6d7eafb753556713066aa489ca192518805dfc6bbd2eba2cae64eda9f4"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94104/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94104,
+          "sha256": "7b451ebbb0055b4abb827bbcd42bf8c0481239251e0aa52f07e9dc5ef22c9dd4"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94105/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94105,
+          "sha256": "dd101ed8cf9b1c0a7ed693f4a9a8c4750545a30d44c3ebdea09fad1dca899c71"
+        }
+      ],
+      "method": "matched",
+      "name": "be_base_d3-deepsets-b3000-coverage1-alternate0-matched",
+      "screening_cases_per_seed": 300,
+      "teacher": "BE_BASE_D3",
+      "update": 1500
+    },
+    {
+      "architecture": "deepsets",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94101/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94101,
+          "sha256": "79adf91f332748bcd08d7b154e89ef980e72b64a00afe941c615497443b18093"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94102/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94102,
+          "sha256": "a62cc2b8f4ac8a6f44f5bc5d4782c553079ab6279f040d69aa99aa48b536e05f"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94103/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94103,
+          "sha256": "345a189c5708ddc95ee9263ec0edc4212e56258c91a5e41258568144fb354e0c"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94104/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94104,
+          "sha256": "8d85148ea3a6a39af366550143f55540969b3576c30343da10a2f3d15cda8221"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94105/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94105,
+          "sha256": "263be85ed5ceeb438289ea1bdca24f37b8bfddc21d844d0b91ea1a352b3863b4"
+        }
+      ],
+      "method": "passive",
+      "name": "be_base_d3-deepsets-b3000-coverage1-alternate0-passive",
+      "screening_cases_per_seed": 300,
+      "teacher": "BE_BASE_D3",
+      "update": 1500
+    },
+    {
+      "architecture": "transformer",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94101/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94101,
+          "sha256": "8fe4e47157392ea924101f498ca0fa00d79452e16b662bd3feb05c9674d2fdb8"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94102/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94102,
+          "sha256": "2d302059d5bc2c1762c911abbf2cf80f110477f2fba521136432dd1a851f0392"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94103/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94103,
+          "sha256": "a0181d1f6f2b0085d17892a00f1d8cf8c7b404143fcdc840e1d4bd57b55edd01"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94104/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94104,
+          "sha256": "f55f7f373477854988992e33cbe061617d22efa8b1753352515dd3ae48e51ed3"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94105/b3000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94105,
+          "sha256": "52cddfa1201c2468fd7104770e36634e4f72589a7077ca7a80049eaf3abc7159"
+        }
+      ],
+      "method": "counterfactual",
+      "name": "be_base_d3-transformer-b3000-coverage1-alternate0-counterfactual",
+      "screening_cases_per_seed": 300,
+      "teacher": "BE_BASE_D3",
+      "update": 1500
+    },
+    {
+      "architecture": "transformer",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94101/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94101,
+          "sha256": "5c83ac979f7196f5a27204c50d810a8ac25c5fa4e6083968eb346c2ea0ef8114"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94102/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94102,
+          "sha256": "2c1bd7d977c42ce64450ccd3acdcbb75346614245f20bf02bdfb5786993e65cc"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94103/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94103,
+          "sha256": "86e609a584a0c021709c39d70a493eb1d2dffb2e1b56fcf1b232fa543e00c4a3"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94104/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94104,
+          "sha256": "5e69784f8ab32472f3f585738ed7688f30423c9b88c1718d8d06ee45100d9f9d"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94105/b3000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94105,
+          "sha256": "ab3f7428accf1e2a905f4d1c173eddfc17ed2ad8b649ac1528342aad1e6dc0ba"
+        }
+      ],
+      "method": "matched",
+      "name": "be_base_d3-transformer-b3000-coverage1-alternate0-matched",
+      "screening_cases_per_seed": 300,
+      "teacher": "BE_BASE_D3",
+      "update": 1500
+    },
+    {
+      "architecture": "transformer",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94101/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94101,
+          "sha256": "21e0c18b6a1285c16534ef4ff1dd8b79151263fd124ade3643e224b952f1326f"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94102/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94102,
+          "sha256": "af842d786ff84f710bb4f53d1e536c4dd6e318018ca520c30417bc4703384790"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94103/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94103,
+          "sha256": "a9833b04cf7748af114797f8857f0f1dda047919293eb4716cc914546a065c58"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94104/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94104,
+          "sha256": "af92c5cf189b11995225084637cbec95fd9351f0f43b7c81d7b4728bc276aa43"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94105/b3000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94105,
+          "sha256": "67783428fba35b54ed051a47df99b94ca1c8ffe192e5063c77d8851b4468d5ee"
+        }
+      ],
+      "method": "passive",
+      "name": "be_base_d3-transformer-b3000-coverage1-alternate0-passive",
+      "screening_cases_per_seed": 300,
+      "teacher": "BE_BASE_D3",
+      "update": 1500
+    },
+    {
+      "architecture": "normalized",
+      "budget": 30000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94101/b30000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94101,
+          "sha256": "f48d771123e5ff0b1916c4b795d97d03cc0d56216b8c17e2dfe4ecb9d8cc98e5"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94102/b30000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94102,
+          "sha256": "f0fcba45b9ed4c8fcfa0220b23771b4902418fe026de5710315d644bf50d4f49"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94103/b30000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94103,
+          "sha256": "f889ac919b6fa316af43b1ccd82b8a0f2ac86447a369f864b27bd20e947ac020"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94104/b30000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94104,
+          "sha256": "8de111196fa3dd59274af540dcba60ef0f373126b1bc90a6b484004eae4729ed"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94105/b30000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94105,
+          "sha256": "76e6232f3354e0faa05618bbee461300f44f339fd3687dea38667ffac6d0c287"
+        }
+      ],
+      "method": "counterfactual",
+      "name": "color_trials-normalized-b30000-coverage1-alternate0-counterfactual",
+      "screening_cases_per_seed": 300,
+      "teacher": "COLOR_TRIALS",
+      "update": 500
+    },
+    {
+      "architecture": "normalized",
+      "budget": 30000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94101/b30000-coverage1-alternate0/matched/u000500.pt",
+          "seed": 94101,
+          "sha256": "353ffba083638410134038e15e24337c21a15becdb2c61330dd6c89ce76bbac4"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94102/b30000-coverage1-alternate0/matched/u000500.pt",
+          "seed": 94102,
+          "sha256": "ee2e929d97ad2e3821f8fb09479629937194da8b2bee0eb07dabc7817809a7a1"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94103/b30000-coverage1-alternate0/matched/u000500.pt",
+          "seed": 94103,
+          "sha256": "654e1966e914361eb2f3e6251a5ac051eb51e7c7294222697735d77ec59f8dc3"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94104/b30000-coverage1-alternate0/matched/u000500.pt",
+          "seed": 94104,
+          "sha256": "05f1b492c91886549152d60ddf68c2e7719c29733b835788bd3f5d88c0f9033f"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94105/b30000-coverage1-alternate0/matched/u000500.pt",
+          "seed": 94105,
+          "sha256": "5bd3673235249566d736cc77eb6abe1d51070235e20164843e9315d5c1169d1c"
+        }
+      ],
+      "method": "matched",
+      "name": "color_trials-normalized-b30000-coverage1-alternate0-matched",
+      "screening_cases_per_seed": 300,
+      "teacher": "COLOR_TRIALS",
+      "update": 500
+    },
+    {
+      "architecture": "normalized",
+      "budget": 30000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94101/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94101,
+          "sha256": "46067bd67110ba54b725eca3def874761df5a72dc4e9b35f815d81e13a778c3f"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94102/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94102,
+          "sha256": "527321bfacd811f90b6711df8547192da2cf5a9ed38adc1d029f462307f012a4"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94103/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94103,
+          "sha256": "75b1b7f03c4323ee9b7c9100bc31ff5718f2610056c6a3a40c48c7212b8d402d"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94104/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94104,
+          "sha256": "0bcf8a808e5d50964269e4376f541f99581b3f4cf2998f8553eaadb57cf5be04"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94105/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94105,
+          "sha256": "50faaf051beefe0e5f8bcc6bed9901f38e9ced2fa67653d171793d91b9a158a8"
+        }
+      ],
+      "method": "passive",
+      "name": "color_trials-normalized-b30000-coverage1-alternate0-passive",
+      "screening_cases_per_seed": 300,
+      "teacher": "COLOR_TRIALS",
+      "update": 1500
+    },
+    {
+      "architecture": "deepsets",
+      "budget": 30000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94101/b30000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94101,
+          "sha256": "8f4a491d325b6d71fd37ad877eb7b99cc283f24bd75492f45f96888c9ed6658d"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94102/b30000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94102,
+          "sha256": "9f6dde42965d4d0965fe678bc36934c56dca69e6f27c8a4db5f747709678b026"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94103/b30000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94103,
+          "sha256": "980cd90327bf47e2aeb7dd64ba9d68051b4bc8911ea170371224e17212fbc398"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94104/b30000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94104,
+          "sha256": "669f597ddc101727499980ca62a886300ecbccf8ac79fde5b1370268672c07db"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94105/b30000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94105,
+          "sha256": "75a81190775ad5f88503775c42e868f2b97bbe81830a31ed25b6de864aa4bf4e"
+        }
+      ],
+      "method": "counterfactual",
+      "name": "color_trials-deepsets-b30000-coverage1-alternate0-counterfactual",
+      "screening_cases_per_seed": 300,
+      "teacher": "COLOR_TRIALS",
+      "update": 1500
+    },
+    {
+      "architecture": "deepsets",
+      "budget": 30000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94101/b30000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94101,
+          "sha256": "dde28b86bc0b834a1c89e3b3c297d3a482d2e22ba5102a3ae07034acff809e12"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94102/b30000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94102,
+          "sha256": "e0109f29d0c863ba4795dbaf0b891869cc6f7ee5f49bfdd851930a2ff9abca83"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94103/b30000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94103,
+          "sha256": "47ba604dfbe362e54ea0cefa1b4511d96b3a66a3117380052e6a10817f8ecafb"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94104/b30000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94104,
+          "sha256": "fe8f7f44c96ac5713bdaa8dbd9c8c5164836022bd948a640888c092a4a6be649"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94105/b30000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94105,
+          "sha256": "9d232d33b7f1227be9fcfd891e5fac80c3ce61a036932c3374b4f7ebf79b235c"
+        }
+      ],
+      "method": "matched",
+      "name": "color_trials-deepsets-b30000-coverage1-alternate0-matched",
+      "screening_cases_per_seed": 300,
+      "teacher": "COLOR_TRIALS",
+      "update": 1500
+    },
+    {
+      "architecture": "deepsets",
+      "budget": 30000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94101/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94101,
+          "sha256": "e71f18b290f273f833b2d9d684395127e0aa20d317efcf4528f3cbbb162dd3ba"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94102/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94102,
+          "sha256": "1d30ba1531ec03b0446cb24f3bf55c9fe4b19265dce36459bc67a048fc9276d4"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94103/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94103,
+          "sha256": "5e89ab19d7b8b2f8e77679f496dac8cbf1739dbcab9b6ecda6a210875cad43d4"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94104/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94104,
+          "sha256": "60864881914be98ce57b6db1500d1bde46a3f2717c04acb6df64b1f3b58e2e8c"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94105/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94105,
+          "sha256": "72d8a187f36fa67aa57fe047bb14304ed5d41cd527e7d6944c8c3f48b85609fc"
+        }
+      ],
+      "method": "passive",
+      "name": "color_trials-deepsets-b30000-coverage1-alternate0-passive",
+      "screening_cases_per_seed": 300,
+      "teacher": "COLOR_TRIALS",
+      "update": 1500
+    },
+    {
+      "architecture": "transformer",
+      "budget": 30000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94101/b30000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94101,
+          "sha256": "667bca21c6f2f2747214d82d43b5a7cd4e6249645e8e37a8403d5dd873443904"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94102/b30000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94102,
+          "sha256": "f20fb817e1d1578114a8d6287dd92312a48199fc49804d0f1c7e7142ebb9023c"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94103/b30000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94103,
+          "sha256": "36f1ce306a6b3a9411bc0829e2415e5e8d1459f81fa7412761ab779a6696ef0f"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94104/b30000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94104,
+          "sha256": "0774c758d545b3d4cbbd884fec13d99dbec39d233f3d96514d5ed9bff09faa63"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94105/b30000-coverage1-alternate0/counterfactual/u001500.pt",
+          "seed": 94105,
+          "sha256": "d9043fe91e6d68fdd24746896212eeb1f7372b2d74c422f0f7e9a0c34ce99d59"
+        }
+      ],
+      "method": "counterfactual",
+      "name": "color_trials-transformer-b30000-coverage1-alternate0-counterfactual",
+      "screening_cases_per_seed": 300,
+      "teacher": "COLOR_TRIALS",
+      "update": 1500
+    },
+    {
+      "architecture": "transformer",
+      "budget": 30000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94101/b30000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94101,
+          "sha256": "05289e52160b791f00714073769767a51364f5a79d17f9ba12038689394d3cf9"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94102/b30000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94102,
+          "sha256": "b8ffe1f998357cdae9652e173dfd248c4e6c7bfc4670494af557552d16fc457d"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94103/b30000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94103,
+          "sha256": "dcee5056ee07f37d787deea6e8d79b5ff4f37c1d3ac46f1cd32d6471317fcbb7"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94104/b30000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94104,
+          "sha256": "b2fe180d57c0970cf22a35cf25299401c8da34558f07839b4f8780e6fc70a815"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94105/b30000-coverage1-alternate0/matched/u001500.pt",
+          "seed": 94105,
+          "sha256": "67f0fe76303fca9c97dafce24b4ba67f45ad2c3cc87fe2e17b8605a0abc72be7"
+        }
+      ],
+      "method": "matched",
+      "name": "color_trials-transformer-b30000-coverage1-alternate0-matched",
+      "screening_cases_per_seed": 300,
+      "teacher": "COLOR_TRIALS",
+      "update": 1500
+    },
+    {
+      "architecture": "transformer",
+      "budget": 30000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94101/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94101,
+          "sha256": "5e070f8f2ac2580a1b6f6dfcbd8f3a425178c153849388a3ffbe72d5ca633ecd"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94102/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94102,
+          "sha256": "890ab1cad98b65420d02917e2f7b056144e07b83edd6a950110f6461ccec3152"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94103/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94103,
+          "sha256": "16027c43eae2111e00502449eac88bbb30405fe9512c66fff762f5e42a12a188"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94104/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94104,
+          "sha256": "9332b08e961c3eb241e200b590c2e3f395cd6f0ac60fba0f531005c53fad8900"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94105/b30000-coverage1-alternate0/passive/u001500.pt",
+          "seed": 94105,
+          "sha256": "efc739fce737c33333b8a83680a3917ab981bd4b2b060ec40cc62e17e71c0c97"
+        }
+      ],
+      "method": "passive",
+      "name": "color_trials-transformer-b30000-coverage1-alternate0-passive",
+      "screening_cases_per_seed": 300,
+      "teacher": "COLOR_TRIALS",
+      "update": 1500
+    }
+  ],
+  "sources": {
+    "src/dcl/integration/models.py": "8d8ee578033fc5fa5218144add2af0bfc24ee6db339005766fd924cf9d2af1af",
+    "src/dcl/multicf/__init__.py": "1e64591b412c3cecc8ddf604af7ac82598f5c91373f6063288f5f2035d4deb6c",
+    "src/dcl/multicf/data.py": "a865c4bf55f422cd0add3074bc3e29a122481a72f7878c9eb060c0a37d30c679",
+    "src/dcl/multicf/oracles.py": "7a5808250f6e64ab72711fc075caa3182dbf6422a993d56647e9834d4f52f424",
+    "src/dcl/multicf/protocol.py": "43ef4c3c0109fee817f25deb79d855c18c017301f0ae322ab247cf61037b5bbb",
+    "src/dcl/multicf/runner.py": "a8865d06fda82f3de664218d2a4b6895ce0dc5f029cfd193d7fa775767e3bc06",
+    "src/dcl/multicf/states.py": "ca6f02a7418bb87da25f9806e06e02be68867f936ee9736394e85ad956993339",
+    "src/dcl/multicf/training.py": "2bab27d5d069190b9076082519bc97fab954267988263172820759eabb74c682",
+    "src/dcl/multiteacher/__init__.py": "1e8301a2d7f3488eec7d20a1bcbbbb0174987db5fa73a7a0a20fc47d8650863a",
+    "src/dcl/multiteacher/data.py": "9ada4791717f415b7d6158b91dd7fece7601768f0560dc9e5dd605512a6b28de",
+    "src/dcl/multiteacher/experiment.py": "70de36f09f4c162592a631a1964322834808bebca10cfaa3c136947b2af9b684",
+    "src/dcl/multiteacher/model.py": "df8d7d3506ff7d20cbc70f340f6198cac6c675fca39397675a29e7eb207e0a64",
+    "src/dcl/multiteacher/programs.py": "ab51c32c445ea4b6f0afa784093ea52cb7338961b6b50815ce5b65cc9e67738b",
+    "src/dcl/multiteacher_e1/__init__.py": "ece488ebd65a08328dd1eca11897e66bae1423d23a720fdda6b72ad30b3bd452",
+    "src/dcl/multiteacher_e1/experiment.py": "9fbdbcd456dda64ce608863a326a738383ecb5ea8efee892de413ec1f677af46",
+    "src/dcl/multiteacher_e1/model.py": "5b8bf097adb75c6f19cddd64414566f98c7f6a9274e7f2d1b44317ddbb84258d",
+    "src/dcl/multiteacher_e1/supervision.py": "edb6cac308b9dd09a8f542d76528ce286f2ff5dc1d1840bb8b6f7c33f9380450",
+    "src/dcl/paperstudy/models.py": "0b4b12797d7cc969d63c7ffebc0966226dc6f254e079127e15c60bea8c8b7112",
+    "src/dcl/samplecomplexity/evaluation.py": "1afd0dfb45f97047806641e7bb89645fec50569dbff134d59a0b257aa3481a5a",
+    "src/dcl/samplecomplexity/model.py": "1d0e7f3e2202e946c59823fbda335d420390d500cd76b5dc0c8e741a43af1999",
+    "src/dcl/samplecomplexity/training.py": "10f4e65eb59b1188ca6748067f2905e8adbf88a33cb74b29401a86e335b8b570",
+    "src/dcl/universal/__init__.py": "36c3af111b9699a625fa24f73e2e37ca0bc70d7b2dca9516252f966f16f12be6",
+    "src/dcl/universal/cli.py": "f503603e826b52f78a0b799390fb763e2efc0259b242a2ff4ce6e75ec4f0829e",
+    "src/dcl/universal/config.py": "d8811cf701064a2fcc88255730a59ed5e119884beefefdb3e14fae0b11011fdf",
+    "src/dcl/universal/data.py": "80e392fcb367324552f6d67bc5131b718473c6b6c87da784f5341201f3bef065",
+    "src/dcl/universal/diagnostics.py": "d43fb60f91dd3a9de2637cae62fcea0a87fe6dff56d7e5ee185582914e718c5f",
+    "src/dcl/universal/evaluation.py": "9b71cf84e412bf9a5861d9b05bc1f8b0e3a04d3101b1a5794aee723025f9da14",
+    "src/dcl/universal/model.py": "05cad8dcb3b73e853963fd5d46a859640edaec77f4d66c13661639ed04f7e685",
+    "src/dcl/universal/report.py": "8065ca062cc4e60d860149406a41cdb48a624b42685c3c68a10dcd55c9f41270",
+    "src/dcl/universal/rules.py": "af0c07bae78f997ebfcbe8823850709104e09ad474ae2111ce7714b9f72d7338",
+    "src/dcl/universal/train.py": "9a893ce438147c9667b4b2fcb28b78cfad452b2975d905d99c3f328d2148715c"
+  }
+}

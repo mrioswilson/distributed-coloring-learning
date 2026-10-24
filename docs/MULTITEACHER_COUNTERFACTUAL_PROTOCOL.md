@@ -129,8 +129,13 @@ separadamente. Los tiempos observados prevalecen sobre estas estimaciones.
 
 ## Selección, congelación y confirmación
 
-Se exige desarrollo perfecto común de las cinco semillas, dentro de un
-tratamiento y presupuesto, para seleccionar el primer hito candidato.
+La enmienda prospectiva `configs/multiteacher-counterfactual-screen.json`,
+registrada antes de ejecutar el nuevo screen y antes de toda confirmación,
+amplía development de 60 a 300 casos por semilla. Conserva el prefijo de 60
+ya observado, los pesos y los bancos. Se exige desarrollo perfecto común de
+las cinco semillas sobre esos 300 casos, dentro de un tratamiento y
+presupuesto, para seleccionar el primer hito candidato. Los screens fallidos
+quedan conservados. No se han usado resultados finales para esta enmienda.
 Se congelan cinco hashes y configuración antes de usar el final. Los
 profesores exactos validan todas las cintas bajo los horizontes prospectivos
 del estudio previo. Se escribe un marcador de consumo antes de la primera

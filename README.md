@@ -5,6 +5,33 @@ policy learns from a graph-coloring teacher: local actions, transitions,
 valid autonomous solutions, execution cost, and the probability law over
 complete solutions. These are different learning objectives.
 
+The [counterfactual extension](docs/MULTITEACHER_COUNTERFACTUAL_RESULTS.md)
+closes the nine previously pending packages with five frozen policies and
+1000/1000 fresh executions per policy. Together with the twelve preserved
+historical certifications, coverage is 21/21 across explicitly separate
+protocols. Concordant controls also pass all nine; fixed-label counterfactual
+follow-ups, failed checkpoints, component fidelity and complete-output laws
+remain separate evidence. See the [protocol](docs/MULTITEACHER_COUNTERFACTUAL_PROTOCOL.md),
+[M6B reconstruction](docs/COUNTERFACTUAL_TRAINING_RECONSTRUCTION.md),
+[Pedro reconciliation](docs/PEDRO_METHODS_RECONCILIATION.md) and
+[failure analysis](docs/LEARNING_FAILURE_ANALYSIS.md).
+
+New evidence lives only in `results/multiteacher-counterfactual/`. Restore
+the accompanying runtime archive before reproducing reports:
+
+```bash
+PYTHONPATH=src python scripts/verify-multicf.py
+PYTHONPATH=src python scripts/report-multicf.py
+PYTHONPATH=src python scripts/plot-multicf.py
+PYTHONPATH=src python scripts/build-multicf-paper.py --compiler /path/to/verified/tectonic
+```
+
+The full reproduction order, training/restart commands, frozen final-attempt
+rules and metadata erratum are in the new evidence directory's README.
+The current PDF is 36 pages; `pre-counterfactual-main.{tex,pdf}` preserves
+the preceding integrated manuscript byte for byte. No historical result or
+unavailable Pedro checkpoint is replaced by these new trainings.
+
 Start with the [complete paper](paper/PAPER_DRAFT.md), its
 [compiled PDF](paper/ucgnn/main.pdf), the
 [independent-review dossier](docs/PAPER_SCIENTIFIC_AUDIT.md), and the

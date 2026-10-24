@@ -1,0 +1,458 @@
+{
+  "config": {
+    "accounting": "Base labels plus all acquired fixed-bank counterfactual labels plus distinct own-proposal queries when used; presentations, visited labels, updates, simulation, CPU/wall time separate. No sample-efficiency attribution across unequal query/update budgets.",
+    "architectures": [
+      "normalized",
+      "deepsets",
+      "transformer"
+    ],
+    "batch_size": 64,
+    "checkpoints": [
+      500,
+      1500,
+      4000
+    ],
+    "development_runs": 60,
+    "development_sizes": [
+      28,
+      36
+    ],
+    "device": "cpu",
+    "final_runs": 1000,
+    "final_sizes": [
+      32,
+      48,
+      64
+    ],
+    "historical_reference": "12/21 primary PASS unchanged. New certifications are separate evidence and are not retroactive replacements.",
+    "log_every": 100,
+    "lr": 0.001,
+    "namespace": "20261024-multicf-independent-v1",
+    "native_budget": 3000,
+    "pilot_runs": 10,
+    "pilot_sizes": [
+      28
+    ],
+    "protocol": "multiteacher-counterfactual-v1",
+    "save_every": 250,
+    "seeds": [
+      94101,
+      94102,
+      94103,
+      94104,
+      94105
+    ],
+    "selection": "Within a method and native-label budget, first common development-perfect checkpoint; five hashes frozen before an independent, once-only final battery. New methods after final failures require a new namespace. No PASS inferred from development.",
+    "teachers": [
+      "LUBY",
+      "JOHANSSON",
+      "COLOR_TRIALS",
+      "JP",
+      "BE_BASE_D3",
+      "SPECULATIVE_GM",
+      "GREEDY"
+    ],
+    "training_sizes": [
+      8,
+      12,
+      16,
+      24
+    ],
+    "transfer_runs": 60,
+    "transfer_sizes": [
+      128,
+      256,
+      512
+    ],
+    "updates": 4000,
+    "warmup_updates": 100,
+    "workers": 3
+  },
+  "scope": "Nine independently certified counterfactual fixed points. Chosen using functional outcomes before fresh law and transfer tapes; all failed earlier attempts retained. Historical twelve packages remain separate.",
+  "selections": [
+    {
+      "architecture": "normalized",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94101/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94101,
+          "sha256": "e913343c29e59db8ee8de093eb519599e4cca02d9daf307b14fa50714cc38fda"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94102/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94102,
+          "sha256": "1609390e4ad8e84cdfa53c92560c0d15da75aff9ebdc2fb4ed151d82c83ec0af"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94103/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94103,
+          "sha256": "aedf3023d26a9cf23547ec119838ea10f80d79c75787ef23907c86123591ecbc"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94104/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94104,
+          "sha256": "43e033d18cb5f6a780e9783522ccd9aca7ab5608d623dc5304dbd9e54eec1339"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94105/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94105,
+          "sha256": "f442846c31f7a8358a54e7eee95037b6a901cc9d3615b0d52eeb563764701ed8"
+        }
+      ],
+      "functional_namespace": "20261024-multicf-independent-v1-be-cf-optimization-v2",
+      "functional_result": "results/multiteacher-counterfactual/confirmation/be-cf-optimization-v2-normalized-u4000/result.json",
+      "functional_result_sha256": "f087a825af3291dd713785e13df3cad465c8dd387ca107b08144918997c0ef16",
+      "method": "counterfactual",
+      "name": "be-cf-optimization-v2-normalized-u4000",
+      "selection": "Both prespecified existing optimizer points, all three cores, all five seeds; no new training or final-guided tape substitution",
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "architecture": "deepsets",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94101/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94101,
+          "sha256": "3a4a83fd1e2bb8c633add954e385b9faedf6025d0a833a328b064ddf5dd78a74"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94102/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94102,
+          "sha256": "20f1da1c602d1116715728009c19e615a58672aee617cd35a9cc6a45c7bedcd1"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94103/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94103,
+          "sha256": "f47b0a05ef8bedaf737da05507ad9db1bff5007e36c05f2f953b853b1677c6ca"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94104/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94104,
+          "sha256": "8721a0838f413f4eca8383cfcbb2084e2bdc1f52a8cad991137ea66d8985fd37"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/deepsets/s94105/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94105,
+          "sha256": "19ab148aa4da0349c573283c4368d391dc19a1c55e8c4a7988a9ede40c201c2f"
+        }
+      ],
+      "functional_namespace": "20261024-multicf-independent-v1-be-cf-optimization-v2",
+      "functional_result": "results/multiteacher-counterfactual/confirmation/be-cf-optimization-v2-deepsets-u4000/result.json",
+      "functional_result_sha256": "089f740252edcafa6f19fa220b85dd5d5a80c71f2708568743512810a5b026e3",
+      "method": "counterfactual",
+      "name": "be-cf-optimization-v2-deepsets-u4000",
+      "selection": "Both prespecified existing optimizer points, all three cores, all five seeds; no new training or final-guided tape substitution",
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "architecture": "transformer",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94101/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94101,
+          "sha256": "815ba9a1c2c3654416711afd5156ac253ba440ac43659f7aeb637fb06af5f733"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94102/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94102,
+          "sha256": "08a79ff2e38ab7d99cf8f0bcddbe465a5d2d2d31af1b5bcab3273a0533d5385f"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94103/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94103,
+          "sha256": "01bac9c632842e28585ca788a7ec997f9ea3e53178d297418d457029d72706da"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94104/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94104,
+          "sha256": "8ef399d91fc9394472c76e363ad11a1c57950af1aad67532b6cac0519451703d"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/be_base_d3/transformer/s94105/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94105,
+          "sha256": "f81e8c6c2704189eae02386bb5816868b88b95145dc272161425245877afd297"
+        }
+      ],
+      "functional_namespace": "20261024-multicf-independent-v1-be-cf-optimization-v2",
+      "functional_result": "results/multiteacher-counterfactual/confirmation/be-cf-optimization-v2-transformer-u4000/result.json",
+      "functional_result_sha256": "634d0ea7520c8ddb9583ecb79c50e5b90a56b7349bec9891dd3a47c30193f202",
+      "method": "counterfactual",
+      "name": "be-cf-optimization-v2-transformer-u4000",
+      "selection": "Both prespecified existing optimizer points, all three cores, all five seeds; no new training or final-guided tape substitution",
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "architecture": "normalized",
+      "budget": 30000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94101/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94101,
+          "sha256": "a2878479c355c1abe53a8afff3767d8eb0cd2f5b7cf4f263c543d3a2cbdf34e9"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94102/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94102,
+          "sha256": "3a9d4cc306a002d0cd00f08406a33bfe673533ed5975a6d336ef65f5ab24bc2b"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94103/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94103,
+          "sha256": "f509cdc2b1d107e03420b399788d3a6232653a9d8a982b819d683ad1b23a0fe1"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94104/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94104,
+          "sha256": "98916fdad89c3ff835c4a458fbfba8a3b59b2c6ef2fcc89cad08c201677424a2"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/normalized/s94105/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94105,
+          "sha256": "168e524a65b75b8fb1663f58a396a8249ea777e0c4a0a0a2c7111ffc6d1ea28d"
+        }
+      ],
+      "functional_namespace": "20261024-multicf-independent-v1-ct-cf-optimization-v2",
+      "functional_result": "results/multiteacher-counterfactual/confirmation/ct-cf-optimization-v2-normalized-u4000/result.json",
+      "functional_result_sha256": "4825f16389039308662312e6097598a64269c65c07df5c1d48efe613f8159286",
+      "method": "counterfactual",
+      "name": "ct-cf-optimization-v2-normalized-u4000",
+      "selection": "Both existing fixed-label optimizer points, all cores and five seeds; frozen before this fresh final battery",
+      "teacher": "COLOR_TRIALS",
+      "update": 4000
+    },
+    {
+      "architecture": "deepsets",
+      "budget": 30000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94101/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94101,
+          "sha256": "e68f1bfaca362f6314d479876aff3ffc36c3cd8d13bfca0abfc4e96306b895d9"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94102/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94102,
+          "sha256": "034f2115c034ab787b2d000e1566890b4a9b89bd9163c4d9c5893ca78bfbc683"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94103/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94103,
+          "sha256": "5626e83bdee372328c9b12358f0dbbb901d97cf6419c87577eb8245b84177768"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94104/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94104,
+          "sha256": "73bfaf76fd65edcec476b81d99f22c5d666329f90b92ead63829b19996f06ef4"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94105/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94105,
+          "sha256": "dee7f8c16863056ecf1012216146cc9854665eed42dfe413b86e4c51db47dba7"
+        }
+      ],
+      "functional_namespace": "20261024-multicf-independent-v1-ct-cf-optimization-v2",
+      "functional_result": "results/multiteacher-counterfactual/confirmation/ct-cf-optimization-v2-deepsets-u4000/result.json",
+      "functional_result_sha256": "835dd1bb49aa697224309ebf7b277bb0f5aa001fd325a51eca725b367403c1ad",
+      "method": "counterfactual",
+      "name": "ct-cf-optimization-v2-deepsets-u4000",
+      "selection": "Both existing fixed-label optimizer points, all cores and five seeds; frozen before this fresh final battery",
+      "teacher": "COLOR_TRIALS",
+      "update": 4000
+    },
+    {
+      "architecture": "transformer",
+      "budget": 30000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94101/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94101,
+          "sha256": "b1526f32b292b9d3ced65ac66fd6ac6be6c308cc62617cbbe46cd36c7ba041d5"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94102/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94102,
+          "sha256": "1cd2d6b5f0cdaf3ac2d17216f99601919c2345439b8f74a2b2825180bd3b14e1"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94103/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94103,
+          "sha256": "b48b1b2dc8b552ac136e81594eaa47d408e05c781e85ae67354ef01b3195a3d0"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94104/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94104,
+          "sha256": "e5064c4510ba8e3272035241207045c0498f2a60649d553bfa994c0798f8b3c0"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/color_trials/transformer/s94105/b30000-coverage1-alternate0/counterfactual/u004000.pt",
+          "seed": 94105,
+          "sha256": "3d2ac1e819bfcb91fdf7906ad80934b724da8d717cf88aa5c4c35d4a6fa91c44"
+        }
+      ],
+      "functional_namespace": "20261024-multicf-independent-v1-ct-cf-optimization-v2",
+      "functional_result": "results/multiteacher-counterfactual/confirmation/ct-cf-optimization-v2-transformer-u4000/result.json",
+      "functional_result_sha256": "b2bbf92852b11c825f86ba537c73424e9a849d38393ab84c2a049b5794f5260e",
+      "method": "counterfactual",
+      "name": "ct-cf-optimization-v2-transformer-u4000",
+      "selection": "Both existing fixed-label optimizer points, all cores and five seeds; frozen before this fresh final battery",
+      "teacher": "COLOR_TRIALS",
+      "update": 4000
+    },
+    {
+      "architecture": "normalized",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/normalized/s94101/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94101,
+          "sha256": "e0ad5f2c684dd866230da9ab7273b4637e9fd01c7880bccbb50b6606e37f4711"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/normalized/s94102/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94102,
+          "sha256": "afcfd169220bcf9b9f550c7ca9bb6c0434d6f0a80236ded59adfe2e96496ed41"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/normalized/s94103/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94103,
+          "sha256": "75c73491a991bc88361dfce39fde51a8741b3b5fdbf3377de452ae83147ba07c"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/normalized/s94104/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94104,
+          "sha256": "e7f753082276a7532976e34f55cc39eadd0e504ccd416c05b4209b9bc941ad9f"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/normalized/s94105/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94105,
+          "sha256": "dd8598a78654a34b23a0b01ef7b9134c925655f6cca04775218e8fcbdc394286"
+        }
+      ],
+      "functional_namespace": "20261024-multicf-independent-v1",
+      "functional_result": "results/multiteacher-counterfactual/confirmation/speculative_gm-normalized-b3000-coverage1-alternate0-counterfactual/result.json",
+      "functional_result_sha256": "7aae701fb0272b0ae14d7a2df5a1f8de7aa0ccc9e24ec40ee489892266355c03",
+      "method": "counterfactual",
+      "name": "speculative_gm-normalized-b3000-coverage1-alternate0-counterfactual",
+      "screening_cases_per_seed": 300,
+      "teacher": "SPECULATIVE_GM",
+      "update": 500
+    },
+    {
+      "architecture": "deepsets",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/deepsets/s94101/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94101,
+          "sha256": "239aa612a46bcbc1282e3f513eedae004cc5f6b69f629f4a00e1c48cc8a37409"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/deepsets/s94102/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94102,
+          "sha256": "1a8bac9b0584c4431284bb627ac905515877de94bc77f124307db7ce9911cfc0"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/deepsets/s94103/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94103,
+          "sha256": "c4277acb24bffdaf6d85a011420abd92f2eae01bbe75fa9ef962ba4a0cec46f9"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/deepsets/s94104/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94104,
+          "sha256": "bbef33e73283825029b6623948eff7afae74aa940273b88a4e0d75e468e00cdd"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/deepsets/s94105/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94105,
+          "sha256": "a53341a6f6e24c92b447ca2e22b87dad059cf3953d8300b7ddae5f495412e851"
+        }
+      ],
+      "functional_namespace": "20261024-multicf-independent-v1",
+      "functional_result": "results/multiteacher-counterfactual/confirmation/speculative_gm-deepsets-b3000-coverage1-alternate0-counterfactual/result.json",
+      "functional_result_sha256": "36c059549f23d7036d5167587a5dc79f2003a5cbcc06e2880ebdcb3bd137d2b6",
+      "method": "counterfactual",
+      "name": "speculative_gm-deepsets-b3000-coverage1-alternate0-counterfactual",
+      "screening_cases_per_seed": 300,
+      "teacher": "SPECULATIVE_GM",
+      "update": 500
+    },
+    {
+      "architecture": "transformer",
+      "budget": 3000,
+      "checkpoints": [
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/transformer/s94101/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94101,
+          "sha256": "8f7e4416d99c90368a2bd4041bb34b890922311d9a64019060a137a8b67c3647"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/transformer/s94102/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94102,
+          "sha256": "e769226d5ac63f095fd02ddd6163d6a2eb369afd37e291f9a3d38578cef4cc79"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/transformer/s94103/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94103,
+          "sha256": "82198a65d6e68af4d150a73fac9cb466621df665c63e4e60759ee25d8104c937"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/transformer/s94104/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94104,
+          "sha256": "0faa440e5621c32a0b789b7d8ad7c442a9866fc16e109863fd8493ec2581f2ec"
+        },
+        {
+          "path": "results/multiteacher-counterfactual/runs/speculative_gm/transformer/s94105/b3000-coverage1-alternate0/counterfactual/u000500.pt",
+          "seed": 94105,
+          "sha256": "ece4ac0553755ef55c5ac088f2aaaa515793aca7c68311494bf26139771382ad"
+        }
+      ],
+      "functional_namespace": "20261024-multicf-independent-v1",
+      "functional_result": "results/multiteacher-counterfactual/confirmation/speculative_gm-transformer-b3000-coverage1-alternate0-counterfactual/result.json",
+      "functional_result_sha256": "c93db88bd4305502104739c9f1d46d949daf6283d0803161d5722b0d517ccda7",
+      "method": "counterfactual",
+      "name": "speculative_gm-transformer-b3000-coverage1-alternate0-counterfactual",
+      "screening_cases_per_seed": 300,
+      "teacher": "SPECULATIVE_GM",
+      "update": 500
+    }
+  ],
+  "sources": {
+    "src/dcl/integration/models.py": "8d8ee578033fc5fa5218144add2af0bfc24ee6db339005766fd924cf9d2af1af",
+    "src/dcl/multicf/__init__.py": "1e64591b412c3cecc8ddf604af7ac82598f5c91373f6063288f5f2035d4deb6c",
+    "src/dcl/multicf/data.py": "a865c4bf55f422cd0add3074bc3e29a122481a72f7878c9eb060c0a37d30c679",
+    "src/dcl/multicf/oracles.py": "7a5808250f6e64ab72711fc075caa3182dbf6422a993d56647e9834d4f52f424",
+    "src/dcl/multicf/protocol.py": "43ef4c3c0109fee817f25deb79d855c18c017301f0ae322ab247cf61037b5bbb",
+    "src/dcl/multicf/runner.py": "a8865d06fda82f3de664218d2a4b6895ce0dc5f029cfd193d7fa775767e3bc06",
+    "src/dcl/multicf/states.py": "ca6f02a7418bb87da25f9806e06e02be68867f936ee9736394e85ad956993339",
+    "src/dcl/multicf/training.py": "2bab27d5d069190b9076082519bc97fab954267988263172820759eabb74c682",
+    "src/dcl/multiteacher/__init__.py": "1e8301a2d7f3488eec7d20a1bcbbbb0174987db5fa73a7a0a20fc47d8650863a",
+    "src/dcl/multiteacher/data.py": "9ada4791717f415b7d6158b91dd7fece7601768f0560dc9e5dd605512a6b28de",
+    "src/dcl/multiteacher/experiment.py": "70de36f09f4c162592a631a1964322834808bebca10cfaa3c136947b2af9b684",
+    "src/dcl/multiteacher/model.py": "df8d7d3506ff7d20cbc70f340f6198cac6c675fca39397675a29e7eb207e0a64",
+    "src/dcl/multiteacher/programs.py": "ab51c32c445ea4b6f0afa784093ea52cb7338961b6b50815ce5b65cc9e67738b",
+    "src/dcl/multiteacher_e1/__init__.py": "ece488ebd65a08328dd1eca11897e66bae1423d23a720fdda6b72ad30b3bd452",
+    "src/dcl/multiteacher_e1/experiment.py": "9fbdbcd456dda64ce608863a326a738383ecb5ea8efee892de413ec1f677af46",
+    "src/dcl/multiteacher_e1/model.py": "5b8bf097adb75c6f19cddd64414566f98c7f6a9274e7f2d1b44317ddbb84258d",
+    "src/dcl/multiteacher_e1/supervision.py": "edb6cac308b9dd09a8f542d76528ce286f2ff5dc1d1840bb8b6f7c33f9380450",
+    "src/dcl/paperstudy/models.py": "0b4b12797d7cc969d63c7ffebc0966226dc6f254e079127e15c60bea8c8b7112",
+    "src/dcl/samplecomplexity/evaluation.py": "1afd0dfb45f97047806641e7bb89645fec50569dbff134d59a0b257aa3481a5a",
+    "src/dcl/samplecomplexity/model.py": "1d0e7f3e2202e946c59823fbda335d420390d500cd76b5dc0c8e741a43af1999",
+    "src/dcl/samplecomplexity/training.py": "10f4e65eb59b1188ca6748067f2905e8adbf88a33cb74b29401a86e335b8b570",
+    "src/dcl/universal/__init__.py": "36c3af111b9699a625fa24f73e2e37ca0bc70d7b2dca9516252f966f16f12be6",
+    "src/dcl/universal/cli.py": "f503603e826b52f78a0b799390fb763e2efc0259b242a2ff4ce6e75ec4f0829e",
+    "src/dcl/universal/config.py": "d8811cf701064a2fcc88255730a59ed5e119884beefefdb3e14fae0b11011fdf",
+    "src/dcl/universal/data.py": "80e392fcb367324552f6d67bc5131b718473c6b6c87da784f5341201f3bef065",
+    "src/dcl/universal/diagnostics.py": "d43fb60f91dd3a9de2637cae62fcea0a87fe6dff56d7e5ee185582914e718c5f",
+    "src/dcl/universal/evaluation.py": "9b71cf84e412bf9a5861d9b05bc1f8b0e3a04d3101b1a5794aee723025f9da14",
+    "src/dcl/universal/model.py": "05cad8dcb3b73e853963fd5d46a859640edaec77f4d66c13661639ed04f7e685",
+    "src/dcl/universal/report.py": "8065ca062cc4e60d860149406a41cdb48a624b42685c3c68a10dcd55c9f41270",
+    "src/dcl/universal/rules.py": "af0c07bae78f997ebfcbe8823850709104e09ad474ae2111ce7714b9f72d7338",
+    "src/dcl/universal/train.py": "9a893ce438147c9667b4b2fcb28b78cfad452b2975d905d99c3f328d2148715c"
+  }
+}

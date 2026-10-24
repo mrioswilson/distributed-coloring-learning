@@ -98,6 +98,23 @@ y_v=\mathbf1[U_v\land p_v\land c_v\ne0]
 Los colores permanentes y los candidatos usan aquí la misma codificación por
 clases. La fórmula consulta los mensajes intervenidos, no los originales.
 
+El control propio y el contrafactual tienen todos los tensores de
+participación, mensaje 1 y candidato idénticos en sus checkpoints originales
+de época 53; sólo difieren mensaje 2 y COMMIT. El recibo
+`audit/m6-paired-component-weights.json` verifica cada tensor. La comparación
+249→476 además cambia la exposición: el entrenamiento M4 original usa una
+cinta por grafo y los controles M6 tres. No es un efecto aislado del cambio de
+etiquetas. La comparación propia→contrafactual conserva ese presupuesto y el
+script de optimización, con el límite de una sola réplica y selección histórica
+por validación.
+
+La regeneración de los datos produce 18.877 rondas y 248.122 decisiones
+pendientes, es decir 744.366 componentes P/C/COMMIT nativos almacenados.
+Son 148 updates por época, 7.844 hasta la época 53 y 17.760 en el horizonte
+configurado de 120 épocas. Los únicos labels propios/contrafactuales
+originales no se pueden contar exactamente sin la historia de pesos y RNG;
+no se declaran gratuitos ni se usan para una conclusión de eficiencia muestral.
+
 La pérdida posterior al calentamiento es
 
 \[

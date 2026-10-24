@@ -1,0 +1,280 @@
+{
+  "causal_library_sha256": "43dd9319fd042254296717f71c2ba8eeeacb268c3a7af0a4cd413221069b8318",
+  "rows": [
+    {
+      "acquired_diagnostic_labels": {
+        "confirmation": 60,
+        "counterfactual_confirmation": 240,
+        "participation": 60,
+        "proposal": 60
+      },
+      "contexts": 12,
+      "contract": {
+        "components": [
+          "participation",
+          "candidate",
+          "confirmation"
+        ],
+        "constraints": "anonymous two-stage exchange",
+        "hard_cases": [
+          "fixed-color conflict",
+          "simultaneous equal offers",
+          "empty neighborhood"
+        ],
+        "interventions": [
+          "fresh private draws",
+          "participation messages",
+          "candidate messages"
+        ],
+        "recompute": [
+          "availability",
+          "rank proposal",
+          "received offers",
+          "confirmation"
+        ],
+        "state_domain": "proper partial K4 coloring; exact or validated safe prefix",
+        "teacher": "LUBY"
+      },
+      "scope": "Verified, replayable supplementary cases; not used to fit or select the frozen main policies",
+      "sha256": "0a5fc295889d7d55e01a97d80ade148dfb04d1898844d5ea350a2b48009b0181",
+      "teacher": "LUBY"
+    },
+    {
+      "acquired_diagnostic_labels": {
+        "confirmation": 48,
+        "counterfactual_confirmation": 192,
+        "participation": 48,
+        "proposal": 48
+      },
+      "contexts": 6,
+      "contract": {
+        "components": [
+          "participation",
+          "candidate",
+          "confirmation"
+        ],
+        "constraints": "native participation is always true; silent messages are off-policy continuation queries",
+        "hard_cases": [
+          "simultaneous equal offers",
+          "one free color",
+          "empty neighborhood"
+        ],
+        "interventions": [
+          "fresh candidate draws",
+          "typed proposal messages"
+        ],
+        "recompute": [
+          "availability",
+          "rank proposal",
+          "received offers",
+          "confirmation"
+        ],
+        "state_domain": "proper partial K4 coloring; exact or validated safe prefix",
+        "teacher": "JOHANSSON"
+      },
+      "scope": "Verified, replayable supplementary cases; not used to fit or select the frozen main policies",
+      "sha256": "1d463f8a58c12aa3b602b947717d731a6187a87a81bc71dead634b66f450ca23",
+      "teacher": "JOHANSSON"
+    },
+    {
+      "acquired_diagnostic_labels": {
+        "confirmation": 100,
+        "counterfactual_confirmation": 400,
+        "participation": 100,
+        "proposal": 100
+      },
+      "contexts": 24,
+      "contract": {
+        "components": [
+          "participation",
+          "candidate",
+          "confirmation"
+        ],
+        "constraints": "IDs fixed during each replay; ineligible roots never confirm",
+        "hard_cases": [
+          "priority chain",
+          "close IDs",
+          "disconnected maxima"
+        ],
+        "interventions": [
+          "new distinct ID assignment before replay",
+          "safe-prefix color choices",
+          "typed proposal messages"
+        ],
+        "recompute": [
+          "every edge order",
+          "eligibility",
+          "availability",
+          "confirmation"
+        ],
+        "state_domain": "proper partial K4 coloring; distinct fixed IDs; priority-compatible prefix",
+        "teacher": "JP"
+      },
+      "scope": "Verified, replayable supplementary cases; not used to fit or select the frozen main policies",
+      "sha256": "868989fa4791579d34a0c458debefd8f8ada4d028955e3eaf7bdcf83f06c713f",
+      "teacher": "JP"
+    },
+    {
+      "acquired_diagnostic_labels": {
+        "confirmation": 57,
+        "counterfactual_confirmation": 228,
+        "participation": 57,
+        "proposal": 57
+      },
+      "contexts": 12,
+      "contract": {
+        "components": [
+          "participation",
+          "candidate",
+          "confirmation"
+        ],
+        "constraints": "two exchanges; no independent edits of derived messages",
+        "hard_cases": [
+          "ties",
+          "neighbor lacks queried color",
+          "multiple winning colors",
+          "no winner"
+        ],
+        "interventions": [
+          "private discrete preferences",
+          "candidate query",
+          "safe-prefix color choices"
+        ],
+        "recompute": [
+          "own and neighbor availability",
+          "per-color preference messages",
+          "strict winners",
+          "confirmation"
+        ],
+        "state_domain": "proper partial K4 coloring; exact or validated safe prefix",
+        "teacher": "COLOR_TRIALS"
+      },
+      "scope": "Verified, replayable supplementary cases; not used to fit or select the frozen main policies",
+      "sha256": "e4df616c4a038d4047eb343b740840f93aad922b6a5364197d56c61d176e1c08",
+      "teacher": "COLOR_TRIALS"
+    },
+    {
+      "acquired_diagnostic_labels": {
+        "confirmation": 416,
+        "counterfactual_confirmation": 1664,
+        "linial_point": 64,
+        "participation": 416,
+        "proposal": 416
+      },
+      "contexts": 60,
+      "contract": {
+        "components": [
+          "linial_point",
+          "participation",
+          "candidate",
+          "confirmation"
+        ],
+        "constraints": "no independent edits of evaluations, phase or auxiliary equality; low KW colors cannot recolor",
+        "hard_cases": [
+          "late KW",
+          "three occupied options",
+          "field 7",
+          "field 13"
+        ],
+        "interventions": [
+          "new distinct initial IDs",
+          "unblocked Linial point",
+          "free KW option",
+          "candidate query"
+        ],
+        "recompute": [
+          "polynomial values and equality",
+          "KW receiver-relative options",
+          "phase bounds",
+          "confirmation"
+        ],
+        "state_domain": "proper bounded auxiliary coloring obtained by legal Linial/KW replay",
+        "teacher": "BE_BASE_D3"
+      },
+      "scope": "Verified, replayable supplementary cases; not used to fit or select the frozen main policies",
+      "sha256": "a7152597738bb018138bd22949036b405028dd99f5a69b8d7aa9d8f7f23954d1",
+      "teacher": "BE_BASE_D3"
+    },
+    {
+      "acquired_diagnostic_labels": {
+        "confirmation": 32,
+        "conflict_mark": 32,
+        "counterfactual_confirmation": 128,
+        "participation": 32,
+        "proposal": 32
+      },
+      "contexts": 16,
+      "contract": {
+        "components": [
+          "participation",
+          "candidate",
+          "confirmation",
+          "conflict_mark"
+        ],
+        "constraints": "no oracle on an unverified speculative history; legal temporary conflicts only",
+        "hard_cases": [
+          "isolates",
+          "disconnected components",
+          "same-slot conflict",
+          "empty repair queue"
+        ],
+        "interventions": [
+          "new distinct IDs before schedule construction",
+          "free ASSIGN/REPAIR color",
+          "candidate query"
+        ],
+        "recompute": [
+          "block slots and permissions",
+          "actual speculative colors",
+          "marks",
+          "repair queue",
+          "confirmation"
+        ],
+        "state_domain": "replay of four-block schedule with free-color assignments, same-slot detection and scheduled repair",
+        "teacher": "SPECULATIVE_GM"
+      },
+      "scope": "Verified, replayable supplementary cases; not used to fit or select the frozen main policies",
+      "sha256": "8a820720fb5e3316e4f7511d23ab7a09bb00c8ac149ebcf05e39ba9eaf99d9f0",
+      "teacher": "SPECULATIVE_GM"
+    },
+    {
+      "acquired_diagnostic_labels": {
+        "confirmation": 32,
+        "counterfactual_confirmation": 128,
+        "participation": 32,
+        "proposal": 32
+      },
+      "contexts": 32,
+      "contract": {
+        "components": [
+          "participation",
+          "candidate",
+          "confirmation"
+        ],
+        "constraints": "only scheduled root may write",
+        "hard_cases": [
+          "isolates",
+          "last free color",
+          "disconnected components"
+        ],
+        "interventions": [
+          "new distinct IDs before replay",
+          "free-color prefix writes",
+          "candidate query"
+        ],
+        "recompute": [
+          "schedule",
+          "availability",
+          "first free target",
+          "confirmation"
+        ],
+        "state_domain": "proper partial coloring produced in supplied increasing-ID order",
+        "teacher": "GREEDY"
+      },
+      "scope": "Verified, replayable supplementary cases; not used to fit or select the frozen main policies",
+      "sha256": "8c58fbf7d1c6ac26afceacdbbf2f9d13e0182266a9c3de34e7dcefbf15527d5f",
+      "teacher": "GREEDY"
+    }
+  ],
+  "script_sha256": "ac9b2e3d56db8b6c81d9953348c9c0bdf99b5bf7a441b64f5e7278ee1114ac9c"
+}

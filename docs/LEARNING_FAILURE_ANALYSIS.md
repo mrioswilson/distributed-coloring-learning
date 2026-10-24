@@ -111,7 +111,7 @@ necesarios para esa decisión. Ello no prueba que el optimizador aprenda la
 función ni que baste cualquier codificación anónima enriquecida.
 
 **ColorTrials y radio.** Sean v-u-w un camino y un color c libre en v.
-Mantener las observaciones de v y u, con u pendiente y preferencia mayor
+Mantener el estado propio de v y u y el vecindario observado por v, con u pendiente y preferencia mayor
 que v para c. Cambiar sólo el color fijo de w entre c y otro color cambia
 si c está disponible para u y, por tanto, si u compite contra v. La raíz no
 puede decidir siempre ese ganador con una observación que omita la
@@ -152,6 +152,17 @@ Estos resultados son suficiencias y obstrucciones para observaciones
 especificadas. No son garantías universales de entrenamiento, límites
 muestrales de las tres redes ni demostraciones de imposibilidad de aprender
 los profesores que antes figuraban NOT CERTIFIED.
+
+**Cuantización histórica.** En M6 primitivo el profesor genera uniforms
+float64 y `encode_m4_state` los convierte a float32. Los valores
+\(1/2-2^{-28}\) y \(1/2+2^{-28}\) se codifican ambos como float32 1/2,
+pero su etiqueta de participación float64 difiere. Por indistinguibilidad,
+ese encoder no permite fidelidad de participación universal a la ley
+float64 original. El test constructivo queda en `test_multicf.py`. Ello no
+invalida los éxitos funcionales históricos. En el protocolo nativo actual,
+`snapshot` genera directamente float32 y el profesor consulta exactamente
+esas entradas; no se hereda esa obstrucción numérica. La corrección universal
+de una política entrenada sigue sin demostrarse.
 
 ## Generalización y leyes de salida
 

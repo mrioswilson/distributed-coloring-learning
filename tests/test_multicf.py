@@ -157,3 +157,80 @@ def test_exact_resume_and_loss_query_accounting(method, tmp_path):
     assert (full["record"]["own_confirmation_labels"] > 0) == (method == "owncf")
     # Completed training is idempotent and does not overwrite frozen outputs.
     train(c, "LUBY", "normalized", 14, dataset, tmp_path/"resume", method, development=False)
+
+
+def test_jp_no_id_observation_has_opposite_valid_labels():
+    from dcl.multiteacher.programs import ColoringProgram, teacher_choices
+    p = ColoringProgram(nx.path_graph(2), "JP", 12)
+    state = p.snapshot()
+    observations, actions = [], []
+    for ids in (np.array([1, 2]), np.array([2, 1])):
+        other = copy.deepcopy(state); other.ids = ids
+        arrays = encode_roots(other, p.neighbors, [0])
+        arrays[0][..., 5] = 0; arrays[1][..., 5] = 0
+        observations.append(arrays)
+        actions.append(teacher_choices(other, p.neighbors, "JP").color[0])
+    assert all(np.array_equal(a, b) for a, b in zip(*observations))
+    assert actions == [0, 1]
+
+
+def test_relative_id_adapter_is_invariant_to_valid_order_preserving_reassignment():
+    import torch
+    from dcl.multiteacher.programs import ColoringProgram
+    from dcl.samplecomplexity.model import relational_arrays
+    from dcl.multiteacher_e1.supervision import tensor_arrays
+    p = ColoringProgram(nx.path_graph(4), "JP", 14)
+    state = p.snapshot(); encoded = []
+    for ids in (np.array([10, 40, 20, 30]), np.array([110, 500, 210, 350])):
+        other = copy.deepcopy(state); other.ids = ids
+        encoded.append(relational_arrays(tensor_arrays(encode_roots(other, p.neighbors, [0, 1, 2, 3])), "JP", 0))
+    assert all(torch.equal(a, b) for a, b in zip(*encoded))
+
+
+@pytest.mark.parametrize("teacher", TEACHERS)
+@pytest.mark.parametrize("architecture", ["normalized", "deepsets", "transformer"])
+def test_new_autonomous_evaluator_cannot_query_teacher_or_counterfactual_oracle(monkeypatch, teacher, architecture):
+    import dcl.samplecomplexity.evaluation as evaluator
+    import dcl.multicf.oracles as oracles
+    from dcl.samplecomplexity.training import initialize
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Teacher/oracle called in autonomous inference")
+    monkeypatch.setattr(evaluator, "teacher_choices", forbidden)
+    monkeypatch.setattr(oracles, "confirmation", forbidden)
+    monkeypatch.setattr(oracles, "stage_targets", forbidden)
+    model = initialize(teacher, architecture, 881)
+    rows, _ = evaluator.evaluate(model, teacher, [(nx.path_graph(4), dict(case_id="no-oracle", tape_seed=18))])
+    assert len(rows) == 1 and rows[0]["no_technical_error"] is True
+
+
+@pytest.mark.parametrize("teacher", TEACHERS)
+def test_private_tape_and_id_interventions_have_exact_replay(teacher):
+    from dcl.causal_interventions import contexts, replay_context
+    from dcl.multicf.states import state_hash
+    count = 0
+    for p, s, exact, proof in contexts(nx.disjoint_union(nx.complete_graph(4), nx.empty_graph(4)), teacher):
+        q, check = replay_context(proof)
+        assert state_hash(s) == state_hash(check)
+        assert np.all((s.draws >= 0) & (s.draws < 1))
+        assert np.all((s.preferences >= 0) & (s.preferences <= 3))
+        if "initial_ids" in proof["base"]:
+            assert len(np.unique(s.ids)) == len(s.ids)
+            if teacher == "SPECULATIVE_GM":
+                for block in q.blocks:
+                    assert np.array_equal(q.slots[block], np.arange(len(block)))
+        bad = copy.deepcopy(proof); bad["state_sha256"] = "f" * 64
+        with pytest.raises(ValueError):
+            replay_context(bad)
+        count += 1
+    assert count > 0
+
+
+def test_historical_float64_to_float32_encoder_can_identify_opposite_participation_labels():
+    from dcl.m4_data import encode_m4_state
+    graph=nx.path_graph(2);colors=np.full(2,-1);candidates=np.array([.1,.2])
+    a=np.array([.5-2**-28,.2],np.float64)
+    b=np.array([.5+2**-28,.2],np.float64)
+    xa=encode_m4_state(graph,colors,a,candidates).x
+    xb=encode_m4_state(graph,colors,b,candidates).x
+    assert np.array_equal(xa,xb)
+    assert (a[0]<.5)!=(b[0]<.5)

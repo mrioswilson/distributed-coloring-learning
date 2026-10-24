@@ -120,5 +120,9 @@ def replay_m6(count=10):
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser();parser.add_argument("stage",choices=["inventory","replay-m6"])
-    parser.add_argument("--count",type=int,default=10);args=parser.parse_args()
+    parser.add_argument("--count",type=int,default=10)
+    parser.add_argument("--historical-root",type=Path,default=HIST)
+    parser.add_argument("--output-dir",type=Path,default=OUT)
+    args=parser.parse_args();HIST=args.historical_root;OUT=args.output_dir
+    OUT.mkdir(parents=True,exist_ok=True)
     inventory() if args.stage=="inventory" else replay_m6(args.count)

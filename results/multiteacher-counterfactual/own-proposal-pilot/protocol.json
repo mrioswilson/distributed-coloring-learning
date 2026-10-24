@@ -1,0 +1,79 @@
+{
+  "budgets": {
+    "BE_BASE_D3": 3000,
+    "COLOR_TRIALS": 30000,
+    "GREEDY": 3000,
+    "JOHANSSON": 3000,
+    "JP": 3000,
+    "LUBY": 3000,
+    "SPECULATIVE_GM": 3000
+  },
+  "config": {
+    "accounting": "Base labels plus all acquired fixed-bank counterfactual labels plus distinct own-proposal queries when used; presentations, visited labels, updates, simulation, CPU/wall time separate. No sample-efficiency attribution across unequal query/update budgets.",
+    "architectures": [
+      "normalized",
+      "deepsets",
+      "transformer"
+    ],
+    "batch_size": 64,
+    "checkpoints": [
+      500,
+      1500
+    ],
+    "development_runs": 60,
+    "development_sizes": [
+      28,
+      36
+    ],
+    "device": "cpu",
+    "final_runs": 1000,
+    "final_sizes": [
+      32,
+      48,
+      64
+    ],
+    "historical_reference": "12/21 primary PASS unchanged. New certifications are separate evidence and are not retroactive replacements.",
+    "log_every": 100,
+    "lr": 0.001,
+    "namespace": "20261024-multicf-independent-v1",
+    "native_budget": 3000,
+    "pilot_runs": 10,
+    "pilot_sizes": [
+      28
+    ],
+    "protocol": "multiteacher-counterfactual-v1",
+    "save_every": 250,
+    "seeds": [
+      95101
+    ],
+    "selection": "Within a method and native-label budget, first common development-perfect checkpoint; five hashes frozen before an independent, once-only final battery. New methods after final failures require a new namespace. No PASS inferred from development.",
+    "teachers": [
+      "LUBY",
+      "JOHANSSON",
+      "COLOR_TRIALS",
+      "JP",
+      "BE_BASE_D3",
+      "SPECULATIVE_GM",
+      "GREEDY"
+    ],
+    "training_sizes": [
+      8,
+      12,
+      16,
+      24
+    ],
+    "transfer_runs": 60,
+    "transfer_sizes": [
+      128,
+      256,
+      512
+    ],
+    "updates": 1500,
+    "warmup_updates": 100,
+    "workers": 3
+  },
+  "method": "owncf",
+  "scope": "Exploratory one-seed mechanism-portability pilot; not a five-seed certification or exact retraining of original unavailable Pedro weights. Native and stored cf labels plus every distinct newly queried own confirmation are charged.",
+  "script_sha256": "92bbda7d50a93b8046244caeb400a414156fbae13092d7881b18ba02d3b691d5",
+  "seed": 95101
+}

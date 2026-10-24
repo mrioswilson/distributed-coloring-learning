@@ -6,7 +6,21 @@ claim provenance and human-readable verified references from exported results.
 Do not manually change generated numerical tables.
 
 `main.tex` is generated from that Markdown with Pandoc 3.9/natbib.
-`main.pdf` is a 23-page unpublished draft. `pre-integration-main.tex` and
+`main.pdf` is a 36-page unpublished draft including the counterfactual extension.
+The current evidence-derived build is:
+
+```bash
+PYTHONPATH=src python scripts/report-multicf.py
+PYTHONPATH=src python scripts/plot-multicf.py
+PYTHONPATH=src python scripts/build-multicf-paper.py --compiler /path/to/verified/tectonic
+```
+
+Its receipts and reviewed renders live in
+`results/multiteacher-counterfactual/paper-build.json` and `paper-review/`.
+`pre-counterfactual-main.{tex,pdf}` preserves the previous manuscript.
+The commands below document the earlier integrated build.
+
+`pre-integration-main.tex` and
 `pre-integration-main.pdf` preserve the earlier manuscript byte for byte.
 Its documentation remains in `docs/historical/PAPER_README_pre_integration.md`.
 Earlier commits and recovery archives also retain the original study.

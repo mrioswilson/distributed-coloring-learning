@@ -1,0 +1,11 @@
+{
+  "protocol": "multicf-coupling-supplement-v1",
+  "samples_per_fixed_graph": 256,
+  "graphs": ["path8", "K4-and-four-isolates"],
+  "observable": "Full labelled terminal color vector plus correctness/cutoff/technical/invariant status; no success filtering",
+  "selection": "All finally certified counterfactual checkpoints, frozen before these fresh coupling tapes",
+  "max_hypotheses": 90,
+  "family_alpha": 0.05,
+  "method": "The total variation of the two marginal terminal laws is at most disagreement probability under the supplied shared-tape coupling. A one-sided exact binomial upper confidence bound on disagreement, Bonferroni at .05/90, gives a simultaneous approximate-law upper certificate. Observed disagreement is not a TV lower bound; nonzero upper bound does not establish equality.",
+  "transfer": "Separate exploratory 84-case suite on N128/256/512: 60 cases in the ten native-domain families plus 24 cases in four newly generated families (binary trees, diamond chains, triangle chains, subdivided K4 components). Two instances per new family and size. No tuning from transfer or law results."
+}

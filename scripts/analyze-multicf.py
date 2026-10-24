@@ -28,7 +28,7 @@ def summaries():
     for p in sorted((OUT/"runs").rglob("u*-record.json")):
         r=json.loads(p.read_text());i=r["identity"]
         rows.append(dict(**{k:i[k] for k in ("teacher","architecture","seed","method")},
-            native_budget=r["native_labels"],updates=r["update"],
+            native_budget=int(p.parents[1].name.split("-")[0][1:]),native_labels=r["native_labels"],updates=r["update"],
             development_successes=r["development"]["successes"],development_executions=r["development"]["executions"],
             total_acquired_component_labels=r["total_acquired_component_labels"],
             counterfactual_labels=r["counterfactual_labels"],own_labels=r["own_confirmation_labels"],
@@ -102,7 +102,7 @@ def diagnostics(config,teacher,arch,seed,checkpoint,tag):
     model=initialize(teacher,arch,seed);model.load_state_dict(torch.load(checkpoint,weights_only=False)["model"]);model.eval()
     native,meta=packed["native"],packed["meta"]
     correct_action=np.zeros(len(native),bool);correct_state=np.zeros(len(native),bool)
-    phase_counts=defaultdict(Counter);counts=Counter();errors=[]
+    phase_counts=defaultdict(Counter);bound_counts=defaultdict(Counter);counts=Counter();errors=[]
     rng=np.random.default_rng(17001)
     for phase in sorted(np.unique(native[:,3])):
         positions=np.flatnonzero(native[:,3]==phase)
@@ -115,6 +115,11 @@ def diagnostics(config,teacher,arch,seed,checkpoint,tag):
             correct_state[use]=next_values(phase,predicted,meta[use])==next_values(phase,exact,meta[use])
             phase_counts[str(phase)]["action_total"]+=len(use)
             phase_counts[str(phase)]["action_correct"]+=int(correct_action[use].sum())
+            for bound in np.unique(meta[use,5]):
+                at=meta[use,5]==bound
+                key=f"phase{phase}-bound{bound}"
+                bound_counts[key]["action_total"]+=int(at.sum())
+                bound_counts[key]["action_correct"]+=int(correct_action[use][at].sum())
             if phase not in (LINIAL,DETECT):
                 targets=stage_targets(arrays,native[use],teacher)
                 own_truth=confirmation(arrays,teacher,out.p.numpy(),out.candidates.numpy())
@@ -125,11 +130,15 @@ def diagnostics(config,teacher,arch,seed,checkpoint,tag):
                 counts["own_confirmation_total"]+=len(use)
                 counts["own_confirmation_correct"]+=int(((out.commit.numpy()>0)==(own_truth>.5)).sum())
                 counts["unsafe_own_confirmation"]+=int(((out.commit.numpy()>0)&(own_truth<.5)&out.p[:,0].numpy()).sum())
+                counts["own_false_negative"]+=int(((out.commit.numpy()<=0)&(own_truth>.5)).sum())
                 ps,cs,ys=proposal_bank(arrays,native[use],teacher,rng)
                 for v in range(4):
                     logits=model.commit_for(out.state,torch.from_numpy(ps[:,v]),torch.from_numpy(cs[:,v])).numpy()
                     counts["counterfactual_total"]+=len(use)
                     counts["counterfactual_correct"]+=int(((logits>0)==(ys[:,v]>.5)).sum())
+                    counts["counterfactual_positive_truth"]+=int((ys[:,v]>.5).sum())
+                    counts["counterfactual_false_positive"]+=int(((logits>0)&(ys[:,v]<.5)).sum())
+                    counts["counterfactual_false_negative"]+=int(((logits<=0)&(ys[:,v]>.5)).sum())
             for j in np.flatnonzero(~correct_action[use])[:max(0,30-len(errors))]:
                 errors.append(dict(phase=int(phase),bound=int(meta[use[j],5]),native_step=int(meta[use[j],8]),
                     case_id=manifest["transitions"][int(meta[use[j],4])]["case_id"],
@@ -139,7 +148,7 @@ def diagnostics(config,teacher,arch,seed,checkpoint,tag):
         action_correct=int(correct_action.sum()),action_total=len(native),action_fidelity=float(correct_action.mean()),
         transition_equal=int((mismatch==0).sum()),transition_total=len(mismatch),
         transition_fidelity=float((mismatch==0).mean()),components=dict(counts),by_phase={k:dict(v) for k,v in phase_counts.items()},
-        first_action_errors=errors,bank_sha256=manifest["sha256"],
+        first_action_errors=errors,by_phase_bound={k:dict(v) for k,v in bound_counts.items()},bank_sha256=manifest["sha256"],
         scope="All permitted roots of 60 common native development trajectories; four fresh diagnostic continuation queries per color root; no training labels or final-case tuning")
     directory=OUT/"diagnostics"/tag/teacher.lower()/arch
     atomic_json(directory/f"s{seed}.json",r)

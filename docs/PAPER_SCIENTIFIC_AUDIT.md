@@ -529,3 +529,28 @@ redundant KW/GM repair writes; three interpreter-based regression tests check
 these cases. Reported fidelity curves use the full audit when available.
 
 <!-- END_SAMPLE_COMPLEXITY_AUDIT -->
+# Counterfactual extension: additional evidence and review boundary
+
+The separately versioned counterfactual study closes the nine pending native
+teacher/core packages, preserving the primary 12/21 result and its original
+interpretation. There are two validated new procedures: concordant teacher
+proposal training with sufficient optimization, and fixed-bank counterfactual
+training with teacher-specific optimizer points. Every successful package has
+five frozen checkpoints and five complete, independent 1000-case batteries.
+The coverage statement 21/21 combines historical and new protocols.
+
+The extension retains all 195000 final runs, including 21 failures at earlier
+fixed points. The first counterfactual ColorTrials/E1 failure is at500 updates;
+a frozen follow-up plan's reason field incorrectly said1500. The explicit
+machine-readable erratum corrects that rationale without changing its actual
+1500/4000 experiment, source hashes, policies or outcomes. KW omissions,
+shared cross-architecture confirmation heads, a negative BE own-proposal
+pilot and a null tested coverage ablation are retained.
+
+Review `MULTITEACHER_COUNTERFACTUAL_RESULTS.md` for P1--P14 and the exact
+per-policy/per-component denominators; `verification.json` recalculates gates,
+hashes and every stored intervention label. Approximate-law evidence is89/90
+fixed-small-graph labelled terminal-law bounds; the exception is not claimed
+to prove a marginal-law difference. Larger-domain generalization remains
+empirical and within degree3/global K4. Original Pedro weights remain missing.
+The new manuscript is36 pages, with its preceding PDF/TeX archived intact.

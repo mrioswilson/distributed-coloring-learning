@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Numerically replay BE's fixed-label optimization result; extend to 3 cores."""
 from concurrent.futures import ProcessPoolExecutor
+import argparse
 import json
 from pathlib import Path
 
@@ -31,6 +32,10 @@ def job(args):
 
 
 if __name__=="__main__":
+    parser=argparse.ArgumentParser()
+    parser.add_argument("--original-runtime",type=Path,default=ORIGINAL)
+    parser.add_argument("--output",type=Path,default=OUT)
+    args=parser.parse_args();ORIGINAL=args.original_runtime;OUT=args.output
     torch.set_num_threads(1)
     with ProcessPoolExecutor(max_workers=3) as pool:
         rows=list(pool.map(job,[(a,s) for a in ("normalized","deepsets","transformer") for s in range(83101,83106)]))

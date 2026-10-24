@@ -1,0 +1,81 @@
+{
+  "budget": 3000,
+  "config": {
+    "accounting": "Base labels plus all acquired fixed-bank counterfactual labels plus distinct own-proposal queries when used; presentations, visited labels, updates, simulation, CPU/wall time separate. No sample-efficiency attribution across unequal query/update budgets.",
+    "architectures": [
+      "normalized",
+      "deepsets",
+      "transformer"
+    ],
+    "batch_size": 64,
+    "checkpoints": [
+      500,
+      1500,
+      4000
+    ],
+    "development_runs": 60,
+    "development_sizes": [
+      28,
+      36
+    ],
+    "device": "cpu",
+    "final_runs": 1000,
+    "final_sizes": [
+      32,
+      48,
+      64
+    ],
+    "historical_reference": "12/21 primary PASS unchanged. New certifications are separate evidence and are not retroactive replacements.",
+    "log_every": 100,
+    "lr": 0.001,
+    "namespace": "20261024-multicf-independent-v1-information",
+    "native_budget": 3000,
+    "pilot_runs": 10,
+    "pilot_sizes": [
+      28
+    ],
+    "protocol": "multiteacher-counterfactual-v1",
+    "save_every": 250,
+    "seeds": [
+      94101,
+      94102,
+      94103,
+      94104,
+      94105
+    ],
+    "selection": "Within a method and native-label budget, first common development-perfect checkpoint; five hashes frozen before an independent, once-only final battery. New methods after final failures require a new namespace. No PASS inferred from development.",
+    "teachers": [
+      "LUBY",
+      "JOHANSSON",
+      "COLOR_TRIALS",
+      "JP",
+      "BE_BASE_D3",
+      "SPECULATIVE_GM",
+      "GREEDY"
+    ],
+    "training_sizes": [
+      8,
+      12,
+      16,
+      24
+    ],
+    "transfer_runs": 60,
+    "transfer_sizes": [
+      128,
+      256,
+      512
+    ],
+    "updates": 4000,
+    "warmup_updates": 100,
+    "workers": 3
+  },
+  "modes": [
+    "without_ids",
+    "numeric_ids",
+    "numeric_differences",
+    "relative_comparisons"
+  ],
+  "script_sha256": "8e4794e472612e5b5f0e476ea64335901a5d4f24a7f2a2cd43bad7fd8e7fba7b",
+  "selection": "All four modes and all five seeds; no tuning or dropping a mode",
+  "updates": 500
+}

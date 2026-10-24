@@ -1,0 +1,141 @@
+{
+  "config": {
+    "accounting": "Base labels plus all acquired fixed-bank counterfactual labels plus distinct own-proposal queries when used; presentations, visited labels, updates, simulation, CPU/wall time separate. No sample-efficiency attribution across unequal query/update budgets.",
+    "architectures": [
+      "normalized",
+      "deepsets",
+      "transformer"
+    ],
+    "batch_size": 64,
+    "checkpoints": [
+      500,
+      1500,
+      4000
+    ],
+    "development_runs": 60,
+    "development_sizes": [
+      28,
+      36
+    ],
+    "device": "cpu",
+    "final_runs": 1000,
+    "final_sizes": [
+      32,
+      48,
+      64
+    ],
+    "historical_reference": "12/21 primary PASS unchanged. New certifications are separate evidence and are not retroactive replacements.",
+    "log_every": 100,
+    "lr": 0.001,
+    "namespace": "20261024-multicf-independent-v1",
+    "native_budget": 3000,
+    "pilot_runs": 10,
+    "pilot_sizes": [
+      28
+    ],
+    "protocol": "multiteacher-counterfactual-v1",
+    "save_every": 250,
+    "seeds": [
+      94101,
+      94102,
+      94103,
+      94104,
+      94105
+    ],
+    "selection": "Within a method and native-label budget, first common development-perfect checkpoint; five hashes frozen before an independent, once-only final battery. New methods after final failures require a new namespace. No PASS inferred from development.",
+    "teachers": [
+      "LUBY",
+      "JOHANSSON",
+      "COLOR_TRIALS",
+      "JP",
+      "BE_BASE_D3",
+      "SPECULATIVE_GM",
+      "GREEDY"
+    ],
+    "training_sizes": [
+      8,
+      12,
+      16,
+      24
+    ],
+    "transfer_runs": 60,
+    "transfer_sizes": [
+      128,
+      256,
+      512
+    ],
+    "updates": 4000,
+    "warmup_updates": 100,
+    "workers": 3
+  },
+  "confirmation_script_sha256": "c5d8d949f22f4301a78682c6ac2f96bb76b67aa7a0e03699eabb685176257c17",
+  "selected": {
+    "architecture": "deepsets",
+    "budget": 30000,
+    "checkpoints": [
+      {
+        "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94101/b30000-coverage1-alternate0/matched/u001500.pt",
+        "seed": 94101,
+        "sha256": "dde28b86bc0b834a1c89e3b3c297d3a482d2e22ba5102a3ae07034acff809e12"
+      },
+      {
+        "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94102/b30000-coverage1-alternate0/matched/u001500.pt",
+        "seed": 94102,
+        "sha256": "e0109f29d0c863ba4795dbaf0b891869cc6f7ee5f49bfdd851930a2ff9abca83"
+      },
+      {
+        "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94103/b30000-coverage1-alternate0/matched/u001500.pt",
+        "seed": 94103,
+        "sha256": "47ba604dfbe362e54ea0cefa1b4511d96b3a66a3117380052e6a10817f8ecafb"
+      },
+      {
+        "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94104/b30000-coverage1-alternate0/matched/u001500.pt",
+        "seed": 94104,
+        "sha256": "fe8f7f44c96ac5713bdaa8dbd9c8c5164836022bd948a640888c092a4a6be649"
+      },
+      {
+        "path": "results/multiteacher-counterfactual/runs/color_trials/deepsets/s94105/b30000-coverage1-alternate0/matched/u001500.pt",
+        "seed": 94105,
+        "sha256": "9d232d33b7f1227be9fcfd891e5fac80c3ce61a036932c3374b4f7ebf79b235c"
+      }
+    ],
+    "method": "matched",
+    "name": "color_trials-deepsets-b30000-coverage1-alternate0-matched",
+    "screening_cases_per_seed": 300,
+    "teacher": "COLOR_TRIALS",
+    "update": 1500
+  },
+  "sources": {
+    "src/dcl/integration/models.py": "8d8ee578033fc5fa5218144add2af0bfc24ee6db339005766fd924cf9d2af1af",
+    "src/dcl/multicf/__init__.py": "1e64591b412c3cecc8ddf604af7ac82598f5c91373f6063288f5f2035d4deb6c",
+    "src/dcl/multicf/data.py": "a865c4bf55f422cd0add3074bc3e29a122481a72f7878c9eb060c0a37d30c679",
+    "src/dcl/multicf/oracles.py": "7a5808250f6e64ab72711fc075caa3182dbf6422a993d56647e9834d4f52f424",
+    "src/dcl/multicf/protocol.py": "43ef4c3c0109fee817f25deb79d855c18c017301f0ae322ab247cf61037b5bbb",
+    "src/dcl/multicf/runner.py": "a8865d06fda82f3de664218d2a4b6895ce0dc5f029cfd193d7fa775767e3bc06",
+    "src/dcl/multicf/states.py": "ca6f02a7418bb87da25f9806e06e02be68867f936ee9736394e85ad956993339",
+    "src/dcl/multicf/training.py": "2bab27d5d069190b9076082519bc97fab954267988263172820759eabb74c682",
+    "src/dcl/multiteacher/__init__.py": "1e8301a2d7f3488eec7d20a1bcbbbb0174987db5fa73a7a0a20fc47d8650863a",
+    "src/dcl/multiteacher/data.py": "9ada4791717f415b7d6158b91dd7fece7601768f0560dc9e5dd605512a6b28de",
+    "src/dcl/multiteacher/experiment.py": "70de36f09f4c162592a631a1964322834808bebca10cfaa3c136947b2af9b684",
+    "src/dcl/multiteacher/model.py": "df8d7d3506ff7d20cbc70f340f6198cac6c675fca39397675a29e7eb207e0a64",
+    "src/dcl/multiteacher/programs.py": "ab51c32c445ea4b6f0afa784093ea52cb7338961b6b50815ce5b65cc9e67738b",
+    "src/dcl/multiteacher_e1/__init__.py": "ece488ebd65a08328dd1eca11897e66bae1423d23a720fdda6b72ad30b3bd452",
+    "src/dcl/multiteacher_e1/experiment.py": "9fbdbcd456dda64ce608863a326a738383ecb5ea8efee892de413ec1f677af46",
+    "src/dcl/multiteacher_e1/model.py": "5b8bf097adb75c6f19cddd64414566f98c7f6a9274e7f2d1b44317ddbb84258d",
+    "src/dcl/multiteacher_e1/supervision.py": "edb6cac308b9dd09a8f542d76528ce286f2ff5dc1d1840bb8b6f7c33f9380450",
+    "src/dcl/paperstudy/models.py": "0b4b12797d7cc969d63c7ffebc0966226dc6f254e079127e15c60bea8c8b7112",
+    "src/dcl/samplecomplexity/evaluation.py": "1afd0dfb45f97047806641e7bb89645fec50569dbff134d59a0b257aa3481a5a",
+    "src/dcl/samplecomplexity/model.py": "1d0e7f3e2202e946c59823fbda335d420390d500cd76b5dc0c8e741a43af1999",
+    "src/dcl/samplecomplexity/training.py": "10f4e65eb59b1188ca6748067f2905e8adbf88a33cb74b29401a86e335b8b570",
+    "src/dcl/universal/__init__.py": "36c3af111b9699a625fa24f73e2e37ca0bc70d7b2dca9516252f966f16f12be6",
+    "src/dcl/universal/cli.py": "f503603e826b52f78a0b799390fb763e2efc0259b242a2ff4ce6e75ec4f0829e",
+    "src/dcl/universal/config.py": "d8811cf701064a2fcc88255730a59ed5e119884beefefdb3e14fae0b11011fdf",
+    "src/dcl/universal/data.py": "80e392fcb367324552f6d67bc5131b718473c6b6c87da784f5341201f3bef065",
+    "src/dcl/universal/diagnostics.py": "d43fb60f91dd3a9de2637cae62fcea0a87fe6dff56d7e5ee185582914e718c5f",
+    "src/dcl/universal/evaluation.py": "9b71cf84e412bf9a5861d9b05bc1f8b0e3a04d3101b1a5794aee723025f9da14",
+    "src/dcl/universal/model.py": "05cad8dcb3b73e853963fd5d46a859640edaec77f4d66c13661639ed04f7e685",
+    "src/dcl/universal/report.py": "8065ca062cc4e60d860149406a41cdb48a624b42685c3c68a10dcd55c9f41270",
+    "src/dcl/universal/rules.py": "af0c07bae78f997ebfcbe8823850709104e09ad474ae2111ce7714b9f72d7338",
+    "src/dcl/universal/train.py": "9a893ce438147c9667b4b2fcb28b78cfad452b2975d905d99c3f328d2148715c"
+  }
+}
