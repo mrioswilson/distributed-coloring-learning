@@ -119,6 +119,9 @@ numerical differences.
 The [information audit](docs/TEACHER_MODEL_INFORMATION_COMPATIBILITY.md),
 [frozen protocol](docs/SAMPLE_COMPLEXITY_PROTOCOL.md), and
 [P1–P12 results](docs/SAMPLE_COMPLEXITY_RESULTS.md) define the new central study.
+The [detailed Spanish review brief](docs/RESULTADOS_TIRADA_2026-10-23_PARA_REVISION_CHATGPT.md)
+explains the principal results, negative cases, controls and limits in a
+self-contained document for scientific review.
 The [data dictionary](docs/SAMPLE_COMPLEXITY_DATA_DICTIONARY.md) and
 [new evidence ledger](results/sample-complexity/evidence-ledger.json) map
 query units, raw schemas, hashes and claim boundaries.
