@@ -1,0 +1,1522 @@
+{
+  "architecture": "deepsets",
+  "checkpoint": "COLOR_TRIALS-deepsets-counterfactual-primary-counterfactual-s94102",
+  "cohort": "counterfactual-primary",
+  "commit_queries": {
+    "d10-global": {
+      "correct": 330,
+      "false_accept": 0,
+      "false_reject": 6,
+      "negative": 266,
+      "positive": 70,
+      "total": 336
+    },
+    "d10-local": {
+      "correct": 348,
+      "false_accept": 0,
+      "false_reject": 4,
+      "negative": 271,
+      "positive": 81,
+      "total": 352
+    },
+    "d200-global": {
+      "correct": 1888,
+      "false_accept": 0,
+      "false_reject": 168,
+      "negative": 1164,
+      "positive": 892,
+      "total": 2056
+    },
+    "d200-local": {
+      "correct": 2026,
+      "false_accept": 0,
+      "false_reject": 178,
+      "negative": 1099,
+      "positive": 1105,
+      "total": 2204
+    },
+    "d3-global": {
+      "correct": 320,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 218,
+      "positive": 102,
+      "total": 320
+    },
+    "d3-local": {
+      "correct": 320,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 212,
+      "positive": 108,
+      "total": 320
+    },
+    "d4-global": {
+      "correct": 320,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 223,
+      "positive": 97,
+      "total": 320
+    },
+    "d4-local": {
+      "correct": 316,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 218,
+      "positive": 98,
+      "total": 316
+    },
+    "d50-global": {
+      "correct": 2008,
+      "false_accept": 0,
+      "false_reject": 44,
+      "negative": 858,
+      "positive": 1194,
+      "total": 2052
+    },
+    "d50-local": {
+      "correct": 2012,
+      "false_accept": 0,
+      "false_reject": 44,
+      "negative": 811,
+      "positive": 1245,
+      "total": 2056
+    }
+  },
+  "method": "counterfactual",
+  "preference_gap_probes": [
+    {
+      "delta": 3,
+      "endpoint_palette": 4,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 4,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.833306312561035,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.3333333333333333,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 4,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.833306312561035,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.3333333333333333,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 5,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 5,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 8.163432121276855,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.25,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 5,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 4,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 8.163432121276855,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.25,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 4,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 6,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 6,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 3.6859750747680664,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.2,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 6,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 5,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 3.6859750747680664,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.2,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 5,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -6.484278202056885,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.1,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.0444974899292,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 10,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -6.484278202056885,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.1,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.0444974899292,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 10,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -11.572410583496094,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.05,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.0444974899292,
+      "gap": 6,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 20,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -11.572410583496094,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.05,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.0444974899292,
+      "gap": 6,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 20,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.342141151428223,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.02,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.542159080505371,
+      "gap": 16,
+      "native_action": 1,
+      "normalized_gap": 0.32,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 50,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.342141151428223,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.02,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.542159080505371,
+      "gap": 16,
+      "native_action": 1,
+      "normalized_gap": 0.32,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 50,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.946399688720703,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.01,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.765247344970703,
+      "gap": 33,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 100,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.946399688720703,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.01,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.765247344970703,
+      "gap": 33,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 100,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.157276153564453,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.005,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.765247344970703,
+      "gap": 66,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 200,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.275289535522461,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -15.157276153564453,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.005,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.765247344970703,
+      "gap": 66,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.206478118896484,
+      "gap": 200,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    }
+  ],
+  "seed": 94102,
+  "sha256": "034f2115c034ab787b2d000e1566890b4a9b89bd9163c4d9c5893ca78bfbc683",
+  "teacher": "COLOR_TRIALS",
+  "update": 4000,
+  "witnesses": [
+    {
+      "case": {
+        "actual_delta": 10,
+        "case_id": "degree-cf-probe-20261025-32-10-isolates-0-r1",
+        "delta": 10,
+        "edges": [
+          [
+            11,
+            3
+          ],
+          [
+            11,
+            4
+          ],
+          [
+            11,
+            8
+          ],
+          [
+            11,
+            9
+          ],
+          [
+            11,
+            14
+          ],
+          [
+            11,
+            15
+          ],
+          [
+            11,
+            25
+          ],
+          [
+            11,
+            27
+          ],
+          [
+            11,
+            28
+          ],
+          [
+            11,
+            30
+          ]
+        ],
+        "family": "isolates",
+        "fingerprint": "9f583d85fdd0b423e3b3601eef97181f29a43976bc7ad8c4e9b09011715d5adc",
+        "graph_seed": 5388919462013934180,
+        "n": 32,
+        "tape_seed": 16418917891644594348
+      },
+      "delta": 10,
+      "expected": true,
+      "family": "isolates",
+      "logit": -9.054604530334473,
+      "palette": "global",
+      "participation": true,
+      "predicted": false,
+      "query": 0,
+      "root": 25,
+      "step": 0,
+      "variant": 1
+    },
+    {
+      "case": {
+        "actual_delta": 10,
+        "case_id": "degree-cf-probe-20261025-32-10-bipartite-1-r1",
+        "delta": 10,
+        "edges": [
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            0,
+            9
+          ],
+          [
+            0,
+            11
+          ],
+          [
+            0,
+            12
+          ],
+          [
+            0,
+            14
+          ],
+          [
+            0,
+            17
+          ],
+          [
+            0,
+            18
+          ],
+          [
+            0,
+            21
+          ],
+          [
+            0,
+            30
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            1,
+            11
+          ],
+          [
+            1,
+            12
+          ],
+          [
+            1,
+            17
+          ],
+          [
+            1,
+            18
+          ],
+          [
+            1,
+            27
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            10
+          ],
+          [
+            3,
+            11
+          ],
+          [
+            3,
+            12
+          ],
+          [
+            3,
+            18
+          ],
+          [
+            3,
+            20
+          ],
+          [
+            3,
+            21
+          ],
+          [
+            3,
+            30
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            8,
+            10
+          ],
+          [
+            8,
+            11
+          ],
+          [
+            8,
+            18
+          ],
+          [
+            8,
+            21
+          ],
+          [
+            8,
+            27
+          ],
+          [
+            8,
+            30
+          ],
+          [
+            13,
+            2
+          ],
+          [
+            13,
+            5
+          ],
+          [
+            13,
+            6
+          ],
+          [
+            13,
+            7
+          ],
+          [
+            13,
+            9
+          ],
+          [
+            13,
+            10
+          ],
+          [
+            13,
+            12
+          ],
+          [
+            13,
+            14
+          ],
+          [
+            13,
+            17
+          ],
+          [
+            13,
+            20
+          ],
+          [
+            15,
+            2
+          ],
+          [
+            15,
+            4
+          ],
+          [
+            15,
+            5
+          ],
+          [
+            15,
+            6
+          ],
+          [
+            15,
+            10
+          ],
+          [
+            15,
+            11
+          ],
+          [
+            15,
+            17
+          ],
+          [
+            15,
+            20
+          ],
+          [
+            15,
+            21
+          ],
+          [
+            15,
+            27
+          ],
+          [
+            16,
+            5
+          ],
+          [
+            16,
+            6
+          ],
+          [
+            16,
+            9
+          ],
+          [
+            16,
+            10
+          ],
+          [
+            16,
+            12
+          ],
+          [
+            16,
+            14
+          ],
+          [
+            16,
+            17
+          ],
+          [
+            16,
+            18
+          ],
+          [
+            16,
+            20
+          ],
+          [
+            16,
+            27
+          ],
+          [
+            19,
+            4
+          ],
+          [
+            19,
+            5
+          ],
+          [
+            19,
+            6
+          ],
+          [
+            19,
+            9
+          ],
+          [
+            19,
+            10
+          ],
+          [
+            19,
+            11
+          ],
+          [
+            19,
+            20
+          ],
+          [
+            19,
+            21
+          ],
+          [
+            19,
+            27
+          ],
+          [
+            19,
+            30
+          ],
+          [
+            22,
+            2
+          ],
+          [
+            22,
+            4
+          ],
+          [
+            22,
+            10
+          ],
+          [
+            22,
+            12
+          ],
+          [
+            22,
+            14
+          ],
+          [
+            22,
+            17
+          ],
+          [
+            22,
+            20
+          ],
+          [
+            22,
+            21
+          ],
+          [
+            22,
+            27
+          ],
+          [
+            22,
+            30
+          ],
+          [
+            23,
+            2
+          ],
+          [
+            23,
+            5
+          ],
+          [
+            23,
+            6
+          ],
+          [
+            23,
+            7
+          ],
+          [
+            23,
+            10
+          ],
+          [
+            23,
+            12
+          ],
+          [
+            23,
+            14
+          ],
+          [
+            23,
+            17
+          ],
+          [
+            23,
+            18
+          ],
+          [
+            23,
+            30
+          ],
+          [
+            24,
+            4
+          ],
+          [
+            24,
+            5
+          ],
+          [
+            24,
+            6
+          ],
+          [
+            24,
+            7
+          ],
+          [
+            24,
+            9
+          ],
+          [
+            24,
+            11
+          ],
+          [
+            24,
+            12
+          ],
+          [
+            24,
+            14
+          ],
+          [
+            24,
+            18
+          ],
+          [
+            24,
+            21
+          ],
+          [
+            25,
+            2
+          ],
+          [
+            25,
+            7
+          ],
+          [
+            25,
+            10
+          ],
+          [
+            25,
+            11
+          ],
+          [
+            25,
+            12
+          ],
+          [
+            25,
+            14
+          ],
+          [
+            25,
+            20
+          ],
+          [
+            25,
+            21
+          ],
+          [
+            25,
+            27
+          ],
+          [
+            25,
+            30
+          ],
+          [
+            26,
+            2
+          ],
+          [
+            26,
+            6
+          ],
+          [
+            26,
+            7
+          ],
+          [
+            26,
+            9
+          ],
+          [
+            26,
+            12
+          ],
+          [
+            26,
+            14
+          ],
+          [
+            26,
+            17
+          ],
+          [
+            26,
+            18
+          ],
+          [
+            26,
+            21
+          ],
+          [
+            26,
+            30
+          ],
+          [
+            28,
+            4
+          ],
+          [
+            28,
+            5
+          ],
+          [
+            28,
+            6
+          ],
+          [
+            28,
+            7
+          ],
+          [
+            28,
+            9
+          ],
+          [
+            28,
+            14
+          ],
+          [
+            28,
+            17
+          ],
+          [
+            28,
+            18
+          ],
+          [
+            28,
+            20
+          ],
+          [
+            28,
+            27
+          ],
+          [
+            29,
+            2
+          ],
+          [
+            29,
+            4
+          ],
+          [
+            29,
+            5
+          ],
+          [
+            29,
+            9
+          ],
+          [
+            29,
+            11
+          ],
+          [
+            29,
+            18
+          ],
+          [
+            29,
+            20
+          ],
+          [
+            29,
+            21
+          ],
+          [
+            29,
+            27
+          ],
+          [
+            29,
+            30
+          ],
+          [
+            31,
+            2
+          ],
+          [
+            31,
+            4
+          ],
+          [
+            31,
+            6
+          ],
+          [
+            31,
+            10
+          ],
+          [
+            31,
+            11
+          ],
+          [
+            31,
+            14
+          ],
+          [
+            31,
+            17
+          ],
+          [
+            31,
+            20
+          ],
+          [
+            31,
+            27
+          ],
+          [
+            31,
+            30
+          ]
+        ],
+        "family": "bipartite",
+        "fingerprint": "1e25c04855ad4b6832b8bb1b206af7992a10fe62c2f8ae75005673e76b2cd2fc",
+        "graph_seed": 18070032640448886258,
+        "n": 32,
+        "tape_seed": 13228564042525881039
+      },
+      "delta": 10,
+      "expected": true,
+      "family": "bipartite",
+      "logit": -5.762887001037598,
+      "palette": "global",
+      "participation": true,
+      "predicted": false,
+      "query": 0,
+      "root": 2,
+      "step": 0,
+      "variant": 1
+    }
+  ]
+}

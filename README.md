@@ -450,3 +450,10 @@ histories and earlier repairs retain attribution. Algorithms and dependencies
 retain their references/licenses. No repository-level LICENSE was present;
 the integration invents no license or additional reuse permission. Tectonic
 downloads retain their upstream licensing.
+
+
+## Frozen degree and palette transfer (25 October 2026)
+
+Independent study on `research/multiteacher-degree-generalization`: six audited teacher extensions, 225 authenticated frozen checkpoints, 810,000 confirmatory student runs and separate exploratory size/degree pilots. The primary cohort has 449,791/450,000 correct runs, with documented Johansson/Transformer progress and GM/Transformer local-palette failures. The 21/21 native result retains its heterogeneous historical protocols. No evaluated weights were trained or changed.
+
+See [results](docs/DEGREE_GENERALIZATION_RESULTS.md), [failure mechanisms](docs/DEGREE_GENERALIZATION_FAILURE_ANALYSIS.md), [paper closure and P1–P15](docs/MULTITEACHER_PAPER_CLOSURE_REVIEW.md), and [runtime recovery](results/multiteacher-degree-generalization/README.md). The local runtime archive is authenticated but has not been uploaded.

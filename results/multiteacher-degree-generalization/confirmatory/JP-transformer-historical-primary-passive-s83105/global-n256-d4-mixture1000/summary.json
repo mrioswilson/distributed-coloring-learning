@@ -1,0 +1,41 @@
+{
+  "architecture": "transformer",
+  "checkpoint_id": "JP-transformer-historical-primary-passive-s83105",
+  "cohort": "historical-primary",
+  "condition": {
+    "delta": 4,
+    "families": [
+      "regular",
+      "random",
+      "bipartite",
+      "tree",
+      "irregular",
+      "hubs",
+      "disconnected",
+      "isolates",
+      "heterogeneous",
+      "cliques"
+    ],
+    "family_sampling": "iid_uniform",
+    "id": "global-n256-d4-mixture1000",
+    "n": 256,
+    "palette": "global",
+    "primary_only": true,
+    "runs": 1000
+  },
+  "cost": {
+    "cpu_seconds": 13.659069055999964,
+    "wall_budget_seconds": null,
+    "wall_seconds": 13.743028886034153
+  },
+  "executions": 1000,
+  "method": "passive",
+  "peak_rss_bytes": 739295232,
+  "primary": true,
+  "rows_path": "results/multiteacher-degree-generalization/confirmatory/JP-transformer-historical-primary-passive-s83105/global-n256-d4-mixture1000/rows.json",
+  "rows_sha256": "199e55c3d4d64d8c9ef2f50e0d4482d6e8b5efa83b5af7a52b15b8367c80f41f",
+  "seed": 83105,
+  "sha256": "99e521fe4f2acab3f4afb3299f69c3a96626f58ae995b7c212d2537c85db665b",
+  "successes": 1000,
+  "teacher": "JP"
+}

@@ -1,0 +1,1138 @@
+{
+  "architecture": "transformer",
+  "checkpoint": "COLOR_TRIALS-transformer-counterfactual-primary-counterfactual-s94101",
+  "cohort": "counterfactual-primary",
+  "commit_queries": {
+    "d10-global": {
+      "correct": 316,
+      "false_accept": 0,
+      "false_reject": 8,
+      "negative": 234,
+      "positive": 90,
+      "total": 324
+    },
+    "d10-local": {
+      "correct": 316,
+      "false_accept": 0,
+      "false_reject": 4,
+      "negative": 236,
+      "positive": 84,
+      "total": 320
+    },
+    "d200-global": {
+      "correct": 1882,
+      "false_accept": 0,
+      "false_reject": 166,
+      "negative": 1252,
+      "positive": 796,
+      "total": 2048
+    },
+    "d200-local": {
+      "correct": 2321,
+      "false_accept": 0,
+      "false_reject": 163,
+      "negative": 1445,
+      "positive": 1039,
+      "total": 2484
+    },
+    "d3-global": {
+      "correct": 336,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 239,
+      "positive": 97,
+      "total": 336
+    },
+    "d3-local": {
+      "correct": 336,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 242,
+      "positive": 94,
+      "total": 336
+    },
+    "d4-global": {
+      "correct": 335,
+      "false_accept": 0,
+      "false_reject": 1,
+      "negative": 241,
+      "positive": 95,
+      "total": 336
+    },
+    "d4-local": {
+      "correct": 336,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 251,
+      "positive": 85,
+      "total": 336
+    },
+    "d50-global": {
+      "correct": 2013,
+      "false_accept": 0,
+      "false_reject": 39,
+      "negative": 906,
+      "positive": 1146,
+      "total": 2052
+    },
+    "d50-local": {
+      "correct": 2031,
+      "false_accept": 0,
+      "false_reject": 33,
+      "negative": 877,
+      "positive": 1187,
+      "total": 2064
+    }
+  },
+  "method": "counterfactual",
+  "preference_gap_probes": [
+    {
+      "delta": 3,
+      "endpoint_palette": 4,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 4,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.426514625549316,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.3333333333333333,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 4,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.426514625549316,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.3333333333333333,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 5,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 5,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 7.274113655090332,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.25,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 5,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 4,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 7.274113655090332,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.25,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 4,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 6,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 6,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 2.793170213699341,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.2,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 6,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 5,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 2.793170213699341,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.2,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 5,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -6.262031555175781,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.1,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.181374549865723,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 10,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -6.262031555175781,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.1,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.181374549865723,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 10,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -10.669075965881348,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.05,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.181374549865723,
+      "gap": 6,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 20,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -10.669075965881348,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.05,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.181374549865723,
+      "gap": 6,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 20,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -12.349251747131348,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.02,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.025769233703613,
+      "gap": 16,
+      "native_action": 1,
+      "normalized_gap": 0.32,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 50,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -12.349251747131348,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.02,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.025769233703613,
+      "gap": 16,
+      "native_action": 1,
+      "normalized_gap": 0.32,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 50,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -12.863268852233887,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.01,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.346054077148438,
+      "gap": 33,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 100,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -12.863268852233887,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.01,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.346054077148438,
+      "gap": 33,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 100,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.120269775390625,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.005,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.346054077148438,
+      "gap": 66,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 200,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.374101638793945,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.120269775390625,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.005,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.346054077148438,
+      "gap": 66,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 15.12246036529541,
+      "gap": 200,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    }
+  ],
+  "seed": 94101,
+  "sha256": "b1526f32b292b9d3ced65ac66fd6ac6be6c308cc62617cbbe46cd36c7ba041d5",
+  "teacher": "COLOR_TRIALS",
+  "update": 4000,
+  "witnesses": [
+    {
+      "case": {
+        "actual_delta": 4,
+        "case_id": "degree-cf-probe-20261025-32-4-bipartite-1-r0",
+        "delta": 4,
+        "edges": [
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            9
+          ],
+          [
+            0,
+            10
+          ],
+          [
+            0,
+            13
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            14
+          ],
+          [
+            2,
+            21
+          ],
+          [
+            2,
+            27
+          ],
+          [
+            3,
+            22
+          ],
+          [
+            3,
+            24
+          ],
+          [
+            3,
+            26
+          ],
+          [
+            3,
+            29
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            9
+          ],
+          [
+            6,
+            24
+          ],
+          [
+            6,
+            30
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            7,
+            13
+          ],
+          [
+            7,
+            28
+          ],
+          [
+            7,
+            30
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            8,
+            26
+          ],
+          [
+            8,
+            28
+          ],
+          [
+            8,
+            30
+          ],
+          [
+            11,
+            1
+          ],
+          [
+            11,
+            4
+          ],
+          [
+            11,
+            10
+          ],
+          [
+            11,
+            27
+          ],
+          [
+            12,
+            21
+          ],
+          [
+            12,
+            25
+          ],
+          [
+            12,
+            26
+          ],
+          [
+            12,
+            29
+          ],
+          [
+            15,
+            21
+          ],
+          [
+            15,
+            22
+          ],
+          [
+            15,
+            25
+          ],
+          [
+            15,
+            27
+          ],
+          [
+            16,
+            4
+          ],
+          [
+            16,
+            9
+          ],
+          [
+            16,
+            10
+          ],
+          [
+            16,
+            14
+          ],
+          [
+            17,
+            5
+          ],
+          [
+            17,
+            24
+          ],
+          [
+            17,
+            28
+          ],
+          [
+            17,
+            29
+          ],
+          [
+            18,
+            1
+          ],
+          [
+            18,
+            22
+          ],
+          [
+            18,
+            25
+          ],
+          [
+            18,
+            29
+          ],
+          [
+            19,
+            10
+          ],
+          [
+            19,
+            13
+          ],
+          [
+            19,
+            14
+          ],
+          [
+            19,
+            30
+          ],
+          [
+            20,
+            24
+          ],
+          [
+            20,
+            25
+          ],
+          [
+            20,
+            26
+          ],
+          [
+            20,
+            28
+          ],
+          [
+            23,
+            1
+          ],
+          [
+            23,
+            4
+          ],
+          [
+            23,
+            21
+          ],
+          [
+            23,
+            22
+          ],
+          [
+            31,
+            4
+          ],
+          [
+            31,
+            13
+          ],
+          [
+            31,
+            14
+          ],
+          [
+            31,
+            27
+          ]
+        ],
+        "family": "bipartite",
+        "fingerprint": "005d6f87e2ae536e9dffca34ee966b5763a739d57ee014892d5320d0f13679e0",
+        "graph_seed": 17208143433200770487,
+        "n": 32,
+        "tape_seed": 1328739820662551237
+      },
+      "delta": 4,
+      "expected": true,
+      "family": "bipartite",
+      "logit": -3.2424888610839844,
+      "palette": "global",
+      "participation": true,
+      "predicted": false,
+      "query": 0,
+      "root": 1,
+      "step": 0,
+      "variant": 2
+    },
+    {
+      "case": {
+        "actual_delta": 10,
+        "case_id": "degree-cf-probe-20261025-32-10-isolates-0-r0",
+        "delta": 10,
+        "edges": [
+          [
+            11,
+            3
+          ],
+          [
+            11,
+            4
+          ],
+          [
+            11,
+            8
+          ],
+          [
+            11,
+            9
+          ],
+          [
+            11,
+            14
+          ],
+          [
+            11,
+            15
+          ],
+          [
+            11,
+            25
+          ],
+          [
+            11,
+            27
+          ],
+          [
+            11,
+            28
+          ],
+          [
+            11,
+            30
+          ]
+        ],
+        "family": "isolates",
+        "fingerprint": "9f583d85fdd0b423e3b3601eef97181f29a43976bc7ad8c4e9b09011715d5adc",
+        "graph_seed": 5388919462013934180,
+        "n": 32,
+        "tape_seed": 11323067305806799988
+      },
+      "delta": 10,
+      "expected": true,
+      "family": "isolates",
+      "logit": -8.205680847167969,
+      "palette": "global",
+      "participation": true,
+      "predicted": false,
+      "query": 1,
+      "root": 28,
+      "step": 0,
+      "variant": 0
+    }
+  ]
+}

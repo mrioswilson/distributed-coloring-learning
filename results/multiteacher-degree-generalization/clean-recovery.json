@@ -1,0 +1,174 @@
+{
+  "archive_sha256": "c343499d5ff978bf5d217ea650520fe8d15a0baf6287aed7817708eb61889511",
+  "commands": [
+    {
+      "returncode": 0,
+      "script": "verify-degree-study.py",
+      "stderr": "",
+      "stdout": "{\"complete\": true, \"verified_student_rows\": 813810, \"verified_checkpoints\": 225, \"preserved_historical_files\": 0, \"external_originals_checked\": false, \"stages\": {\"pilot\": {\"executions\": 3570, \"successes\": 3526, \"exact_references\": 930, \"checkpoint_conditions\": 2070}, \"confirmatory\": {\"executions\": 810000, \"successes\": 808413, \"exact_references\": 150000, \"checkpoint_conditions\": 810}, \"larger-size-pilot\": {\"executions\": 240, \"successes\": 240, \"exact_references\": 80, \"checkpoint_conditions\": 240}}, \"verified_failure_replays\": 15, \"scientific_training_updates\": 0, \"weights_unchanged\": true, \"pdf_compiled\": true, \"wall_seconds\": 79.73636517499108, \"test_scope\": \"Historical regression tests contain disposable native-domain optimization smokes; no resulting weights enter this study.\"}\n"
+    },
+    {
+      "returncode": 0,
+      "script": "replay-degree-smoke.py",
+      "stderr": "",
+      "stdout": "{\"checkpoints\": 18, \"replayed_rows\": 576, \"identical_rows\": 576, \"records\": [{\"checkpoint\": \"LUBY-normalized-historical-primary-passive-s83101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"LUBY-deepsets-historical-primary-passive-s83101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"LUBY-transformer-historical-primary-passive-s83101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"JOHANSSON-normalized-historical-primary-passive-s83101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"JOHANSSON-deepsets-historical-primary-passive-s83101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"JOHANSSON-transformer-historical-primary-passive-s83101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 30}, {\"checkpoint\": \"COLOR_TRIALS-normalized-counterfactual-primary-counterfactual-s94101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"COLOR_TRIALS-deepsets-counterfactual-primary-counterfactual-s94101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"COLOR_TRIALS-transformer-counterfactual-primary-counterfactual-s94101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"JP-normalized-historical-primary-passive-s83101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"JP-deepsets-historical-primary-passive-s83101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"JP-transformer-historical-primary-passive-s83101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"SPECULATIVE_GM-normalized-counterfactual-primary-counterfactual-s94101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"SPECULATIVE_GM-deepsets-counterfactual-primary-counterfactual-s94101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"SPECULATIVE_GM-transformer-counterfactual-primary-counterfactual-s94101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"GREEDY-normalized-historical-primary-passive-s83101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"GREEDY-deepsets-historical-primary-passive-s83101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}, {\"checkpoint\": \"GREEDY-transformer-historical-primary-passive-s83101\", \"rows\": 32, \"identical_rows\": 32, \"successes\": 32}], \"wall_seconds\": 20.697613637079485, \"new_independent_final_samples\": 0, \"scientific_training_updates\": 0, \"interpretation\": \"Read-only reproduction of existing final cases, including the Johansson cutoff; never replaces or enlarges a final battery.\"}\n"
+    }
+  ],
+  "external_original_worktrees_used": false,
+  "portable_verification": {
+    "complete": true,
+    "external_originals_checked": false,
+    "pdf_compiled": true,
+    "preserved_historical_files": 0,
+    "scientific_training_updates": 0,
+    "stages": {
+      "confirmatory": {
+        "checkpoint_conditions": 810,
+        "exact_references": 150000,
+        "executions": 810000,
+        "successes": 808413
+      },
+      "larger-size-pilot": {
+        "checkpoint_conditions": 240,
+        "exact_references": 80,
+        "executions": 240,
+        "successes": 240
+      },
+      "pilot": {
+        "checkpoint_conditions": 2070,
+        "exact_references": 930,
+        "executions": 3570,
+        "successes": 3526
+      }
+    },
+    "test_scope": "Historical regression tests contain disposable native-domain optimization smokes; no resulting weights enter this study.",
+    "verified_checkpoints": 225,
+    "verified_failure_replays": 15,
+    "verified_student_rows": 813810,
+    "wall_seconds": 79.73636517499108,
+    "weights_unchanged": true
+  },
+  "qualification": "Current repository source/manuscript plus the local runtime bundle; external absolute source paths are intentionally skipped.",
+  "reproduction_smoke": {
+    "checkpoints": 18,
+    "identical_rows": 576,
+    "interpretation": "Read-only reproduction of existing final cases, including the Johansson cutoff; never replaces or enlarges a final battery.",
+    "new_independent_final_samples": 0,
+    "records": [
+      {
+        "checkpoint": "LUBY-normalized-historical-primary-passive-s83101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "LUBY-deepsets-historical-primary-passive-s83101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "LUBY-transformer-historical-primary-passive-s83101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "JOHANSSON-normalized-historical-primary-passive-s83101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "JOHANSSON-deepsets-historical-primary-passive-s83101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "JOHANSSON-transformer-historical-primary-passive-s83101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 30
+      },
+      {
+        "checkpoint": "COLOR_TRIALS-normalized-counterfactual-primary-counterfactual-s94101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "COLOR_TRIALS-deepsets-counterfactual-primary-counterfactual-s94101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "COLOR_TRIALS-transformer-counterfactual-primary-counterfactual-s94101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "JP-normalized-historical-primary-passive-s83101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "JP-deepsets-historical-primary-passive-s83101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "JP-transformer-historical-primary-passive-s83101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "SPECULATIVE_GM-normalized-counterfactual-primary-counterfactual-s94101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "SPECULATIVE_GM-deepsets-counterfactual-primary-counterfactual-s94101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "SPECULATIVE_GM-transformer-counterfactual-primary-counterfactual-s94101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "GREEDY-normalized-historical-primary-passive-s83101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "GREEDY-deepsets-historical-primary-passive-s83101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      },
+      {
+        "checkpoint": "GREEDY-transformer-historical-primary-passive-s83101",
+        "identical_rows": 32,
+        "rows": 32,
+        "successes": 32
+      }
+    ],
+    "replayed_rows": 576,
+    "scientific_training_updates": 0,
+    "wall_seconds": 20.697613637079485
+  },
+  "restored": true,
+  "verified_restored_files": 7923,
+  "wall_seconds": 113.82766242197249
+}

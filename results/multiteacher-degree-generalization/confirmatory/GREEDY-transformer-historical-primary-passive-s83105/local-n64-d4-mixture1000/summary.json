@@ -1,0 +1,40 @@
+{
+  "architecture": "transformer",
+  "checkpoint_id": "GREEDY-transformer-historical-primary-passive-s83105",
+  "cohort": "historical-primary",
+  "condition": {
+    "delta": 4,
+    "families": [
+      "regular",
+      "random",
+      "bipartite",
+      "tree",
+      "irregular",
+      "hubs",
+      "disconnected",
+      "isolates",
+      "heterogeneous",
+      "cliques"
+    ],
+    "family_sampling": "iid_uniform",
+    "id": "local-n64-d4-mixture1000",
+    "n": 64,
+    "palette": "local",
+    "runs": 1000
+  },
+  "cost": {
+    "cpu_seconds": 17.12564770600011,
+    "wall_budget_seconds": null,
+    "wall_seconds": 17.17987296800129
+  },
+  "executions": 1000,
+  "method": "passive",
+  "peak_rss_bytes": 739827712,
+  "primary": true,
+  "rows_path": "results/multiteacher-degree-generalization/confirmatory/GREEDY-transformer-historical-primary-passive-s83105/local-n64-d4-mixture1000/rows.json",
+  "rows_sha256": "446d35d49d9423e303d831d071e5dbc76be038877f6b09e8bb199b8567790b8b",
+  "seed": 83105,
+  "sha256": "0e27f9172a33dcb03dbb31c0a58375a43f5d3ce95f6770964ae2bebe01cfc55b",
+  "successes": 1000,
+  "teacher": "GREEDY"
+}

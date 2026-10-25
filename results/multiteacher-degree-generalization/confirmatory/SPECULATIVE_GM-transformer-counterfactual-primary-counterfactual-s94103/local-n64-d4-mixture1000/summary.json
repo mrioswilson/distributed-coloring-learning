@@ -1,0 +1,40 @@
+{
+  "architecture": "transformer",
+  "checkpoint_id": "SPECULATIVE_GM-transformer-counterfactual-primary-counterfactual-s94103",
+  "cohort": "counterfactual-primary",
+  "condition": {
+    "delta": 4,
+    "families": [
+      "regular",
+      "random",
+      "bipartite",
+      "tree",
+      "irregular",
+      "hubs",
+      "disconnected",
+      "isolates",
+      "heterogeneous",
+      "cliques"
+    ],
+    "family_sampling": "iid_uniform",
+    "id": "local-n64-d4-mixture1000",
+    "n": 64,
+    "palette": "local",
+    "runs": 1000
+  },
+  "cost": {
+    "cpu_seconds": 12.738549724999984,
+    "wall_budget_seconds": null,
+    "wall_seconds": 12.780766600975767
+  },
+  "executions": 1000,
+  "method": "counterfactual",
+  "peak_rss_bytes": 749260800,
+  "primary": true,
+  "rows_path": "results/multiteacher-degree-generalization/confirmatory/SPECULATIVE_GM-transformer-counterfactual-primary-counterfactual-s94103/local-n64-d4-mixture1000/rows.json",
+  "rows_sha256": "a6c6d192511de7c27bb5f8879aa3ff3d43f94c7ddc7539b4572a3983ec37f0d8",
+  "seed": 94103,
+  "sha256": "82198a65d6e68af4d150a73fac9cb466621df665c63e4e60759ee25d8104c937",
+  "successes": 1000,
+  "teacher": "SPECULATIVE_GM"
+}

@@ -1,0 +1,609 @@
+{
+  "architecture": "transformer",
+  "checkpoint": "SPECULATIVE_GM-transformer-counterfactual-primary-counterfactual-s94105",
+  "cohort": "counterfactual-primary",
+  "commit_queries": {
+    "d10-global": {
+      "correct": 59,
+      "false_accept": 13,
+      "false_reject": 0,
+      "negative": 36,
+      "positive": 36,
+      "total": 72
+    },
+    "d10-global-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 12,
+      "positive": 4,
+      "total": 16
+    },
+    "d10-local": {
+      "correct": 63,
+      "false_accept": 9,
+      "false_reject": 0,
+      "negative": 37,
+      "positive": 35,
+      "total": 72
+    },
+    "d10-local-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 12,
+      "positive": 4,
+      "total": 16
+    },
+    "d200-global": {
+      "correct": 64,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 26,
+      "positive": 38,
+      "total": 64
+    },
+    "d200-global-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 16,
+      "positive": 0,
+      "total": 16
+    },
+    "d200-local": {
+      "correct": 62,
+      "false_accept": 2,
+      "false_reject": 0,
+      "negative": 26,
+      "positive": 38,
+      "total": 64
+    },
+    "d200-local-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 16,
+      "positive": 0,
+      "total": 16
+    },
+    "d3-global": {
+      "correct": 60,
+      "false_accept": 12,
+      "false_reject": 0,
+      "negative": 36,
+      "positive": 36,
+      "total": 72
+    },
+    "d3-global-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 15,
+      "positive": 1,
+      "total": 16
+    },
+    "d3-local": {
+      "correct": 60,
+      "false_accept": 12,
+      "false_reject": 0,
+      "negative": 36,
+      "positive": 36,
+      "total": 72
+    },
+    "d3-local-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 15,
+      "positive": 1,
+      "total": 16
+    },
+    "d4-global": {
+      "correct": 62,
+      "false_accept": 14,
+      "false_reject": 0,
+      "negative": 35,
+      "positive": 41,
+      "total": 76
+    },
+    "d4-global-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 14,
+      "positive": 2,
+      "total": 16
+    },
+    "d4-local": {
+      "correct": 64,
+      "false_accept": 12,
+      "false_reject": 0,
+      "negative": 41,
+      "positive": 35,
+      "total": 76
+    },
+    "d4-local-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 14,
+      "positive": 2,
+      "total": 16
+    },
+    "d50-global": {
+      "correct": 63,
+      "false_accept": 1,
+      "false_reject": 0,
+      "negative": 24,
+      "positive": 40,
+      "total": 64
+    },
+    "d50-global-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 16,
+      "positive": 0,
+      "total": 16
+    },
+    "d50-local": {
+      "correct": 64,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 27,
+      "positive": 37,
+      "total": 64
+    },
+    "d50-local-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 16,
+      "positive": 0,
+      "total": 16
+    }
+  },
+  "method": "counterfactual",
+  "preference_gap_probes": [],
+  "seed": 94105,
+  "sha256": "ece4ac0553755ef55c5ac088f2aaaa515793aca7c68311494bf26139771382ad",
+  "teacher": "SPECULATIVE_GM",
+  "update": 500,
+  "witnesses": [
+    {
+      "case": {
+        "actual_delta": 3,
+        "case_id": "degree-cf-probe-20261025-32-3-bipartite-1-r4",
+        "delta": 3,
+        "edges": [
+          [
+            1,
+            15
+          ],
+          [
+            1,
+            23
+          ],
+          [
+            1,
+            29
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            19
+          ],
+          [
+            3,
+            20
+          ],
+          [
+            6,
+            11
+          ],
+          [
+            6,
+            17
+          ],
+          [
+            6,
+            23
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            29
+          ],
+          [
+            8,
+            31
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            9,
+            15
+          ],
+          [
+            9,
+            17
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            10,
+            15
+          ],
+          [
+            10,
+            31
+          ],
+          [
+            13,
+            23
+          ],
+          [
+            13,
+            27
+          ],
+          [
+            13,
+            31
+          ],
+          [
+            14,
+            7
+          ],
+          [
+            14,
+            12
+          ],
+          [
+            14,
+            19
+          ],
+          [
+            16,
+            2
+          ],
+          [
+            16,
+            5
+          ],
+          [
+            16,
+            12
+          ],
+          [
+            18,
+            17
+          ],
+          [
+            18,
+            27
+          ],
+          [
+            18,
+            29
+          ],
+          [
+            22,
+            2
+          ],
+          [
+            22,
+            7
+          ],
+          [
+            22,
+            21
+          ],
+          [
+            24,
+            0
+          ],
+          [
+            24,
+            5
+          ],
+          [
+            24,
+            7
+          ],
+          [
+            25,
+            12
+          ],
+          [
+            25,
+            20
+          ],
+          [
+            25,
+            21
+          ],
+          [
+            26,
+            0
+          ],
+          [
+            26,
+            19
+          ],
+          [
+            26,
+            21
+          ],
+          [
+            28,
+            0
+          ],
+          [
+            28,
+            2
+          ],
+          [
+            28,
+            20
+          ],
+          [
+            30,
+            4
+          ],
+          [
+            30,
+            11
+          ],
+          [
+            30,
+            27
+          ]
+        ],
+        "family": "bipartite",
+        "fingerprint": "6ef5992be719aeed25cc787e52cac80b240c0ff1d77f225abb709f2ae718680f",
+        "graph_seed": 11380550162293133511,
+        "n": 32,
+        "tape_seed": 18080111051932696395
+      },
+      "delta": 3,
+      "expected": false,
+      "family": "bipartite",
+      "logit": 6.720662593841553,
+      "palette": "global",
+      "participation": false,
+      "predicted": true,
+      "query": 1,
+      "root": 10,
+      "step": 0,
+      "variant": 2
+    },
+    {
+      "case": {
+        "actual_delta": 3,
+        "case_id": "degree-cf-probe-20261025-32-3-bipartite-1-r4",
+        "delta": 3,
+        "edges": [
+          [
+            1,
+            15
+          ],
+          [
+            1,
+            23
+          ],
+          [
+            1,
+            29
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            19
+          ],
+          [
+            3,
+            20
+          ],
+          [
+            6,
+            11
+          ],
+          [
+            6,
+            17
+          ],
+          [
+            6,
+            23
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            29
+          ],
+          [
+            8,
+            31
+          ],
+          [
+            9,
+            4
+          ],
+          [
+            9,
+            15
+          ],
+          [
+            9,
+            17
+          ],
+          [
+            10,
+            11
+          ],
+          [
+            10,
+            15
+          ],
+          [
+            10,
+            31
+          ],
+          [
+            13,
+            23
+          ],
+          [
+            13,
+            27
+          ],
+          [
+            13,
+            31
+          ],
+          [
+            14,
+            7
+          ],
+          [
+            14,
+            12
+          ],
+          [
+            14,
+            19
+          ],
+          [
+            16,
+            2
+          ],
+          [
+            16,
+            5
+          ],
+          [
+            16,
+            12
+          ],
+          [
+            18,
+            17
+          ],
+          [
+            18,
+            27
+          ],
+          [
+            18,
+            29
+          ],
+          [
+            22,
+            2
+          ],
+          [
+            22,
+            7
+          ],
+          [
+            22,
+            21
+          ],
+          [
+            24,
+            0
+          ],
+          [
+            24,
+            5
+          ],
+          [
+            24,
+            7
+          ],
+          [
+            25,
+            12
+          ],
+          [
+            25,
+            20
+          ],
+          [
+            25,
+            21
+          ],
+          [
+            26,
+            0
+          ],
+          [
+            26,
+            19
+          ],
+          [
+            26,
+            21
+          ],
+          [
+            28,
+            0
+          ],
+          [
+            28,
+            2
+          ],
+          [
+            28,
+            20
+          ],
+          [
+            30,
+            4
+          ],
+          [
+            30,
+            11
+          ],
+          [
+            30,
+            27
+          ]
+        ],
+        "family": "bipartite",
+        "fingerprint": "6ef5992be719aeed25cc787e52cac80b240c0ff1d77f225abb709f2ae718680f",
+        "graph_seed": 11380550162293133511,
+        "n": 32,
+        "tape_seed": 18080111051932696395
+      },
+      "delta": 3,
+      "expected": false,
+      "family": "bipartite",
+      "logit": 6.073947906494141,
+      "palette": "global",
+      "participation": false,
+      "predicted": true,
+      "query": 3,
+      "root": 10,
+      "step": 0,
+      "variant": 3
+    }
+  ]
+}

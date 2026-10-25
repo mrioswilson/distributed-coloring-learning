@@ -2,3 +2,5 @@
 *.pdf binary
 # Preserve the byte hashes of historical source snapshots (some CSVs use CRLF).
 results/ucgnn/**/*.csv -text !eol
+# Preserve the exact CSV bytes authenticated by the frozen-degree bundle.
+results/multiteacher-degree-generalization/**/*.csv -text !eol whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

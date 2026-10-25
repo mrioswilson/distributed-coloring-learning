@@ -1,0 +1,40 @@
+{
+  "architecture": "transformer",
+  "checkpoint_id": "SPECULATIVE_GM-transformer-new-certified-control-passive-s94101",
+  "cohort": "new-certified-control",
+  "condition": {
+    "delta": 4,
+    "families": [
+      "regular",
+      "random",
+      "bipartite",
+      "tree",
+      "irregular",
+      "hubs",
+      "disconnected",
+      "isolates",
+      "heterogeneous",
+      "cliques"
+    ],
+    "family_sampling": "iid_uniform",
+    "id": "local-n64-d4-mixture1000",
+    "n": 64,
+    "palette": "local",
+    "runs": 1000
+  },
+  "cost": {
+    "cpu_seconds": 14.60447371500004,
+    "wall_budget_seconds": null,
+    "wall_seconds": 14.670791284996085
+  },
+  "executions": 1000,
+  "method": "passive",
+  "peak_rss_bytes": 541212672,
+  "primary": false,
+  "rows_path": "results/multiteacher-degree-generalization/confirmatory/SPECULATIVE_GM-transformer-new-certified-control-passive-s94101/local-n64-d4-mixture1000/rows.json",
+  "rows_sha256": "37ef34f6e24934676e2a73e7751749775a682b085d5a0dbbfe7511652e9ff859",
+  "seed": 94101,
+  "sha256": "c0c8bbf8d21a7be58e057e80bd608c1d3a5132734f63efa39a6d7d4d3f49220e",
+  "successes": 1000,
+  "teacher": "SPECULATIVE_GM"
+}

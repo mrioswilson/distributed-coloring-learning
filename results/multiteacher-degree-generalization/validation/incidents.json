@@ -1,0 +1,21 @@
+[
+  {
+    "event": "initial_unit_boundary",
+    "fix": "Exact rho=1 boundary returns finite native-control horizon",
+    "observed": "3 failures, 24 passes before maxfail on CT degree-zero horizon: log1p(-1)",
+    "scope": "No transfer rows produced under that implementation"
+  },
+  {
+    "cost_limit": "CPU consumed in interrupted unfinished cells was not measured separately; total completed-rows CPU undercounts it",
+    "event": "exploratory_interruption",
+    "evidence": "pilot/amendment-v2.json",
+    "fix": "Bound only unfinished exploratory CT high-degree cells; preserve every completed outcome",
+    "observed": "Four CT workers interrupted while dense degree>=100 cells exceeded minutes"
+  },
+  {
+    "action": "Retained without changing weights or excluding it from confirmation",
+    "checkpoint": "COLOR_TRIALS-normalized-equal-update-control-matched-s94104",
+    "event": "additional_existing_control_native_regression",
+    "observed": "Clique4 native collision at step2, original and structural adapter agree"
+  }
+]

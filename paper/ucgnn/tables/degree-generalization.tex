@@ -1,0 +1,33 @@
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{llcccc}
+\toprule
+Teacher & Core & $\Delta4$ global & $\Delta10$ global & $\Delta4$ local & $n256,\Delta4$ \\
+\midrule
+ColorTrials & DeepSets & 5/5 & 5/5 & 5/5 & 5/5 \\
+ColorTrials & E1 & 5/5 & 5/5 & 5/5 & 5/5 \\
+ColorTrials & Transformer & 5/5 & 5/5 & 5/5 & 5/5 \\
+Greedy & DeepSets & 5/5 & 5/5 & 5/5 & 5/5 \\
+Greedy & E1 & 5/5 & 5/5 & 5/5 & 5/5 \\
+Greedy & Transformer & 5/5 & 5/5 & 5/5 & 5/5 \\
+Johansson & DeepSets & 5/5 & 5/5 & 5/5 & 5/5 \\
+Johansson & E1 & 5/5 & 5/5 & 5/5 & 5/5 \\
+Johansson & Transformer & 5/5 & 4/5 (972--1000) & 5/5 & 5/5 \\
+JP & DeepSets & 5/5 & 5/5 & 5/5 & 5/5 \\
+JP & E1 & 5/5 & 5/5 & 5/5 & 5/5 \\
+JP & Transformer & 5/5 & 5/5 & 5/5 & 5/5 \\
+Luby & DeepSets & 5/5 & 5/5 & 5/5 & 5/5 \\
+Luby & E1 & 5/5 & 5/5 & 5/5 & 5/5 \\
+Luby & Transformer & 5/5 & 5/5 & 5/5 & 5/5 \\
+GM & DeepSets & 5/5 & 5/5 & 5/5 & 5/5 \\
+GM & E1 & 5/5 & 5/5 & 5/5 & 5/5 \\
+GM & Transformer & 5/5 & 5/5 & 4/5 (819--1000) & 5/5 \\
+\bottomrule
+\end{tabular}
+\caption{Frozen primary policies: checkpoints with 1000/1000 successes out
+of five. Nonperfect cells additionally give the per-checkpoint success
+range out of 1000. The first three columns use $n=64$; the last uses the
+global palette at $n=256$. Each condition samples the declared uniform
+mixture of ten exact-degree families. There is no averaged policy.}
+\label{tab:frozen-degree}
+\end{table}

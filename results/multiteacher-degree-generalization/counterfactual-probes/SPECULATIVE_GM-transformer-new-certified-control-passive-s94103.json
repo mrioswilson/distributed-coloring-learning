@@ -1,0 +1,249 @@
+{
+  "architecture": "transformer",
+  "checkpoint": "SPECULATIVE_GM-transformer-new-certified-control-passive-s94103",
+  "cohort": "new-certified-control",
+  "commit_queries": {
+    "d10-global": {
+      "correct": 40,
+      "false_accept": 32,
+      "false_reject": 0,
+      "negative": 32,
+      "positive": 40,
+      "total": 72
+    },
+    "d10-global-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 12,
+      "positive": 4,
+      "total": 16
+    },
+    "d10-local": {
+      "correct": 40,
+      "false_accept": 32,
+      "false_reject": 0,
+      "negative": 32,
+      "positive": 40,
+      "total": 72
+    },
+    "d10-local-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 12,
+      "positive": 4,
+      "total": 16
+    },
+    "d200-global": {
+      "correct": 42,
+      "false_accept": 22,
+      "false_reject": 0,
+      "negative": 22,
+      "positive": 42,
+      "total": 64
+    },
+    "d200-global-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 16,
+      "positive": 0,
+      "total": 16
+    },
+    "d200-local": {
+      "correct": 37,
+      "false_accept": 27,
+      "false_reject": 0,
+      "negative": 27,
+      "positive": 37,
+      "total": 64
+    },
+    "d200-local-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 16,
+      "positive": 0,
+      "total": 16
+    },
+    "d3-global": {
+      "correct": 40,
+      "false_accept": 32,
+      "false_reject": 0,
+      "negative": 32,
+      "positive": 40,
+      "total": 72
+    },
+    "d3-global-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 14,
+      "positive": 2,
+      "total": 16
+    },
+    "d3-local": {
+      "correct": 39,
+      "false_accept": 33,
+      "false_reject": 0,
+      "negative": 33,
+      "positive": 39,
+      "total": 72
+    },
+    "d3-local-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 14,
+      "positive": 2,
+      "total": 16
+    },
+    "d4-global": {
+      "correct": 36,
+      "false_accept": 36,
+      "false_reject": 0,
+      "negative": 36,
+      "positive": 36,
+      "total": 72
+    },
+    "d4-global-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 13,
+      "positive": 3,
+      "total": 16
+    },
+    "d4-local": {
+      "correct": 44,
+      "false_accept": 28,
+      "false_reject": 0,
+      "negative": 28,
+      "positive": 44,
+      "total": 72
+    },
+    "d4-local-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 13,
+      "positive": 3,
+      "total": 16
+    },
+    "d50-global": {
+      "correct": 39,
+      "false_accept": 25,
+      "false_reject": 0,
+      "negative": 25,
+      "positive": 39,
+      "total": 64
+    },
+    "d50-global-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 16,
+      "positive": 0,
+      "total": 16
+    },
+    "d50-local": {
+      "correct": 38,
+      "false_accept": 26,
+      "false_reject": 0,
+      "negative": 26,
+      "positive": 38,
+      "total": 64
+    },
+    "d50-local-detection": {
+      "correct": 16,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 16,
+      "positive": 0,
+      "total": 16
+    }
+  },
+  "method": "passive",
+  "preference_gap_probes": [],
+  "seed": 94103,
+  "sha256": "0e4696f1701049ce92c8205bb9e5d6175acef46f3ef8d0d376dfe887cc8b1d68",
+  "teacher": "SPECULATIVE_GM",
+  "update": 500,
+  "witnesses": [
+    {
+      "case": {
+        "actual_delta": 3,
+        "case_id": "degree-cf-probe-20261025-32-3-isolates-0-r2",
+        "delta": 3,
+        "edges": [
+          [
+            30,
+            1
+          ],
+          [
+            30,
+            3
+          ],
+          [
+            30,
+            21
+          ]
+        ],
+        "family": "isolates",
+        "fingerprint": "717e9014ca4a74bd267ae97888ed7a36b61830bae3bafcb56d462b8b14fbd1e1",
+        "graph_seed": 9285663240817924133,
+        "n": 32,
+        "tape_seed": 9457186387019085353
+      },
+      "delta": 3,
+      "expected": false,
+      "family": "isolates",
+      "logit": 4.827341079711914,
+      "palette": "global",
+      "participation": false,
+      "predicted": true,
+      "query": 0,
+      "root": 13,
+      "step": 0,
+      "variant": 2
+    },
+    {
+      "case": {
+        "actual_delta": 3,
+        "case_id": "degree-cf-probe-20261025-32-3-isolates-0-r2",
+        "delta": 3,
+        "edges": [
+          [
+            30,
+            1
+          ],
+          [
+            30,
+            3
+          ],
+          [
+            30,
+            21
+          ]
+        ],
+        "family": "isolates",
+        "fingerprint": "717e9014ca4a74bd267ae97888ed7a36b61830bae3bafcb56d462b8b14fbd1e1",
+        "graph_seed": 9285663240817924133,
+        "n": 32,
+        "tape_seed": 9457186387019085353
+      },
+      "delta": 3,
+      "expected": false,
+      "family": "isolates",
+      "logit": 4.827341079711914,
+      "palette": "global",
+      "participation": false,
+      "predicted": true,
+      "query": 3,
+      "root": 13,
+      "step": 0,
+      "variant": 3
+    }
+  ]
+}

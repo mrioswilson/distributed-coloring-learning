@@ -1,0 +1,922 @@
+{
+  "architecture": "normalized",
+  "checkpoint": "COLOR_TRIALS-normalized-counterfactual-primary-counterfactual-s94102",
+  "cohort": "counterfactual-primary",
+  "commit_queries": {
+    "d10-global": {
+      "correct": 329,
+      "false_accept": 0,
+      "false_reject": 7,
+      "negative": 266,
+      "positive": 70,
+      "total": 336
+    },
+    "d10-local": {
+      "correct": 348,
+      "false_accept": 0,
+      "false_reject": 4,
+      "negative": 271,
+      "positive": 81,
+      "total": 352
+    },
+    "d200-global": {
+      "correct": 1900,
+      "false_accept": 0,
+      "false_reject": 156,
+      "negative": 1164,
+      "positive": 892,
+      "total": 2056
+    },
+    "d200-local": {
+      "correct": 2042,
+      "false_accept": 0,
+      "false_reject": 162,
+      "negative": 1099,
+      "positive": 1105,
+      "total": 2204
+    },
+    "d3-global": {
+      "correct": 320,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 218,
+      "positive": 102,
+      "total": 320
+    },
+    "d3-local": {
+      "correct": 320,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 212,
+      "positive": 108,
+      "total": 320
+    },
+    "d4-global": {
+      "correct": 320,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 223,
+      "positive": 97,
+      "total": 320
+    },
+    "d4-local": {
+      "correct": 316,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 218,
+      "positive": 98,
+      "total": 316
+    },
+    "d50-global": {
+      "correct": 2013,
+      "false_accept": 0,
+      "false_reject": 39,
+      "negative": 858,
+      "positive": 1194,
+      "total": 2052
+    },
+    "d50-local": {
+      "correct": 2015,
+      "false_accept": 0,
+      "false_reject": 41,
+      "negative": 811,
+      "positive": 1245,
+      "total": 2056
+    }
+  },
+  "method": "counterfactual",
+  "preference_gap_probes": [
+    {
+      "delta": 3,
+      "endpoint_palette": 4,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 4,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.810958862304688,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.3333333333333333,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 4,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.810958862304688,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.3333333333333333,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 5,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 5,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 7.070174694061279,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.25,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 5,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 4,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 7.070174694061279,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.25,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 4,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 6,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 6,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 2.3113019466400146,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.2,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 6,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 5,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 2.3113019466400146,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.2,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 5,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -7.405526161193848,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.1,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 10.9448823928833,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 10,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -7.405526161193848,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.1,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 10.9448823928833,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 10,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -11.881954193115234,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.05,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 10.9448823928833,
+      "gap": 6,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 20,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -11.881954193115234,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.05,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 10.9448823928833,
+      "gap": 6,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 20,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.465030670166016,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.02,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.520926475524902,
+      "gap": 16,
+      "native_action": 1,
+      "normalized_gap": 0.32,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 50,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.465030670166016,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.02,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.520926475524902,
+      "gap": 16,
+      "native_action": 1,
+      "normalized_gap": 0.32,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 50,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.867230415344238,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.01,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.74184799194336,
+      "gap": 33,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 100,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.867230415344238,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.01,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.74184799194336,
+      "gap": 33,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 100,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.050904273986816,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.005,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.74184799194336,
+      "gap": 66,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 200,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.214461326599121,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.050904273986816,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.005,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 11.74184799194336,
+      "gap": 66,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 12.783682823181152,
+      "gap": 200,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    }
+  ],
+  "seed": 94102,
+  "sha256": "3a9d4cc306a002d0cd00f08406a33bfe673533ed5975a6d336ef65f5ab24bc2b",
+  "teacher": "COLOR_TRIALS",
+  "update": 4000,
+  "witnesses": [
+    {
+      "case": {
+        "actual_delta": 10,
+        "case_id": "degree-cf-probe-20261025-32-10-isolates-0-r1",
+        "delta": 10,
+        "edges": [
+          [
+            11,
+            3
+          ],
+          [
+            11,
+            4
+          ],
+          [
+            11,
+            8
+          ],
+          [
+            11,
+            9
+          ],
+          [
+            11,
+            14
+          ],
+          [
+            11,
+            15
+          ],
+          [
+            11,
+            25
+          ],
+          [
+            11,
+            27
+          ],
+          [
+            11,
+            28
+          ],
+          [
+            11,
+            30
+          ]
+        ],
+        "family": "isolates",
+        "fingerprint": "9f583d85fdd0b423e3b3601eef97181f29a43976bc7ad8c4e9b09011715d5adc",
+        "graph_seed": 5388919462013934180,
+        "n": 32,
+        "tape_seed": 16418917891644594348
+      },
+      "delta": 10,
+      "expected": true,
+      "family": "isolates",
+      "logit": -6.797550201416016,
+      "palette": "global",
+      "participation": true,
+      "predicted": false,
+      "query": 0,
+      "root": 25,
+      "step": 0,
+      "variant": 1
+    },
+    {
+      "case": {
+        "actual_delta": 10,
+        "case_id": "degree-cf-probe-20261025-32-10-isolates-0-r1",
+        "delta": 10,
+        "edges": [
+          [
+            11,
+            3
+          ],
+          [
+            11,
+            4
+          ],
+          [
+            11,
+            8
+          ],
+          [
+            11,
+            9
+          ],
+          [
+            11,
+            14
+          ],
+          [
+            11,
+            15
+          ],
+          [
+            11,
+            25
+          ],
+          [
+            11,
+            27
+          ],
+          [
+            11,
+            28
+          ],
+          [
+            11,
+            30
+          ]
+        ],
+        "family": "isolates",
+        "fingerprint": "9f583d85fdd0b423e3b3601eef97181f29a43976bc7ad8c4e9b09011715d5adc",
+        "graph_seed": 5388919462013934180,
+        "n": 32,
+        "tape_seed": 16418917891644594348
+      },
+      "delta": 10,
+      "expected": true,
+      "family": "isolates",
+      "logit": -0.35261860489845276,
+      "palette": "global",
+      "participation": true,
+      "predicted": false,
+      "query": 0,
+      "root": 25,
+      "step": 0,
+      "variant": 2
+    }
+  ]
+}

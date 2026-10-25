@@ -1,0 +1,1494 @@
+{
+  "architecture": "transformer",
+  "checkpoint": "COLOR_TRIALS-transformer-counterfactual-primary-counterfactual-s94103",
+  "cohort": "counterfactual-primary",
+  "commit_queries": {
+    "d10-global": {
+      "correct": 342,
+      "false_accept": 0,
+      "false_reject": 2,
+      "negative": 280,
+      "positive": 64,
+      "total": 344
+    },
+    "d10-local": {
+      "correct": 340,
+      "false_accept": 0,
+      "false_reject": 8,
+      "negative": 269,
+      "positive": 79,
+      "total": 348
+    },
+    "d200-global": {
+      "correct": 1898,
+      "false_accept": 0,
+      "false_reject": 154,
+      "negative": 1318,
+      "positive": 734,
+      "total": 2052
+    },
+    "d200-local": {
+      "correct": 2195,
+      "false_accept": 0,
+      "false_reject": 157,
+      "negative": 1413,
+      "positive": 939,
+      "total": 2352
+    },
+    "d3-global": {
+      "correct": 332,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 233,
+      "positive": 99,
+      "total": 332
+    },
+    "d3-local": {
+      "correct": 331,
+      "false_accept": 0,
+      "false_reject": 1,
+      "negative": 228,
+      "positive": 104,
+      "total": 332
+    },
+    "d4-global": {
+      "correct": 336,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 242,
+      "positive": 94,
+      "total": 336
+    },
+    "d4-local": {
+      "correct": 332,
+      "false_accept": 0,
+      "false_reject": 0,
+      "negative": 231,
+      "positive": 101,
+      "total": 332
+    },
+    "d50-global": {
+      "correct": 2015,
+      "false_accept": 0,
+      "false_reject": 37,
+      "negative": 897,
+      "positive": 1155,
+      "total": 2052
+    },
+    "d50-local": {
+      "correct": 2116,
+      "false_accept": 0,
+      "false_reject": 40,
+      "negative": 920,
+      "positive": 1236,
+      "total": 2156
+    }
+  },
+  "method": "counterfactual",
+  "preference_gap_probes": [
+    {
+      "delta": 3,
+      "endpoint_palette": 4,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 4,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 10.6259765625,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.3333333333333333,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 4,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 10.6259765625,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.3333333333333333,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 3,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 5,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 5,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 5.110149383544922,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.25,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 5,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 4,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 5.110149383544922,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.25,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 4,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 4,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 6,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 6,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 0.8171020150184631,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.2,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 6,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 5,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 0.8171020150184631,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.2,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 5,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 5,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -10.059847831726074,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.1,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 8.623583793640137,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 11,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 10,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -10.059847831726074,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.1,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 8.623583793640137,
+      "gap": 3,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 10,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 10,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.340280532836914,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.05,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 8.623583793640137,
+      "gap": 6,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 21,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 20,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -13.340280532836914,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.05,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 8.623583793640137,
+      "gap": 6,
+      "native_action": 1,
+      "normalized_gap": 0.3,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 20,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 20,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.209098815917969,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.02,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 9.969095230102539,
+      "gap": 16,
+      "native_action": 1,
+      "normalized_gap": 0.32,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 51,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 50,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.209098815917969,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.02,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 9.969095230102539,
+      "gap": 16,
+      "native_action": 1,
+      "normalized_gap": 0.32,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 50,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 50,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.349306106567383,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.01,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 10.48971939086914,
+      "gap": 33,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 101,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 100,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.349306106567383,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.01,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 10.48971939086914,
+      "gap": 33,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 100,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 100,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.419411659240723,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.005,
+      "palette": "global",
+      "predicted_action": 0,
+      "proposal": 1
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 10.48971939086914,
+      "gap": 66,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 201,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 200,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "global",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.489516258239746,
+      "gap": 0,
+      "native_action": 0,
+      "normalized_gap": 0.0,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": false,
+      "forced_zero_logit": -14.419411659240723,
+      "gap": 1,
+      "native_action": 1,
+      "normalized_gap": 0.005,
+      "palette": "local",
+      "predicted_action": 0,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 10.48971939086914,
+      "gap": 66,
+      "native_action": 1,
+      "normalized_gap": 0.33,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    },
+    {
+      "delta": 200,
+      "endpoint_palette": 2,
+      "forced_zero_commit": true,
+      "forced_zero_logit": 20.051286697387695,
+      "gap": 200,
+      "native_action": 1,
+      "normalized_gap": 1.0,
+      "palette": "local",
+      "predicted_action": 1,
+      "proposal": 0
+    }
+  ],
+  "seed": 94103,
+  "sha256": "b48b1b2dc8b552ac136e81594eaa47d408e05c781e85ae67354ef01b3195a3d0",
+  "teacher": "COLOR_TRIALS",
+  "update": 4000,
+  "witnesses": [
+    {
+      "case": {
+        "actual_delta": 3,
+        "case_id": "degree-cf-probe-20261025-32-3-isolates-0-r2",
+        "delta": 3,
+        "edges": [
+          [
+            30,
+            1
+          ],
+          [
+            30,
+            3
+          ],
+          [
+            30,
+            21
+          ]
+        ],
+        "family": "isolates",
+        "fingerprint": "717e9014ca4a74bd267ae97888ed7a36b61830bae3bafcb56d462b8b14fbd1e1",
+        "graph_seed": 9285663240817924133,
+        "n": 32,
+        "tape_seed": 9457186387019085353
+      },
+      "delta": 3,
+      "expected": true,
+      "family": "isolates",
+      "logit": -16.01448631286621,
+      "palette": "local",
+      "participation": true,
+      "predicted": false,
+      "query": 2,
+      "root": 30,
+      "step": 0,
+      "variant": 2
+    },
+    {
+      "case": {
+        "actual_delta": 10,
+        "case_id": "degree-cf-probe-20261025-32-10-bipartite-1-r2",
+        "delta": 10,
+        "edges": [
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            0,
+            9
+          ],
+          [
+            0,
+            11
+          ],
+          [
+            0,
+            12
+          ],
+          [
+            0,
+            14
+          ],
+          [
+            0,
+            17
+          ],
+          [
+            0,
+            18
+          ],
+          [
+            0,
+            21
+          ],
+          [
+            0,
+            30
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            1,
+            11
+          ],
+          [
+            1,
+            12
+          ],
+          [
+            1,
+            17
+          ],
+          [
+            1,
+            18
+          ],
+          [
+            1,
+            27
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            3,
+            10
+          ],
+          [
+            3,
+            11
+          ],
+          [
+            3,
+            12
+          ],
+          [
+            3,
+            18
+          ],
+          [
+            3,
+            20
+          ],
+          [
+            3,
+            21
+          ],
+          [
+            3,
+            30
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            4
+          ],
+          [
+            8,
+            7
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            8,
+            10
+          ],
+          [
+            8,
+            11
+          ],
+          [
+            8,
+            18
+          ],
+          [
+            8,
+            21
+          ],
+          [
+            8,
+            27
+          ],
+          [
+            8,
+            30
+          ],
+          [
+            13,
+            2
+          ],
+          [
+            13,
+            5
+          ],
+          [
+            13,
+            6
+          ],
+          [
+            13,
+            7
+          ],
+          [
+            13,
+            9
+          ],
+          [
+            13,
+            10
+          ],
+          [
+            13,
+            12
+          ],
+          [
+            13,
+            14
+          ],
+          [
+            13,
+            17
+          ],
+          [
+            13,
+            20
+          ],
+          [
+            15,
+            2
+          ],
+          [
+            15,
+            4
+          ],
+          [
+            15,
+            5
+          ],
+          [
+            15,
+            6
+          ],
+          [
+            15,
+            10
+          ],
+          [
+            15,
+            11
+          ],
+          [
+            15,
+            17
+          ],
+          [
+            15,
+            20
+          ],
+          [
+            15,
+            21
+          ],
+          [
+            15,
+            27
+          ],
+          [
+            16,
+            5
+          ],
+          [
+            16,
+            6
+          ],
+          [
+            16,
+            9
+          ],
+          [
+            16,
+            10
+          ],
+          [
+            16,
+            12
+          ],
+          [
+            16,
+            14
+          ],
+          [
+            16,
+            17
+          ],
+          [
+            16,
+            18
+          ],
+          [
+            16,
+            20
+          ],
+          [
+            16,
+            27
+          ],
+          [
+            19,
+            4
+          ],
+          [
+            19,
+            5
+          ],
+          [
+            19,
+            6
+          ],
+          [
+            19,
+            9
+          ],
+          [
+            19,
+            10
+          ],
+          [
+            19,
+            11
+          ],
+          [
+            19,
+            20
+          ],
+          [
+            19,
+            21
+          ],
+          [
+            19,
+            27
+          ],
+          [
+            19,
+            30
+          ],
+          [
+            22,
+            2
+          ],
+          [
+            22,
+            4
+          ],
+          [
+            22,
+            10
+          ],
+          [
+            22,
+            12
+          ],
+          [
+            22,
+            14
+          ],
+          [
+            22,
+            17
+          ],
+          [
+            22,
+            20
+          ],
+          [
+            22,
+            21
+          ],
+          [
+            22,
+            27
+          ],
+          [
+            22,
+            30
+          ],
+          [
+            23,
+            2
+          ],
+          [
+            23,
+            5
+          ],
+          [
+            23,
+            6
+          ],
+          [
+            23,
+            7
+          ],
+          [
+            23,
+            10
+          ],
+          [
+            23,
+            12
+          ],
+          [
+            23,
+            14
+          ],
+          [
+            23,
+            17
+          ],
+          [
+            23,
+            18
+          ],
+          [
+            23,
+            30
+          ],
+          [
+            24,
+            4
+          ],
+          [
+            24,
+            5
+          ],
+          [
+            24,
+            6
+          ],
+          [
+            24,
+            7
+          ],
+          [
+            24,
+            9
+          ],
+          [
+            24,
+            11
+          ],
+          [
+            24,
+            12
+          ],
+          [
+            24,
+            14
+          ],
+          [
+            24,
+            18
+          ],
+          [
+            24,
+            21
+          ],
+          [
+            25,
+            2
+          ],
+          [
+            25,
+            7
+          ],
+          [
+            25,
+            10
+          ],
+          [
+            25,
+            11
+          ],
+          [
+            25,
+            12
+          ],
+          [
+            25,
+            14
+          ],
+          [
+            25,
+            20
+          ],
+          [
+            25,
+            21
+          ],
+          [
+            25,
+            27
+          ],
+          [
+            25,
+            30
+          ],
+          [
+            26,
+            2
+          ],
+          [
+            26,
+            6
+          ],
+          [
+            26,
+            7
+          ],
+          [
+            26,
+            9
+          ],
+          [
+            26,
+            12
+          ],
+          [
+            26,
+            14
+          ],
+          [
+            26,
+            17
+          ],
+          [
+            26,
+            18
+          ],
+          [
+            26,
+            21
+          ],
+          [
+            26,
+            30
+          ],
+          [
+            28,
+            4
+          ],
+          [
+            28,
+            5
+          ],
+          [
+            28,
+            6
+          ],
+          [
+            28,
+            7
+          ],
+          [
+            28,
+            9
+          ],
+          [
+            28,
+            14
+          ],
+          [
+            28,
+            17
+          ],
+          [
+            28,
+            18
+          ],
+          [
+            28,
+            20
+          ],
+          [
+            28,
+            27
+          ],
+          [
+            29,
+            2
+          ],
+          [
+            29,
+            4
+          ],
+          [
+            29,
+            5
+          ],
+          [
+            29,
+            9
+          ],
+          [
+            29,
+            11
+          ],
+          [
+            29,
+            18
+          ],
+          [
+            29,
+            20
+          ],
+          [
+            29,
+            21
+          ],
+          [
+            29,
+            27
+          ],
+          [
+            29,
+            30
+          ],
+          [
+            31,
+            2
+          ],
+          [
+            31,
+            4
+          ],
+          [
+            31,
+            6
+          ],
+          [
+            31,
+            10
+          ],
+          [
+            31,
+            11
+          ],
+          [
+            31,
+            14
+          ],
+          [
+            31,
+            17
+          ],
+          [
+            31,
+            20
+          ],
+          [
+            31,
+            27
+          ],
+          [
+            31,
+            30
+          ]
+        ],
+        "family": "bipartite",
+        "fingerprint": "1e25c04855ad4b6832b8bb1b206af7992a10fe62c2f8ae75005673e76b2cd2fc",
+        "graph_seed": 18070032640448886258,
+        "n": 32,
+        "tape_seed": 12915630676205639128
+      },
+      "delta": 10,
+      "expected": true,
+      "family": "bipartite",
+      "logit": -3.0762436389923096,
+      "palette": "global",
+      "participation": true,
+      "predicted": false,
+      "query": 0,
+      "root": 13,
+      "step": 1,
+      "variant": 1
+    }
+  ]
+}
