@@ -18,6 +18,9 @@ sys.path.insert(0, str(ROOT / "src"))
 from dcl.integration.report import run as rebuild_report
 from dcl.study.storage import file_hash
 
+if (ROOT / "paper/ucgnn/main.tex").read_text().startswith("% Authoritative closure source"):
+    raise SystemExit("Historical generator: use scripts/build-closure-paper.py here, or reproduce the historical source in a separate checkout.")
+
 p = argparse.ArgumentParser()
 p.add_argument("--compiler", type=Path, default=ROOT / ".tools/tectonic")
 p.add_argument("--skip-report", action="store_true")

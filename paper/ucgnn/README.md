@@ -1,68 +1,64 @@
-# Integrated manuscript and build
+# Authoritative closure manuscript
 
-`../../paper/PAPER_DRAFT.md` is the complete English manuscript. Its source
-template is `../PAPER_DRAFT.md.in`; `dcl.integration.report` inserts tables,
-claim provenance and human-readable verified references from exported results.
-Do not manually change generated numerical tables.
+`main.tex` is the edited English closure source, dated 26 October 2026.
+`main.pdf` is built from it. The current page count, source/PDF/figure hashes,
+compiler version, reference checks and render paths are recorded in
+`results/final-closure/paper-build.json`; do not infer the page count from an
+older report. `paper/PAPER_DRAFT.md` and its template are historical drafts,
+not the source of the closure manuscript.
 
-`main.tex` is generated from that Markdown with Pandoc 3.9/natbib.
-`main.pdf` is a 36-page unpublished draft including the counterfactual extension.
-The current evidence-derived build is:
-
-```bash
-PYTHONPATH=src python scripts/report-multicf.py
-PYTHONPATH=src python scripts/plot-multicf.py
-PYTHONPATH=src python scripts/build-multicf-paper.py --compiler /path/to/verified/tectonic
-```
-
-Its receipts and reviewed renders live in
-`results/multiteacher-counterfactual/paper-build.json` and `paper-review/`.
-`pre-counterfactual-main.{tex,pdf}` preserves the previous manuscript.
-The commands below document the earlier integrated build.
-
-`pre-integration-main.tex` and
-`pre-integration-main.pdf` preserve the earlier manuscript byte for byte.
-Its documentation remains in `docs/historical/PAPER_README_pre_integration.md`.
-Earlier commits and recovery archives also retain the original study.
-
-Run from the repository root after installing `.[dev,study,paper]`:
+From the repository root, with the restored runtime and `.[dev,study,paper]`:
 
 ```bash
-python -m dcl.integration.report
 python scripts/setup-paper-compiler.py
-python scripts/build-integrated-paper.py
+PYTHONPATH=src python scripts/build-closure-assets.py
+PYTHONPATH=src python scripts/build-closure-paper.py
 ```
 
-The setup script pins Tectonic 0.17.0 from its
-[official release](https://github.com/tectonic-typesetting/tectonic/releases/tag/tectonic%400.17.0).
-It validates the Linux x86-64 musl archive SHA256
-`8533d07f9ccbd7a65824b9e0459041bca34af1eb33daba48f59215593753a3b7`
-and compiler SHA256
+The asset script derives the native, JP, BE, baseline, label-cost and transfer
+tables and both vector figures from authenticated existing records. It does
+not train or simulate. The build checks the pinned Tectonic 0.17.0 binary,
+unresolved citations/references, glyphs, overfull boxes, key PDF numerical
+strings and off-page text, and renders every page. Actual visual inspection
+is a separate `pdf-visual-review.json` receipt, never inferred from compilation.
+
+The Linux x86-64 compiler SHA-256 is
 `a98aa59ad5c1df39a6c9e56cbfc5088f2b11d6c179c0130b97998e4bd46a46da`.
-The binary remains in ignored `.tools/tectonic`, with upstream licensing.
-On other systems supply an appropriate Tectonic binary with the build's
-`--compiler` option. First use may download TeX packages/fonts.
+The setup script verifies the official archive and binary; first compilation
+can download TeX packages. Compiler and rendered pages are local runtime.
+`main.tex` uses the four local bibliography files, including the new
+`closure-references.bib`; no bibliography is fetched during manuscript writing.
 
-Build outputs `results/integration/paper-build.{json,txt}` record source/PDF
-hashes, bibliography keys, compiler version/hash, reference diagnostics,
-missing glyphs and overfull boxes. Ignored `results/integration/paper-review/`
-contains page renders. Compilation success does not imply visual review:
-the script resets `visual_review_passed=false` for every new PDF. After
-inspection, record review scope and exact reviewed hashes in that JSON.
-The committed PDF passed both checks. Table 4 continues onto the next page.
+## Evidence and reproduction
 
-Four vector PDF figures and PNG previews are generated from exported data.
-Their hashes and input hashes are in `results/integration/figure-manifest.json`.
-The integrated draft uses the vector versions. The old figure set remains
-preserved for historical reporting.
+Read `docs/FINAL_EVIDENCE_AUDIT.md`, `docs/EVIDENCE_REGISTER.md` and the
+machine-readable `results/final-closure/evidence-register.json` for claim,
+protocol, data and checkpoint provenance. `artifact-manifest.json` authenticates
+the final source/result set, while `verified-inputs.json` lists checked raw
+degree/size files and weights. `native-certifications.json` identifies all
+105 selected native policies and their original final rows.
 
-`references.bib` retains earlier verified ML/statistical sources.
-`integration-references.bib` adds teacher and Holm references. The two
-bibliography-verification JSONs identify primary source URLs and the scope
-of checks; this is a scoped review, not an exhaustive novelty claim.
+Large raw JSON, NPZ banks and weights require runtime restoration; they are
+not made available merely by cloning source. The local closure delivery and
+its checksums are described in `results/final-closure/delivery.json`. Historical
+runtime recovery remains documented in `results/multiteacher-counterfactual/README.md`
+and `scripts/fetch-sample-complexity.py`. No new release or push is performed.
+The exported source/runtime can be inspected before any external publication.
 
-See `docs/PAPER_SCIENTIFIC_AUDIT.md` for limitations and claim provenance,
-especially the 40 unavailable historical collaborator checkpoints. The new
-balanced experiment and matched statistical controls are independent work,
-not an exact replay of those unavailable models. Author order and submission
-venue remain undecided; no accepted publication is implied.
+## Historical builds
+
+The previous integrated manuscript is preserved byte for byte in
+`archive/pre-closure-71153993.{tex,pdf}`, along with earlier pre-integration,
+pre-sample-complexity and pre-counterfactual copies. Reproduce those studies
+in a separate checkout of their source commit. Their generators
+`build-integrated-paper.py`, `build-multicf-paper.py` and `build-degree-paper.py`
+belong to those historical versions and refuse to overwrite an authoritative
+closure source in this checkout. They are not the commands for the current PDF.
+
+## Editorial status
+
+This is an externally reviewable scientific draft, not a formatted submission.
+Author list/order and attribution require coauthor agreement; target-venue
+style and anonymization remain editorial work. See
+`docs/PAPER_CLOSURE_DECISION.md` for the explicit decision, all fifteen answers,
+remaining items and the distinction between new results and reused history.

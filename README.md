@@ -1,4 +1,28 @@
-# Learning Distributed Algorithms from Algorithmic Teachers
+# Learning Distributed Coloring Rules
+
+The current scientific closure is dated **26 October 2026** on the local
+`research/scientific-closure-20261026` branch. Start with the
+[closure decision and fifteen answers](docs/PAPER_CLOSURE_DECISION.md),
+[compiled manuscript](paper/ucgnn/main.pdf),
+[final evidence audit](docs/FINAL_EVIDENCE_AUDIT.md),
+[adversarial reviews and responses](docs/ADVERSARIAL_REVIEW.md), and
+[claim register](docs/EVIDENCE_REGISTER.md).
+
+The authoritative source is [main.tex](paper/ucgnn/main.tex), with build and
+runtime instructions in [the paper README](paper/ucgnn/README.md). Use
+`scripts/build-closure-assets.py` and `scripts/build-closure-paper.py` for the
+current version. The historical generators below refuse to overwrite it;
+run those in a separate checkout of their historical source commit.
+The current PDF and page count are identified by the final build receipt.
+
+The audit reconciles 808,413/810,000 confirmatory executions, including
+449,791/450,000 primary-policy observations, and replays all fifteen failed
+cells. Native 21/21 coverage combines twelve historical and nine new packages.
+Counterfactual comparisons retain unequal-label and development-reuse limits,
+class-aware baselines, and all negative results. Closure trains no new models
+and performs no push or release publication.
+
+## Preserved pre-closure project description
 
 Unpublished integrated research draft, 23 October 2026. We study what a neural
 policy learns from a graph-coloring teacher: local actions, transitions,
@@ -31,12 +55,11 @@ rules and metadata erratum are in the new evidence directory's README.
 The [research prerelease](https://github.com/mrioswilson/distributed-coloring-learning/releases/tag/multiteacher-counterfactual-2026-10-24)
 supplies the full source-history bundle, runtime files, checkpoints, datasets
 and original M6 recovery artifacts, with SHA-256 manifests.
-The current PDF is 36 pages; `pre-counterfactual-main.{tex,pdf}` preserves
+That historical PDF was 36 pages; `pre-counterfactual-main.{tex,pdf}` preserves
 the preceding integrated manuscript byte for byte. No historical result or
 unavailable Pedro checkpoint is replaced by these new trainings.
 
-Start with the [complete paper](paper/PAPER_DRAFT.md), its
-[compiled PDF](paper/ucgnn/main.pdf), the
+The historical [Markdown paper](paper/PAPER_DRAFT.md), the
 [independent-review dossier](docs/PAPER_SCIENTIFIC_AUDIT.md), and the
 [statistical reconciliation](docs/integration/GLOBAL_DISTRIBUTION_RECONCILIATION.md).
 The [evidence ledger](results/integration/evidence-ledger.json) maps principal

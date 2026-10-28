@@ -1,5 +1,10 @@
 # Fallos, límites y mecanismos de transferencia
 
+> Informe histórico del estudio `71153993`. Para el cierre científico vigente,
+> véase `GENERALIZATION_FAILURE_REVIEW.md`. Los testigos guardados aquí no son
+> necesariamente la primera fila fallida de cada archivo: el cierre reproduce
+> explícitamente esas quince primeras filas y distingue mecanismos CF/control.
+
 ## Separación de causas
 
 **A, profesor.** Seis variantes tienen pruebas condicionales para ambas

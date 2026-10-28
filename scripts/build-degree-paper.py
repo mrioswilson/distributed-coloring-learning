@@ -16,6 +16,8 @@ ARCH=dict(normalized='E1',deepsets='DeepSets',transformer='Transformer')
 
 
 if __name__=='__main__':
+    if (PAPER/'main.tex').read_text().startswith('% Authoritative closure source'):
+        raise SystemExit('Historical generator: use scripts/build-closure-paper.py here, or a separate historical checkout.')
     summary=json.loads((ROOT/'summary.json').read_text())
     assert summary['stages']['confirmatory']['executions']==810000
     rows=list(csv.DictReader((ROOT/'checkpoint-condition.csv').open()))

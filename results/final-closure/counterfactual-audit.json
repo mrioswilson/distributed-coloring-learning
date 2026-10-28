@@ -1,0 +1,450 @@
+{
+  "interpretation": "Original development diagnostic queries reconstructed exactly. Disjoint graph sizes/PRNG namespaces do not imply unseen local COMMIT types. Complete-input novelty and sufficient queried-slot input-type novelty are reported separately. The same four-color query design is used in training and diagnostics; no held-out intervention family is identified. Native visitation/RNG receipts plus training code support identical minibatch sequences, not statistical independence across arms.",
+  "new_random_queries": 0,
+  "new_training_updates": 0,
+  "pairing": [
+    {
+      "data_sha256": "91f226c379093be9543515aa5b3d4fd47f8693dc2a82cf91e29e47906e00b8d5",
+      "evaluation_manifest_sha256": "dc2d70075797a369dac999bc28f22b21bb14ac7a0cc1c73037b6eced2ffab143",
+      "evaluation_split": "development",
+      "identical_final_minibatch_rng_state": true,
+      "identical_native_visits": true,
+      "initial_hash": "b5db352ad7e80066a2c38f8c9d1852daefd6329bd0e1b4975aa5951a0d0603a6",
+      "labels": {
+        "counterfactual": 6776,
+        "matched": 3000,
+        "passive": 3000
+      },
+      "seed": 94101,
+      "training_graph_sizes": [
+        8,
+        12
+      ],
+      "training_manifest_sha256": "35226d3cb314df84093fb9a495272ec81b9128bd9bccadc0c6a8e9a04d05b607"
+    },
+    {
+      "data_sha256": "2cd49aa22001fec1659a2c4062f2f50eeeeef69e13000e03674753c0b786c852",
+      "evaluation_manifest_sha256": "785a23fda1ca8c948300152ae490ed83fad4a178278d74936408b1d4e5b433e3",
+      "evaluation_split": "development",
+      "identical_final_minibatch_rng_state": true,
+      "identical_native_visits": true,
+      "initial_hash": "92f190213d3f5e21830869bee6691ab03f09de77d939505e795c10110fe4dc3e",
+      "labels": {
+        "counterfactual": 6776,
+        "matched": 3000,
+        "passive": 3000
+      },
+      "seed": 94102,
+      "training_graph_sizes": [
+        8,
+        12
+      ],
+      "training_manifest_sha256": "fe02978180d1675cceb462f41de18bd945500bfc8c089ba2d01264520c565258"
+    },
+    {
+      "data_sha256": "17414ab4e2671a236ef8751a17a165df440b72aaae8e630b6095c701f3b43fa5",
+      "evaluation_manifest_sha256": "a5f86743d1d4cbf4115a50ffd540f3486936c91bcfc9df6b587858b1320578c2",
+      "evaluation_split": "development",
+      "identical_final_minibatch_rng_state": true,
+      "identical_native_visits": true,
+      "initial_hash": "876828b52d686fc11ec79d951e05c043c72cbe72f17122b8aba43a12fcf462f1",
+      "labels": {
+        "counterfactual": 6776,
+        "matched": 3000,
+        "passive": 3000
+      },
+      "seed": 94103,
+      "training_graph_sizes": [
+        8,
+        12
+      ],
+      "training_manifest_sha256": "bb07bdf0b0170cce0f6fc70c17e8527e41553061d0dacf838614a79c5f616e93"
+    },
+    {
+      "data_sha256": "da3292cf72a39f08ca939effb51d2e9780537ab972bfdf51e462ef7e90a9242f",
+      "evaluation_manifest_sha256": "c8ae30f11323fc517b50a876020087d82eda2fb73f5cedafc1d1c4e1236a7bd2",
+      "evaluation_split": "development",
+      "identical_final_minibatch_rng_state": true,
+      "identical_native_visits": true,
+      "initial_hash": "7afd36e73934e2f042d0ca331e6a9017dfc26ed361351b63f50eb63123fdd8fd",
+      "labels": {
+        "counterfactual": 6776,
+        "matched": 3000,
+        "passive": 3000
+      },
+      "seed": 94104,
+      "training_graph_sizes": [
+        8,
+        12
+      ],
+      "training_manifest_sha256": "1554470ba8fbb3fd2bd82fa0111399581b5b8ccaaea4822671b361c6af1cd5fa"
+    },
+    {
+      "data_sha256": "08169a543625a13c6102173e7571b1d74a02da6e7b0f2615788929fc17888e7a",
+      "evaluation_manifest_sha256": "f5ad7afcfee57908d033e1ae671206d5019937bdc00e743c0d287ed4e6d01b7b",
+      "evaluation_split": "development",
+      "identical_final_minibatch_rng_state": true,
+      "identical_native_visits": true,
+      "initial_hash": "3efe0c74758bacd305a21788e9559139f1f919ed49ae5cb21362c11788337ab0",
+      "labels": {
+        "counterfactual": 6776,
+        "matched": 3000,
+        "passive": 3000
+      },
+      "seed": 94105,
+      "training_graph_sizes": [
+        8,
+        12
+      ],
+      "training_manifest_sha256": "9b217a42ef4944f4a509644bd86442aa7fbccecafcacea0d3f24590983521d38"
+    }
+  ],
+  "rows": [
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94101/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+      "checkpoint_sha256": "e913343c29e59db8ee8de093eb519599e4cca02d9daf307b14fa50714cc38fda",
+      "correct": 99840,
+      "distinct_test_commit_types": 116,
+      "distinct_train_commit_types": 61,
+      "evaluation_bank_sha256": "16a7d1a1cad81c555cb6dc73260d0f22cea66c3f5167092002ecf2cc25f798af",
+      "labels": 6776,
+      "method": "counterfactual",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 0,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99291
+      },
+      "seed": 94101,
+      "total": 99840,
+      "unseen_commit_type_correct": 549,
+      "unseen_commit_type_total": 549,
+      "unseen_complete_input_correct": 99840,
+      "unseen_complete_input_total": 99840
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94101/b3000-coverage1-alternate0/matched/u004000.pt",
+      "checkpoint_sha256": "f8619a99a31d0bbd904d1461f4adcb09f5b1db1b9ee800176a7dcbe6ab76310e",
+      "correct": 9343,
+      "distinct_test_commit_types": 116,
+      "distinct_train_commit_types": 61,
+      "evaluation_bank_sha256": "16a7d1a1cad81c555cb6dc73260d0f22cea66c3f5167092002ecf2cc25f798af",
+      "labels": 3000,
+      "method": "matched",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 0,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99291
+      },
+      "seed": 94101,
+      "total": 99840,
+      "unseen_commit_type_correct": 158,
+      "unseen_commit_type_total": 549,
+      "unseen_complete_input_correct": 9343,
+      "unseen_complete_input_total": 99840
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94101/b3000-coverage1-alternate0/passive/u004000.pt",
+      "checkpoint_sha256": "11750faa378992ddce2dde881daa48dc55e2543e788f09a5b7950037ba0d6425",
+      "correct": 41591,
+      "distinct_test_commit_types": 116,
+      "distinct_train_commit_types": 61,
+      "evaluation_bank_sha256": "16a7d1a1cad81c555cb6dc73260d0f22cea66c3f5167092002ecf2cc25f798af",
+      "labels": 3000,
+      "method": "passive",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 0,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99291
+      },
+      "seed": 94101,
+      "total": 99840,
+      "unseen_commit_type_correct": 229,
+      "unseen_commit_type_total": 549,
+      "unseen_complete_input_correct": 41591,
+      "unseen_complete_input_total": 99840
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94102/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+      "checkpoint_sha256": "1609390e4ad8e84cdfa53c92560c0d15da75aff9ebdc2fb4ed151d82c83ec0af",
+      "correct": 99818,
+      "distinct_test_commit_types": 115,
+      "distinct_train_commit_types": 65,
+      "evaluation_bank_sha256": "48d287a9ad91402cd23645aa0571dd4711f0c61ec9d237c1faabfe049b866f45",
+      "labels": 6776,
+      "method": "counterfactual",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 91,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99381
+      },
+      "seed": 94102,
+      "total": 99840,
+      "unseen_commit_type_correct": 437,
+      "unseen_commit_type_total": 459,
+      "unseen_complete_input_correct": 99727,
+      "unseen_complete_input_total": 99749
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94102/b3000-coverage1-alternate0/matched/u004000.pt",
+      "checkpoint_sha256": "324e9ea60d0175e3a0426daf82466938c4e4c5434b366a2e690a13dea79b7d8c",
+      "correct": 9322,
+      "distinct_test_commit_types": 115,
+      "distinct_train_commit_types": 65,
+      "evaluation_bank_sha256": "48d287a9ad91402cd23645aa0571dd4711f0c61ec9d237c1faabfe049b866f45",
+      "labels": 3000,
+      "method": "matched",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 91,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99381
+      },
+      "seed": 94102,
+      "total": 99840,
+      "unseen_commit_type_correct": 342,
+      "unseen_commit_type_total": 459,
+      "unseen_complete_input_correct": 9315,
+      "unseen_complete_input_total": 99749
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94102/b3000-coverage1-alternate0/passive/u004000.pt",
+      "checkpoint_sha256": "3ccb4a0432b65d5c3344f833f01e5aa3c666782dfc9a63fbe0857a04201537d0",
+      "correct": 9157,
+      "distinct_test_commit_types": 115,
+      "distinct_train_commit_types": 65,
+      "evaluation_bank_sha256": "48d287a9ad91402cd23645aa0571dd4711f0c61ec9d237c1faabfe049b866f45",
+      "labels": 3000,
+      "method": "passive",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 91,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99381
+      },
+      "seed": 94102,
+      "total": 99840,
+      "unseen_commit_type_correct": 270,
+      "unseen_commit_type_total": 459,
+      "unseen_complete_input_correct": 9150,
+      "unseen_complete_input_total": 99749
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94103/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+      "checkpoint_sha256": "aedf3023d26a9cf23547ec119838ea10f80d79c75787ef23907c86123591ecbc",
+      "correct": 99840,
+      "distinct_test_commit_types": 132,
+      "distinct_train_commit_types": 60,
+      "evaluation_bank_sha256": "4f1827314c77c5bf3b64b4633dc4f5159e1ed407184bfdf148dd6e66df38ad6c",
+      "labels": 6776,
+      "method": "counterfactual",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 0,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99123
+      },
+      "seed": 94103,
+      "total": 99840,
+      "unseen_commit_type_correct": 717,
+      "unseen_commit_type_total": 717,
+      "unseen_complete_input_correct": 99840,
+      "unseen_complete_input_total": 99840
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94103/b3000-coverage1-alternate0/matched/u004000.pt",
+      "checkpoint_sha256": "d4b83dc9bb22615e91e8f9aeefdc2f92aed653c65fa610b02e0dde17f7fed604",
+      "correct": 9146,
+      "distinct_test_commit_types": 132,
+      "distinct_train_commit_types": 60,
+      "evaluation_bank_sha256": "4f1827314c77c5bf3b64b4633dc4f5159e1ed407184bfdf148dd6e66df38ad6c",
+      "labels": 3000,
+      "method": "matched",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 0,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99123
+      },
+      "seed": 94103,
+      "total": 99840,
+      "unseen_commit_type_correct": 229,
+      "unseen_commit_type_total": 717,
+      "unseen_complete_input_correct": 9146,
+      "unseen_complete_input_total": 99840
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94103/b3000-coverage1-alternate0/passive/u004000.pt",
+      "checkpoint_sha256": "5f798a91dbca4bc57488328b112fd472cba52b4f7fda55b56f2c201e5745f912",
+      "correct": 9146,
+      "distinct_test_commit_types": 132,
+      "distinct_train_commit_types": 60,
+      "evaluation_bank_sha256": "4f1827314c77c5bf3b64b4633dc4f5159e1ed407184bfdf148dd6e66df38ad6c",
+      "labels": 3000,
+      "method": "passive",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 0,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99123
+      },
+      "seed": 94103,
+      "total": 99840,
+      "unseen_commit_type_correct": 229,
+      "unseen_commit_type_total": 717,
+      "unseen_complete_input_correct": 9146,
+      "unseen_complete_input_total": 99840
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94104/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+      "checkpoint_sha256": "43e033d18cb5f6a780e9783522ccd9aca7ab5608d623dc5304dbd9e54eec1339",
+      "correct": 99828,
+      "distinct_test_commit_types": 122,
+      "distinct_train_commit_types": 59,
+      "evaluation_bank_sha256": "13ad20f52a774babf73a3959ae1b0226eeb9f5a032aa544343e445ee582984a4",
+      "labels": 6776,
+      "method": "counterfactual",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 0,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99318
+      },
+      "seed": 94104,
+      "total": 99840,
+      "unseen_commit_type_correct": 510,
+      "unseen_commit_type_total": 522,
+      "unseen_complete_input_correct": 99828,
+      "unseen_complete_input_total": 99840
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94104/b3000-coverage1-alternate0/matched/u004000.pt",
+      "checkpoint_sha256": "8ae626c7d5c51ea0b608d81f77da4bea11684cf5e284a2dce8605937cd3c1836",
+      "correct": 9076,
+      "distinct_test_commit_types": 122,
+      "distinct_train_commit_types": 59,
+      "evaluation_bank_sha256": "13ad20f52a774babf73a3959ae1b0226eeb9f5a032aa544343e445ee582984a4",
+      "labels": 3000,
+      "method": "matched",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 0,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99318
+      },
+      "seed": 94104,
+      "total": 99840,
+      "unseen_commit_type_correct": 182,
+      "unseen_commit_type_total": 522,
+      "unseen_complete_input_correct": 9076,
+      "unseen_complete_input_total": 99840
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94104/b3000-coverage1-alternate0/passive/u004000.pt",
+      "checkpoint_sha256": "393ddcc767fd2e49f038472b53ea69b4c3e089b5f81b70d2650c17cabecc1cd8",
+      "correct": 42262,
+      "distinct_test_commit_types": 122,
+      "distinct_train_commit_types": 59,
+      "evaluation_bank_sha256": "13ad20f52a774babf73a3959ae1b0226eeb9f5a032aa544343e445ee582984a4",
+      "labels": 3000,
+      "method": "passive",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 0,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99318
+      },
+      "seed": 94104,
+      "total": 99840,
+      "unseen_commit_type_correct": 288,
+      "unseen_commit_type_total": 522,
+      "unseen_complete_input_correct": 42262,
+      "unseen_complete_input_total": 99840
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94105/b3000-coverage1-alternate0/counterfactual/u004000.pt",
+      "checkpoint_sha256": "f442846c31f7a8358a54e7eee95037b6a901cc9d3615b0d52eeb563764701ed8",
+      "correct": 99840,
+      "distinct_test_commit_types": 123,
+      "distinct_train_commit_types": 58,
+      "evaluation_bank_sha256": "6b7eec376a702afad7f22a5ebcbe35dae2f20d60cb36c35298c9fe4ebffa72d6",
+      "labels": 6776,
+      "method": "counterfactual",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 0,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99118
+      },
+      "seed": 94105,
+      "total": 99840,
+      "unseen_commit_type_correct": 722,
+      "unseen_commit_type_total": 722,
+      "unseen_complete_input_correct": 99840,
+      "unseen_complete_input_total": 99840
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94105/b3000-coverage1-alternate0/matched/u004000.pt",
+      "checkpoint_sha256": "4879702f3a6371feadcc5acea88cec338c7a8babf38dfb682c258255f7a2f0ee",
+      "correct": 9382,
+      "distinct_test_commit_types": 123,
+      "distinct_train_commit_types": 58,
+      "evaluation_bank_sha256": "6b7eec376a702afad7f22a5ebcbe35dae2f20d60cb36c35298c9fe4ebffa72d6",
+      "labels": 3000,
+      "method": "matched",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 0,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99118
+      },
+      "seed": 94105,
+      "total": 99840,
+      "unseen_commit_type_correct": 246,
+      "unseen_commit_type_total": 722,
+      "unseen_complete_input_correct": 9382,
+      "unseen_complete_input_total": 99840
+    },
+    {
+      "checkpoint": "results/multiteacher-counterfactual/runs/be_base_d3/normalized/s94105/b3000-coverage1-alternate0/passive/u004000.pt",
+      "checkpoint_sha256": "052c8522b27bfbb7a29b6bb744538a1c56a84389a9e9182e93226b42f1e43720",
+      "correct": 10865,
+      "distinct_test_commit_types": 123,
+      "distinct_train_commit_types": 58,
+      "evaluation_bank_sha256": "6b7eec376a702afad7f22a5ebcbe35dae2f20d60cb36c35298c9fe4ebffa72d6",
+      "labels": 3000,
+      "method": "passive",
+      "native_action_correct": 28800,
+      "native_action_total": 28800,
+      "overlap": {
+        "identical_complete_input_queries_in_training": 0,
+        "queries": 99840,
+        "sufficient_commit_input_types_in_training": 99118
+      },
+      "seed": 94105,
+      "total": 99840,
+      "unseen_commit_type_correct": 356,
+      "unseen_commit_type_total": 722,
+      "unseen_complete_input_correct": 10865,
+      "unseen_complete_input_total": 99840
+    }
+  ],
+  "script_sha256": "f2867bb30a69bd55c1521fc38764aa748b05492ee9613f734dec7a1ae820881c"
+}

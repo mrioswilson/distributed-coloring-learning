@@ -26,6 +26,8 @@ def short(t):return {"BE_BASE_D3":"BE","COLOR_TRIALS":"ColorTrials","SPECULATIVE
 
 
 if __name__=="__main__":
+    if (PAPER/"main.tex").read_text().startswith("% Authoritative closure source"):
+        raise SystemExit("Historical generator: use scripts/build-closure-paper.py here, or a separate historical checkout.")
     p=argparse.ArgumentParser();p.add_argument("--compiler",default="/tmp/algolearning-verified-tectonic/tectonic");a=p.parse_args()
     compiler=Path(a.compiler)
     assert file_hash(compiler)=="a98aa59ad5c1df39a6c9e56cbfc5088f2b11d6c179c0130b97998e4bd46a46da"

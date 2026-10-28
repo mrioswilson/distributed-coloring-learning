@@ -1,5 +1,10 @@
 # Frozen multiteacher degree study
 
+> Historical study record for `71153993`. The current closure manuscript,
+> page count, reviews and reproduction flow are documented in
+> `paper/ucgnn/README.md` and `docs/FINAL_EVIDENCE_AUDIT.md`. The forty-page
+> build and 388-test receipt below describe the preserved earlier version.
+
 Independent branch `research/multiteacher-degree-generalization`, based on
 `291d4b82`. No push or release upload was performed.
 
