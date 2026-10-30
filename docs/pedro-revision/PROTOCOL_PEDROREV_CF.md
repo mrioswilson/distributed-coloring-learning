@@ -193,3 +193,41 @@ functional battery. Config `configs/pedrorev-cf-followup.json`.
   most such positives (TPR < 0.5), and the other `cf-high` seeds do not.
 This is a follow-up chosen after seeing battery v1; it is confirmatory only
 with respect to battery v2, which did not exist when F was registered.
+
+## 9. Outcome register (written after all batteries; nothing above was edited)
+
+Sources: `results/pedro-revision/cf-experiment/analysis.json`,
+`functional/`, `native-agreement.json`, `be-neighbor-activity.json`,
+`results/pedro-revision/cf-followup/`, `results/pedro-revision/transfer-experiment/summary.json`,
+`results/pedro-revision/ct-scale-probe.json`,
+`results/pedro-revision/failed-cell-classification.json`.
+
+| Hypothesis | Outcome |
+|---|---|
+| A1 equal labels, CF > passive and matched, all seeds (BE, GM) | **Supported** (BE CF-high 93.81–100% vs ≤71.66%; GM 100% vs 50%) |
+| A2 CF at L_low > native-only at L_high, all seeds (BE, GM) | **Supported** (BE CF-low 94.61–100% vs ≤71.66%; GM 100% vs 50%) |
+| A3 native-only TNR on eligible-active occupied < 0.5 at both budgets | **Supported** (≤0.59% in every BE run; 0% GM) |
+| A4 CT gap smaller than BE/GM in every seed | **Supported** (CT native-only 99.34–99.39% vs CF 100%) |
+| A5 functional (descriptive) | GM, CT: all 60 arms 1,000/1,000. BE: 34/40 arms 1,000/1,000; failures in seed 95105 (cf-high, cf-lateocc, cf-noforce 298; cf-low 133; matched-low 394; passive-low 985) and cf-low 95102 (989), 95103 (148) |
+| B1 CF unseen-type BA ≥ 0.99 in every seed | **Not supported**: holds in 2/5 seeds for cf-high (52.3–100% type-level); unseen negative types robust, unseen positive types not |
+| B2 cf-lateocc rejects held-out late occupied queries, TNR ≥ 0.95 | **Supported** (≥96.33%; 100% in four seeds) |
+| B3 cf-noforce does not recover forced-ineligible clause; keeps eligible-active BA ≥ 0.95 | First part **supported** (TNR ≤10.57%); second part holds in 4/5 seeds (95105: 93.8%) |
+| B4 nuisance family BA ≥ 0.99 (BE, GM) | **Not supported**: BE cf-high 4/5 seeds; GM CF 97.1–98.7% (errors only on execution-irrelevant silent queries) |
+| D1 fewer unsafe accepts for CF under shift (GM) | **Untestable/null**: no arm of GM or CT produced any unsafe accept or failure in 240 cells × 1,000 runs; E1 GM proposals never deviated |
+| D2 CF contains ≥99% of own bad proposals | Supported for CT (100%); vacuous for GM (no bad proposals) |
+| D3 descriptive | all 240,000 runs succeed; CT completeness misses at Δ=10 in every arm (8,550–10,759 per 1,000 runs) |
+| E1 Δ-invariance at fixed normalized preferences | **Supported** (all 45 checkpoints accept at Δ=3…60) |
+| E2 gap threshold at Δ=10 | **Supported in the modified form**: reject at gap 0.1 (all 45), accept at gap ≥0.3 (all 45), gap 0.2 accepted by most; threshold below the native minimum gap 1/3 |
+| F1 cf-neighbor TPR ≥ 0.99 on active-neighbor positives, all seeds | **Supported** (1.0 in all seeds, battery v2; 1,000/1,000 functional) |
+| F2 cf-high 95105 defect replicates on battery v2 | **Supported** (TPR 0.0; 301/1,000 functional) |
+
+Additional posthoc analysis (not pre-registered): every failed run of the 15
+historical failed transfer cells re-executed and classified; all success
+counts reproduce. GM/Transformer 94102: the CF, matched and passive
+checkpoints share every Exchange-1 tensor; the same 181 runs fail in all
+three, containing 274 bad scheduled repair proposals; CF rejects all 274
+(181 progress failures, 0 unsafe writes); matched and passive accept all 274
+(181 safety failures). Johansson/Transformer 83101: all 28 failures are
+cutoffs on cliques ending with every pending vertex in a colliding proposal
+group and every confirmation rejecting. All 11 ColorTrials control cells fail
+only through unsafe accepted writes (collisions).
