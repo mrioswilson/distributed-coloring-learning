@@ -145,3 +145,23 @@ evaluator `src/dcl/pedrorev/transfer.py`.
 Interpretation limits fixed in advance: fewer unsafe accepts is not higher
 functional success; a contained bad proposal can still cost progress (e.g. GM
 repairs are not retried), which is exactly what D3 measures.
+
+## 7. Addendum (registered before Experiment E is run)
+
+**Experiment E (exploratory decision-level probe; ColorTrials scale).** In the
+earlier posthoc probe all fifteen primary CF ColorTrials policies reject a
+strict winner when the global degree reaches 10, with root degree and local list
+fixed. In that probe Δ, the normalized preferences (Δ/Δ, (Δ−1)/Δ) and the
+number of masked palette slots change together. Script
+`scripts/pedrorev-ct-scale-probe.py` separates them on the same constructed
+state: panel G fixes Δ=10 and varies (winner, competitor); panel D fixes the
+normalized preferences at (1, 2/3) and (1, 1/3) and varies Δ ∈ {3,6,12,30,60}.
+Applied to the 15 primary CF checkpoints and the 30 new pedrorev ColorTrials
+checkpoints.
+
+- E1: acceptance is (nearly) invariant in Δ at fixed normalized preferences
+  (panel D), i.e. the masked-slot count is not the driver.
+- E2: at Δ=10, acceptance fails for normalized gaps below the native minimum
+  gap 1/3 and holds at gaps ≥ 1/3 (panel G).
+This is decision-level evidence on one constructed state, not a rollout
+failure rate and not a causal account of all ColorTrials transfer failures.
