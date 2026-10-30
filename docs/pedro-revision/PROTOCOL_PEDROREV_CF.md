@@ -1,0 +1,114 @@
+# Protocol `pedrorev-cf-v1`: budget-controlled continuation supervision and held-out intervention families
+
+Status: written and committed **before** any model of this protocol was trained
+and before the confirmatory battery existed. Configuration:
+`configs/pedrorev-cf.json`. Code: `src/dcl/pedrorev/`,
+`scripts/pedrorev-cf-experiment.py`. Runtime artefacts (banks, checkpoints,
+logits) live in `data/pedrorev-cf/` (not versioned); summaries in
+`results/pedro-revision/cf-experiment/`. Local registration via Git commit;
+this is not an external preregistration.
+
+## 1. Problems addressed
+
+Coauthor review, objection 3 (interpretation of the counterfactual result):
+
+1. The existing BE contrast (passive 60.14%, matched 53.25%, CF 99.9965%
+   seed-mean balanced accuracy) compares procedures that differ in total
+   acquired labels (3,000 vs 6,776). It cannot separate *what* was labelled
+   from *how many* labels were acquired.
+2. The diagnostic states belong to a repeatedly used development split, and
+   the four query colors and intervention generator are shared between training
+   and diagnosis. No intervention family was held out.
+3. It is unclear how much of the continuation behaviour is explained by simple
+   predicates supplied by the interface.
+
+## 2. Hypotheses and pre-declared success criteria
+
+Unit of replication: training seed (five paired seeds 95101–95105). Queries are
+correlated within a seed and are never treated as independent replicates.
+Criteria are stated per seed; "all five seeds" is the pre-declared criterion.
+Exact two-sided sign tests (minimum p = 0.0625 for 5/5) are descriptive only.
+
+**Experiment A (label budget).** For each teacher in {BE, GM, ColorTrials}
+and E1 (normalized) architecture, six arms at 4,000 updates:
+passive/matched/CF at a low total `L_low` (BE, GM 3,000; CT 30,000) and at a
+high total `L_high` (= native 3,000/30,000 plus that bank's continuation
+labels; 6,104–6,776 for BE/GM, 70,000 for CT). Passive/matched controls at
+`L_high` receive **additional native labels** (new teacher trajectories),
+never continuation labels; CF at `L_low` receives fewer native labels plus
+uniformly subsampled continuation labels so that its total equals `L_low`.
+
+- A1. At equal total labels (`L_high`), CF has higher continuation balanced
+  accuracy (BA) than both passive and matched in all five seeds, for BE and GM.
+- A2. CF at `L_low` has higher BA than passive and matched at `L_high` (more
+  than twice CF's labels) in all five seeds, for BE and GM.
+- A3 (mechanism, predicted from native underdetermination): doubling native
+  labels does not make passive/matched reject eligible-active occupied BE
+  queries: their per-seed TNR on that stratum stays below 0.5 at both budgets.
+- A4 (ColorTrials contrast, predicted): because native ColorTrials data contain
+  non-winning negatives, the matched–CF BA gap for CT is smaller than for BE
+  and GM in every seed. Reported descriptively.
+- A5 (functional, descriptive): native functional success on a fresh
+  1,000-run battery is reported for every arm; no superiority hypothesis.
+
+**Experiment B (held-out intervention families; BE).** Arms at `L_high`
+native bank: `cf-noforce` (all forced-participation-of-ineligible-root
+queries removed from training, replaced by the root's native query) and
+`cf-lateocc` (all eligible, participating, occupied-option queries at late KW
+steps, bound ≤ 12, removed).
+
+- B1. CF arms (`cf-high`, `cf-low`) reach BA ≥ 0.99 on query occurrences whose
+  sufficient COMMIT type never occurred in that arm's training inputs, in every
+  seed in which that subset contains both classes.
+- B2. `cf-lateocc` rejects the held-out late-KW occupied queries with per-seed
+  TNR ≥ 0.95 (genuine generalization to a new combination of an intervention
+  type and phase values).
+- B3. `cf-noforce` does **not** reject forced-ineligible queries (per-seed TNR
+  on that family < 0.5) while keeping eligible-active BA ≥ 0.95: an
+  off-support clause of the contract is not recovered from the other clauses.
+  (Predicted negative result supporting semantic underdetermination.)
+- B4. Nuisance family (received neighbor messages randomized; never
+  intervened in any training bank; contract labels provably unchanged for BE,
+  GM, CT): CF arms keep BA ≥ 0.99 per seed for BE and GM.
+
+**Experiment C (semantic controls).** On the same battery, rule baselines
+that read privileged decoded predicates: always-reject; accept-iff-P (root
+participates); accept-iff-P∧E (KW eligibility); accept-iff-P∧F (queried option
+free); and the oracle P∧E∧F. They are not trained competitors and use
+predicates the network receives only implicitly.
+
+## 3. Design details
+
+- Training: `dcl.multicf.training.train` unchanged; Adam 1e-3, batch 64,
+  warmup 100 (CF), checkpoints 1,500 and 4,000; **no selection**: 4,000 is the
+  primary milestone, 1,500 secondary. Same initialization per seed in all arms.
+- Training graphs: sizes 8/12/16/24, nine families, namespace
+  `20261030-pedrorev-cf-v1` (disjoint from all earlier namespaces).
+- Confirmatory continuation battery: namespace
+  `20261030-pedrorev-cf-v1-confirmatory-battery`, 90 exact-teacher trajectories,
+  sizes 32/48/64, ten families, shared by all seeds and arms. Every permitted
+  root of every color phase is queried with the four standard continuation
+  variants and four nuisance variants (fresh RNG).
+- Functional battery: namespace `...-functional-battery`, 1,000 runs, sizes
+  32/48/64, exact teachers validated first.
+- Freeze: all checkpoint hashes are written to `freeze.json` before the
+  battery is generated (the script refuses otherwise).
+
+## 4. Metrics
+
+Per seed, arm, family and stratum: accuracy, BA, TPR, TNR, precision,
+confusion counts. BE strata: forced-ineligible (¬E∧P), silent (¬P),
+eligible-active free (E∧P∧F), eligible-active occupied (E∧P∧¬F). Per sufficient
+type (BE): each distinct type has one label and (at fixed weights) one
+decision; type-level BA weights every distinct type equally; seen/unseen is
+defined relative to (i) the arm's own training inputs and (ii) the shared bank.
+Sufficiency of the type key is checked empirically (zero within-type decision
+disagreement).
+
+## 5. What would change the conclusions
+
+If A1/A2 fail, the existing BE contrast is attributed to label budget and the
+manuscript must say so. If B1/B2/B4 fail, continuation fidelity is reported as
+not generalizing beyond trained types/combinations. If B3 fails (the clause is
+recovered), the claim of semantic underdetermination is withdrawn. All outcomes
+are reported.
