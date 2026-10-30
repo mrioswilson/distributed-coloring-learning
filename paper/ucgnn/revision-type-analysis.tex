@@ -1,0 +1,31 @@
+\paragraph{Equal weight per sufficient local type.}
+Occurrence-weighted accuracy gives frequent local configurations more weight.
+We additionally average accuracy within each sufficient COMMIT input type and
+then over distinct types, separately within each training seed. This measures
+the tested type set, not a natural input distribution or a new training replica.
+Reconstruction with the original RNG and 256-root chunks reproduces every
+historical numerator before this reweighting.
+
+\begin{table}[htbp]\centering\small
+\begin{tabular}{lrrr}
+\toprule Procedure & Occurrence acc. (\%) & BA (\%) & Equal-type acc. (\%) \\
+\midrule
+passive & 22.640 & 60.141 & 50.784 \\
+matched & 9.269 & 53.254 & 46.350 \\
+counterfactual & 99.993 & 99.996 & 99.488 \\
+always reject & 97.046 & 50.000 & 82.317 \\
+eligibility only & 98.599 & 99.278 & 78.973 \\
+\bottomrule
+\end{tabular}
+\caption{Same historical BE queries, three different estimands. Entries
+average five paired seeds. Equal-type accuracy weights the 115--132 distinct
+tested types equally within seed, rather than their 99,840 occurrences.}
+\label{tab:type-weighting}
+\end{table}
+
+These estimates retain both the strong rejection difference and the limits
+of the familiar-type diagnostic. Per-seed seen/unseen, eligibility, silence
+and occupied/free strata, including all confusion counts, accompany the
+type-level occurrence counts in the revision evidence. The split uses the
+union of native and stored CF training types in all historical arms, making
+its novelty criterion common rather than treatment-dependent.

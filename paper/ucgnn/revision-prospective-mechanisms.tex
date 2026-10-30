@@ -1,0 +1,20 @@
+\paragraph{Two distinct BE failure diagnoses (post-test).}
+In the two deteriorated CF seeds, 105001 and 105008, COMMIT BA on the 3,600
+acquired auxiliary queries is 99.510\% and 100.000\%, versus 52.756\%
+and 52.094\% on the held-out contexts. Both models visited all auxiliary
+queries. Failure to fit acquired labels alone does not explain these cases:
+the observed COMMIT gap concerns generalization across contexts, without
+identifying its optimization cause or an architectural impossibility.
+
+Seed 105010 has a different defect: both arms complete only 204/1,000 runs,
+despite final COMMIT BA 99.451\% native and 99.949\% CF. Their shared
+first stage omits participation on 13/118 eligible test roots.
+A replay of the original 32-case cohort localizes the first invariant
+violation in one selected run: at KW step 7, vertex 31 must
+recolor as the bound drops from 21 to 17, but remains at 17
+because participation is false. Its proposed value 12 is free;
+changing only root participation makes COMMIT accept it. Thus this state
+exposes an upstream omission, rather than an incorrect veto of the actual
+silent message. These are selected post-test diagnostics, without retuning,
+a continued rescue rollout or an estimate of causes across all failed runs
+(Appendix~\ref{app:be-failure-diagnostics}).

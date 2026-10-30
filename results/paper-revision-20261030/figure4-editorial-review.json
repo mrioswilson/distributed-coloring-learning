@@ -1,0 +1,101 @@
+{
+  "completed_utc": "2026-10-30T11:04:07.516435+00:00",
+  "scope": "Figure 4 editorial replacement; experimental results and protocol unchanged",
+  "previous_manifest_sha256": "d9c067e8b4449a37bd74719c947bbfaed8b59e445ea8639f6cb5b8221a0e1902",
+  "previous_pdf_sha256": "ff64a5af362be2065241b63098c8a80debf286ccdb811620e510ddcb1ece9e69",
+  "current_pdf_sha256": "5292e8c8b35f3cdeec4b518af177641a73b12772d579b985b4c94ea9f022836f",
+  "changed_existing_manifest_paths": [
+    "docs/PAPER_REVISION_REPRODUCE.md",
+    "paper/ucgnn/main.pdf",
+    "paper/ucgnn/main.tex",
+    "results/paper-revision-20261030/build/01-pdflatex.txt",
+    "results/paper-revision-20261030/build/03-pdflatex.txt",
+    "results/paper-revision-20261030/build/04-pdflatex.txt",
+    "results/paper-revision-20261030/paper-build.json",
+    "results/paper-revision-20261030/paper-build.log",
+    "results/paper-revision-20261030/paper-text.txt",
+    "results/paper-revision-20261030/pdf-fonts.txt",
+    "scripts/build-revision-assets.py",
+    "scripts/package-paper-revision.py"
+  ],
+  "unchanged_existing_manifest_files": 193,
+  "runtime_files_verified": 300,
+  "runtime_archive_unchanged": true,
+  "pages": 23,
+  "unresolved_references": [],
+  "overfull_boxes": [],
+  "figure_source": {
+    "status": "compact editorial replacement of Figure 4; experimental results unchanged",
+    "source": "results/final-closure/generalization-cells.csv",
+    "source_sha256": "f675a80a87ef52f581e665589d81a1b078dc21803ce1c290b605805b57965451",
+    "filter": {
+      "stage": "confirmatory",
+      "primary": "True"
+    },
+    "cells": 450,
+    "zero_failure_cells": 448,
+    "executions": 450000,
+    "failures": 209,
+    "nonzero_rows": [
+      {
+        "stage": "confirmatory",
+        "checkpoint": "JOHANSSON-transformer-historical-primary-passive-s83101",
+        "sha256": "231665deba8f1e736eef2bba2964ed14d1f5e14190a5d208caf416b688ee3335",
+        "teacher": "JOHANSSON",
+        "architecture": "transformer",
+        "cohort": "historical-primary",
+        "primary": "True",
+        "method": "passive",
+        "seed": "83101",
+        "condition": "global-n64-d10-mixture1000",
+        "n": "64",
+        "delta": "10",
+        "palette": "global",
+        "executions": "1000",
+        "successes": "972",
+        "failures": "28",
+        "cp95_lower": "0.9597851126261567",
+        "cp95_upper": "0.9813153138044625",
+        "interval_scope": "pointwise_95_under_declared_iid_mixture",
+        "rows_path": "results/multiteacher-degree-generalization/confirmatory/JOHANSSON-transformer-historical-primary-passive-s83101/global-n64-d10-mixture1000/rows.json",
+        "rows_sha256": "113569af889b79e9581220be4ceb8a4c7c1354600e792dfa5a2d6a1efc56022f"
+      },
+      {
+        "stage": "confirmatory",
+        "checkpoint": "SPECULATIVE_GM-transformer-counterfactual-primary-counterfactual-s94102",
+        "sha256": "e769226d5ac63f095fd02ddd6163d6a2eb369afd37e291f9a3d38578cef4cc79",
+        "teacher": "SPECULATIVE_GM",
+        "architecture": "transformer",
+        "cohort": "counterfactual-primary",
+        "primary": "True",
+        "method": "counterfactual",
+        "seed": "94102",
+        "condition": "local-n64-d4-mixture1000",
+        "n": "64",
+        "delta": "4",
+        "palette": "local",
+        "executions": "1000",
+        "successes": "819",
+        "failures": "181",
+        "cp95_lower": "0.7937091934424307",
+        "cp95_upper": "0.8423962581557707",
+        "interval_scope": "pointwise_95_under_declared_iid_mixture",
+        "rows_path": "results/multiteacher-degree-generalization/confirmatory/SPECULATIVE_GM-transformer-counterfactual-primary-counterfactual-s94102/local-n64-d4-mixture1000/rows.json",
+        "rows_sha256": "ff7197d3747b4c9e5e7ee4c73b42bf4072476ae43c7a7f45974b608e1579f9eb"
+      }
+    ],
+    "outputs": {
+      "results/paper-revision-20261030/figure4.png": "098960a0d11741c0b14b4782b3c9e7ddc75869fa90419781056e287725c9d8a0",
+      "results/paper-revision-20261030/figure4.pdf": "bd08e5010bb0105aeab2d95d4aea3ce22e160cb2a8c429804d1d23ba52eb190d",
+      "paper/ucgnn/figures/closure-generalization-compact.pdf": "bd08e5010bb0105aeab2d95d4aea3ce22e160cb2a8c429804d1d23ba52eb190d"
+    }
+  },
+  "visual_review": {
+    "inspected_pages": [
+      10
+    ],
+    "figure_and_caption_legible": true,
+    "mechanism_analysis_visible": true
+  },
+  "audit_status": "Scientific audit findings remain open except for the Figure 4 editorial replacement; independent human review pending"
+}

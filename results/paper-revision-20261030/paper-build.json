@@ -1,0 +1,73 @@
+{
+  "engine": "native-pdflatex-bibtex",
+  "machine": "aarch64",
+  "python": "3.12.3",
+  "source_date_epoch": 1793354084,
+  "commands": [
+    [
+      "pdflatex",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "main.tex"
+    ],
+    [
+      "bibtex",
+      "main"
+    ],
+    [
+      "pdflatex",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "main.tex"
+    ],
+    [
+      "pdflatex",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "main.tex"
+    ]
+  ],
+  "compiler": {
+    "pdflatex": {
+      "path": "/usr/bin/pdftex",
+      "sha256": "6ebc4fde0d8e66104fb23d6ce1d7397b8fc2ae1a8bacc1a99896a439caa50e61",
+      "version": "pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian)"
+    },
+    "bibtex": {
+      "path": "/usr/bin/bibtex.original",
+      "sha256": "c8220108a1b4b1393aa7139a29c4f843cd7b66b5d2d574fee3f3867f7a560e83",
+      "version": "BibTeX 0.99d (TeX Live 2023/Debian)"
+    }
+  },
+  "pages": 27,
+  "pdf_sha256": "196e2fccbd3401abebc42a995cf132b5c8a4a9406633172d97eb6623ddec5984",
+  "source_sha256": {
+    "paper/ucgnn/factorial-size-degree.tex": "5ca67f8f0896afaf04a9cd51ec74cbc6dc46289c23e03c28fe60c78a456a0824",
+    "paper/ucgnn/global-distributions.tex": "c8d7dbb8170e311945fcde9632765196edf766c572a95cab294d79564a607492",
+    "paper/ucgnn/local-palette-details.tex": "206b4229c56ab489a332e4649106d076207c1ef8f2037194d3e3858e8a142c31",
+    "paper/ucgnn/local-palettes.tex": "4a34c7114604db249d494295e64a3365b8250626ab905cb36604034aafc978dc",
+    "paper/ucgnn/main.tex": "bd303c9da5ff5068709b56a90f33a23c6d85807aa8d363122596d260a3032bb3",
+    "paper/ucgnn/multicf-details.tex": "9df5afe32c9010925400600552aa0495a556bdd96014beb7fcd773f9ca6f1271",
+    "paper/ucgnn/pre-counterfactual-main.tex": "6a6b9fd3f6f5a698b55d023b597341ae46a507b2ca4ae9d7e35529bd1d8e9148",
+    "paper/ucgnn/pre-integration-main.tex": "1c3ae23effe2ec41bfcfeefe747966b02936107c00b40071cdc49f4fe7ee6613",
+    "paper/ucgnn/pre-sample-complexity-main.tex": "f13d89ea8fab99a57e94dc7f097fc29e8f2430ce1e4b383abd781e9dc2bff01e",
+    "paper/ucgnn/revision-architecture.tex": "40ea2c93fe167b24b6a908e2e96a08e4062b264bbded6aae7ae67ced6ab4cbf8",
+    "paper/ucgnn/revision-contracts.tex": "3b4926b705651ea2846ad0479dd31e34adab9f1cb53afcaa926202ac31bff7a5",
+    "paper/ucgnn/revision-prospective-audit-details.tex": "936072b8719a83c4196245cbf02dfaeff9be61c4efaf5ac6e52aa99d7a85b330",
+    "paper/ucgnn/revision-prospective-audit.tex": "41b4059ae0dd0b37f02bc29eba9cee2d71628a197eb8454f8960666e06737060",
+    "paper/ucgnn/revision-prospective-details.tex": "06e7f90fdb7d9ffbcb867099a39f4647080a08effbab29debec7c9b59cc4182c",
+    "paper/ucgnn/revision-prospective-mechanism-details.tex": "212a5bce27814d72971eb5f4fd0bb71eff26600476294c3e4681ca847fb2cece",
+    "paper/ucgnn/revision-prospective-mechanisms.tex": "97659ac4eaddd8cc55bd6fa77035c61fb58c3729cf2af747536555e3c9da9a71",
+    "paper/ucgnn/revision-prospective-methods.tex": "4facbcbdeadf5b715f179345f5e487a450e8289a830be077c5a8f8ac6e0c014d",
+    "paper/ucgnn/revision-prospective.tex": "966f9b1c2ecc0a6aae0411a4e4a7b7550d785041e344984599385dc282b48092",
+    "paper/ucgnn/revision-rescue-details.tex": "be5fa33262a1914ad31979516398e37693297be123ade02cf1d8f0b39bb56a41",
+    "paper/ucgnn/revision-rescues.tex": "c5358660b7b3b0d9b443ee65bda943339aec2e676c13a0830353bd71e80c2b52",
+    "paper/ucgnn/revision-theory.tex": "9e43d1097bed3ee6ab021dee484387d85275a102378c73a4a7edec7f5c73c878",
+    "paper/ucgnn/revision-type-analysis.tex": "2d6be3e42675d8c6f32ccf89ef87c54a0dc6d7d6868dc2f46c4c5ee89d11e254",
+    "paper/ucgnn/robust-distributions.tex": "fec546cb9f6bb98490449ca7fc45a7688de52a5d4d1d00cfe700341183195530"
+  },
+  "unresolved_references": [],
+  "overfull_boxes": [],
+  "visual_review": "Renders produced; visual inspection recorded separately, not implied by compilation.",
+  "historical_engine": "Old Linux x86-64 Tectonic receipt preserved; not executed on this ARM host."
+}

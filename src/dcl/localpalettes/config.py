@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import hashlib
+import os
 from pathlib import Path
 
 ROOT = Path('data/ucgnn-local-palettes')
 RESULTS = Path('results/ucgnn-local-palettes')
-PREVIOUS = Path('/workspaces/AlgoLearning/ucgnn-paper-study')
+PREVIOUS = Path(os.environ.get('DCL_PAPER_STUDY_ROOT', Path(__file__).resolve().parents[3]))
 PROTOCOL = Path('docs/LOCAL_PALETTES_STATISTICAL_PROTOCOL.md')
 TREATMENTS = ('normalized', 'raw_endpoints', 'sum', 'mean', 'deepsets', 'transformer')
 SEEDS = range(41000, 41005)

@@ -10,7 +10,7 @@ from dcl.localpalettes.adapter import LocalPaletteAdapter
 
 def test_all_fifteen_checkpoint_identities_actions_reset():
     torch.set_num_threads(1)
-    previous=json.loads(Path('/workspaces/AlgoLearning/ucgnn-local-palette-study/results/ucgnn-local-palettes/frozen-checkpoints.json').read_text())
+    previous=json.loads(Path('results/ucgnn-local-palettes/frozen-checkpoints.json').read_text())
     previous={s['label']:s for s in previous}
     selected=specs();assert len(selected)==15
     for s in selected:

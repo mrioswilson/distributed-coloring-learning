@@ -1,0 +1,82 @@
+\section{Prospective Equal-Budget Continuation Experiment}\label{sec:prospective}
+We test a separate acquisition-strategy contrast with BE/E1 and GM/E1
+(19,396 parameters). Ten fresh paired seeds per teacher give forty models.
+Before training, a fixed SHA256 partition holds out 20\% of sufficient
+queried-slot COMMIT type buckets, common across seeds. Phase, root/context
+features and distinct neighbor message types determine this key; MAX removes
+multiplicity. Neither training arm supervises a held-out continuation type.
+LINIAL and DETECT remain separate native targets. This is a split of input
+contexts within the same intervention templates. It does not withhold all
+coarser oracle-relevant configurations (quantified below).
+
+Each pair shares 3,000 native component targets and 3,600 fresh auxiliary
+rooted states. On each auxiliary state the native arm acquires one native
+COMMIT target and CF one prespecified intervened COMMIT target. Both queries
+must pass the training-type filter to retain that state. GM auxiliary quotas
+are 1,800 ASSIGN and 1,800 REPAIR; BE uses KW only. Each model therefore
+accesses 6,600 optimization targets. Native P/C conditioning is supplied to
+both arms equally and charged separately: 7,200 root values plus retained
+neighbor values. Simulator computation, rejected states and duplicate queries
+are also recorded; this does not equate all teacher-computation costs.
+The root option cycles through native-option offsets 0,1,2,3 modulo four.
+Participation is the root permission, except that offset three independently
+silences it with probability 1/4; neighbor messages remain native. The cursor
+advances before filtering, including discarded roots. Test queries use the
+same intervention and retain held-out CF types; their phase quotas are
+4,000 KW or 2,000 each ASSIGN/REPAIR. This single-query design differs from
+the historical four-query diagnostic. Appendix~\ref{app:prospective-method}
+specifies the key, serialization, hash and acquisition order.
+
+Adam, batch 64 and 1,500 updates are fixed before test, with 100 matched warmup
+updates and the same subsequent native/auxiliary loss weighting. Paired data,
+initialization, index sequences and first-stage final tensors agree. All forty
+weights are frozen before generating 4,000 held-out queries per seed/teacher
+on sizes 28/36 and evaluating 1,000 autonomous runs per model on sizes 32/48/64.
+All exact references pass. Every final continuation has zero intersection
+with its training sufficient-type set; both truth classes occur in every seed.
+
+
+\begin{table}[htbp]\centering\small
+\begin{tabular}{lrrlc}
+\toprule Teacher & Native BA & CF BA & Paired difference [95\% interval] & Successes N / CF \\
+\midrule
+BE & 84.64 & 90.41 & +5.77 [-13.73,+25.26] & 9,204 / 7,405 \\
+GM & 50.00 & 100.00 & +50.00 [+50.00,+50.00] & 10,000 / 10,000 \\
+\bottomrule
+\end{tabular}
+\caption{New final experiment. BA is a percentage; differences and intervals are percentage points,
+averaged over ten paired training seeds. Intervals bootstrap paired seeds
+(10,000 resamples), conditional on this fixed split/protocol; individual
+queries are not independent replications. Success totals are out of 10,000
+autonomous runs per teacher/arm. No checkpoint selection uses these tests.}
+\label{tab:prospective}
+\end{table}
+
+GM equal-type accuracy is 35.44\% native and 100.00\% CF; both arms average 26.01 native steps.
+
+GM gains 50 percentage points in every paired seed without changing any
+autonomous outcome or mean step count. Its degenerate bootstrap interval
+reflects those identical observed seed differences, not certainty over all
+future types or training replicas. BE's mean difference is +5.77 points, but
+the interval spans zero (\(-13.73,+25.26\)). BE equal-type accuracy increases
+from 51.70\% to 86.94\%, while the two endpoints weight errors differently.
+CF adds false negatives in two BE seeds and reduces autonomous successes from
+9,204 to 7,405; one further seed has identical failures in both arms.
+Mean step counts over \emph{all} final runs (14.53 native versus 13.43 CF)
+include early exits on failure. Every successful BE run takes 15 native
+steps in both arms; the lower overall mean is not a successful-run speedup.
+These are substantive negative results for a uniform-benefit claim.
+
+\input{revision-prospective-audit.tex}
+\input{revision-prospective-mechanisms.tex}
+
+The primary endpoint concerns held-out continuation types; autonomous success
+is secondary. This finite comparison concerns the specified acquisitions at
+equal target/context access. It supports neither extrapolation to new logical
+conditions nor an advantage over alternative informative-negative acquisition
+strategies. BE's occurrence-level endpoint must be read with its diagnostic
+baseline and type weighting; GM's control lacks negative color confirmations.
+No universal CF superiority, minimum sample complexity or all-source teacher
+efficiency follows.
+The protocol, forty checkpoints, all seed outcomes, per-component costs and
+freeze receipts accompany the new results (Appendix~\ref{app:prospective}).

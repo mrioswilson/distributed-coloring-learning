@@ -1,26 +1,46 @@
 # Learning Distributed Coloring Rules
 
-The current scientific closure is dated **26 October 2026** on the local
+The **30 October 2026 revision** is in [the canonical article](paper/ucgnn/main.pdf)
+and [its TeX source](paper/ucgnn/main.tex). It adds explicit continuation
+contracts, type-aware BE reanalysis, component interventions on failure
+witnesses and a separate forty-model prospective BE/GM experiment. Start with
+the [claim/evidence matrix](docs/PAPER_REVISION_CLAIMS.md),
+[fixed prospective protocol](docs/PAPER_REVISION_PROTOCOL.md) and
+[reproduction commands](docs/PAPER_REVISION_REPRODUCE.md).
+New evidence is under `results/paper-revision-20261030`; the earlier source/PDF
+are preserved in `paper/ucgnn/archive/pre-revision-c3affd16.*`.
+The original main workspace and its pre-existing changes are preserved.
+The scientific correction adds post-test programmed controls, class/phase
+coverage and support counts. BE's gate baseline outperforms CF on occurrence
+BA while CF improves equal-type accuracy; GM's native color control has no
+negative confirmations. Held-out fine contexts mostly reuse logical oracle
+configurations. The original trial, split, weights and primary results are
+retained. See the [revision report](docs/PAPER_REVISION_REPORT.md).
+
+The preceding scientific closure is dated **26 October 2026** on the local
 `research/scientific-closure-20261026` branch. Start with the
 [closure decision and fifteen answers](docs/PAPER_CLOSURE_DECISION.md),
-[compiled manuscript](paper/ucgnn/main.pdf),
+[archived closure manuscript](paper/ucgnn/archive/pre-revision-c3affd16.pdf),
 [final evidence audit](docs/FINAL_EVIDENCE_AUDIT.md),
 [adversarial reviews and responses](docs/ADVERSARIAL_REVIEW.md), and
 [claim register](docs/EVIDENCE_REGISTER.md).
 
 The authoritative source is [main.tex](paper/ucgnn/main.tex), with build and
 runtime instructions in [the paper README](paper/ucgnn/README.md). Use
-`scripts/build-closure-assets.py` and `scripts/build-closure-paper.py` for the
-current version. The historical generators below refuse to overwrite it;
+`scripts/build-revision-assets.py` and `scripts/build-revised-paper.py` for the
+current version. The historical PDF generators refuse to overwrite it;
 run those in a separate checkout of their historical source commit.
-The current PDF and page count are identified by the final build receipt.
+The current PDF and page count are identified by
+`results/paper-revision-20261030/paper-build.json`.
 
 The audit reconciles 808,413/810,000 confirmatory executions, including
 449,791/450,000 primary-policy observations, and replays all fifteen failed
 cells. Native 21/21 coverage combines twelve historical and nine new packages.
 Counterfactual comparisons retain unequal-label and development-reuse limits,
-class-aware baselines, and all negative results. Closure trains no new models
-and performs no push or release publication.
+class-aware baselines, and all negative results. That archived closure added
+no new models; the separate 30 October trial trained forty. The revised source,
+PDF and reproducibility artifacts are delivered on `codex/paper-revision-20261030`.
+The revision does not create a separate GitHub release.
 
 ## Preserved pre-closure project description
 
@@ -57,7 +77,7 @@ supplies the full source-history bundle, runtime files, checkpoints, datasets
 and original M6 recovery artifacts, with SHA-256 manifests.
 That historical PDF was 36 pages; `pre-counterfactual-main.{tex,pdf}` preserves
 the preceding integrated manuscript byte for byte. No historical result or
-unavailable Pedro checkpoint is replaced by these new trainings.
+Pedro checkpoint is replaced by these new trainings.
 
 The historical [Markdown paper](paper/PAPER_DRAFT.md), the
 [independent-review dossier](docs/PAPER_SCIENTIFIC_AUDIT.md), and the
@@ -112,11 +132,12 @@ Almost-sure uncapped termination differs from completion by a fixed cutoff.
 Exact-teacher guarantees do not automatically transfer to learned heads.
 
 The [Pedro reconstruction](docs/integration/PEDRO_RESEARCH_RECONSTRUCTION.md)
-covers his direct GNN, E1 adaptations and behavioral study. Five retrained and
-35 native E1 weights, source pools and original raw banks remain unavailable;
-their identities are in the [source manifest](docs/integration/PEDRO_SOURCE_MANIFEST.json).
-Their numerical tables are archival evidence, not independently replayed
-models. Newly trained checkpoints do not replace those missing artifacts.
+covers his direct GNN, E1 adaptations and behavioral study. The five retrained
+and 35 native E1 weights are now available locally and match the
+[source manifest](docs/integration/PEDRO_SOURCE_MANIFEST.json). This verifies
+weight availability only; the revision does not newly replay that cohort or
+claim recovery of every original raw bank. Newly trained checkpoints do not
+replace the historical models.
 
 ## Architectures and baselines
 
@@ -446,8 +467,9 @@ preserved. Historical partial snapshots are not the integrated final evidence.
 
 ## Limitations and next work
 
-Recovering Pedro's 40 weights and raw banks is necessary for historical
-model-level replay. New native training has two seeds and five fixed test
+Pedro's forty original weights are locally SHA-verified; complete historical
+model/raw-bank replay remains separate work. The earlier balanced native
+study has two seeds and five fixed test
 graphs, so it does not yield population rankings. Supplied native schedules
 remain explicit. Earlier high-degree/local-list evidence does not transfer
 automatically to every teacher or small model. Native status meanings differ

@@ -1,0 +1,82 @@
+\section{New Prospective Replicas and Costs}\label{app:prospective}
+
+\begin{longtable}{llrrrrr}
+\caption{All new final seed outcomes. BA is a percentage; differences are
+percentage points. Successes are out of 1,000 per model. N expands native confirmations.}\\
+\toprule Teacher & Seed & N BA & CF BA & Difference & N success & CF success \\
+\midrule\endfirsthead
+\toprule Teacher & Seed & N BA & CF BA & Difference & N success & CF success \\
+\midrule\endhead
+BE & 105001 & 99.435 & 52.756 & -46.679 & 1000 & 100 \\
+BE & 105002 & 99.334 & 99.872 & +0.538 & 1000 & 1000 \\
+BE & 105003 & 99.539 & 99.987 & +0.448 & 1000 & 1000 \\
+BE & 105004 & 50.193 & 99.923 & +49.730 & 1000 & 1000 \\
+BE & 105005 & 50.320 & 99.885 & +49.565 & 1000 & 1000 \\
+BE & 105006 & 99.152 & 99.897 & +0.746 & 1000 & 1000 \\
+BE & 105007 & 50.348 & 99.923 & +49.575 & 1000 & 1000 \\
+BE & 105008 & 99.195 & 52.094 & -47.101 & 1000 & 101 \\
+BE & 105009 & 99.462 & 99.859 & +0.397 & 1000 & 1000 \\
+BE & 105010 & 99.451 & 99.949 & +0.498 & 204 & 204 \\
+GM & 105001 & 50.000 & 100.000 & +50.000 & 1000 & 1000 \\
+GM & 105002 & 50.000 & 100.000 & +50.000 & 1000 & 1000 \\
+GM & 105003 & 50.000 & 100.000 & +50.000 & 1000 & 1000 \\
+GM & 105004 & 50.000 & 100.000 & +50.000 & 1000 & 1000 \\
+GM & 105005 & 50.000 & 100.000 & +50.000 & 1000 & 1000 \\
+GM & 105006 & 50.000 & 100.000 & +50.000 & 1000 & 1000 \\
+GM & 105007 & 50.000 & 100.000 & +50.000 & 1000 & 1000 \\
+GM & 105008 & 50.000 & 100.000 & +50.000 & 1000 & 1000 \\
+GM & 105009 & 50.000 & 100.000 & +50.000 & 1000 & 1000 \\
+GM & 105010 & 50.000 & 100.000 & +50.000 & 1000 & 1000 \\
+\bottomrule
+\end{longtable}
+
+
+\begin{table}[htbp]\centering\small
+\begin{tabular}{llr}
+\toprule Teacher & Base target component & Count range across ten banks \\
+\midrule
+BE & confirmation & 944--944 \\
+BE & linial point & 168--168 \\
+BE & participation & 944--944 \\
+BE & proposal & 944--944 \\
+GM & confirmation & 744--754 \\
+GM & conflict mark & 738--768 \\
+GM & participation & 744--754 \\
+GM & proposal & 744--754 \\
+\bottomrule
+\end{tabular}
+\caption{Base supervision sums to exactly 3,000 per seed. Both arms add
+3,600 auxiliary COMMIT targets. Context values and simulator costs are
+reported separately, not absorbed into a free-label assumption.}
+\end{table}
+
+Each pair physically acquires 10,200 optimization targets: one shared
+3,000-target base and two 3,600-target auxiliary banks. Each model accesses
+6,600 targets, so shared physical acquisition and summed model access differ.
+The shared auxiliary P/C context contains 7,200 root scalar occurrences and
+additional real-neighbor occurrences. Base root P/C context overlaps base
+target labels; its neighbor conditioning values are also recorded separately.
+These are scalar occurrences, not claims about distinct simulator calls.
+
+\code{results/paper-revision-20261030/prospective-summary.json} records the
+per-seed component counts, complete-query duplicates, phase quotas, contexts
+considered/rejected, observed simulator states, acquisition CPU/wall time and
+paired bootstrap outputs. Training records separately retain presentations,
+visited targets, source/data hashes and optimizer CPU/wall time. One run's
+wall time includes a shared-host memory stall; wall time is not a FLOP or
+teacher-sample-efficiency estimate. All training remains at update 1,500.
+The original source/config freeze predates scientific training; the complete
+forty-weight freeze is dated 30 October 2026, 10:11:58 UTC, before any new
+final diagnostic generation. No final outcome selects a milestone, protocol
+change, seed exclusion or replacement model.
+
+The recorded source freeze covers the enumerated files, not a complete
+transitive dependency or environment lock. In particular, graph generation,
+storage and sample-complexity data helpers outside that list are not sealed
+by this receipt. Their stability is not independently timestamped here.
+The original freeze is preserved; this limitation is not repaired by
+retrospectively adding hashes to it.
+
+\input{revision-prospective-methods.tex}
+\input{revision-prospective-audit-details.tex}
+\input{revision-prospective-mechanism-details.tex}

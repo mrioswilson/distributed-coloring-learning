@@ -1,0 +1,64 @@
+\subsection{Selected BE failure diagnoses after the test}\label{app:be-failure-diagnostics}
+Frozen-model inference covers both arms of BE seeds 105001, 105002, 105004,
+105008 and 105010, plus both GM arms in 105001. This deliberately selected
+set includes good and bad outcomes; it does not estimate their prevalence.
+There are 102,128 COMMIT predictions on existing native-color,
+auxiliary-training and final banks. All 48,000 final predictions
+reproduce the original confusion counts; no weights, split or primary
+results are changed. This diagnosis uses neural inference, separately from
+the preceding array-only coverage audit.
+
+
+\begin{table}[htbp]\centering\small
+\begin{tabular}{lrrrrr}
+\toprule CF seed & Aux. BA & Final BA & Aux. FN & Final FN & Final FP \\
+\midrule
+105001 & 99.510 & 52.756 & 1 & 98 & 10 \\
+105008 & 100.000 & 52.094 & 0 & 83 & 16 \\
+\bottomrule
+\end{tabular}
+\caption{Selected BE COMMIT generalization failures. BA is a percentage.
+Each row evaluates the arm's 3,600 acquired auxiliary queries and the 4,000
+held-out final queries. All auxiliary targets were visited during training;
+neither selected model has an auxiliary false positive. The contexts differ,
+so this is a descriptive fit/test contrast, not a new randomized comparison.}
+\label{tab:be-fit-test}
+\end{table}
+
+The two CF models also classify all 944 native-color base queries correctly.
+Their held-out-context errors coexist with near-perfect acquired-label fit;
+this does not identify a unique shortcut, optimization cause or limitation
+of representational capacity.
+
+For seed 105010, native and CF first-stage tensors are identical. On 4,000
+teacher-prefix test states their participation head omits 13 of
+118 eligible roots, with no false activation. On 3,600 auxiliary
+states it omits 4 of 128 eligible roots and falsely activates
+1 ineligible root. Auxiliary P/C values condition the COMMIT loss;
+they are not direct participation-loss targets. These first-stage scores on
+auxiliary states are evaluations, not evidence of failure to fit a
+participation training objective there. Candidate options equal the native
+ones throughout both banks, with no occupied proposals at eligible roots.
+
+The witness is \code{final-s105010-0000}, a 32-node path in the native arm.
+Replay preserves the first 32 original cases in their original order,
+cohort size 32 and root batch size 1,024. All 32 terminal color vectors,
+step counts, failures, invariant flags and correctness flags match the
+original records. In the selected case the state before step 7 is a
+proper auxiliary coloring bounded by 21. Vertex 31 has value 17
+and must recolor when the interpreter lowers the bound to 17.
+Its participation logit is -0.420059, so it waits, leaving 17 outside
+$[0,17)$. Its option 0 decodes to the free value 12,
+also chosen by the exact native rule. The actual COMMIT logit -11.225789
+correctly rejects silence. Setting only this root's participation bit to
+true, with identical first-stage tensors, candidates and all other messages,
+gives logit +4.629150 and the correct positive oracle label. The
+observer's re-evaluated actions match the original actions at this frame.
+The intervention is only a local query; unchanged actions drive the replay.
+It locates the first violation in this case, without showing that all 796
+failed runs share this mechanism or that the intervened run would complete.
+
+\path{scripts/probe-revision-be-failures.py} reproduces the diagnosis;
+\path{results/paper-revision-20261030/be-failure-diagnostics.json} records
+input hashes, counts, graph/tape seeds and the local intervention. This is
+post-test explanatory evidence, not independent scientific review.

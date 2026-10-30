@@ -1,0 +1,32 @@
+\section{What Confirmation Can and Cannot Guarantee}\label{sec:interpretation}
+Safety and progress require different hypotheses. Exact availability and
+equal-offer rejection preserve partial properness; always waiting is also
+safe. For independent fresh proposal laws $q_v$ and participation $p_v$,
+conditioned on history before those draws, the exact anonymous rule gives
+\[
+ \Pr(v\text{ commits}\mid S)=p_v\sum_{c\in\A_v}q_v(c)
+ \prod_{u\in U_v}(1-p_uq_u(c)).
+\]
+Uniform available proposals yield the exact teachers' positive progress
+bounds (Appendix~\ref{app:teachers}). Concentrating both endpoint proposals
+on the same color can make the product zero under always-active Johansson,
+even with perfect COMMIT. A finite draw probe demonstrates observed
+concentration, not a proof of zero alternative probability.
+
+GM uses a different argument: exact marks cover all speculative conflict
+edges and every queued repair writes a currently free color. The queue
+visits each marked vertex once. Correctly rejecting an occupied proposal
+satisfies the continuation rule but violates the required repair-write
+condition; there is no automatic retry. The two witness interventions test
+these specific missing hypotheses directly.
+
+The finite-type MAX condition in Appendix~\ref{app:math} certifies one
+canonical COMMIT predicate when every required local type satisfies the
+sign inequalities. It does not certify candidate diversity, scheduled
+repair, or palette-context invariance. All 45 selected canonical transfer
+cores fail that sufficient condition; five \emph{different} historical E1
+weights pass conditional certificates. Successful finite runs do not convert
+either cohort into a universally certified learned algorithm. The elementary
+ID-observation obstruction and representation controls appear in
+Appendix~\ref{app:ids}; numerical sensitivity is distinguished from missing
+information.

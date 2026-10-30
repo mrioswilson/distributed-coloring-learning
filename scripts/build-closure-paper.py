@@ -6,16 +6,17 @@ from pathlib import Path
 import re
 import subprocess
 
-import pypdfium2 as pdfium
-from dcl.study.storage import file_hash
-
-
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--compiler", type=Path, default=Path(".tools/tectonic"))
     args = p.parse_args()
     out = Path("results/final-closure")
     paper = Path("paper/ucgnn")
+    if "% Scientific revision dated" in (paper / "main.tex").read_text():
+        raise SystemExit("Historical closure builder refuses the revised manuscript; use scripts/build-revised-paper.py or a historical checkout.")
+    import pypdfium2 as pdfium
+    from dcl.study.storage import file_hash
+
     out.mkdir(parents=True, exist_ok=True)
     binary = args.compiler.resolve()
     assert file_hash(binary) == "a98aa59ad5c1df39a6c9e56cbfc5088f2b11d6c179c0130b97998e4bd46a46da"

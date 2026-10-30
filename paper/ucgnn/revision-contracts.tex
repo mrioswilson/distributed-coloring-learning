@@ -1,0 +1,69 @@
+\paragraph{A continuation is a specified target, not an inferred intention.}
+Fix a legal teacher-prefix state $S$, including its phase, permissions $w$,
+IDs, slots, private inputs and derived algebraic data. After the first
+exchange, a rooted query supplies typed messages $(p_u,c_u)$ at the root and
+its neighbors: $p_u\in\{0,1\}$, $p_u\le w_u$, $c_u\in C_u$ (four option
+indices for KW). Let $F_v(c)$ mean that the queried color, or the decoded
+receiver-relative KW option, is unoccupied. Define
+\[
+ E_v=\begin{cases}
+ w_v\,\mathbf1[\text{no pending neighbor has a larger ID}],&T=\mathrm{JP},\\
+ w_v\,\mathbf1[a_v\ge q],&T=\mathrm{BE}\text{ in KW},\\
+ w_v,&\text{otherwise}.
+ \end{cases}
+\]
+The binary confirmation oracle is
+\begin{equation}\label{eq:oracle}
+ O_T(S,p,c)=E_v p_v F_v(c_v)\,R_T(S,p,c),
+\end{equation}
+where $R_T$ is the rule-specific condition below. It returns a confirmation
+bit; it does not select a new color, repair an invalid proposal, or promise
+progress. Its agreement with the native decision is checked when $p,c$ are
+the native messages. Off-policy targets are defined by this extension of the
+rule, rather than uniquely identified by the original native trace.
+
+\begin{table}[htbp]\centering\small
+\begin{tabular}{p{.18\linewidth}p{.38\linewidth}p{.35\linewidth}}
+\toprule Rule & $R_T$ and separate targets & Legal state and permitted intervention \\
+\midrule
+Luby, Johansson & No active neighbor offers $c_v$ & Proper partial state;
+replace typed participation/candidate messages after first exchange \\
+JP & No active neighbor offers $c_v$ & Proper partial state; fixed coherent
+distinct IDs. New ID assignments precede replay, not independent edge edits \\
+ColorTrials & Root preference for $c_v$ strictly exceeds every writable
+neighbor's preference when that color is free there & Proper partial state;
+preferences and their availability-dependent messages stay coherent.
+Silencing $p_u$ does not remove that neighbor's preference message \\
+BE & $R_T=1$ in KW. LINIAL has a separate legal-point target & Proper
+auxiliary coloring from validated reduction prefix; change option query,
+not polynomial evaluations, equalities, clock or bounds \\
+GM, Greedy & $R_T=1$ in color phases. GM DETECT separately marks the
+smaller-ID endpoint of each equal-color/equal-slot edge & Scheduled
+prefix; GM allows legal temporary same-slot conflicts. Repair queue follows
+marks. Replace P/C without independently editing marks or queue \\
+\bottomrule
+\end{tabular}
+\caption{Self-contained continuation contracts. The main experiments use
+rooted message queries, not arbitrary edited global states. Alternative
+prefixes must satisfy the teacher's native safety/schedule constraints.}
+\label{tab:contracts}
+\end{table}
+For ColorTrials the competing preference is $-1$ when the neighbor is not
+writable or its queried color is occupied; strict comparison includes ties
+as rejection. For GM, $F_v$ is computed against actual speculative colors,
+including during repair. DETECT does not use a P/C continuation label.
+For BE, a queried index $c$ decodes to $(B-1-a_v)4+c$ at a high auxiliary
+color, with $q=\lceil4B/5\rceil$. Low colors cannot recolor. LINIAL predicts
+an unblocked evaluation point; the interpreter computes the corresponding
+polynomial value. This supplied arithmetic is not learned.
+
+\paragraph{Worked KW continuation.}
+A replayed training witness has $B=7$, $q=6$, root auxiliary color $a_v=6$
+and neighbor auxiliary colors $3,0,1$. Its four decoded options are
+$0,1,2,3$, so only option index 2 is free. With $w_v=p_v=1$,
+$O_{\rm BE}(S,p,c_v=2)=1$ and $O_{\rm BE}(S,p,c_v=1)=0$; setting $p_v=0$
+also gives zero. The state, clock and neighbor equalities are identical in
+the three queries. Native imitation sees the successful choice 2; it need
+not constrain rejection of choice 1 or silence. The source is seed 94101,
+root 0, native step 12, tape 14094519662940050106; its full legal prefix is
+stored with the original acquisition witnesses.

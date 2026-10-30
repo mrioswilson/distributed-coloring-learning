@@ -1,0 +1,60 @@
+\paragraph{Post-test diagnostic controls.}
+The primary endpoint and all original outcomes above are retained.
+The following controls and support audit were added after inspecting the test;
+they are descriptive checks, not a revised primary analysis. The programmed
+rule $G_v=E_vp_v$ uses supplied eligibility and root participation and ignores
+query occupancy. It requires no training and is a diagnostic, not a learned
+label-efficiency competitor.
+
+\begin{table}[htbp]\centering\small
+\begin{tabular}{llrr}
+\toprule Teacher & Procedure & BA (\%) & Equal-type acc. (\%) \\
+\midrule
+BE & Native & 84.64 & 51.70 \\
+BE & CF & 90.41 & 86.94 \\
+BE & Eligibility/participation & 99.71 & 81.27 \\
+GM & Native & 50.00 & 35.44 \\
+GM & CF & 100.00 & 100.00 \\
+GM & Eligibility/participation & 53.03 & 62.34 \\
+\bottomrule
+\end{tabular}
+\caption{Same final queries and sufficient-type key; means over ten seeds.
+The programmed diagnostic ignores occupancy. BA averages sensitivity and
+specificity; equal-type accuracy first averages within each distinct
+type, then across types within seed. The diagnostic is post-test.}
+\label{tab:prospective-controls}
+\end{table}
+
+For BE, the programmed rule scores 99.71\% BA, above CF's 90.41\%,
+whereas CF scores 86.94\% equal-type accuracy versus 81.27\%.
+A single negative type accounts for 95.05--96.30\% of each 4,000-query bank.
+Class balancing therefore leaves the negative subtypes highly imbalanced;
+high occurrence-level BA alone does not identify the occupancy condition.
+Among eligible active BE queries, native and the programmed rule accept
+995/995 free options but reject 0/228 occupied options.
+CF rejects 228/228 occupied options but accepts only
+814/995 free options. These are pooled descriptive counts over
+ten banks, not independent training replications. Appendix~\ref{app:prospective-audit}
+reports the full confusion strata.
+
+GM's native control receives 4,344--4,354 positive COMMIT labels and zero
+negative COMMIT labels in ASSIGN/REPAIR per seed, while CF receives
+1,038--1,098 negatives and the test has 2,420--2,491 negatives per seed.
+The native model accepts all test queries, giving BA 50\%; the contrast
+therefore demonstrates learning rejections absent from native color supervision.
+DETECT has separate positive/negative conflict supervision and is excluded
+from these color-label counts. This result does not compare CF with another
+acquisition strategy supplying informative negative confirmations.
+
+\paragraph{Support of the held-out queries.}
+There are 17--23 distinct sufficient test types per BE seed and 82--92
+per GM seed, despite 4,000 occurrences. For these color oracles
+$O_T=E_vp_v(1-o_v)$, with $o_v$ the queried-option occupancy. A coarser
+configuration $(\text{phase},E_v,p_v,o_v)$ is therefore oracle-sufficient.
+CF training has already seen configurations covering 99.475--100.000\% of BE
+test occurrences and 100\% of GM test occurrences. The original fine-key
+holdout remains disjoint: novelty is defined by contextual combinations
+rather than by this coarser configuration. There is no separate evaluation
+restricted to novel logical conditions. These tests do not establish extrapolation to new logical
+conditions. Per-seed support counts and logical overlap are in
+Appendix~\ref{app:prospective-audit}; no split, label or model was changed.

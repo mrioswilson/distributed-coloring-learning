@@ -1,0 +1,95 @@
+\subsection{Post-test coverage and confusion audit}\label{app:prospective-audit}
+All tables here are descriptive additions after the final test. Labels are
+recomputed from raw encoded state arrays and agree with stored base, auxiliary
+and final color confirmations. Fine keys are reconstructed from those arrays;
+their training/test unions equal the delivered key files and obey the original
+hash filter. Model predictions are summarized from frozen result records;
+this audit does not rerun neural inference or train another model.
+{\small
+
+\begin{longtable}{lllrr}
+\caption{Ranges over ten seeds of base plus auxiliary color-COMMIT targets.
+LINIAL and DETECT have different targets and are excluded. Minima and maxima
+in separate columns need not occur at the same seed.}\\
+\toprule Teacher & Phase & Arm & Positive labels & Negative labels \\
+\midrule\endfirsthead
+\toprule Teacher & Phase & Arm & Positive labels & Negative labels \\
+\midrule\endhead
+BE & KW & native & 152--189 & 4,355--4,392 \\
+BE & KW & cf & 113--147 & 4,397--4,431 \\
+GM & ASSIGN & native & 2,417--2,440 & 0 \\
+GM & ASSIGN & cf & 2,108--2,153 & 277--326 \\
+GM & REPAIR & native & 1,904--1,932 & 0 \\
+GM & REPAIR & cf & 1,119--1,171 & 749--793 \\
+\bottomrule
+\end{longtable}
+
+}
+
+
+\begin{longtable}{llrrrrr}
+\caption{Final support and programmed diagnostic by seed. Types are distinct
+fine sufficient keys; mass is the largest key's fraction of 4,000 queries.
+Overlap is the fraction of occurrences whose coarser oracle configuration was
+seen by CF training. Mass, overlap, BA and type accuracy are percentages.}\\
+\toprule Rule & Seed & Types & Max mass & Overlap & Gate BA & Gate type acc. \\
+\midrule\endfirsthead
+\toprule Rule & Seed & Types & Max mass & Overlap & Gate BA & Gate type acc. \\
+\midrule\endhead
+BE & 105001 & 20 & 95.38 & 99.750 & 99.679 & 80.000 \\
+BE & 105002 & 23 & 96.03 & 99.475 & 99.770 & 78.261 \\
+BE & 105003 & 17 & 96.30 & 99.825 & 99.770 & 82.353 \\
+BE & 105004 & 20 & 95.17 & 99.750 & 99.614 & 80.000 \\
+BE & 105005 & 18 & 95.62 & 100.000 & 99.731 & 83.333 \\
+BE & 105006 & 20 & 95.05 & 99.800 & 99.589 & 80.000 \\
+BE & 105007 & 21 & 95.15 & 99.725 & 99.704 & 80.952 \\
+BE & 105008 & 20 & 95.53 & 100.000 & 99.706 & 85.000 \\
+BE & 105009 & 22 & 95.67 & 99.725 & 99.756 & 86.364 \\
+BE & 105010 & 17 & 96.23 & 99.775 & 99.757 & 76.471 \\
+GM & 105001 & 89 & 23.80 & 100.000 & 53.055 & 61.798 \\
+GM & 105002 & 84 & 23.62 & 100.000 & 52.910 & 63.095 \\
+GM & 105003 & 92 & 23.82 & 100.000 & 53.204 & 63.043 \\
+GM & 105004 & 86 & 24.60 & 100.000 & 53.182 & 62.791 \\
+GM & 105005 & 91 & 23.88 & 100.000 & 52.686 & 63.736 \\
+GM & 105006 & 83 & 24.10 & 100.000 & 52.921 & 60.241 \\
+GM & 105007 & 86 & 24.52 & 100.000 & 53.193 & 62.791 \\
+GM & 105008 & 87 & 23.85 & 100.000 & 53.111 & 60.920 \\
+GM & 105009 & 89 & 23.80 & 100.000 & 53.065 & 64.045 \\
+GM & 105010 & 82 & 24.60 & 100.000 & 53.005 & 60.976 \\
+\bottomrule
+\end{longtable}
+
+
+{\small
+
+\begin{longtable}{lllrrrr}
+\caption{Confusion counts summed over ten final banks, 40,000 queries per
+teacher/procedure. Within eligible active queries, positives are free options
+and negatives occupied options. Silent and ineligible queries are negative.
+No GM query is ineligible. These are accounting totals, not IID replications.}\\
+\toprule Rule & Stratum & Procedure & TP & TN & FP & FN \\
+\midrule\endfirsthead
+\toprule Rule & Stratum & Procedure & TP & TN & FP & FN \\
+\midrule\endhead
+BE & eligible active & native & 995 & 0 & 228 & 0 \\
+BE & eligible active & cf & 814 & 228 & 0 & 181 \\
+BE & eligible active & gate & 995 & 0 & 228 & 0 \\
+BE & eligible silent & native & 0 & 91 & 42 & 0 \\
+BE & eligible silent & cf & 0 & 52 & 81 & 0 \\
+BE & eligible silent & gate & 0 & 133 & 0 & 0 \\
+BE & ineligible & native & 0 & 26,956 & 11,688 & 0 \\
+BE & ineligible & cf & 0 & 38,644 & 0 & 0 \\
+BE & ineligible & gate & 0 & 38,644 & 0 & 0 \\
+GM & eligible active & native & 15,554 & 0 & 22,963 & 0 \\
+GM & eligible active & cf & 15,554 & 22,963 & 0 & 0 \\
+GM & eligible active & gate & 15,554 & 0 & 22,963 & 0 \\
+GM & eligible silent & native & 0 & 0 & 1,483 & 0 \\
+GM & eligible silent & cf & 0 & 1,483 & 0 & 0 \\
+GM & eligible silent & gate & 0 & 1,483 & 0 & 0 \\
+\bottomrule
+\end{longtable}
+
+}
+The reproducible analysis and input hashes are
+\code{scripts/audit-revision-continuations.py} and
+\code{results/paper-revision-20261030/continuation-audit.json}.

@@ -3,6 +3,7 @@ import hashlib
 import json
 import numpy as np
 from dcl.study.storage import atomic_json, atomic_write, file_hash, now
+from dcl.artifacts import resolve_artifact
 
 ROOT = Path('data/ucgnn-size-degree')
 OUT = Path('results/ucgnn-size-degree')
@@ -21,7 +22,9 @@ def rng(*parts):
     return np.random.default_rng(seed(*parts))
 
 def specs():
-    return read(OUT / 'checkpoints.json')
+    records = read(OUT / 'checkpoints.json')
+    return [dict(s, historical_checkpoint=s['checkpoint'],
+                 checkpoint=str(resolve_artifact(s['checkpoint'], s['sha256']))) for s in records]
 
 def graphs():
     return read(OUT / 'graphs.json')
