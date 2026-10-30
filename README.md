@@ -7,6 +7,8 @@ witnesses and a separate forty-model prospective BE/GM experiment. Start with
 the [claim/evidence matrix](docs/PAPER_REVISION_CLAIMS.md),
 [fixed prospective protocol](docs/PAPER_REVISION_PROTOCOL.md) and
 [reproduction commands](docs/PAPER_REVISION_REPRODUCE.md).
+The [handoff for Martín](docs/PAPER_REVISION_HANDOFF_MARTIN.md) summarizes
+the published revision, interpretation limits and next review steps.
 New evidence is under `results/paper-revision-20261030`; the earlier source/PDF
 are preserved in `paper/ucgnn/archive/pre-revision-c3affd16.*`.
 The original main workspace and its pre-existing changes are preserved.

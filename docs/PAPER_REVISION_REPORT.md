@@ -226,7 +226,7 @@ La rama de entrega es `codex/paper-revision-20261030` en
 `mrioswilson/distributed-coloring-learning`. Incluye fuentes, PDF revisado,
 figuras, generadores, pruebas, protocolos, resultados completos del ensayo,
 diagnósticos y archivo portátil del runtime. El manifiesto autentica los
-234 archivos de la entrega; sus recibos de congelación originales se conservan.
+235 archivos de la entrega; sus recibos de congelación originales se conservan.
 El SHA del commit publicado se consulta en Git y en el relevo de coordinación
 de la publicación, evitando una referencia circular en este mismo archivo.
 Esta entrega no crea una release nueva ni modifica la rama main. La revisión
