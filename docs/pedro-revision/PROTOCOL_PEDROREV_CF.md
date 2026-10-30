@@ -165,3 +165,31 @@ checkpoints.
   gap 1/3 and holds at gaps ≥ 1/3 (panel G).
 This is decision-level evidence on one constructed state, not a rollout
 failure rate and not a causal account of all ColorTrials transfer failures.
+
+## 8. Follow-up registered after the Experiment A/B results (Experiment F)
+
+**Observation that motivates it (confirmatory battery v1).** In five BE CF
+runs (`cf-high`, `cf-lateocc`, `cf-noforce` and `cf-low` of seed 95105;
+`cf-low` of seed 95103) the COMMIT rejects safe continuations in which a
+neighbor also recolors in its own disjoint KW block. Posthoc
+(`scripts/pedrorev-be-neighbor-activity.py`): this happens exactly in the
+runs whose training bank contains no positive example with a participating,
+non-occupying neighbor; the BE intervention generator never perturbs
+neighbor messages.
+
+**Experiment F.** Arm `cf-neighbor` (seeds 95101–95105) uses the `cf-high`
+bank with identical roots, root queries and labels (6,776), but the neighbor
+messages of every stored continuation query are perturbed (labels provably
+unchanged for BE; checked). Training as in §3. Evaluation on a **new**
+battery (namespace `20261030-pedrorev-cf-v2-confirmatory-battery`, 90
+trajectories, sizes 32/48/64), together with the frozen `cf-high`,
+`matched-high` and `passive-high` checkpoints, plus a fresh 1,000-run
+functional battery. Config `configs/pedrorev-cf-followup.json`.
+
+- F1: `cf-neighbor` accepts standard-family positive queries with a
+  participating non-occupying neighbor (TPR ≥ 0.99) in all five seeds, while
+  keeping TNR ≥ 0.99 on forced-ineligible and eligible-active-occupied queries.
+- F2 (replication): on the new battery, `cf-high` seed 95105 again rejects
+  most such positives (TPR < 0.5), and the other `cf-high` seeds do not.
+This is a follow-up chosen after seeing battery v1; it is confirmatory only
+with respect to battery v2, which did not exist when F was registered.

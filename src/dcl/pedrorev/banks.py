@@ -143,3 +143,44 @@ def holdout_bank(config, teacher, seed, budget, kind, root):
                         kept_queries=int(keep))
     directory = Path(root) / "derived" / teacher.lower() / f"s{seed}" / f"holdout-{kind}"
     return directory, _write_derived(directory, derived, base, base_dir, modification, keep)
+
+
+def neighbor_bank(config, teacher, seed, budget, root):
+    """Experiment F: the cf-high bank with neighbor messages intervened.
+
+    Same roots, root queries and acquired labels; only the received neighbor
+    messages of every continuation query are perturbed (Luby-style generator:
+    candidates resampled w.p. .25, permitted participation flipped w.p. .15,
+    variant 1 copies the root candidate to all permitted neighbors). For BE
+    the contract label does not read neighbor messages; this is verified.
+    """
+    base_dir, base = acquire_native(config, teacher, seed, budget, root)
+    packed, _ = load(base_dir)
+    rng = np.random.default_rng(named_seed(config["namespace"], "neighbor-interventions", teacher, seed))
+    cf_p, cf_c = packed["cf_p"].copy(), packed["cf_c"].copy()
+    rows = color_rows(packed)
+    allowed = packed["a0"][rows][..., 7] > .5
+    for v in range(4):
+        p, c = cf_p[rows, v], cf_c[rows, v]
+        b, centers = p.shape
+        change = rng.random((b, centers - 1)) < .25
+        c[:, 1:] = np.where(change, rng.integers(4, size=(b, centers - 1)), c[:, 1:])
+        p[:, 1:] ^= (rng.random((b, centers - 1)) < .15) & allowed[:, 1:]
+        if v == 1:
+            c[:, 1:] = c[:, :1]
+            p[:, 1:] = allowed[:, 1:]
+        p &= allowed
+        cf_p[rows, v], cf_c[rows, v] = p, c
+    for phase in np.unique(packed["native"][rows, 3]):
+        use = rows[packed["native"][rows, 3] == phase]
+        arrays = tuple(packed[f"a{i}"][use] for i in range(4))
+        for v in range(4):
+            y = confirmation(arrays, teacher, cf_p[use, v], cf_c[use, v])
+            if not np.array_equal(y, packed["cf_y"][use, v]):
+                raise RuntimeError("Neighbor intervention changed a contract label")
+    derived = dict(packed, cf_p=cf_p, cf_c=cf_c)
+    modification = dict(kind="neighbor-interventions", base_native_budget=budget, dropped_queries=0,
+                        kept_queries=int(base["counterfactual_labels"]),
+                        rule="Luby-style neighbor message perturbation of every stored continuation query; labels unchanged")
+    directory = Path(root) / "derived" / teacher.lower() / f"s{seed}" / "neighbor-interventions"
+    return directory, _write_derived(directory, derived, base, base_dir, modification, base["counterfactual_labels"])
