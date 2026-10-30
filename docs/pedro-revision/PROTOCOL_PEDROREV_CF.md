@@ -112,3 +112,36 @@ manuscript must say so. If B1/B2/B4 fail, continuation fidelity is reported as
 not generalizing beyond trained types/combinations. If B3 fails (the clause is
 recovered), the claim of semantic underdetermination is withdrawn. All outcomes
 are reported.
+
+## 6. Addendum (registered before Experiment D is run; after training, before any battery)
+
+**Experiment D (continuation fidelity under shift; GM and ColorTrials).**
+The question: does continuation supervision change *how* frozen policies fail
+when their proposal/participation modules deviate under transfer? Existing
+evidence is one replayed witness per failed cell (GM/Transformer: CF rejects a
+bad repair proposal and leaves a conflict, matched/passive write a forbidden
+color); it cannot separate training procedure from seed or budget.
+
+Design: all 4,000-update GM and ColorTrials checkpoints of the six budget arms
+(5 seeds, 60 checkpoints) are run, frozen and without selection, on four fresh
+transfer conditions mirroring the earlier confirmatory n=64 cells (global
+Δ=3, 4, 10; local Δ=4; 1,000 runs each; iid-uniform ten-family mixture;
+namespace `20261030-pedrorev-transfer-v1`; one battery shared by every arm).
+Exact teachers must pass every case first. At every color-phase step the
+declared contract is evaluated on the network's own messages (measurement
+only; never applied). Script `scripts/pedrorev-transfer-experiment.py`,
+evaluator `src/dcl/pedrorev/transfer.py`.
+
+- D1 (primary, GM): at equal total labels (`*-high`), CF has fewer unsafe
+  accepted writes (writes the contract rejects) than matched and than passive,
+  summed over the three shifted conditions (Δ=4, Δ=10, local Δ=4), in every
+  seed in which the comparator has at least one unsafe accept.
+- D2: in shifted conditions, CF arms contain at least 99% of their own bad
+  proposals (contained / (contained + unsafe accepts)), per seed, GM and CT.
+- D3 (descriptive): failures per arm and condition, split into safety
+  (≥1 unsafe accept) and progress failures; CT is reported with the same
+  measures without a directional hypothesis (its native data already contain
+  non-winning negatives).
+Interpretation limits fixed in advance: fewer unsafe accepts is not higher
+functional success; a contained bad proposal can still cost progress (e.g. GM
+repairs are not retried), which is exactly what D3 measures.

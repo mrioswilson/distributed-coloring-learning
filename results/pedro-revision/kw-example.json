@@ -1,0 +1,183 @@
+{
+  "bound": 14,
+  "case_id": "development-s94101-0004",
+  "checkpoints": {
+    "counterfactual": "e913343c29e59db8ee8de093eb519599e4cca02d9daf307b14fa50714cc38fda",
+    "matched": "f8619a99a31d0bbd904d1461f4adcb09f5b1db1b9ee800176a7dcbe6ab76310e",
+    "passive": "11750faa378992ddce2dde881daa48dc55e2543e788f09a5b7950037ba0d6425"
+  },
+  "encoded_option_equalities": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "encoded_root_offset_feature": 0.0714285746216774,
+  "free": [
+    false,
+    true,
+    true,
+    true
+  ],
+  "n": 28,
+  "native_candidate_slot": 1,
+  "native_participation": true,
+  "native_step": 8,
+  "native_write_option_slot": 1,
+  "neighbors": [
+    {
+      "aux": 4,
+      "eligible": false,
+      "native_write": 0,
+      "options_equal": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "vertex": 6
+    },
+    {
+      "aux": 12,
+      "eligible": true,
+      "native_write": 1,
+      "options_equal": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "vertex": 15
+    },
+    {
+      "aux": 0,
+      "eligible": false,
+      "native_write": 0,
+      "options_equal": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "vertex": 20
+    }
+  ],
+  "offset": 0,
+  "options": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "queries": [
+    {
+      "accepts": {
+        "counterfactual": true,
+        "matched": true,
+        "passive": true
+      },
+      "label": 1.0,
+      "logits": {
+        "counterfactual": 11.902931213378906,
+        "matched": 17.341854095458984,
+        "passive": 13.634828567504883
+      },
+      "option_color": 1,
+      "option_slot": 1,
+      "participates": true,
+      "query": "native query (teacher message)",
+      "root": 16
+    },
+    {
+      "accepts": {
+        "counterfactual": false,
+        "matched": true,
+        "passive": true
+      },
+      "label": 0.0,
+      "logits": {
+        "counterfactual": -12.777942657470703,
+        "matched": 16.14527702331543,
+        "passive": 13.669200897216797
+      },
+      "option_color": 0,
+      "option_slot": 0,
+      "participates": true,
+      "query": "alternative option, occupied",
+      "root": 16
+    },
+    {
+      "accepts": {
+        "counterfactual": true,
+        "matched": true,
+        "passive": true
+      },
+      "label": 1.0,
+      "logits": {
+        "counterfactual": 11.902931213378906,
+        "matched": 17.341854095458984,
+        "passive": 13.634828567504883
+      },
+      "option_color": 3,
+      "option_slot": 3,
+      "participates": true,
+      "query": "alternative option, free",
+      "root": 16
+    },
+    {
+      "accepts": {
+        "counterfactual": false,
+        "matched": true,
+        "passive": true
+      },
+      "label": 0.0,
+      "logits": {
+        "counterfactual": -3.3279967308044434,
+        "matched": 1.2234575748443604,
+        "passive": 5.3047003746032715
+      },
+      "option_color": 1,
+      "option_slot": 1,
+      "participates": false,
+      "query": "silence (eligible root does not participate)",
+      "root": 16
+    },
+    {
+      "accepts": {
+        "counterfactual": false,
+        "matched": true,
+        "passive": false
+      },
+      "label": 0.0,
+      "logits": {
+        "counterfactual": -12.247997283935547,
+        "matched": 5.1501312255859375,
+        "passive": -1.520909070968628
+      },
+      "option_color": 36,
+      "option_slot": 0,
+      "participates": true,
+      "query": "forced participation of an ineligible root",
+      "root": 6
+    }
+  ],
+  "root": 16,
+  "root_aux": 13,
+  "root_eligible": true,
+  "seed": 94101,
+  "target": 12
+}
