@@ -1,0 +1,73 @@
+{
+  "scope": "Posthoc observer: distinguish a rejected COMMIT bit from a state change.\n\nMotivated by the original frozen component diagnostic's unsafe_accepts count.\nThat historical field means contract-rejected active acceptance, not collision.\nNo intervention, retraining, case selection within a seed, or result rewriting.\n",
+  "rows": [
+    {
+      "seed": 105001,
+      "weight_sha256": "b195c8c0fcf3c641cf9f8921cb83a6b4855e3de22ed76ad26eb41eeaf63c9782",
+      "baseline_parity": true,
+      "counts": {
+        "contract_rejected_active_acceptances": 64,
+        "identity_decodes": 64,
+        "next_bound_valid": 64
+      },
+      "contexts": [
+        {
+          "bound": 8,
+          "old": 6,
+          "option": 2,
+          "decoded": 6,
+          "count": 53
+        },
+        {
+          "bound": 12,
+          "old": 9,
+          "option": 1,
+          "decoded": 9,
+          "count": 6
+        },
+        {
+          "bound": 14,
+          "old": 11,
+          "option": 3,
+          "decoded": 11,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "seed": 105010,
+      "weight_sha256": "d77325dd58e000e35cee2a895aa8f1ac22c55c9a2da556d222b37dcd48d2a65a",
+      "baseline_parity": true,
+      "counts": {
+        "contract_rejected_active_acceptances": 20,
+        "identity_decodes": 20,
+        "next_bound_valid": 20
+      },
+      "contexts": [
+        {
+          "bound": 8,
+          "old": 6,
+          "option": 2,
+          "decoded": 6,
+          "count": 15
+        },
+        {
+          "bound": 12,
+          "old": 9,
+          "option": 1,
+          "decoded": 9,
+          "count": 1
+        },
+        {
+          "bound": 14,
+          "old": 11,
+          "option": 3,
+          "decoded": 11,
+          "count": 4
+        }
+      ]
+    }
+  ],
+  "freeze_sha256": "edf33fc2f86e047707c7b2afb706b60a672fd5baed36c6892ff2aad1d0574fa8",
+  "interpretation": "A contract error can be dynamically inert even for an active root when decoding reproduces its old state."
+}

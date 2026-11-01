@@ -1,0 +1,13 @@
+{
+  "scope": "Posthoc observer: distinguish a rejected COMMIT bit from a state change.\n\nMotivated by the original frozen component diagnostic's unsafe_accepts count.\nThat historical field means contract-rejected active acceptance, not collision.\nNo intervention, retraining, case selection within a seed, or result rewriting.\n",
+  "seeds": [
+    105001,
+    105010
+  ],
+  "arm": "native",
+  "cases_per_seed": 1000,
+  "inputs": {
+    "scripts/integrated-observe-redundant-writes.py": "28dd4f3db694e7ea4b32d8790c539cda789c48f123881fd40f9e02093ddd5611",
+    "results/integrated-paper-20261031/functional-summary.json": "0dd43d888af360a9d54ab80e031cc1bc4d4b0403d35ff825e2fd16f9f49fd730"
+  }
+}

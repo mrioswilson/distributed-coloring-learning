@@ -1,0 +1,122 @@
+{
+  "scope": "Two post-test selected 64-node witness fragments, not population rates or a general repair policy",
+  "inputs": {
+    "results/paper-revision-20261030/component-rescues.json": "ebb49d7736d7f8f44aeccaadca2e811c78c15b5804be30ad20bf52d7cbf09354",
+    "results/final-closure/failure-replays/JOHANSSON-transformer-historical-primary-passive-s83101/global-n64-d10-mixture1000.json": "40819444bd27b094f45d092e1f4b69dbae7b282eaa68a599c55a4b536b5e2246",
+    "results/final-closure/failure-replays/SPECULATIVE_GM-transformer-counterfactual-primary-counterfactual-s94102/local-n64-d4-mixture1000.json": "c500c5fa51e46148a743f899c545da16c89cd7d8958a42a1b94b1a7c39548bae"
+  },
+  "panels": [
+    {
+      "teacher": "JOHANSSON",
+      "checkpoint": "JOHANSSON-transformer-historical-primary-passive-s83101",
+      "case_id": "degree-20261025-confirmatory-v1-64-10-cliques-17-r0",
+      "condition": "global-n64-d10-mixture1000",
+      "step_before": 10,
+      "step_after": 11,
+      "vertices": [
+        28,
+        54
+      ],
+      "before_colors": [
+        -1,
+        -1
+      ],
+      "baseline_after_colors": [
+        -1,
+        -1
+      ],
+      "candidate_after_colors": [
+        0,
+        2
+      ],
+      "original_candidates": [
+        2,
+        2
+      ],
+      "changed_candidates": [
+        0,
+        2
+      ],
+      "original_commit": [
+        false,
+        false
+      ],
+      "changed_commit": [
+        true,
+        true
+      ],
+      "available": [
+        0,
+        2
+      ],
+      "changed_vertex": 28,
+      "original_terminal": {
+        "steps": 128,
+        "failure": "cutoff",
+        "bad_edges": 0
+      },
+      "changed_terminal": {
+        "steps": 11,
+        "success": true,
+        "bad_edges": 0
+      },
+      "exact_commit_control_identical": true
+    },
+    {
+      "teacher": "SPECULATIVE_GM",
+      "checkpoint": "SPECULATIVE_GM-transformer-counterfactual-primary-counterfactual-s94102",
+      "case_id": "degree-20261025-confirmatory-v1-64-4-random-0-r1",
+      "condition": "local-n64-d4-mixture1000",
+      "step_before": 32,
+      "step_after": 33,
+      "vertices": [
+        11,
+        40
+      ],
+      "before_colors": [
+        0,
+        0
+      ],
+      "baseline_after_colors": [
+        0,
+        0
+      ],
+      "candidate_after_colors": [
+        1,
+        0
+      ],
+      "original_candidates": [
+        0
+      ],
+      "changed_candidates": [
+        1
+      ],
+      "original_commit": [
+        false
+      ],
+      "changed_commit": [
+        true
+      ],
+      "available": [
+        1
+      ],
+      "changed_vertex": 11,
+      "original_terminal": {
+        "steps": 34,
+        "failure": "collision",
+        "bad_edges": 1
+      },
+      "changed_terminal": {
+        "steps": 34,
+        "success": true,
+        "bad_edges": 0
+      },
+      "exact_commit_control_identical": true
+    }
+  ],
+  "script_sha256": "fa19ec16ab77565d61c1681099353a3c4212e4e39bc08cc8a3abf64f74c840ca",
+  "outputs": {
+    "paper/ucgnn/figures/revision-failure-mechanisms.pdf": "f7081a4dd1c4875d7fef4a35944ad42361766a6f46c1d0ee2119d0f9ec2e0580",
+    "results/paper-revision-20261030/failure-mechanisms.png": "a85024cb9845e3d959591d8682403dbbe1a7995124045c9ae13aedcee866d99a"
+  }
+}

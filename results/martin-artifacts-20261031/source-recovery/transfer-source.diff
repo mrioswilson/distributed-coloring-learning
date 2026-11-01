@@ -1,0 +1,34 @@
+--- frozen-design-source
++++ current-imported-source
+@@ -63,7 +63,7 @@
+ 
+ 
+ @torch.inference_mode()
+-def run(adapter, teacher, cases, palette, batch=16):
++def run(adapter, teacher, cases, palette, batch=16, last_state=False):
+     rows = []
+     tick = time.process_time()
+     for start in range(0, len(cases), batch):
+@@ -96,6 +96,13 @@
+                         st["missed"] += int((d.participation & ok & ~d.commit).sum())
+                         if unsafe and st["first_unsafe"] is None:
+                             st["first_unsafe"] = dict(step=p.steps, phase=int(s.phase))
++                    if last_state and adapter is not None and s.phase != DETECT:
++                        pend = d.roots[(s.colors[d.roots] < 0)] if p.teacher != "SPECULATIVE_GM" else d.roots
++                        free = availability(p, s)
++                        stats[i]["last"] = [dict(vertex=int(v), available=np.flatnonzero(free[v]).tolist(),
++                                                 participates=bool(d.participation[k]), candidate=int(d.candidates[k]),
++                                                 commit=bool(d.commit[k]))
++                                            for k, v in enumerate(d.roots) if v in set(pend.tolist())][:12]
+                     before = p.colors.copy()
+                     p.apply(s, choice)
+                     palette_ok = bool(np.all((p.colors >= -1) & (p.colors < p.palette)))
+@@ -115,7 +122,7 @@
+             rows.append(dict(case_id=meta["case_id"], family=meta["family"], n=meta["n"], delta=meta["delta"],
+                              success=bool(success), failure=p.failure, failure_kind=kind, conflicts=int(conflicts),
+                              incomplete=incomplete, steps=int(p.steps), **{k: st[k] for k in COUNTERS},
+-                             first_unsafe=st["first_unsafe"]))
++                             first_unsafe=st["first_unsafe"], last=st.get("last")))
+     return rows, time.process_time() - tick
+ 
+ 

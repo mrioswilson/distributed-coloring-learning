@@ -1,48 +1,63 @@
 # Learning Distributed Coloring Rules
 
-The **30 October 2026 revision** is in [the canonical article](paper/ucgnn/main.pdf)
-and [its TeX source](paper/ucgnn/main.tex). It adds explicit continuation
-contracts, type-aware BE reanalysis, component interventions on failure
-witnesses and a separate forty-model prospective BE/GM experiment. Start with
-the [claim/evidence matrix](docs/PAPER_REVISION_CLAIMS.md),
-[fixed prospective protocol](docs/PAPER_REVISION_PROTOCOL.md) and
-[reproduction commands](docs/PAPER_REVISION_REPRODUCE.md).
-The [handoff for Martín](docs/PAPER_REVISION_HANDOFF_MARTIN.md) summarizes
-the published revision, interpretation limits and next review steps.
-New evidence is under `results/paper-revision-20261030`; the earlier source/PDF
-are preserved in `paper/ucgnn/archive/pre-revision-c3affd16.*`.
-The original main workspace and its pre-existing changes are preserved.
-The scientific correction adds post-test programmed controls, class/phase
-coverage and support counts. BE's gate baseline outperforms CF on occurrence
-BA while CF improves equal-type accuracy; GM's native color control has no
-negative confirmations. Held-out fine contexts mostly reuse logical oracle
-configurations. The original trial, split, weights and primary results are
-retained. See the [revision report](docs/PAPER_REVISION_REPORT.md).
+The **integrated draft, editorially revised on 1 November 2026,** is in [main.pdf](paper/ucgnn/main.pdf)
+and [main.tex](paper/ucgnn/main.tex). It connects functional success,
+contract-relative continuation fidelity and transfer, preserving the seven-teacher
+21/21 coverage and the positive primary transfer record. The integration uses
+Pedro's published revision as its textual base and selectively audits Martín's
+additional evidence; it does not merge two manuscripts automatically.
 
-The preceding scientific closure is dated **26 October 2026** on the local
-`research/scientific-closure-20261026` branch. Start with the
-[closure decision and fifteen answers](docs/PAPER_CLOSURE_DECISION.md),
-[archived closure manuscript](paper/ucgnn/archive/pre-revision-c3affd16.pdf),
-[final evidence audit](docs/FINAL_EVIDENCE_AUDIT.md),
-[adversarial reviews and responses](docs/ADVERSARIAL_REVIEW.md), and
-[claim register](docs/EVIDENCE_REGISTER.md).
+Start with the [coauthor handoff](docs/INTEGRATED_PAPER_COAUTHOR_HANDOFF.md),
+[objection matrix](docs/COAUTHOR_RECONCILIATION.md),
+[theory audit](docs/CONTINUATION_PROGRESS_THEORY_AUDIT.md),
+[experimental reconciliation](docs/CONTINUATION_EXPERIMENTAL_RECONCILIATION.md),
+[critical review](docs/INTEGRATED_MANUSCRIPT_REVIEW.md), and
+[reproduction instructions](docs/INTEGRATED_PAPER_REPRODUCE.md).
 
-The authoritative source is [main.tex](paper/ucgnn/main.tex), with build and
-runtime instructions in [the paper README](paper/ucgnn/README.md). Use
-`scripts/build-revision-assets.py` and `scripts/build-revised-paper.py` for the
-current version. The historical PDF generators refuse to overwrite it;
-run those in a separate checkout of their historical source commit.
-The current PDF and page count are identified by
-`results/paper-revision-20261030/paper-build.json`.
+New fixed-component BE interventions cover 30,000 executions. COMMIT-only
+correction rescues all 1,799 failures in two CF seeds; participation-only
+correction rescues the other 796 in the third seed. Candidate-only correction
+rescues none. These are retrospective results on consumed cases, not a learned
+remedy or population guarantee. All 160,000 final continuation decisions of the
+40-model trial are re-inferred, and all 15 historical failed transfer cells
+(15,000 cases) independently match their published classifications.
 
-The audit reconciles 808,413/810,000 confirmatory executions, including
-449,791/450,000 primary-policy observations, and replays all fifteen failed
-cells. Native 21/21 coverage combines twelve historical and nine new packages.
-Counterfactual comparisons retain unequal-label and development-reuse limits,
-class-aware baselines, and all negative results. That archived closure added
-no new models; the separate 30 October trial trained forty. The revised source,
-PDF and reproducibility artifacts are delivered on `codex/paper-revision-20261030`.
-The revision does not create a separate GitHub release.
+The other branch's 100-model study and five-model neighbor follow-up remain
+separate campaigns. Their weights, banks and all historical 810,000 raw rows
+are now restored from the hash-pinned
+[artifact release](https://github.com/mrioswilson/distributed-coloring-learning/releases/tag/pedrorev-experimental-data-2026-10-31).
+Independent inference reproduces all 50,173,920 continuation decisions;
+reconstruction of every historical terminal coloring confirms 808,413/810,000
+successes, including 449,791/450,000 in the primary cohort. See the
+[delivery audit](docs/MARTIN_ARTIFACT_DELIVERY_AUDIT.md) for the distinct
+levels of verification and the 220-reference/205-path inventory.
+The separate 240,000-run transfer contrast now has its240 original raw files
+restored from the fourth release package. Their hashes, complete design,
+case identities and all saved summaries/counters are independently checked.
+No additional neural rollout or training was needed; the article is unchanged.
+
+After cloning, restore the historical snapshot archives with
+`python scripts/restore-coauthor-snapshots.py`. Their Git-sized parts preserve
+the original archive bytes and hashes. Build the current article with `scripts/build-coauthor-assets.py` and
+`scripts/build-coauthor-paper.py`; check it with
+`scripts/verify-coauthor-integration.py`. Current source/PDF identities, compiler
+and page count are in `results/integrated-paper-20261031/paper-build.json`.
+Use the matching manifest for this version. Historical builders/receipts belong
+to their original checkout and must not be used to regenerate this article.
+
+This coauthor-review draft is on
+[`codex/integrated-paper-20261031`](https://github.com/mrioswilson/distributed-coloring-learning/tree/codex/integrated-paper-20261031).
+It is separate from `main`; journal submission and coauthor approval remain pending. The original
+workspaces and uncommitted changes remain intact. Source provenance is recorded
+in `results/integrated-paper-20261031/sources.json`.
+
+The **30 October revision** is preserved as
+[pre-integration-5993a5e4.pdf](paper/ucgnn/archive/pre-integration-5993a5e4.pdf)
+and its TeX copy. Its [handoff](docs/PAPER_REVISION_HANDOFF_MARTIN.md),
+[protocol](docs/PAPER_REVISION_PROTOCOL.md), results and runtime remain unchanged.
+The earlier closure is preserved as
+[pre-revision-c3affd16.pdf](paper/ucgnn/archive/pre-revision-c3affd16.pdf).
+Historical scientific records retain their own scope and source commits.
 
 ## Preserved pre-closure project description
 

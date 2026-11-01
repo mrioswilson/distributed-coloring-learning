@@ -1,0 +1,25 @@
+\subsection{Frozen-component interventions on reached BE states}\label{sec:components}
+We select all three BE seeds with any functional failure in the 40-model
+study, retain both arms and all 1,000 original cases per model, and compare
+five fixed modes: unchanged policy; exact KW confirmation on actual learned
+messages; exact KW participation with learned proposal/COMMIT recomputed;
+first-free KW candidates with learned participation/COMMIT recomputed; and
+all three exact KW components. Learned Linial decisions remain unchanged.
+This is a retrospective diagnostic on consumed cases, selected by known
+failures, not a new training-method test. Its protocol and source/weight
+hashes are frozen before replay outcomes. All baseline terminal vectors,
+statuses, steps and invariant flags must reproduce before interpreting
+interventions. The other learned modules retain their weights; their later
+outputs are recomputed after trajectories diverge.
+The exact KW predicate uses each reached state's valid auxiliary coloring,
+clock and bounds; it is the diagnostic state-domain extension specified
+with the contracts, not an assumption that every rollout state is an exact
+teacher prefix.
+
+\input{integration-functional-outcomes.tex}
+
+The interventions use oracle decisions and are diagnostic tools, not deployable
+learned policies. Their fixed-battery rescue counts localize mechanisms in
+the selected models; they do not estimate a population remedy. Errors on
+teacher-prefix continuation queries and errors reached during autonomous
+rollouts have different denominators and are reported separately.

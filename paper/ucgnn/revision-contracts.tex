@@ -2,8 +2,10 @@
 Fix a legal teacher-prefix state $S$, including its phase, permissions $w$,
 IDs, slots, private inputs and derived algebraic data. After the first
 exchange, a rooted query supplies typed messages $(p_u,c_u)$ at the root and
-its neighbors: $p_u\in\{0,1\}$, $p_u\le w_u$, $c_u\in C_u$ (four option
-indices for KW). Let $F_v(c)$ mean that the queried color, or the decoded
+its neighbors: $p_u\in\{0,1\}$, $p_u\le w_u$, and a color query $c_u\in C_u$
+(four option indices for KW). The acquired continuation oracles implemented
+here use the four-color native domain; the transfer evaluator separately
+extends the six non-BE rules to the declared palette lists. Let $F_v(c)$ mean that the queried color, or the decoded
 receiver-relative KW option, is unoccupied. Define
 \[
  E_v=\begin{cases}
@@ -35,7 +37,7 @@ neighbor's preference when that color is free there & Proper partial state;
 preferences and their availability-dependent messages stay coherent.
 Silencing $p_u$ does not remove that neighbor's preference message \\
 BE & $R_T=1$ in KW. LINIAL has a separate legal-point target & Proper
-auxiliary coloring from validated reduction prefix; change option query,
+auxiliary coloring from validated reduction prefix; change participation or option query,
 not polynomial evaluations, equalities, clock or bounds \\
 GM, Greedy & $R_T=1$ in color phases. GM DETECT separately marks the
 smaller-ID endpoint of each equal-color/equal-slot edge & Scheduled
@@ -53,17 +55,30 @@ writable or its queried color is occupied; strict comparison includes ties
 as rejection. For GM, $F_v$ is computed against actual speculative colors,
 including during repair. DETECT does not use a P/C continuation label.
 For BE, a queried index $c$ decodes to $(B-1-a_v)4+c$ at a high auxiliary
-color, with $q=\lceil4B/5\rceil$. Low colors cannot recolor. LINIAL predicts
-an unblocked evaluation point; the interpreter computes the corresponding
-polynomial value. This supplied arithmetic is not learned.
+color, with $q=\lceil4B/5\rceil$. The contract rejects low-color recoloring;
+this is learned, not enforced by the interpreter. LINIAL's native target is
+the first unblocked evaluation point; the interpreter computes the corresponding
+polynomial value. This supplied arithmetic is not learned. JP's equal-offer
+veto is part of the chosen continuation extension: adjacent native eligible
+maxima cannot occur, so this additional veto is redundant on native messages
+and is not an extra rule attributed to the original JP algorithm.
+
+The continuation-query banks use exact teacher-prefix states. The component
+replays below declare an additional diagnostic domain: the same KW predicate
+is evaluated on currently reached proper auxiliary states with the actual
+reduction clock and bounds. Such states need not follow the exact teacher's
+earlier choices. This extension is explicit; its rollout distribution is
+separate from the teacher-prefix query distribution.
 
 \paragraph{Worked KW continuation.}
 A replayed training witness has $B=7$, $q=6$, root auxiliary color $a_v=6$
 and neighbor auxiliary colors $3,0,1$. Its four decoded options are
 $0,1,2,3$, so only option index 2 is free. With $w_v=p_v=1$,
-$O_{\rm BE}(S,p,c_v=2)=1$ and $O_{\rm BE}(S,p,c_v=1)=0$; setting $p_v=0$
+$O_{\rm BE}(S,p,c_v=2)=1$ and $O_{\rm BE}(S,p,c_v=3)=0$; setting $p_v=0$
 also gives zero. The state, clock and neighbor equalities are identical in
 the three queries. Native imitation sees the successful choice 2; it need
-not constrain rejection of choice 1 or silence. The source is seed 94101,
-root 0, native step 12, tape 14094519662940050106; its full legal prefix is
-stored with the original acquisition witnesses.
+not constrain rejection of choice 3 or silence. The source is seed 94101,
+root 0, immediately before native transition 13 (zero-based frame 12),
+tape 14094519662940050106. The stored reduction snapshots support replay
+from the second Linial stage through KW; reconstructing the first Linial
+stage additionally requires the original ID assignment.

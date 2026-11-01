@@ -1,0 +1,5374 @@
+{
+  "scope": "Recompute support/labels and validate published additional-study summaries.\n\nNew analysis directory only. Summary validation is not new inference of the\n105 unavailable additional-study checkpoints; that distinction is explicit.\n",
+  "original_20_pair_audit_exactly_reproduced": true,
+  "raw_labels_and_fine_keys_recomputed": true,
+  "native_logical_overlap": {
+    "BE_BASE_D3": [
+      0.02125,
+      0.029
+    ],
+    "SPECULATIVE_GM": [
+      0.37725,
+      0.395
+    ]
+  },
+  "cf_logical_overlap": {
+    "BE_BASE_D3": [
+      0.99475,
+      1.0
+    ],
+    "SPECULATIVE_GM": [
+      1.0,
+      1.0
+    ]
+  },
+  "additional_summary_rows_validated": 466,
+  "functional_be_files": 40,
+  "functional_be": [
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-cf-high.json",
+      "arm": "cf-high",
+      "checkpoint_sha256": "f5f8c3a12d2720b3c540498251bb078395aa72b33bc9f103034a4222198e480c",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 99.06436817601207,
+      "seed": 95101,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-cf-lateocc.json",
+      "arm": "cf-lateocc",
+      "checkpoint_sha256": "d10b4d01c0558c6167fafe79355cab4b0b7f60b0a4b70283d3bc5654ec87ef75",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 102.1138991429907,
+      "seed": 95101,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-cf-low.json",
+      "arm": "cf-low",
+      "checkpoint_sha256": "027a96e80f0b22f314f6311382511a9f27247c7afa0aa00b650307056745f85f",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 100.66221212199889,
+      "seed": 95101,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-cf-noforce.json",
+      "arm": "cf-noforce",
+      "checkpoint_sha256": "3c1672cab0439cec245e11e56792d5e6d152fea8ff60f4fb318f8ab6b6714669",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 99.32799681200413,
+      "seed": 95101,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-matched-high.json",
+      "arm": "matched-high",
+      "checkpoint_sha256": "7223f2029b96a65d1733dfa831bc03b999528107bc35687a091ca907803a4ce3",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 102.35457336400577,
+      "seed": 95101,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-matched-low.json",
+      "arm": "matched-low",
+      "checkpoint_sha256": "c4ee748ff805a94cc73b16e4b9e875034394059138eaf6291a5d1664fc1788ec",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 101.44640932999027,
+      "seed": 95101,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-passive-high.json",
+      "arm": "passive-high",
+      "checkpoint_sha256": "a6895291f009e9f475ba19d86639c9d670657c88bf1e926590fa2df29c6712f4",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 103.36203532799846,
+      "seed": 95101,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-passive-low.json",
+      "arm": "passive-low",
+      "checkpoint_sha256": "7351e1769bf068c0181068d9836f3162b5afa1fbee0d5d4906c0e21d4682eefa",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 99.39497699899948,
+      "seed": 95101,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-cf-high.json",
+      "arm": "cf-high",
+      "checkpoint_sha256": "6a0d835cd87009b0ff8cbd02ec581282d230d08af3a5ab50e8817aa0d4505d73",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 101.4319902999996,
+      "seed": 95102,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-cf-lateocc.json",
+      "arm": "cf-lateocc",
+      "checkpoint_sha256": "389c529d3b74e36e53239f7edcf4523835e23fef275362f64a5c25c4e89916ad",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 112.8088678419881,
+      "seed": 95102,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-cf-low.json",
+      "arm": "cf-low",
+      "checkpoint_sha256": "dcc888fd9f0af209a1b11b0bff827ce8efbccc872abee6a8567629b129d5f443",
+      "complete": true,
+      "executions": 1000,
+      "failures": {
+        "invariant": 11
+      },
+      "failures_by_family": {
+        "adversarial": 4,
+        "bipartite": 1,
+        "cliques-and-isolates": 3,
+        "cubic": 2,
+        "symmetric": 1
+      },
+      "lower_one_sided_95": null,
+      "mean_native_steps": 14.942,
+      "pass_all": false,
+      "seconds": 114.42567750401213,
+      "seed": 95102,
+      "success_rate": 0.989,
+      "successes": 989,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-cf-noforce.json",
+      "arm": "cf-noforce",
+      "checkpoint_sha256": "3293ed5635130423af6943d9197e01c5ed0c670bfa77df9c818d29e7e3fac655",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 114.62648926999827,
+      "seed": 95102,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-matched-high.json",
+      "arm": "matched-high",
+      "checkpoint_sha256": "058226a84a50f3cf670f31ff4dae7c6ad857f51a2a543cd3fd67c57c0a15f705",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 117.17080938498839,
+      "seed": 95102,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-matched-low.json",
+      "arm": "matched-low",
+      "checkpoint_sha256": "08c07b92ff8a5e11da22412727d7b5fb1db8cd2646b27b0633658f821c5c6003",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 98.7822543719958,
+      "seed": 95102,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-passive-high.json",
+      "arm": "passive-high",
+      "checkpoint_sha256": "e286d31cd679cc9f400c9eb93901f214c15dd18bc38b1fbc52a02c680bc36771",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 102.87440491600137,
+      "seed": 95102,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-passive-low.json",
+      "arm": "passive-low",
+      "checkpoint_sha256": "9834fe75575101c28164ba255952963b135173b7054bd28c40849d7263f7a3c3",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 101.10690700699342,
+      "seed": 95102,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-cf-high.json",
+      "arm": "cf-high",
+      "checkpoint_sha256": "582056399a6b2ff47e295441cc713a4f17508033cb91afc71871b792cd8147c3",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 112.53773181699216,
+      "seed": 95103,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-cf-lateocc.json",
+      "arm": "cf-lateocc",
+      "checkpoint_sha256": "dd0230d562cec87d1c4d7e64db5fee57230bde0d503f28eea58a8432c08569e1",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 119.72795159800444,
+      "seed": 95103,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-cf-low.json",
+      "arm": "cf-low",
+      "checkpoint_sha256": "41dbb4204e22c95d8c4f46c2d87827e2c0ea7a594ef36e577108aa60891be22e",
+      "complete": true,
+      "executions": 1000,
+      "failures": {
+        "invariant": 852
+      },
+      "failures_by_family": {
+        "adversarial": 87,
+        "bipartite": 77,
+        "cliques-and-isolates": 97,
+        "cubic": 82,
+        "cycle": 72,
+        "edgeless": 100,
+        "irregular": 79,
+        "mixed": 98,
+        "path": 82,
+        "symmetric": 78
+      },
+      "lower_one_sided_95": null,
+      "mean_native_steps": 10.939,
+      "pass_all": false,
+      "seconds": 77.04306003800593,
+      "seed": 95103,
+      "success_rate": 0.148,
+      "successes": 148,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-cf-noforce.json",
+      "arm": "cf-noforce",
+      "checkpoint_sha256": "b7c379a08d414aaca9dfa0dd9a9f8da01a46a396d397df8bc9a70860afc8e571",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 119.81334081399837,
+      "seed": 95103,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-matched-high.json",
+      "arm": "matched-high",
+      "checkpoint_sha256": "dc8cfcf9cda343681d3af99e98f204c30cea224b14bd51f7e9decf354c770953",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 116.54122940001253,
+      "seed": 95103,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-matched-low.json",
+      "arm": "matched-low",
+      "checkpoint_sha256": "9830ab8d11dedc41c593962903bb135ea7ea6b4950662f0c560617c52b954e85",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 111.00585315699573,
+      "seed": 95103,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-passive-high.json",
+      "arm": "passive-high",
+      "checkpoint_sha256": "d603af00d8e9ff508c6f58cd231f204d21c9a1745481cc8b86884ae0703ecc2e",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 117.86708834100864,
+      "seed": 95103,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-passive-low.json",
+      "arm": "passive-low",
+      "checkpoint_sha256": "03a1f67be3807f1a5d023a09155f7aa0e190b04c64773b093169f26fb3315cdf",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 114.21985238499474,
+      "seed": 95103,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-cf-high.json",
+      "arm": "cf-high",
+      "checkpoint_sha256": "35619ac88b306822a57ba1bb02be2cdf038b58f6ff7a6463cc51577d3ce18f9c",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 168.7000122939935,
+      "seed": 95104,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-cf-lateocc.json",
+      "arm": "cf-lateocc",
+      "checkpoint_sha256": "73b3c91fb0b08bae87366658a025aa7d61d88c43f365c3f08b18eb4a16352eba",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 176.72860945700086,
+      "seed": 95104,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-cf-low.json",
+      "arm": "cf-low",
+      "checkpoint_sha256": "934200863bb14f5d67960dfd907d40889175dc86430a0611bafd0db2f61391c8",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 169.9951855669933,
+      "seed": 95104,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-cf-noforce.json",
+      "arm": "cf-noforce",
+      "checkpoint_sha256": "0a05b5ae734c7dd61972b15867334fb5f3ce926ea095f71ae8b731c6c57036f4",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 167.0356082419894,
+      "seed": 95104,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-matched-high.json",
+      "arm": "matched-high",
+      "checkpoint_sha256": "c28291e84795640c0d24d1b0b28eba42b1da68f7028057ed3c40a591c601b767",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 181.1176362249971,
+      "seed": 95104,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-matched-low.json",
+      "arm": "matched-low",
+      "checkpoint_sha256": "861cc8728794544d6aef3a81f0703cf6b117cf22e6cebe9910bea03dfd510148",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 171.4815962749999,
+      "seed": 95104,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-passive-high.json",
+      "arm": "passive-high",
+      "checkpoint_sha256": "5e6095a0e97f28de828f90535781846e4242282c077b24e23fbe43451136fb20",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 164.31196477501362,
+      "seed": 95104,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-passive-low.json",
+      "arm": "passive-low",
+      "checkpoint_sha256": "0af8366322a94c4731e0c7dae2fcdab3b2095e288ab2fde7052fe55b30b93a33",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 158.98420385799545,
+      "seed": 95104,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-cf-high.json",
+      "arm": "cf-high",
+      "checkpoint_sha256": "8f88a8af08741f2047be5b2eacd4f9a18ceb8b1c0946e1d9838a8c0afe4f17ce",
+      "complete": true,
+      "executions": 1000,
+      "failures": {
+        "invariant": 702
+      },
+      "failures_by_family": {
+        "adversarial": 90,
+        "bipartite": 78,
+        "cliques-and-isolates": 77,
+        "cubic": 85,
+        "cycle": 73,
+        "irregular": 74,
+        "mixed": 63,
+        "path": 82,
+        "symmetric": 80
+      },
+      "lower_one_sided_95": null,
+      "mean_native_steps": 11.048,
+      "pass_all": false,
+      "seconds": 131.153744078998,
+      "seed": 95105,
+      "success_rate": 0.298,
+      "successes": 298,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-cf-lateocc.json",
+      "arm": "cf-lateocc",
+      "checkpoint_sha256": "d4a2c145e8cde3dd9ba3d3a835d2b7e608088a7a8e8f958644006d59066089f5",
+      "complete": true,
+      "executions": 1000,
+      "failures": {
+        "invariant": 702
+      },
+      "failures_by_family": {
+        "adversarial": 90,
+        "bipartite": 78,
+        "cliques-and-isolates": 77,
+        "cubic": 85,
+        "cycle": 73,
+        "irregular": 74,
+        "mixed": 63,
+        "path": 82,
+        "symmetric": 80
+      },
+      "lower_one_sided_95": null,
+      "mean_native_steps": 11.048,
+      "pass_all": false,
+      "seconds": 56.44763374500326,
+      "seed": 95105,
+      "success_rate": 0.298,
+      "successes": 298,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-cf-low.json",
+      "arm": "cf-low",
+      "checkpoint_sha256": "2cbc940c2689034c31212d40f1fa91e593ebf1f63be07361cfea31341afdc28e",
+      "complete": true,
+      "executions": 1000,
+      "failures": {
+        "invariant": 867
+      },
+      "failures_by_family": {
+        "adversarial": 100,
+        "bipartite": 95,
+        "cliques-and-isolates": 97,
+        "cubic": 97,
+        "cycle": 97,
+        "irregular": 98,
+        "mixed": 90,
+        "path": 98,
+        "symmetric": 95
+      },
+      "lower_one_sided_95": null,
+      "mean_native_steps": 9.814,
+      "pass_all": false,
+      "seconds": 70.44428840000182,
+      "seed": 95105,
+      "success_rate": 0.133,
+      "successes": 133,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-cf-noforce.json",
+      "arm": "cf-noforce",
+      "checkpoint_sha256": "01cfd5e4349389efd2ad021ba76fb15074fe0fbcd3cd95fc667993c1b812e60c",
+      "complete": true,
+      "executions": 1000,
+      "failures": {
+        "invariant": 702
+      },
+      "failures_by_family": {
+        "adversarial": 90,
+        "bipartite": 78,
+        "cliques-and-isolates": 77,
+        "cubic": 85,
+        "cycle": 73,
+        "irregular": 74,
+        "mixed": 63,
+        "path": 82,
+        "symmetric": 80
+      },
+      "lower_one_sided_95": null,
+      "mean_native_steps": 11.048,
+      "pass_all": false,
+      "seconds": 67.11815199999546,
+      "seed": 95105,
+      "success_rate": 0.298,
+      "successes": 298,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-matched-high.json",
+      "arm": "matched-high",
+      "checkpoint_sha256": "d10ae0aa3859ae4059fd3cfa3de788e085a2b0292671ccb106d999d92e7fc2e2",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 99.21349114499753,
+      "seed": 95105,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-matched-low.json",
+      "arm": "matched-low",
+      "checkpoint_sha256": "6f6a28a10c1dfa67b43632d37ad5740c40ba2862dfc3785931477030b53b0671",
+      "complete": true,
+      "executions": 1000,
+      "failures": {
+        "invariant": 606
+      },
+      "failures_by_family": {
+        "adversarial": 73,
+        "bipartite": 71,
+        "cliques-and-isolates": 64,
+        "cubic": 72,
+        "cycle": 68,
+        "irregular": 62,
+        "mixed": 50,
+        "path": 74,
+        "symmetric": 72
+      },
+      "lower_one_sided_95": null,
+      "mean_native_steps": 11.721,
+      "pass_all": false,
+      "seconds": 142.47042968899768,
+      "seed": 95105,
+      "success_rate": 0.394,
+      "successes": 394,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-passive-high.json",
+      "arm": "passive-high",
+      "checkpoint_sha256": "edd7a042a9e0f0803338bd96dfe6197c8c909600f0ee593942fb54bfe66f3ce4",
+      "complete": true,
+      "executions": 1000,
+      "failures": {},
+      "failures_by_family": {},
+      "lower_one_sided_95": 0.9970087504549047,
+      "mean_native_steps": 15.0,
+      "pass_all": true,
+      "seconds": 166.58468953000556,
+      "seed": 95105,
+      "success_rate": 1.0,
+      "successes": 1000,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    },
+    {
+      "path": "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-passive-low.json",
+      "arm": "passive-low",
+      "checkpoint_sha256": "ceb6b32f8126d2b705e7363c3ea4ce62c84fe2c65dd1baf68e7a1879031c60fe",
+      "complete": true,
+      "executions": 1000,
+      "failures": {
+        "invariant": 15
+      },
+      "failures_by_family": {
+        "bipartite": 5,
+        "cubic": 3,
+        "path": 2,
+        "symmetric": 5
+      },
+      "lower_one_sided_95": null,
+      "mean_native_steps": 14.92,
+      "pass_all": false,
+      "seconds": 162.97225149600126,
+      "seed": 95105,
+      "success_rate": 0.985,
+      "successes": 985,
+      "teacher": "BE_BASE_D3",
+      "update": 4000
+    }
+  ],
+  "pairs": [
+    {
+      "teacher": "BE_BASE_D3",
+      "seed": 105001,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 161,
+          "negative": 4383
+        },
+        "cf": {
+          "positive": 129,
+          "negative": 4415
+        }
+      },
+      "train_labels_by_phase": {
+        "KW": {
+          "native": {
+            "positive": 161,
+            "negative": 4383
+          },
+          "cf": {
+            "positive": 129,
+            "negative": 4415
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 104,
+        "negative": 3896
+      },
+      "sufficient_test_types": 20,
+      "max_fine_type_fraction": 0.95375,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.026,
+        "cf": 0.9975
+      },
+      "logical_test_type_overlap": {
+        "native": 1,
+        "cf": 6
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 104,
+        "tn": 3871,
+        "fp": 25,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.99375,
+        "balanced_accuracy": 0.9967915811088296,
+        "equal_type_accuracy": 0.8
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.989,
+          "balanced_accuracy": 0.99435318275154,
+          "distinct_types": 20,
+          "equal_type_accuracy": 0.6,
+          "fn": 0,
+          "fp": 44,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.8062015503875969,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 25,
+              "n": 129,
+              "tn": 0,
+              "tp": 104
+            },
+            "eligible_silent": {
+              "accuracy": 0.7272727272727273,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 3,
+              "n": 11,
+              "tn": 8,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 0.9958549222797928,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 16,
+              "n": 3860,
+              "tn": 3844,
+              "tp": 0
+            }
+          },
+          "tn": 3852,
+          "tp": 104,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 0.973,
+          "balanced_accuracy": 0.5275627862896857,
+          "distinct_types": 20,
+          "equal_type_accuracy": 0.75,
+          "fn": 98,
+          "fp": 10,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.24031007751937986,
+              "balanced_accuracy": 0.5288461538461539,
+              "fn": 98,
+              "fp": 0,
+              "n": 129,
+              "tn": 25,
+              "tp": 6
+            },
+            "eligible_silent": {
+              "accuracy": 0.09090909090909091,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 10,
+              "n": 11,
+              "tn": 1,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 3860,
+              "tn": 3860,
+              "tp": 0
+            }
+          },
+          "tn": 3886,
+          "tp": 6,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 104,
+            "negative": 25
+          },
+          "gate": {
+            "tp": 104,
+            "tn": 0,
+            "fp": 25,
+            "fn": 0,
+            "n": 129,
+            "accuracy": 0.8062015503875969,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.8062015503875969,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 25,
+            "n": 129,
+            "tn": 0,
+            "tp": 104
+          },
+          "cf": {
+            "accuracy": 0.24031007751937986,
+            "balanced_accuracy": 0.5288461538461539,
+            "fn": 98,
+            "fp": 0,
+            "n": 129,
+            "tn": 25,
+            "tp": 6
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 11
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 11,
+            "fp": 0,
+            "fn": 0,
+            "n": 11,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.7272727272727273,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 3,
+            "n": 11,
+            "tn": 8,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 0.09090909090909091,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 10,
+            "n": 11,
+            "tn": 1,
+            "tp": 0
+          }
+        },
+        "ineligible": {
+          "truth": {
+            "positive": 0,
+            "negative": 3860
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 3860,
+            "fp": 0,
+            "fn": 0,
+            "n": 3860,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.9958549222797928,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 16,
+            "n": 3860,
+            "tn": 3844,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 3860,
+            "tn": 3860,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "BE_BASE_D3",
+      "seed": 105002,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 179,
+          "negative": 4365
+        },
+        "cf": {
+          "positive": 135,
+          "negative": 4409
+        }
+      },
+      "train_labels_by_phase": {
+        "KW": {
+          "native": {
+            "positive": 179,
+            "negative": 4365
+          },
+          "cf": {
+            "positive": 135,
+            "negative": 4409
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 94,
+        "negative": 3906
+      },
+      "sufficient_test_types": 23,
+      "max_fine_type_fraction": 0.96025,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.0235,
+        "cf": 0.99475
+      },
+      "logical_test_type_overlap": {
+        "native": 1,
+        "cf": 5
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 94,
+        "tn": 3888,
+        "fp": 18,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.9955,
+        "balanced_accuracy": 0.9976958525345623,
+        "equal_type_accuracy": 0.782608695652174
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.987,
+          "balanced_accuracy": 0.9933435739887353,
+          "distinct_types": 23,
+          "equal_type_accuracy": 0.4782608695652174,
+          "fn": 0,
+          "fp": 52,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.8392857142857143,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 18,
+              "n": 112,
+              "tn": 0,
+              "tp": 94
+            },
+            "eligible_silent": {
+              "accuracy": 0.375,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 10,
+              "n": 16,
+              "tn": 6,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 0.993801652892562,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 24,
+              "n": 3872,
+              "tn": 3848,
+              "tp": 0
+            }
+          },
+          "tn": 3854,
+          "tp": 94,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 0.9975,
+          "balanced_accuracy": 0.9987199180747568,
+          "distinct_types": 23,
+          "equal_type_accuracy": 0.9130434782608695,
+          "fn": 0,
+          "fp": 10,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 112,
+              "tn": 18,
+              "tp": 94
+            },
+            "eligible_silent": {
+              "accuracy": 0.375,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 10,
+              "n": 16,
+              "tn": 6,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 3872,
+              "tn": 3872,
+              "tp": 0
+            }
+          },
+          "tn": 3896,
+          "tp": 94,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 94,
+            "negative": 18
+          },
+          "gate": {
+            "tp": 94,
+            "tn": 0,
+            "fp": 18,
+            "fn": 0,
+            "n": 112,
+            "accuracy": 0.8392857142857143,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.8392857142857143,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 18,
+            "n": 112,
+            "tn": 0,
+            "tp": 94
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 112,
+            "tn": 18,
+            "tp": 94
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 16
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 16,
+            "fp": 0,
+            "fn": 0,
+            "n": 16,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.375,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 10,
+            "n": 16,
+            "tn": 6,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 0.375,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 10,
+            "n": 16,
+            "tn": 6,
+            "tp": 0
+          }
+        },
+        "ineligible": {
+          "truth": {
+            "positive": 0,
+            "negative": 3872
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 3872,
+            "fp": 0,
+            "fn": 0,
+            "n": 3872,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.993801652892562,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 24,
+            "n": 3872,
+            "tn": 3848,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 3872,
+            "tn": 3872,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "BE_BASE_D3",
+      "seed": 105003,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 161,
+          "negative": 4383
+        },
+        "cf": {
+          "positive": 114,
+          "negative": 4430
+        }
+      },
+      "train_labels_by_phase": {
+        "KW": {
+          "native": {
+            "positive": 161,
+            "negative": 4383
+          },
+          "cf": {
+            "positive": 114,
+            "negative": 4430
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 95,
+        "negative": 3905
+      },
+      "sufficient_test_types": 17,
+      "max_fine_type_fraction": 0.963,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.02375,
+        "cf": 0.99825
+      },
+      "logical_test_type_overlap": {
+        "native": 1,
+        "cf": 6
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 95,
+        "tn": 3887,
+        "fp": 18,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.9955,
+        "balanced_accuracy": 0.9976952624839949,
+        "equal_type_accuracy": 0.8235294117647058
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.991,
+          "balanced_accuracy": 0.9953905249679897,
+          "distinct_types": 17,
+          "equal_type_accuracy": 0.5882352941176471,
+          "fn": 0,
+          "fp": 36,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.8407079646017699,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 18,
+              "n": 113,
+              "tn": 0,
+              "tp": 95
+            },
+            "eligible_silent": {
+              "accuracy": 0.8888888888888888,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 1,
+              "n": 9,
+              "tn": 8,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 0.9956162970603404,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 17,
+              "n": 3878,
+              "tn": 3861,
+              "tp": 0
+            }
+          },
+          "tn": 3869,
+          "tp": 95,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 0.99975,
+          "balanced_accuracy": 0.9998719590268885,
+          "distinct_types": 17,
+          "equal_type_accuracy": 0.9411764705882353,
+          "fn": 0,
+          "fp": 1,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 113,
+              "tn": 18,
+              "tp": 95
+            },
+            "eligible_silent": {
+              "accuracy": 0.8888888888888888,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 1,
+              "n": 9,
+              "tn": 8,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 3878,
+              "tn": 3878,
+              "tp": 0
+            }
+          },
+          "tn": 3904,
+          "tp": 95,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 95,
+            "negative": 18
+          },
+          "gate": {
+            "tp": 95,
+            "tn": 0,
+            "fp": 18,
+            "fn": 0,
+            "n": 113,
+            "accuracy": 0.8407079646017699,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.8407079646017699,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 18,
+            "n": 113,
+            "tn": 0,
+            "tp": 95
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 113,
+            "tn": 18,
+            "tp": 95
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 9
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 9,
+            "fp": 0,
+            "fn": 0,
+            "n": 9,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.8888888888888888,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 1,
+            "n": 9,
+            "tn": 8,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 0.8888888888888888,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 1,
+            "n": 9,
+            "tn": 8,
+            "tp": 0
+          }
+        },
+        "ineligible": {
+          "truth": {
+            "positive": 0,
+            "negative": 3878
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 3878,
+            "fp": 0,
+            "fn": 0,
+            "n": 3878,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.9956162970603404,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 17,
+            "n": 3878,
+            "tn": 3861,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 3878,
+            "tn": 3878,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "BE_BASE_D3",
+      "seed": 105004,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 189,
+          "negative": 4355
+        },
+        "cf": {
+          "positive": 147,
+          "negative": 4397
+        }
+      },
+      "train_labels_by_phase": {
+        "KW": {
+          "native": {
+            "positive": 189,
+            "negative": 4355
+          },
+          "cf": {
+            "positive": 147,
+            "negative": 4397
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 114,
+        "negative": 3886
+      },
+      "sufficient_test_types": 20,
+      "max_fine_type_fraction": 0.95175,
+      "logical_test_types": 6,
+      "logical_test_occurrence_overlap": {
+        "native": 0.0285,
+        "cf": 0.9975
+      },
+      "logical_test_type_overlap": {
+        "native": 1,
+        "cf": 5
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 114,
+        "tn": 3856,
+        "fp": 30,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.9925,
+        "balanced_accuracy": 0.9961399897066392,
+        "equal_type_accuracy": 0.8
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.03225,
+          "balanced_accuracy": 0.5019300051466804,
+          "distinct_types": 20,
+          "equal_type_accuracy": 0.35,
+          "fn": 0,
+          "fp": 3871,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.7916666666666666,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 30,
+              "n": 144,
+              "tn": 0,
+              "tp": 114
+            },
+            "eligible_silent": {
+              "accuracy": 0.4,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 6,
+              "n": 10,
+              "tn": 4,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 0.002860114404576183,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 3835,
+              "n": 3846,
+              "tn": 11,
+              "tp": 0
+            }
+          },
+          "tn": 15,
+          "tp": 114,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 0.9985,
+          "balanced_accuracy": 0.9992279979413279,
+          "distinct_types": 20,
+          "equal_type_accuracy": 0.9,
+          "fn": 0,
+          "fp": 6,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 144,
+              "tn": 30,
+              "tp": 114
+            },
+            "eligible_silent": {
+              "accuracy": 0.4,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 6,
+              "n": 10,
+              "tn": 4,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 3846,
+              "tn": 3846,
+              "tp": 0
+            }
+          },
+          "tn": 3880,
+          "tp": 114,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 114,
+            "negative": 30
+          },
+          "gate": {
+            "tp": 114,
+            "tn": 0,
+            "fp": 30,
+            "fn": 0,
+            "n": 144,
+            "accuracy": 0.7916666666666666,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.7916666666666666,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 30,
+            "n": 144,
+            "tn": 0,
+            "tp": 114
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 144,
+            "tn": 30,
+            "tp": 114
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 10
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 10,
+            "fp": 0,
+            "fn": 0,
+            "n": 10,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.4,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 6,
+            "n": 10,
+            "tn": 4,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 0.4,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 6,
+            "n": 10,
+            "tn": 4,
+            "tp": 0
+          }
+        },
+        "ineligible": {
+          "truth": {
+            "positive": 0,
+            "negative": 3846
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 3846,
+            "fp": 0,
+            "fn": 0,
+            "n": 3846,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.002860114404576183,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 3835,
+            "n": 3846,
+            "tn": 11,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 3846,
+            "tn": 3846,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "BE_BASE_D3",
+      "seed": 105005,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 175,
+          "negative": 4369
+        },
+        "cf": {
+          "positive": 137,
+          "negative": 4407
+        }
+      },
+      "train_labels_by_phase": {
+        "KW": {
+          "native": {
+            "positive": 175,
+            "negative": 4369
+          },
+          "cf": {
+            "positive": 137,
+            "negative": 4407
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 91,
+        "negative": 3909
+      },
+      "sufficient_test_types": 18,
+      "max_fine_type_fraction": 0.95625,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.02275,
+        "cf": 1.0
+      },
+      "logical_test_type_overlap": {
+        "native": 1,
+        "cf": 7
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 91,
+        "tn": 3888,
+        "fp": 21,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.99475,
+        "balanced_accuracy": 0.9973138910207214,
+        "equal_type_accuracy": 0.8333333333333334
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.029,
+          "balanced_accuracy": 0.5031977487848555,
+          "distinct_types": 18,
+          "equal_type_accuracy": 0.3888888888888889,
+          "fn": 0,
+          "fp": 3884,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.8125,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 21,
+              "n": 112,
+              "tn": 0,
+              "tp": 91
+            },
+            "eligible_silent": {
+              "accuracy": 0.47058823529411764,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 9,
+              "n": 17,
+              "tn": 8,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 0.004391630069749419,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 3854,
+              "n": 3871,
+              "tn": 17,
+              "tp": 0
+            }
+          },
+          "tn": 25,
+          "tp": 91,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 0.99775,
+          "balanced_accuracy": 0.998848810437452,
+          "distinct_types": 18,
+          "equal_type_accuracy": 0.8888888888888888,
+          "fn": 0,
+          "fp": 9,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 112,
+              "tn": 21,
+              "tp": 91
+            },
+            "eligible_silent": {
+              "accuracy": 0.47058823529411764,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 9,
+              "n": 17,
+              "tn": 8,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 3871,
+              "tn": 3871,
+              "tp": 0
+            }
+          },
+          "tn": 3900,
+          "tp": 91,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 91,
+            "negative": 21
+          },
+          "gate": {
+            "tp": 91,
+            "tn": 0,
+            "fp": 21,
+            "fn": 0,
+            "n": 112,
+            "accuracy": 0.8125,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.8125,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 21,
+            "n": 112,
+            "tn": 0,
+            "tp": 91
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 112,
+            "tn": 21,
+            "tp": 91
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 17
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 17,
+            "fp": 0,
+            "fn": 0,
+            "n": 17,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.47058823529411764,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 9,
+            "n": 17,
+            "tn": 8,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 0.47058823529411764,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 9,
+            "n": 17,
+            "tn": 8,
+            "tp": 0
+          }
+        },
+        "ineligible": {
+          "truth": {
+            "positive": 0,
+            "negative": 3871
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 3871,
+            "fp": 0,
+            "fn": 0,
+            "n": 3871,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.004391630069749419,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 3854,
+            "n": 3871,
+            "tn": 17,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 3871,
+            "tn": 3871,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "BE_BASE_D3",
+      "seed": 105006,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 161,
+          "negative": 4383
+        },
+        "cf": {
+          "positive": 126,
+          "negative": 4418
+        }
+      },
+      "train_labels_by_phase": {
+        "KW": {
+          "native": {
+            "positive": 161,
+            "negative": 4383
+          },
+          "cf": {
+            "positive": 126,
+            "negative": 4418
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 110,
+        "negative": 3890
+      },
+      "sufficient_test_types": 20,
+      "max_fine_type_fraction": 0.9505,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.0275,
+        "cf": 0.998
+      },
+      "logical_test_type_overlap": {
+        "native": 1,
+        "cf": 6
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 110,
+        "tn": 3858,
+        "fp": 32,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.992,
+        "balanced_accuracy": 0.9958868894601542,
+        "equal_type_accuracy": 0.8
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.9835,
+          "balanced_accuracy": 0.9915167095115681,
+          "distinct_types": 20,
+          "equal_type_accuracy": 0.5,
+          "fn": 0,
+          "fp": 66,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.7746478873239436,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 32,
+              "n": 142,
+              "tn": 0,
+              "tp": 110
+            },
+            "eligible_silent": {
+              "accuracy": 0.8,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 2,
+              "n": 10,
+              "tn": 8,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 0.9916839916839917,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 32,
+              "n": 3848,
+              "tn": 3816,
+              "tp": 0
+            }
+          },
+          "tn": 3824,
+          "tp": 110,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 0.998,
+          "balanced_accuracy": 0.9989717223650385,
+          "distinct_types": 20,
+          "equal_type_accuracy": 0.9,
+          "fn": 0,
+          "fp": 8,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 142,
+              "tn": 32,
+              "tp": 110
+            },
+            "eligible_silent": {
+              "accuracy": 0.2,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 8,
+              "n": 10,
+              "tn": 2,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 3848,
+              "tn": 3848,
+              "tp": 0
+            }
+          },
+          "tn": 3882,
+          "tp": 110,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 110,
+            "negative": 32
+          },
+          "gate": {
+            "tp": 110,
+            "tn": 0,
+            "fp": 32,
+            "fn": 0,
+            "n": 142,
+            "accuracy": 0.7746478873239436,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.7746478873239436,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 32,
+            "n": 142,
+            "tn": 0,
+            "tp": 110
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 142,
+            "tn": 32,
+            "tp": 110
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 10
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 10,
+            "fp": 0,
+            "fn": 0,
+            "n": 10,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.8,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 2,
+            "n": 10,
+            "tn": 8,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 0.2,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 8,
+            "n": 10,
+            "tn": 2,
+            "tp": 0
+          }
+        },
+        "ineligible": {
+          "truth": {
+            "positive": 0,
+            "negative": 3848
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 3848,
+            "fp": 0,
+            "fn": 0,
+            "n": 3848,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.9916839916839917,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 32,
+            "n": 3848,
+            "tn": 3816,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 3848,
+            "tn": 3848,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "BE_BASE_D3",
+      "seed": 105007,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 163,
+          "negative": 4381
+        },
+        "cf": {
+          "positive": 120,
+          "negative": 4424
+        }
+      },
+      "train_labels_by_phase": {
+        "KW": {
+          "native": {
+            "positive": 163,
+            "negative": 4381
+          },
+          "cf": {
+            "positive": 120,
+            "negative": 4424
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 116,
+        "negative": 3884
+      },
+      "sufficient_test_types": 21,
+      "max_fine_type_fraction": 0.9515,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.029,
+        "cf": 0.99725
+      },
+      "logical_test_type_overlap": {
+        "native": 1,
+        "cf": 6
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 116,
+        "tn": 3861,
+        "fp": 23,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.99425,
+        "balanced_accuracy": 0.9970391349124614,
+        "equal_type_accuracy": 0.8095238095238095
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.03575,
+          "balanced_accuracy": 0.503475798146241,
+          "distinct_types": 21,
+          "equal_type_accuracy": 0.47619047619047616,
+          "fn": 0,
+          "fp": 3857,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.8345323741007195,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 23,
+              "n": 139,
+              "tn": 0,
+              "tp": 116
+            },
+            "eligible_silent": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 16,
+              "tn": 16,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 0.002860858257477243,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 3834,
+              "n": 3845,
+              "tn": 11,
+              "tp": 0
+            }
+          },
+          "tn": 27,
+          "tp": 116,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 0.9985,
+          "balanced_accuracy": 0.9992276004119465,
+          "distinct_types": 21,
+          "equal_type_accuracy": 0.9047619047619048,
+          "fn": 0,
+          "fp": 6,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 139,
+              "tn": 23,
+              "tp": 116
+            },
+            "eligible_silent": {
+              "accuracy": 0.625,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 6,
+              "n": 16,
+              "tn": 10,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 3845,
+              "tn": 3845,
+              "tp": 0
+            }
+          },
+          "tn": 3878,
+          "tp": 116,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 116,
+            "negative": 23
+          },
+          "gate": {
+            "tp": 116,
+            "tn": 0,
+            "fp": 23,
+            "fn": 0,
+            "n": 139,
+            "accuracy": 0.8345323741007195,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.8345323741007195,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 23,
+            "n": 139,
+            "tn": 0,
+            "tp": 116
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 139,
+            "tn": 23,
+            "tp": 116
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 16
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 16,
+            "fp": 0,
+            "fn": 0,
+            "n": 16,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 16,
+            "tn": 16,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 0.625,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 6,
+            "n": 16,
+            "tn": 10,
+            "tp": 0
+          }
+        },
+        "ineligible": {
+          "truth": {
+            "positive": 0,
+            "negative": 3845
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 3845,
+            "fp": 0,
+            "fn": 0,
+            "n": 3845,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.002860858257477243,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 3834,
+            "n": 3845,
+            "tn": 11,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 3845,
+            "tn": 3845,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "BE_BASE_D3",
+      "seed": 105008,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 157,
+          "negative": 4387
+        },
+        "cf": {
+          "positive": 113,
+          "negative": 4431
+        }
+      },
+      "train_labels_by_phase": {
+        "KW": {
+          "native": {
+            "positive": 157,
+            "negative": 4387
+          },
+          "cf": {
+            "positive": 113,
+            "negative": 4431
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 87,
+        "negative": 3913
+      },
+      "sufficient_test_types": 20,
+      "max_fine_type_fraction": 0.95525,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.02175,
+        "cf": 1.0
+      },
+      "logical_test_type_overlap": {
+        "native": 1,
+        "cf": 7
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 87,
+        "tn": 3890,
+        "fp": 23,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.99425,
+        "balanced_accuracy": 0.9970610784564273,
+        "equal_type_accuracy": 0.85
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.98425,
+          "balanced_accuracy": 0.9919499105545617,
+          "distinct_types": 20,
+          "equal_type_accuracy": 0.55,
+          "fn": 0,
+          "fp": 63,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.7909090909090909,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 23,
+              "n": 110,
+              "tn": 0,
+              "tp": 87
+            },
+            "eligible_silent": {
+              "accuracy": 0.6666666666666666,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 6,
+              "n": 18,
+              "tn": 12,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 0.9912190082644629,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 34,
+              "n": 3872,
+              "tn": 3838,
+              "tp": 0
+            }
+          },
+          "tn": 3850,
+          "tp": 87,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 0.97525,
+          "balanced_accuracy": 0.5209440385863802,
+          "distinct_types": 20,
+          "equal_type_accuracy": 0.75,
+          "fn": 83,
+          "fp": 16,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.24545454545454545,
+              "balanced_accuracy": 0.5229885057471264,
+              "fn": 83,
+              "fp": 0,
+              "n": 110,
+              "tn": 23,
+              "tp": 4
+            },
+            "eligible_silent": {
+              "accuracy": 0.1111111111111111,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 16,
+              "n": 18,
+              "tn": 2,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 3872,
+              "tn": 3872,
+              "tp": 0
+            }
+          },
+          "tn": 3897,
+          "tp": 4,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 87,
+            "negative": 23
+          },
+          "gate": {
+            "tp": 87,
+            "tn": 0,
+            "fp": 23,
+            "fn": 0,
+            "n": 110,
+            "accuracy": 0.7909090909090909,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.7909090909090909,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 23,
+            "n": 110,
+            "tn": 0,
+            "tp": 87
+          },
+          "cf": {
+            "accuracy": 0.24545454545454545,
+            "balanced_accuracy": 0.5229885057471264,
+            "fn": 83,
+            "fp": 0,
+            "n": 110,
+            "tn": 23,
+            "tp": 4
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 18
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 18,
+            "fp": 0,
+            "fn": 0,
+            "n": 18,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.6666666666666666,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 6,
+            "n": 18,
+            "tn": 12,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 0.1111111111111111,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 16,
+            "n": 18,
+            "tn": 2,
+            "tp": 0
+          }
+        },
+        "ineligible": {
+          "truth": {
+            "positive": 0,
+            "negative": 3872
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 3872,
+            "fp": 0,
+            "fn": 0,
+            "n": 3872,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.9912190082644629,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 34,
+            "n": 3872,
+            "tn": 3838,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 3872,
+            "tn": 3872,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "BE_BASE_D3",
+      "seed": 105009,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 164,
+          "negative": 4380
+        },
+        "cf": {
+          "positive": 120,
+          "negative": 4424
+        }
+      },
+      "train_labels_by_phase": {
+        "KW": {
+          "native": {
+            "positive": 164,
+            "negative": 4380
+          },
+          "cf": {
+            "positive": 120,
+            "negative": 4424
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 99,
+        "negative": 3901
+      },
+      "sufficient_test_types": 22,
+      "max_fine_type_fraction": 0.95675,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.02475,
+        "cf": 0.99725
+      },
+      "logical_test_type_overlap": {
+        "native": 1,
+        "cf": 6
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 99,
+        "tn": 3882,
+        "fp": 19,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.99525,
+        "balanced_accuracy": 0.9975647269930787,
+        "equal_type_accuracy": 0.8636363636363636
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.9895,
+          "balanced_accuracy": 0.9946167649320687,
+          "distinct_types": 22,
+          "equal_type_accuracy": 0.5909090909090909,
+          "fn": 0,
+          "fp": 42,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.8389830508474576,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 19,
+              "n": 118,
+              "tn": 0,
+              "tp": 99
+            },
+            "eligible_silent": {
+              "accuracy": 0.5833333333333334,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 5,
+              "n": 12,
+              "tn": 7,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 0.9953488372093023,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 18,
+              "n": 3870,
+              "tn": 3852,
+              "tp": 0
+            }
+          },
+          "tn": 3859,
+          "tp": 99,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 0.99725,
+          "balanced_accuracy": 0.998590105101256,
+          "distinct_types": 22,
+          "equal_type_accuracy": 0.8636363636363636,
+          "fn": 0,
+          "fp": 11,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 118,
+              "tn": 19,
+              "tp": 99
+            },
+            "eligible_silent": {
+              "accuracy": 0.08333333333333333,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 11,
+              "n": 12,
+              "tn": 1,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 3870,
+              "tn": 3870,
+              "tp": 0
+            }
+          },
+          "tn": 3890,
+          "tp": 99,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 99,
+            "negative": 19
+          },
+          "gate": {
+            "tp": 99,
+            "tn": 0,
+            "fp": 19,
+            "fn": 0,
+            "n": 118,
+            "accuracy": 0.8389830508474576,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.8389830508474576,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 19,
+            "n": 118,
+            "tn": 0,
+            "tp": 99
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 118,
+            "tn": 19,
+            "tp": 99
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 12
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 12,
+            "fp": 0,
+            "fn": 0,
+            "n": 12,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.5833333333333334,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 5,
+            "n": 12,
+            "tn": 7,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 0.08333333333333333,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 11,
+            "n": 12,
+            "tn": 1,
+            "tp": 0
+          }
+        },
+        "ineligible": {
+          "truth": {
+            "positive": 0,
+            "negative": 3870
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 3870,
+            "fp": 0,
+            "fn": 0,
+            "n": 3870,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.9953488372093023,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 18,
+            "n": 3870,
+            "tn": 3852,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 3870,
+            "tn": 3870,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "BE_BASE_D3",
+      "seed": 105010,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 152,
+          "negative": 4392
+        },
+        "cf": {
+          "positive": 115,
+          "negative": 4429
+        }
+      },
+      "train_labels_by_phase": {
+        "KW": {
+          "native": {
+            "positive": 152,
+            "negative": 4392
+          },
+          "cf": {
+            "positive": 115,
+            "negative": 4429
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 85,
+        "negative": 3915
+      },
+      "sufficient_test_types": 17,
+      "max_fine_type_fraction": 0.96225,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.02125,
+        "cf": 0.99775
+      },
+      "logical_test_type_overlap": {
+        "native": 1,
+        "cf": 6
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 85,
+        "tn": 3896,
+        "fp": 19,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.99525,
+        "balanced_accuracy": 0.99757343550447,
+        "equal_type_accuracy": 0.7647058823529411
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.98925,
+          "balanced_accuracy": 0.9945083014048531,
+          "distinct_types": 17,
+          "equal_type_accuracy": 0.6470588235294118,
+          "fn": 0,
+          "fp": 43,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.8173076923076923,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 19,
+              "n": 104,
+              "tn": 0,
+              "tp": 85
+            },
+            "eligible_silent": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 14,
+              "tn": 14,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 0.9938176197836167,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 24,
+              "n": 3882,
+              "tn": 3858,
+              "tp": 0
+            }
+          },
+          "tn": 3872,
+          "tp": 85,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 0.999,
+          "balanced_accuracy": 0.9994891443167305,
+          "distinct_types": 17,
+          "equal_type_accuracy": 0.8823529411764706,
+          "fn": 0,
+          "fp": 4,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 104,
+              "tn": 19,
+              "tp": 85
+            },
+            "eligible_silent": {
+              "accuracy": 0.7142857142857143,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 4,
+              "n": 14,
+              "tn": 10,
+              "tp": 0
+            },
+            "ineligible": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 3882,
+              "tn": 3882,
+              "tp": 0
+            }
+          },
+          "tn": 3911,
+          "tp": 85,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 85,
+            "negative": 19
+          },
+          "gate": {
+            "tp": 85,
+            "tn": 0,
+            "fp": 19,
+            "fn": 0,
+            "n": 104,
+            "accuracy": 0.8173076923076923,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.8173076923076923,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 19,
+            "n": 104,
+            "tn": 0,
+            "tp": 85
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 104,
+            "tn": 19,
+            "tp": 85
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 14
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 14,
+            "fp": 0,
+            "fn": 0,
+            "n": 14,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 14,
+            "tn": 14,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 0.7142857142857143,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 4,
+            "n": 14,
+            "tn": 10,
+            "tp": 0
+          }
+        },
+        "ineligible": {
+          "truth": {
+            "positive": 0,
+            "negative": 3882
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 3882,
+            "fp": 0,
+            "fn": 0,
+            "n": 3882,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.9938176197836167,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 24,
+            "n": 3882,
+            "tn": 3858,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 3882,
+            "tn": 3882,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "SPECULATIVE_GM",
+      "seed": 105001,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 4344,
+          "negative": 0
+        },
+        "cf": {
+          "positive": 3276,
+          "negative": 1068
+        }
+      },
+      "train_labels_by_phase": {
+        "ASSIGN": {
+          "native": {
+            "positive": 2427,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 2144,
+            "negative": 283
+          }
+        },
+        "REPAIR": {
+          "native": {
+            "positive": 1917,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 1132,
+            "negative": 785
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 1578,
+        "negative": 2422
+      },
+      "sufficient_test_types": 89,
+      "max_fine_type_fraction": 0.238,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.3945,
+        "cf": 1.0
+      },
+      "logical_test_type_overlap": {
+        "native": 2,
+        "cf": 7
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 1578,
+        "tn": 148,
+        "fp": 2274,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.4315,
+        "balanced_accuracy": 0.5305532617671346,
+        "equal_type_accuracy": 0.6179775280898876
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.3945,
+          "balanced_accuracy": 0.5,
+          "distinct_types": 89,
+          "equal_type_accuracy": 0.33707865168539325,
+          "fn": 0,
+          "fp": 2422,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.40965732087227413,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 2274,
+              "n": 3852,
+              "tn": 0,
+              "tp": 1578
+            },
+            "eligible_silent": {
+              "accuracy": 0.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 148,
+              "n": 148,
+              "tn": 0,
+              "tp": 0
+            }
+          },
+          "tn": 0,
+          "tp": 1578,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0,
+          "distinct_types": 89,
+          "equal_type_accuracy": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 3852,
+              "tn": 2274,
+              "tp": 1578
+            },
+            "eligible_silent": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 148,
+              "tn": 148,
+              "tp": 0
+            }
+          },
+          "tn": 2422,
+          "tp": 1578,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 1578,
+            "negative": 2274
+          },
+          "gate": {
+            "tp": 1578,
+            "tn": 0,
+            "fp": 2274,
+            "fn": 0,
+            "n": 3852,
+            "accuracy": 0.40965732087227413,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.40965732087227413,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 2274,
+            "n": 3852,
+            "tn": 0,
+            "tp": 1578
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 3852,
+            "tn": 2274,
+            "tp": 1578
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 148
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 148,
+            "fp": 0,
+            "fn": 0,
+            "n": 148,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 148,
+            "n": 148,
+            "tn": 0,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 148,
+            "tn": 148,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "SPECULATIVE_GM",
+      "seed": 105002,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 4344,
+          "negative": 0
+        },
+        "cf": {
+          "positive": 3256,
+          "negative": 1088
+        }
+      },
+      "train_labels_by_phase": {
+        "ASSIGN": {
+          "native": {
+            "positive": 2440,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 2127,
+            "negative": 313
+          }
+        },
+        "REPAIR": {
+          "native": {
+            "positive": 1904,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 1129,
+            "negative": 775
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 1509,
+        "negative": 2491
+      },
+      "sufficient_test_types": 84,
+      "max_fine_type_fraction": 0.23625,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.37725,
+        "cf": 1.0
+      },
+      "logical_test_type_overlap": {
+        "native": 2,
+        "cf": 7
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 1509,
+        "tn": 145,
+        "fp": 2346,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.4135,
+        "balanced_accuracy": 0.5291047771979125,
+        "equal_type_accuracy": 0.6309523809523809
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.37725,
+          "balanced_accuracy": 0.5,
+          "distinct_types": 84,
+          "equal_type_accuracy": 0.36904761904761907,
+          "fn": 0,
+          "fp": 2491,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.3914396887159533,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 2346,
+              "n": 3855,
+              "tn": 0,
+              "tp": 1509
+            },
+            "eligible_silent": {
+              "accuracy": 0.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 145,
+              "n": 145,
+              "tn": 0,
+              "tp": 0
+            }
+          },
+          "tn": 0,
+          "tp": 1509,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0,
+          "distinct_types": 84,
+          "equal_type_accuracy": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 3855,
+              "tn": 2346,
+              "tp": 1509
+            },
+            "eligible_silent": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 145,
+              "tn": 145,
+              "tp": 0
+            }
+          },
+          "tn": 2491,
+          "tp": 1509,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 1509,
+            "negative": 2346
+          },
+          "gate": {
+            "tp": 1509,
+            "tn": 0,
+            "fp": 2346,
+            "fn": 0,
+            "n": 3855,
+            "accuracy": 0.3914396887159533,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.3914396887159533,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 2346,
+            "n": 3855,
+            "tn": 0,
+            "tp": 1509
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 3855,
+            "tn": 2346,
+            "tp": 1509
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 145
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 145,
+            "fp": 0,
+            "fn": 0,
+            "n": 145,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 145,
+            "n": 145,
+            "tn": 0,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 145,
+            "tn": 145,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "SPECULATIVE_GM",
+      "seed": 105003,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 4349,
+          "negative": 0
+        },
+        "cf": {
+          "positive": 3311,
+          "negative": 1038
+        }
+      },
+      "train_labels_by_phase": {
+        "ASSIGN": {
+          "native": {
+            "positive": 2430,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 2153,
+            "negative": 277
+          }
+        },
+        "REPAIR": {
+          "native": {
+            "positive": 1919,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 1158,
+            "negative": 761
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 1550,
+        "negative": 2450
+      },
+      "sufficient_test_types": 92,
+      "max_fine_type_fraction": 0.23825,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.3875,
+        "cf": 1.0
+      },
+      "logical_test_type_overlap": {
+        "native": 2,
+        "cf": 7
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 1550,
+        "tn": 157,
+        "fp": 2293,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.42675,
+        "balanced_accuracy": 0.5320408163265307,
+        "equal_type_accuracy": 0.6304347826086957
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.3875,
+          "balanced_accuracy": 0.5,
+          "distinct_types": 92,
+          "equal_type_accuracy": 0.34782608695652173,
+          "fn": 0,
+          "fp": 2450,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.4033307311995837,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 2293,
+              "n": 3843,
+              "tn": 0,
+              "tp": 1550
+            },
+            "eligible_silent": {
+              "accuracy": 0.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 157,
+              "n": 157,
+              "tn": 0,
+              "tp": 0
+            }
+          },
+          "tn": 0,
+          "tp": 1550,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0,
+          "distinct_types": 92,
+          "equal_type_accuracy": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 3843,
+              "tn": 2293,
+              "tp": 1550
+            },
+            "eligible_silent": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 157,
+              "tn": 157,
+              "tp": 0
+            }
+          },
+          "tn": 2450,
+          "tp": 1550,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 1550,
+            "negative": 2293
+          },
+          "gate": {
+            "tp": 1550,
+            "tn": 0,
+            "fp": 2293,
+            "fn": 0,
+            "n": 3843,
+            "accuracy": 0.4033307311995837,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.4033307311995837,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 2293,
+            "n": 3843,
+            "tn": 0,
+            "tp": 1550
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 3843,
+            "tn": 2293,
+            "tp": 1550
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 157
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 157,
+            "fp": 0,
+            "fn": 0,
+            "n": 157,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 157,
+            "n": 157,
+            "tn": 0,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 157,
+            "tn": 157,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "SPECULATIVE_GM",
+      "seed": 105004,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 4344,
+          "negative": 0
+        },
+        "cf": {
+          "positive": 3304,
+          "negative": 1040
+        }
+      },
+      "train_labels_by_phase": {
+        "ASSIGN": {
+          "native": {
+            "positive": 2440,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 2149,
+            "negative": 291
+          }
+        },
+        "REPAIR": {
+          "native": {
+            "positive": 1904,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 1155,
+            "negative": 749
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 1580,
+        "negative": 2420
+      },
+      "sufficient_test_types": 86,
+      "max_fine_type_fraction": 0.246,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.395,
+        "cf": 1.0
+      },
+      "logical_test_type_overlap": {
+        "native": 2,
+        "cf": 7
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 1580,
+        "tn": 154,
+        "fp": 2266,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.4335,
+        "balanced_accuracy": 0.5318181818181819,
+        "equal_type_accuracy": 0.627906976744186
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.395,
+          "balanced_accuracy": 0.5,
+          "distinct_types": 86,
+          "equal_type_accuracy": 0.37209302325581395,
+          "fn": 0,
+          "fp": 2420,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.4108164326573063,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 2266,
+              "n": 3846,
+              "tn": 0,
+              "tp": 1580
+            },
+            "eligible_silent": {
+              "accuracy": 0.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 154,
+              "n": 154,
+              "tn": 0,
+              "tp": 0
+            }
+          },
+          "tn": 0,
+          "tp": 1580,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0,
+          "distinct_types": 86,
+          "equal_type_accuracy": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 3846,
+              "tn": 2266,
+              "tp": 1580
+            },
+            "eligible_silent": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 154,
+              "tn": 154,
+              "tp": 0
+            }
+          },
+          "tn": 2420,
+          "tp": 1580,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 1580,
+            "negative": 2266
+          },
+          "gate": {
+            "tp": 1580,
+            "tn": 0,
+            "fp": 2266,
+            "fn": 0,
+            "n": 3846,
+            "accuracy": 0.4108164326573063,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.4108164326573063,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 2266,
+            "n": 3846,
+            "tn": 0,
+            "tp": 1580
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 3846,
+            "tn": 2266,
+            "tp": 1580
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 154
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 154,
+            "fp": 0,
+            "fn": 0,
+            "n": 154,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 154,
+            "n": 154,
+            "tn": 0,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 154,
+            "tn": 154,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "SPECULATIVE_GM",
+      "seed": 105005,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 4344,
+          "negative": 0
+        },
+        "cf": {
+          "positive": 3246,
+          "negative": 1098
+        }
+      },
+      "train_labels_by_phase": {
+        "ASSIGN": {
+          "native": {
+            "positive": 2432,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 2127,
+            "negative": 305
+          }
+        },
+        "REPAIR": {
+          "native": {
+            "positive": 1912,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 1119,
+            "negative": 793
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 1580,
+        "negative": 2420
+      },
+      "sufficient_test_types": 91,
+      "max_fine_type_fraction": 0.23875,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.395,
+        "cf": 1.0
+      },
+      "logical_test_type_overlap": {
+        "native": 2,
+        "cf": 7
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 1580,
+        "tn": 130,
+        "fp": 2290,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.4275,
+        "balanced_accuracy": 0.5268595041322314,
+        "equal_type_accuracy": 0.6373626373626373
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.395,
+          "balanced_accuracy": 0.5,
+          "distinct_types": 91,
+          "equal_type_accuracy": 0.3626373626373626,
+          "fn": 0,
+          "fp": 2420,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.4082687338501292,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 2290,
+              "n": 3870,
+              "tn": 0,
+              "tp": 1580
+            },
+            "eligible_silent": {
+              "accuracy": 0.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 130,
+              "n": 130,
+              "tn": 0,
+              "tp": 0
+            }
+          },
+          "tn": 0,
+          "tp": 1580,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0,
+          "distinct_types": 91,
+          "equal_type_accuracy": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 3870,
+              "tn": 2290,
+              "tp": 1580
+            },
+            "eligible_silent": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 130,
+              "tn": 130,
+              "tp": 0
+            }
+          },
+          "tn": 2420,
+          "tp": 1580,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 1580,
+            "negative": 2290
+          },
+          "gate": {
+            "tp": 1580,
+            "tn": 0,
+            "fp": 2290,
+            "fn": 0,
+            "n": 3870,
+            "accuracy": 0.4082687338501292,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.4082687338501292,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 2290,
+            "n": 3870,
+            "tn": 0,
+            "tp": 1580
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 3870,
+            "tn": 2290,
+            "tp": 1580
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 130
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 130,
+            "fp": 0,
+            "fn": 0,
+            "n": 130,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 130,
+            "n": 130,
+            "tn": 0,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 130,
+            "tn": 130,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "SPECULATIVE_GM",
+      "seed": 105006,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 4347,
+          "negative": 0
+        },
+        "cf": {
+          "positive": 3271,
+          "negative": 1076
+        }
+      },
+      "train_labels_by_phase": {
+        "ASSIGN": {
+          "native": {
+            "positive": 2434,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 2108,
+            "negative": 326
+          }
+        },
+        "REPAIR": {
+          "native": {
+            "positive": 1913,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 1163,
+            "negative": 750
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 1535,
+        "negative": 2465
+      },
+      "sufficient_test_types": 83,
+      "max_fine_type_fraction": 0.241,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.38375,
+        "cf": 1.0
+      },
+      "logical_test_type_overlap": {
+        "native": 2,
+        "cf": 7
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 1535,
+        "tn": 144,
+        "fp": 2321,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.41975,
+        "balanced_accuracy": 0.5292089249492901,
+        "equal_type_accuracy": 0.6024096385542169
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.38375,
+          "balanced_accuracy": 0.5,
+          "distinct_types": 83,
+          "equal_type_accuracy": 0.3614457831325301,
+          "fn": 0,
+          "fp": 2465,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.3980809128630705,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 2321,
+              "n": 3856,
+              "tn": 0,
+              "tp": 1535
+            },
+            "eligible_silent": {
+              "accuracy": 0.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 144,
+              "n": 144,
+              "tn": 0,
+              "tp": 0
+            }
+          },
+          "tn": 0,
+          "tp": 1535,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0,
+          "distinct_types": 83,
+          "equal_type_accuracy": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 3856,
+              "tn": 2321,
+              "tp": 1535
+            },
+            "eligible_silent": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 144,
+              "tn": 144,
+              "tp": 0
+            }
+          },
+          "tn": 2465,
+          "tp": 1535,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 1535,
+            "negative": 2321
+          },
+          "gate": {
+            "tp": 1535,
+            "tn": 0,
+            "fp": 2321,
+            "fn": 0,
+            "n": 3856,
+            "accuracy": 0.3980809128630705,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.3980809128630705,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 2321,
+            "n": 3856,
+            "tn": 0,
+            "tp": 1535
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 3856,
+            "tn": 2321,
+            "tp": 1535
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 144
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 144,
+            "fp": 0,
+            "fn": 0,
+            "n": 144,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 144,
+            "n": 144,
+            "tn": 0,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 144,
+            "tn": 144,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "SPECULATIVE_GM",
+      "seed": 105007,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 4344,
+          "negative": 0
+        },
+        "cf": {
+          "positive": 3281,
+          "negative": 1063
+        }
+      },
+      "train_labels_by_phase": {
+        "ASSIGN": {
+          "native": {
+            "positive": 2436,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 2133,
+            "negative": 303
+          }
+        },
+        "REPAIR": {
+          "native": {
+            "positive": 1908,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 1148,
+            "negative": 760
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 1557,
+        "negative": 2443
+      },
+      "sufficient_test_types": 86,
+      "max_fine_type_fraction": 0.24525,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.38925,
+        "cf": 1.0
+      },
+      "logical_test_type_overlap": {
+        "native": 2,
+        "cf": 7
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 1557,
+        "tn": 156,
+        "fp": 2287,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.42825,
+        "balanced_accuracy": 0.5319279574293901,
+        "equal_type_accuracy": 0.627906976744186
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.38925,
+          "balanced_accuracy": 0.5,
+          "distinct_types": 86,
+          "equal_type_accuracy": 0.3488372093023256,
+          "fn": 0,
+          "fp": 2443,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.40504682622268473,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 2287,
+              "n": 3844,
+              "tn": 0,
+              "tp": 1557
+            },
+            "eligible_silent": {
+              "accuracy": 0.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 156,
+              "n": 156,
+              "tn": 0,
+              "tp": 0
+            }
+          },
+          "tn": 0,
+          "tp": 1557,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0,
+          "distinct_types": 86,
+          "equal_type_accuracy": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 3844,
+              "tn": 2287,
+              "tp": 1557
+            },
+            "eligible_silent": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 156,
+              "tn": 156,
+              "tp": 0
+            }
+          },
+          "tn": 2443,
+          "tp": 1557,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 1557,
+            "negative": 2287
+          },
+          "gate": {
+            "tp": 1557,
+            "tn": 0,
+            "fp": 2287,
+            "fn": 0,
+            "n": 3844,
+            "accuracy": 0.40504682622268473,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.40504682622268473,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 2287,
+            "n": 3844,
+            "tn": 0,
+            "tp": 1557
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 3844,
+            "tn": 2287,
+            "tp": 1557
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 156
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 156,
+            "fp": 0,
+            "fn": 0,
+            "n": 156,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 156,
+            "n": 156,
+            "tn": 0,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 156,
+            "tn": 156,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "SPECULATIVE_GM",
+      "seed": 105008,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 4354,
+          "negative": 0
+        },
+        "cf": {
+          "positive": 3298,
+          "negative": 1056
+        }
+      },
+      "train_labels_by_phase": {
+        "ASSIGN": {
+          "native": {
+            "positive": 2433,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 2127,
+            "negative": 306
+          }
+        },
+        "REPAIR": {
+          "native": {
+            "positive": 1921,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 1171,
+            "negative": 750
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 1541,
+        "negative": 2459
+      },
+      "sufficient_test_types": 87,
+      "max_fine_type_fraction": 0.2385,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.38525,
+        "cf": 1.0
+      },
+      "logical_test_type_overlap": {
+        "native": 2,
+        "cf": 7
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 1541,
+        "tn": 153,
+        "fp": 2306,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.4235,
+        "balanced_accuracy": 0.5311102074013827,
+        "equal_type_accuracy": 0.6091954022988506
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.38525,
+          "balanced_accuracy": 0.5,
+          "distinct_types": 87,
+          "equal_type_accuracy": 0.367816091954023,
+          "fn": 0,
+          "fp": 2459,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.4005718741876787,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 2306,
+              "n": 3847,
+              "tn": 0,
+              "tp": 1541
+            },
+            "eligible_silent": {
+              "accuracy": 0.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 153,
+              "n": 153,
+              "tn": 0,
+              "tp": 0
+            }
+          },
+          "tn": 0,
+          "tp": 1541,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0,
+          "distinct_types": 87,
+          "equal_type_accuracy": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 3847,
+              "tn": 2306,
+              "tp": 1541
+            },
+            "eligible_silent": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 153,
+              "tn": 153,
+              "tp": 0
+            }
+          },
+          "tn": 2459,
+          "tp": 1541,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 1541,
+            "negative": 2306
+          },
+          "gate": {
+            "tp": 1541,
+            "tn": 0,
+            "fp": 2306,
+            "fn": 0,
+            "n": 3847,
+            "accuracy": 0.4005718741876787,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.4005718741876787,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 2306,
+            "n": 3847,
+            "tn": 0,
+            "tp": 1541
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 3847,
+            "tn": 2306,
+            "tp": 1541
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 153
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 153,
+            "fp": 0,
+            "fn": 0,
+            "n": 153,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 153,
+            "n": 153,
+            "tn": 0,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 153,
+            "tn": 153,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "SPECULATIVE_GM",
+      "seed": 105009,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 4349,
+          "negative": 0
+        },
+        "cf": {
+          "positive": 3272,
+          "negative": 1077
+        }
+      },
+      "train_labels_by_phase": {
+        "ASSIGN": {
+          "native": {
+            "positive": 2429,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 2116,
+            "negative": 313
+          }
+        },
+        "REPAIR": {
+          "native": {
+            "positive": 1920,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 1156,
+            "negative": 764
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 1553,
+        "negative": 2447
+      },
+      "sufficient_test_types": 89,
+      "max_fine_type_fraction": 0.238,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.38825,
+        "cf": 1.0
+      },
+      "logical_test_type_overlap": {
+        "native": 2,
+        "cf": 7
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 1553,
+        "tn": 150,
+        "fp": 2297,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.42575,
+        "balanced_accuracy": 0.5306497752349816,
+        "equal_type_accuracy": 0.6404494382022472
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.38825,
+          "balanced_accuracy": 0.5,
+          "distinct_types": 89,
+          "equal_type_accuracy": 0.34831460674157305,
+          "fn": 0,
+          "fp": 2447,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.4033766233766234,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 2297,
+              "n": 3850,
+              "tn": 0,
+              "tp": 1553
+            },
+            "eligible_silent": {
+              "accuracy": 0.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 150,
+              "n": 150,
+              "tn": 0,
+              "tp": 0
+            }
+          },
+          "tn": 0,
+          "tp": 1553,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0,
+          "distinct_types": 89,
+          "equal_type_accuracy": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 3850,
+              "tn": 2297,
+              "tp": 1553
+            },
+            "eligible_silent": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 150,
+              "tn": 150,
+              "tp": 0
+            }
+          },
+          "tn": 2447,
+          "tp": 1553,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 1553,
+            "negative": 2297
+          },
+          "gate": {
+            "tp": 1553,
+            "tn": 0,
+            "fp": 2297,
+            "fn": 0,
+            "n": 3850,
+            "accuracy": 0.4033766233766234,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.4033766233766234,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 2297,
+            "n": 3850,
+            "tn": 0,
+            "tp": 1553
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 3850,
+            "tn": 2297,
+            "tp": 1553
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 150
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 150,
+            "fp": 0,
+            "fn": 0,
+            "n": 150,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 150,
+            "n": 150,
+            "tn": 0,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 150,
+            "tn": 150,
+            "tp": 0
+          }
+        }
+      }
+    },
+    {
+      "teacher": "SPECULATIVE_GM",
+      "seed": 105010,
+      "queries": 4000,
+      "train_color_labels": {
+        "native": {
+          "positive": 4349,
+          "negative": 0
+        },
+        "cf": {
+          "positive": 3278,
+          "negative": 1071
+        }
+      },
+      "train_labels_by_phase": {
+        "ASSIGN": {
+          "native": {
+            "positive": 2417,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 2112,
+            "negative": 305
+          }
+        },
+        "REPAIR": {
+          "native": {
+            "positive": 1932,
+            "negative": 0
+          },
+          "cf": {
+            "positive": 1166,
+            "negative": 766
+          }
+        }
+      },
+      "test_labels": {
+        "positive": 1571,
+        "negative": 2429
+      },
+      "sufficient_test_types": 82,
+      "max_fine_type_fraction": 0.246,
+      "logical_test_types": 7,
+      "logical_test_occurrence_overlap": {
+        "native": 0.39275,
+        "cf": 1.0
+      },
+      "logical_test_type_overlap": {
+        "native": 2,
+        "cf": 7
+      },
+      "fine_train_test_intersection": 0,
+      "gate": {
+        "tp": 1571,
+        "tn": 146,
+        "fp": 2283,
+        "fn": 0,
+        "n": 4000,
+        "accuracy": 0.42925,
+        "balanced_accuracy": 0.5300535199670646,
+        "equal_type_accuracy": 0.6097560975609756
+      },
+      "model_metrics": {
+        "native": {
+          "accuracy": 0.39275,
+          "balanced_accuracy": 0.5,
+          "distinct_types": 82,
+          "equal_type_accuracy": 0.32926829268292684,
+          "fn": 0,
+          "fp": 2429,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 0.4076284379865075,
+              "balanced_accuracy": 0.5,
+              "fn": 0,
+              "fp": 2283,
+              "n": 3854,
+              "tn": 0,
+              "tp": 1571
+            },
+            "eligible_silent": {
+              "accuracy": 0.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 146,
+              "n": 146,
+              "tn": 0,
+              "tp": 0
+            }
+          },
+          "tn": 0,
+          "tp": 1571,
+          "train_test_type_intersection": 0
+        },
+        "cf": {
+          "accuracy": 1.0,
+          "balanced_accuracy": 1.0,
+          "distinct_types": 82,
+          "equal_type_accuracy": 1.0,
+          "fn": 0,
+          "fp": 0,
+          "n": 4000,
+          "strata": {
+            "eligible_active": {
+              "accuracy": 1.0,
+              "balanced_accuracy": 1.0,
+              "fn": 0,
+              "fp": 0,
+              "n": 3854,
+              "tn": 2283,
+              "tp": 1571
+            },
+            "eligible_silent": {
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "fn": 0,
+              "fp": 0,
+              "n": 146,
+              "tn": 146,
+              "tp": 0
+            }
+          },
+          "tn": 2429,
+          "tp": 1571,
+          "train_test_type_intersection": 0
+        }
+      },
+      "strata": {
+        "eligible_active": {
+          "truth": {
+            "positive": 1571,
+            "negative": 2283
+          },
+          "gate": {
+            "tp": 1571,
+            "tn": 0,
+            "fp": 2283,
+            "fn": 0,
+            "n": 3854,
+            "accuracy": 0.4076284379865075,
+            "balanced_accuracy": 0.5
+          },
+          "native": {
+            "accuracy": 0.4076284379865075,
+            "balanced_accuracy": 0.5,
+            "fn": 0,
+            "fp": 2283,
+            "n": 3854,
+            "tn": 0,
+            "tp": 1571
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": 1.0,
+            "fn": 0,
+            "fp": 0,
+            "n": 3854,
+            "tn": 2283,
+            "tp": 1571
+          }
+        },
+        "eligible_silent": {
+          "truth": {
+            "positive": 0,
+            "negative": 146
+          },
+          "gate": {
+            "tp": 0,
+            "tn": 146,
+            "fp": 0,
+            "fn": 0,
+            "n": 146,
+            "accuracy": 1.0,
+            "balanced_accuracy": null
+          },
+          "native": {
+            "accuracy": 0.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 146,
+            "n": 146,
+            "tn": 0,
+            "tp": 0
+          },
+          "cf": {
+            "accuracy": 1.0,
+            "balanced_accuracy": null,
+            "fn": 0,
+            "fp": 0,
+            "n": 146,
+            "tn": 146,
+            "tp": 0
+          }
+        }
+      }
+    }
+  ],
+  "inputs": {
+    "data/paper-revision-20261030/datasets/be_base_d3/s105001/base.npz": "b1c9752cef81873c78553643eec522d0b3ea9b36003ce295244712a498b9477d",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105001/aux.npz": "d70cd1feb0a7a9485b4873503f57445aaffe89041ecd9fb3637796c6cb84967b",
+    "data/paper-revision-20261030/test/be_base_d3/s105001/aux.npz": "d7fa850d439a156e2ff03f5847c8eba171827e9bad8094327e09bd3f49142ee8",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105001/type-keys.json": "ba951bbce91c671ee498dc45628e7fad4d2ce3b8f76c54da9a59076d753d6449",
+    "data/paper-revision-20261030/test/be_base_d3/s105001/type-keys.json": "dac200c286007bd33c2fb5bebab2119c03a215cfa50dba677de020d869ad863d",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105001/native-test.json": "781cf4641a82dc5e141301e68d9b76fb8e36f90c70414f500c3f3de2ee63ccae",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105001/cf-test.json": "5e5cdd67cf854d95933add63454d3176b13a47f178cdffa7cf74b3ba59fa6a36",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105002/base.npz": "457bd673e21e49fac77bde35cf34e4ada748c2079c5ab9a1a09c6f2eb92f9c26",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105002/aux.npz": "5907a65e8868e2d05feaade9b5f079b32063a6d77a2f5c2ff12fca5f0b81db8b",
+    "data/paper-revision-20261030/test/be_base_d3/s105002/aux.npz": "cda4a10afeb29dd4cd03214c19780fde4d08a46cf610fe675b18987433ca060b",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105002/type-keys.json": "e2f352bb2e273b6a3db85d47f16335ad4d2241ce08b8a8134da6e41a440bf283",
+    "data/paper-revision-20261030/test/be_base_d3/s105002/type-keys.json": "9284d8e8521d8098b2f0fe4b3ad6da30d9b41237627a8cdf68cfbf18a44da68c",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105002/native-test.json": "c4d4cd4d4af7d748379d925d8e4e6738419bdd5e1a737fcce3f7cf358686245d",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105002/cf-test.json": "34bcbd64e38258d1a4ea35c1fd87bee9c46b8e11c02ec2ebdbd58a397f0c34b8",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105003/base.npz": "04b847bedfdf69ab233f8fb1ba2fd5b363bc3d7abf004b7d3f934923cb36289a",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105003/aux.npz": "8c505bcf38ad01b3ebe3afa897a7368826bd008f77bcfe3d2c9179e94c73d5d9",
+    "data/paper-revision-20261030/test/be_base_d3/s105003/aux.npz": "07ae233fe73a418045ed2b5677615fcec65e54acad9c07fe69e8ccd7b8d95337",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105003/type-keys.json": "04c51d8a849456ab1deb061d427c0a207802a2a814e5084fdcd75951dfede460",
+    "data/paper-revision-20261030/test/be_base_d3/s105003/type-keys.json": "fa51c895c08ff9764fe95f968749cb6299dd48008cef55b4d15c3e84c645d7eb",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105003/native-test.json": "0a1d217486ca89c7c449b00eba63075edc6a356908217ff2882bd438bb804c1a",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105003/cf-test.json": "25af646ec557849a2695b646bcb278cf530f6ae15d734f1cbefa53cb45bcbb40",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105004/base.npz": "870531badc15cbbb2bfd76d60e4a792056c69c07699df00d48c80123fbaf3540",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105004/aux.npz": "5c590f6e66352d690e334a2045f4f46e73a2f4d7d2b58829feca82f756557114",
+    "data/paper-revision-20261030/test/be_base_d3/s105004/aux.npz": "57a95c34b261510e501ba89a2187b1e15b9b81fffb0abbf59d04b58148828ce7",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105004/type-keys.json": "85a072b5d27ddc3d78c7d94be10b4d500fd5fc079a0e647edeb1ec4755da4a20",
+    "data/paper-revision-20261030/test/be_base_d3/s105004/type-keys.json": "5a618e0f72a629e2c2b8ee9798e78f44d299d74c19770c841c185eeec2c0e4e5",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105004/native-test.json": "182cb9b2ba8368f03103dc54ef904596b04a7c0e84e76eb29f963f603c23fa6f",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105004/cf-test.json": "8f7cc3cdf51caee04856cd9ea683e9a223c66d0ffbf0645bcd98c5b60d10ad6a",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105005/base.npz": "6b24dac1a8c3c8d3f8794b2e8e5435e08602a620d821ea567636ecf0b06a7be1",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105005/aux.npz": "1218aa2d82a091c078bb5f638fa1a6664923c495aa8a661405773b4d63fb9b2f",
+    "data/paper-revision-20261030/test/be_base_d3/s105005/aux.npz": "b570594d41545b06d9c30f3308390d202013ebd5b8b5b9df508df9f1974fabda",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105005/type-keys.json": "9aece851e43f4124631d2af8085c600344e32760eb978f480c78b3fbb8876837",
+    "data/paper-revision-20261030/test/be_base_d3/s105005/type-keys.json": "a9a4cbc913e0491d9f13948d9ba5b9d6be42595a1b43cefbf1d000cd74fcc26a",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105005/native-test.json": "ff2f740c160cd8909d00f31617f7f0b3da52c9212afd7a9d06c7809be8608ec1",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105005/cf-test.json": "369fd8661d44cb03acd53876d8059bf819e7b2884a9b41fd1eff56029dff3685",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105006/base.npz": "bf11f3e5b0004d91e61590e2e97981803b72cef60d42f010dd3b2abc5f3201e2",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105006/aux.npz": "1abbe2fb36f0584ed8a49157dfdb1b078221dbdc6d33a5c8ca87250e9e58e42c",
+    "data/paper-revision-20261030/test/be_base_d3/s105006/aux.npz": "4926cfbfba9fa16824a292d76503f483067f16e7249a73cf36b99e497a81e47f",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105006/type-keys.json": "ee81126143171475064009b66eac98b6d10e66ae98a6bad2e3ca6fe01be6fccc",
+    "data/paper-revision-20261030/test/be_base_d3/s105006/type-keys.json": "546cefa6478039ebd2f198b52681987125a968af405a0951b0d818d83af982cc",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105006/native-test.json": "847afae2c0cf76cebdcdc033aca7d822dc9e747059dc6003ac3361433dcd1ed3",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105006/cf-test.json": "cf2af09e708da1e248145e340e4f05e343cbdc0249f93f339bcf4eebeece31c4",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105007/base.npz": "1fed20a0a1de538453673d73dac8994156561765c84efccf936e4e4f28748cdd",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105007/aux.npz": "a9cf3fdd0c8f89b3321c7fcce80c18bfffebbbf35f21fb0c4f0b65d08866a883",
+    "data/paper-revision-20261030/test/be_base_d3/s105007/aux.npz": "02f5f2f3cf7868bea566e550a89b5c869aeba5f44fa753bc1a9661a20f7509f3",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105007/type-keys.json": "c377cdd418e00e381d910df90b864fd709b601c94bf7e6dcfe2e33d620f8702b",
+    "data/paper-revision-20261030/test/be_base_d3/s105007/type-keys.json": "f28716225da36326498879505ec299b66eb6267d08db4d1a8baf86bc939da14d",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105007/native-test.json": "321a66f4c9ba3c63f80b7507629384c95443a046ac13cbc83ab7f27dde718755",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105007/cf-test.json": "7b66da2a1dbcf5190fc3d52f490b97ed4a89651196eaa4e57d678440674ecd7b",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105008/base.npz": "c06e25a3a09a097b38254f9020af5c08143b2842ae47e5674af42a29be94be0d",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105008/aux.npz": "8e0953a37e15763bed4a69b185e5d47ae26b0ed175a0b1295cd0d33ec65f8d6d",
+    "data/paper-revision-20261030/test/be_base_d3/s105008/aux.npz": "a052ad4de6c2ed989792387115f67de6f5023ed0ca8c1445603aacc600a7cd67",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105008/type-keys.json": "52e546faf3612f32b1f5d063673ca6357dbf8d1183e68e7c42e94337d93e2bf8",
+    "data/paper-revision-20261030/test/be_base_d3/s105008/type-keys.json": "3162d6db75e40c0b46051f9eef6954b68f20e2e8806836d9a4890aeb903d8113",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105008/native-test.json": "85103df3b6a620a2069665e2f97778f86b295d4de756cd235ef3a6cf4e4f7362",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105008/cf-test.json": "fa415fba7390b4c42f94c8a3ceb4111deb238a246ce42fe95b614ade633fc2e0",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105009/base.npz": "c8012f316f1b11e9593b697041c421e5f910efe2660c5e783d5e119d1d433d50",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105009/aux.npz": "4acb9d16b5535cd8dbe6e70c43c7f938609006540c57d867c8866d3a1c47cc2a",
+    "data/paper-revision-20261030/test/be_base_d3/s105009/aux.npz": "bef8477af0ae2afeb3e37f893febc93b9cce1924d886b8c0dd1476b1cfc58be5",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105009/type-keys.json": "2045a6db2772b0865d8056f12fdea849c110d13f2c15f81cfb7afb4a2efe0782",
+    "data/paper-revision-20261030/test/be_base_d3/s105009/type-keys.json": "453c9b9fabc0ceae2323e6f700b8714ced4e8cdc02a706fbf0bf33cc810875a8",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105009/native-test.json": "8e68b4fcec9330217176970e17e73c88d6eb3b3a339a3d37e9be15f1a9fd8a1e",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105009/cf-test.json": "fa1da99ac20935d26078435b923401df608ba9616627aa18e55e56cc531ed1ef",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105010/base.npz": "47be73317e96e5ed6ccf20fce811c9d2da164f0b382df6b174eabe5c6bb6da71",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105010/aux.npz": "85cc992d1fad650011858d957feecde548ec76efb2773bb8cf4c02682d5c3b80",
+    "data/paper-revision-20261030/test/be_base_d3/s105010/aux.npz": "65c4d52dc12dec5cda97c0c9b59ff94a0a2e9ab49349dc9f1777a81472b4a24d",
+    "data/paper-revision-20261030/datasets/be_base_d3/s105010/type-keys.json": "edbc38496a74820a7da5bceb6e72f4de62f66f3affaec51b7bb684facbcf3801",
+    "data/paper-revision-20261030/test/be_base_d3/s105010/type-keys.json": "5bd2cfa0b6194c2f60e9a7afd532c4a695e7f929a68afb295f7319ec7ff06b7a",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105010/native-test.json": "a197b2a36e69ba6a6abbcdd1be6bbebc4e1b20c9d40a45807b6ce9655b62dbcb",
+    "results/paper-revision-20261030/prospective/be_base_d3/s105010/cf-test.json": "a03518d8ac6b4e02e4cb781e8ff28fa425b12b6139997c0adcf4245b1d3dca0b",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105001/base.npz": "5c495b8b5362933c5fc43642099f93f42ec8ecb13839b4e9e7dcfda5af70307f",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105001/aux.npz": "b73da0041e4c5e7bab8ddf5dd3a5a7a53234f15c5a7a58e32379330c2df7e5ec",
+    "data/paper-revision-20261030/test/speculative_gm/s105001/aux.npz": "7f620a0c4565c03c97634da93987f805e38e3cec6c272ab3492b2a677d233e19",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105001/type-keys.json": "31f48fcff61e1e4f40c9d269900af38ef3c0dac7d142fcdc526c4e2015a0ac8b",
+    "data/paper-revision-20261030/test/speculative_gm/s105001/type-keys.json": "0898b7021fd608942f241a9b3586bf753f49fef1f581e57d6763d292440f9728",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105001/native-test.json": "7e39b084a64b5031cd94d32172e916ae398f31280f01c022483c1ca164bae5f9",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105001/cf-test.json": "b9eaf6e2fc3af3beb7e6a8da4ddce42d36268734e58f98965bf390354ec0175b",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105002/base.npz": "5a1fe6ec90ca94f6501ed5158ffee50e6f27cc8e2bad81a256d0585a3332669f",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105002/aux.npz": "7a8f473c5102e0c771090cf61f2ef88b4869e4e49f17620a69daa4d7156488ce",
+    "data/paper-revision-20261030/test/speculative_gm/s105002/aux.npz": "e9a36c05be2fc5a4a6a69f38d98204e611e0b2fedd96c148b3189bf3a55c7752",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105002/type-keys.json": "cc01eec2054329a719e1b873883de6de1f45dd39308f1b74c65a06d7582af2bc",
+    "data/paper-revision-20261030/test/speculative_gm/s105002/type-keys.json": "310bbece6a6023422ff3f86554e2aef1e0cd00757e57989d7e1a945dc3a1c382",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105002/native-test.json": "d9f5dafbde8a2b3bf338576972741380b0730585ec66ba965aea364b8ce9573b",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105002/cf-test.json": "50e7eb28a3a867cf5af04676b2e202809cbefe5151ce78d5b49dc96471962423",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105003/base.npz": "e8e4a3f395c4606b921c1abd9416881de35c91656df0a4c4a5b20a629b14e684",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105003/aux.npz": "5871bcc307665c12382a26df9b3524a6283428a35a56b5cf38b0342ec5087a21",
+    "data/paper-revision-20261030/test/speculative_gm/s105003/aux.npz": "de25ce27023bb068a761fac0c1ff13af10b821ce496e11064e2975fab6a871cc",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105003/type-keys.json": "1db0778e11da01ef9da07afb841f7df93ae194edc36c6dd48b5eae8c0a97f943",
+    "data/paper-revision-20261030/test/speculative_gm/s105003/type-keys.json": "8cb5685f32afc290f74dc76df32a265aac4471ca050ff873490f7d10123220b8",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105003/native-test.json": "8b10a971216dede8d5b6fd8e800065d2a0c7c6bbd980a37e595f33b6fb1d19c1",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105003/cf-test.json": "bc512295c05c4a10814dee5010ec754695f83c24ed5253b67f015600b7995cfe",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105004/base.npz": "13f60c60805d878ae6e13929367f36d87744eb10ba8e4c9eb08c07525296a3ff",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105004/aux.npz": "13959466df87b765e69d6ae1402f977f3e3e65923ddd8bb528a411d6f5987c2a",
+    "data/paper-revision-20261030/test/speculative_gm/s105004/aux.npz": "e159765060a0438bfafaa081636fb28296310d5c3527130f5e7ffec0d40ed1b7",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105004/type-keys.json": "145bcd61124cbcd8e0bc56e9946719d24b25420dc9941989ac18cc61ed492e05",
+    "data/paper-revision-20261030/test/speculative_gm/s105004/type-keys.json": "cd69748303d38bcbf120adb483e7f8469167347e883405a7837d8a17fbd05460",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105004/native-test.json": "c3044b4106bf7ca41412035467470480966478e795f86f36f8df92be88413af1",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105004/cf-test.json": "0c1f320420e97cd5827823c276e1220329e9ea32e15dd67d0ff9600645a5dc08",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105005/base.npz": "a4ab809230bcf629c5afba887afc29b79ca3e5b4c2693658d4c4c3e9d3145db7",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105005/aux.npz": "8a10d88b1b8313095829cd18d7d23721a709bd15710540248ca898931a7c7608",
+    "data/paper-revision-20261030/test/speculative_gm/s105005/aux.npz": "9856e6358b5d8a6d40b0cc1fdccd076c5c9f65c3aaab3f7950e91d6edb3b0161",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105005/type-keys.json": "1f4154f3b38b64f3b44fd113244bc099de5bd7f0853fff5a482d3e0be7a6bfff",
+    "data/paper-revision-20261030/test/speculative_gm/s105005/type-keys.json": "126a2822f40f3e59dd33820e1371d9a6cc1a1bea8d792c7ef36af5cfc11fdadb",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105005/native-test.json": "9c9f0131bb3ac1b4a1e7058aec0ee66245e13f2de75b5bc4dedd2e289e4a543d",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105005/cf-test.json": "92cd05ff526e4ad8a4e46628a139f5fbb34493c7f45e2c8bc74ea12cad879585",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105006/base.npz": "bc1f399e77e5c7eb5d940bab45508b212533c5cbf0d0db6e81a93a2a0f8f7cee",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105006/aux.npz": "d73d6795addfec7a5072a92ab046c89d980c8218563dfec0be5a4914f386a84d",
+    "data/paper-revision-20261030/test/speculative_gm/s105006/aux.npz": "4966f33f0ff48994cc4a05c70a3443c5573b6f5b8bdaa901620dab2901ae275c",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105006/type-keys.json": "039de781e34b98e6536c4244f2ac1c6c37ca9883e0d183626b435e79b20b183b",
+    "data/paper-revision-20261030/test/speculative_gm/s105006/type-keys.json": "25439dcf3223c87cd729651e1ce8a7a41988ceed001f40a23d96c7f7a553ab3a",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105006/native-test.json": "7bd96d8d9554203e84a7ee64a79915604d25c7ef86b62f69bc93050742e1dff3",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105006/cf-test.json": "b1e2e410b4955218a2605e68f9a75de677d42b162ede7a0474d488c62515aaa5",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105007/base.npz": "e2baa55c69d78e50d623a8e5142c4aa683546f1fbcb59e65c4cd9ad5a366db77",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105007/aux.npz": "d028f06ec15dc1f67efe8c83e0d780ba705e5f25522aa398cbbe343723754e96",
+    "data/paper-revision-20261030/test/speculative_gm/s105007/aux.npz": "2c74d986126a520cdd7ae3b5dcb8be8c739d0a5d652fff2a2411cd91255a1915",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105007/type-keys.json": "6997085ac15a26e3ab32ec81f7571721489f0ef4f58212871a7ffee2bbdee662",
+    "data/paper-revision-20261030/test/speculative_gm/s105007/type-keys.json": "ca6d0429f0baa54600b9d9c3187b82c565e86fe907c7059e3ea8c9f174939e9a",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105007/native-test.json": "0193b5344e3725667990379335c07ee29f64de5a81d3b401527a12916fa259d0",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105007/cf-test.json": "3b362fa9a567cf5116bf58f2a188d466afbd6ac80acb04eb31050a381a5869f7",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105008/base.npz": "5931f831edb1b7d1f8c6b6ee2fc8ba6ad297e2dd1542f3e089a9e1a838e1b0b7",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105008/aux.npz": "dedf21485b68a0f566ccebbdb6acc9773223c933f4719785c9b7f499fa65994f",
+    "data/paper-revision-20261030/test/speculative_gm/s105008/aux.npz": "61627b35ddab0b6600818a2a500e5e703faef3196372a748240110ca557f2cd2",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105008/type-keys.json": "da3fadaa732684edb291d434b14e18a87673ff350a178683edba65b0d52bee6c",
+    "data/paper-revision-20261030/test/speculative_gm/s105008/type-keys.json": "91b9db62ec5eceb60dc1632ba6e1ea06d34d03e1aad1c7b178a35b650f7fa340",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105008/native-test.json": "f08a08bd810f13bd4c0a941f16dfb2ed97dcf6af7e093f481204d13c99f88969",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105008/cf-test.json": "3f55293783abdb83743c25c3f2ecd60f103025a5bdec26b7606a1e1003a1687e",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105009/base.npz": "645097d8550321b723d65d50303a64283aa4bf7734c9ebd651ad6fc1ca0ff591",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105009/aux.npz": "e348a58f83c7ecdb46b1d9173dc8ba0b9ccf7861bd4932ebfe553f1371d68d52",
+    "data/paper-revision-20261030/test/speculative_gm/s105009/aux.npz": "33985167174636c9f05e47b56a7392d260d117914a34053e72be2baf629ad92f",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105009/type-keys.json": "8fcc6348970bce0b25ae0547c05d845fa19305cca67c72b54623ee50013a8ed1",
+    "data/paper-revision-20261030/test/speculative_gm/s105009/type-keys.json": "39c591dc01a5ec28048f4a3089e10e6a830c64a6c1dab9f1206d7d3a6872f906",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105009/native-test.json": "f19922f0f2c981d6dcd230019664c3b67be346c5bbf55254b1f8c5563326a8d2",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105009/cf-test.json": "ae7c3c94ea6a463c5461be0fc127223a66e179485f842322456708ebcb74b463",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105010/base.npz": "e081facca4c5546ceda350e0b99d97ba8c368e32f000cf57414c2e2bf9094034",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105010/aux.npz": "671fd2b79ba1c9dd90c735385f3f788873db54709ae5be28a54f71b6f88fae58",
+    "data/paper-revision-20261030/test/speculative_gm/s105010/aux.npz": "8298b3952273edd97d3dfccf80085bea052ce54d1f2a44e3488e1cd7225d9749",
+    "data/paper-revision-20261030/datasets/speculative_gm/s105010/type-keys.json": "8aff797385ec3db01d4d0e57ff1879c56ecde6add26841bc6a5400fdb7947b2e",
+    "data/paper-revision-20261030/test/speculative_gm/s105010/type-keys.json": "72b02ec09366bc87c15fc3f46ad79b4c99d7f4be2a06fdb47cacea7e3097f681",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105010/native-test.json": "62d54fd36220d801f500b16ad4fcb4b208f741176297698733d090ab581a43f2",
+    "results/paper-revision-20261030/prospective/speculative_gm/s105010/cf-test.json": "94580cdcc0e48ac1ba80b012cdb17d9f595493faf672eb990a3db146f9c7c1e8",
+    "results/pedro-revision/cf-experiment/analysis.json": "474580a2833ae1b81e947afd09575041e4659f14d1c2dbc308790d9bdb528288",
+    "results/pedro-revision/cf-followup/analysis.json": "acc148ec4852fd429bbd03406d85e42ea8d47c6a8d600840e0155d191c11c00d",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-cf-high.json": "a41222b1ccba307de196a7e5e06ce8da6ffccabfd79492d44ccd11e5440f7068",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-cf-lateocc.json": "599adad1603a06d2cd0b11f9cffbe701dd774ab830b945b71323a8e30d6d7ca8",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-cf-low.json": "544e71f74fdea2cc1fec6b976511b704cf37d85309bba1a781e54a252509be59",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-cf-noforce.json": "0fe585dc905bf36a1032b7276a3e274be2f33956909017a0e96ef119838ffedc",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-matched-high.json": "d185f8b673445c81c8af0becbbd9d94c9f90b5341b82a18ab7fd9219a9606d29",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-matched-low.json": "bdb5ed456e2a53c531d0f56bcba9053f81c6716f6ba0c9a0e2f31b44d8099b5e",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-passive-high.json": "25ab0ebe2440b909b188aeccfb56de80ef9cbe1ad3c7bc824e89b852ea498f33",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95101-passive-low.json": "1ce95aaa57c5a319d85872d769b8c69d0e518beff8d02c2cc9a4f18be85be569",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-cf-high.json": "9171ce552f71117139de24b7d0ad187b62106f3b501e3cfb88117900d65a1612",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-cf-lateocc.json": "df3c7e1800ee151e853efb09cd7dc937c5033af150fe0695b49f854b1d1be0a9",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-cf-low.json": "0c8cd661182eb7e90251ed536c17f7ca1ff50caddc32b0ea4c2cbfbdaab05b3e",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-cf-noforce.json": "e31bcc5e62cc0df22b20ea7b3671bb6486ee71514e4a1276f9ecfdb7303e68cc",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-matched-high.json": "6c438d2d67235147c0a9933fbe8496ae6445eb21629e614cf06fe46a6201d27d",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-matched-low.json": "f2dd73c92bfdceb9f76d908b9e0c33cba753d6fea1403c11a38513ecf3f9d874",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-passive-high.json": "da77f198fb2aa34235f971f203d769272517fcb749f6269dbad8ecf7dec8e19e",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95102-passive-low.json": "ead8ab71ea208c7f4a9005d6c3d57a60edd95b05bfa9c73bd9f095757b4ef30a",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-cf-high.json": "e4f920994b5a4d3fd93e1a2235aaa40107dcd583cd69e09f52342568d548e17c",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-cf-lateocc.json": "f338ad07c8e8644820af8a740bebaf4482c1e2d16af44958cb31cb4557414f45",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-cf-low.json": "a24210328bc7a8a25b15035e020aac0d88e2159ab74da62ff9596296571b6258",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-cf-noforce.json": "6f4eb791449b8ed0838d3d5860d01ffd8ff53f72bb4e64245cf7f427609c9f7f",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-matched-high.json": "46983622e887a7f9b28fb39e1f7577f5699a437c5455cf7c570c175a91526b6a",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-matched-low.json": "607951727cd19dfb8c63f75fef1d00abcd72069c0a4fe6c48d50def9f998c140",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-passive-high.json": "1aafbe90bee9aa27df46d11b0c82081f0c3c72889c41fc7d89afa4980fb80df0",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95103-passive-low.json": "d78ac1a880659d3e11d09adedf08964feb7b5ab683f2ab6f2b199ff9606c7a0a",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-cf-high.json": "b26496350515d9aa30bd191a47142895de7b2a1c08c007279d9258cd94e96594",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-cf-lateocc.json": "2c7103ec923b08d6f925121b441db9aae9d1376aebf8234b2715ef0ecfc91a36",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-cf-low.json": "7b5231f5f6d982f646e55cee703c4f4da377598626963fba3ef7ff759e654c8d",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-cf-noforce.json": "b2d4dd486a97a34c931dce1dada55084f74e41b6a141a17f1d7016d5db37017e",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-matched-high.json": "f83b1af144f98ad067451718f3323e922796297a6ffe1bd256a46235fbd9ca13",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-matched-low.json": "888aa4335aad80fc0e894aeda8dc71414d8ba1955aa69195fdeadb1601dccb76",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-passive-high.json": "0ce91e7d89de0326ca84d8d19d2f5b4f2ba0a80ca7d2dbf8e99f4099647c9517",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95104-passive-low.json": "0c03405a75d423d418d9f179c27130cf2b3a40629ad529efebc1921ac479be8c",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-cf-high.json": "02a7df9920513f7747be23f123da962f258a55990279713d8e957e634846e789",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-cf-lateocc.json": "8836051deb1746fa8f2da2b9379dbffd9f4afc05239c0ff59308eb00a8d1d0e7",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-cf-low.json": "6398e09f0b9bbb95ad34f9f3ccf5582123ac80a3ba1400b1ffa7eb4b0bd3b228",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-cf-noforce.json": "8da20a305a5ecde267969b60f03acce6d384539f657dfa163144d0fb4b369824",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-matched-high.json": "6f83f24711de1a67d1f10ff156bc90f3350a3679c8d29288d5c777ed59ed352f",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-matched-low.json": "be27d1f6f65a18850e3487e7ca10b98363a6be9c5dabfcacecbc223521db75fd",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-passive-high.json": "f0cb73ba3651f72cfbd43df3d772c669cc65240cbd4631d98aa0be8d4efc6c00",
+    "results/pedro-revision/cf-experiment/functional/be_base_d3/s95105-passive-low.json": "f11c3df16443432804c157c2a7cff1c143003794d20acb3041d4f19e49d41adc"
+  },
+  "source_sha256": "31a0e0fdb37ebc9aafe223c723181550216cb5be8853019e39a0ce24d8908117"
+}

@@ -52,7 +52,11 @@ per GM seed, despite 4,000 occurrences. For these color oracles
 $O_T=E_vp_v(1-o_v)$, with $o_v$ the queried-option occupancy. A coarser
 configuration $(\text{phase},E_v,p_v,o_v)$ is therefore oracle-sufficient.
 CF training has already seen configurations covering 99.475--100.000\% of BE
-test occurrences and 100\% of GM test occurrences. The original fine-key
+test occurrences and 100\% of GM test occurrences. Native training covers
+only 2.125--2.900\% in BE and 37.725--39.500\% in GM. The same test thus has
+different logical-support novelty for the two acquisitions. Equal target
+counts do not imply equal information or equal support coverage.
+The original fine-key
 holdout remains disjoint: novelty is defined by contextual combinations
 rather than by this coarser configuration. There is no separate evaluation
 restricted to novel logical conditions. These tests do not establish extrapolation to new logical

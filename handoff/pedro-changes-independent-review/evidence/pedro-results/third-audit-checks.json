@@ -1,0 +1,124 @@
+{
+  "completed_utc": "2026-10-30T16:39:45.832368+00:00",
+  "scope": "Third self-audit and evidence-based figure revision, original trial unchanged",
+  "initial_pdf_sha256": "4ad1028f4455cd771cb36f64fb528d24871700b0b0c4a27b89bb201de1880de3",
+  "addressed": [
+    "Redundant original Figure3 removed",
+    "Redundant transfer bars removed",
+    "Actual witness mechanism diagram added; full intervention table retained in appendix",
+    "All-run versus failure-only step denominator clarified",
+    "BA and difference units clarified"
+  ],
+  "quantitative_recheck": {
+    "primary_rows_checked": 40,
+    "original_paired_final_queries_rechecked": 80000,
+    "labels_keys_classes_and_support_exactly_reproduced": true,
+    "summary": [
+      {
+        "teacher": "BE_BASE_D3",
+        "mean_difference": 0.05771715623623689,
+        "bootstrap95": [
+          -0.1373195369592907,
+          0.2525849592150111
+        ],
+        "distinct_paired_values": 10
+      },
+      {
+        "teacher": "SPECULATIVE_GM",
+        "mean_difference": 0.5,
+        "bootstrap95": [
+          0.5,
+          0.5
+        ],
+        "distinct_paired_values": 1
+      }
+    ],
+    "interpretation": "Reanalysis of original stored rows and arrays; no new neural inference or scientific executions"
+  },
+  "be_steps": {
+    "native": {
+      "runs": 10000,
+      "successes": 9204,
+      "failures": 796,
+      "mean_all": 14.5288,
+      "mean_success": 15.0,
+      "mean_failure": 9.080402010050252
+    },
+    "cf": {
+      "runs": 10000,
+      "successes": 7405,
+      "failures": 2595,
+      "mean_all": 13.432,
+      "mean_success": 15.0,
+      "mean_failure": 8.957610789980732
+    }
+  },
+  "figure_inputs_verified": true,
+  "figures": [
+    "figures/closure-counterfactual.pdf",
+    "figures/revision-architecture.pdf",
+    "figures/revision-failure-mechanisms.pdf"
+  ],
+  "original_graph_assets_unchanged": true,
+  "protected_prior_manifest_files": 204,
+  "changed_existing_manifest_files": [
+    "docs/PAPER_REVISION_REPORT.md",
+    "docs/PAPER_REVISION_REPRODUCE.md",
+    "paper/ucgnn/README.md",
+    "paper/ucgnn/figures/revision-architecture.pdf",
+    "paper/ucgnn/main.pdf",
+    "paper/ucgnn/main.tex",
+    "paper/ucgnn/revision-prospective-details.tex",
+    "paper/ucgnn/revision-prospective.tex",
+    "paper/ucgnn/revision-rescues.tex",
+    "results/paper-revision-20261030/build/01-pdflatex.txt",
+    "results/paper-revision-20261030/build/03-pdflatex.txt",
+    "results/paper-revision-20261030/build/04-pdflatex.txt",
+    "results/paper-revision-20261030/paper-build.json",
+    "results/paper-revision-20261030/paper-build.log",
+    "results/paper-revision-20261030/paper-text.txt",
+    "results/paper-revision-20261030/pdf-fonts.txt",
+    "results/paper-revision-20261030/verification.json",
+    "scripts/build-revision-assets.py",
+    "scripts/package-paper-revision.py"
+  ],
+  "runtime_files_verified": 300,
+  "scientific_sources_unchanged": 190,
+  "original_40_model_outcomes_unchanged": true,
+  "original_freeze_receipts_unchanged": true,
+  "runtime_archive": {
+    "path": "results/paper-revision-20261030/paper-revision-runtime.tar.gz",
+    "bytes": 26328083,
+    "sha256": "9a33d4bb8bd8b621fd35fd877e8c42f8afaa43f311c5ca8c4abda316551cec8a"
+  },
+  "pdf": {
+    "pages": 27,
+    "sha256": "196e2fccbd3401abebc42a995cf132b5c8a4a9406633172d97eb6623ddec5984",
+    "unresolved_references": [],
+    "overfull_boxes": [],
+    "char_boxes_checked_in_article_and_figure": 101613,
+    "out_of_page_chars": [],
+    "all_fonts_embedded": true
+  },
+  "visual_review": {
+    "contact_sheets": [
+      1,
+      2,
+      3
+    ],
+    "full_pages": [
+      8,
+      11,
+      24
+    ],
+    "figure_and_caption_readable": true
+  },
+  "syntax_checks": 3,
+  "forty_model_verification": true,
+  "limits": [
+    "No new neural inference or training in this audit",
+    "No new population rescue estimate",
+    "Historical810000 raw rows still unavailable",
+    "Independent human scientific review pending"
+  ]
+}

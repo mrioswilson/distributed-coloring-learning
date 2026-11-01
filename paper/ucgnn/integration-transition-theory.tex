@@ -1,0 +1,51 @@
+\section{Which Continuation Errors Affect Execution?}\label{sec:relevance}
+Continuation error weights queries in an evaluation distribution. Functional
+error depends additionally on whether those queries are reached and how the
+interpreter uses the answer. In color phases, let $z_v$ be the confirmation
+bit and $D_v(S,c_v)$ the supplied decoding of a proposed color or KW option.
+DETECT marks and LINIAL point reductions are separate interfaces.
+
+\begin{proposition}[Gated transition relevance]\label{prop:relevance}
+Fix a legal color-phase state $S$, permissions $w$, participation $p$ and
+candidates $c$. Let $y_v$ be the current persistent color (auxiliary color
+in KW). For the implemented interpreters,
+\[
+ y'_v=\begin{cases}D_v(S,c_v),&w_vp_vz_v=1,\\y_v,&\text{otherwise}.\end{cases}
+\]
+Changing $z$ only where $w_vp_v=0$ leaves this transition unchanged.
+Changing $z_v$ where $w_vp_v=1$ changes the stored value precisely when
+$D_v(S,c_v)\ne y_v$. In a KW transition with new bound $q$, a root with
+$a_v\ge q$ that does not write retains a value outside $[0,q)$ and violates
+the checked bound invariant immediately.
+\end{proposition}
+\begin{proof}
+The neural action decoder writes only when participation and COMMIT are
+true; the interpreter additionally enforces permission. It performs no
+eligibility or availability check. Each vertex updates its own stored
+value from the common old state. The displayed formula and the first two
+claims follow by substitution. KW lowers the bound to $q$ regardless of
+whether a vertex wrote. An unchanged $a_v\ge q$ therefore violates the new
+bound, independently of neighbor writes. The benchmark checks that invariant
+after each transition and stops on violation.
+\end{proof}
+Thus a false acceptance at a silent root has no direct write effect, whereas
+a false rejection of an eligible active free KW option is immediately
+consequential. An ineligible active acceptance can change execution if an upstream
+participation error makes it reachable and decoding changes the stored value;
+eligibility alone is not an interpreter shield. These are fixed-state statements, not claims that every off-policy
+error is harmless or every local error causes failure in every protocol.
+
+\paragraph{GM repair is a suffix property.}
+Correct marks covering every speculative conflict edge, followed by a
+currently free write at every queued vertex, are sufficient for proper
+completion. For any initially conflicting edge, the last repaired endpoint
+avoids the other; an edge with no repaired endpoint was already proper.
+These conditions are not individually necessary. If a failed repair leaves
+an edge monochromatic and neither endpoint changes color later, that edge
+remains a final conflict. If another queued endpoint later writes a free
+color, it may resolve the edge. For example, three one-vertex blocks on a
+path with increasing IDs $1,2,3$ simultaneously assign color~0. DETECT marks
+vertices~1 and~2. Skipping repair~1 and repairing~2 to color~1 still gives
+$(0,1,0)$. This is a legal execution of the supplied schedule. A repair veto
+must therefore be interpreted with the remaining queue, rather than treated
+as a universal implication of failure.

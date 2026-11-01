@@ -57,6 +57,10 @@ observer's re-evaluated actions match the original actions at this frame.
 The intervention is only a local query; unchanged actions drive the replay.
 It locates the first violation in this case, without showing that all 796
 failed runs share this mechanism or that the intervened run would complete.
+The subsequent full-battery interventions in Section~\ref{sec:components}
+separately establish that participation-only correction rescues all 796
+failures in each paired arm; that stronger result is not inferred from
+this earlier local query alone.
 
 \path{scripts/probe-revision-be-failures.py} reproduces the diagnosis;
 \path{results/paper-revision-20261030/be-failure-diagnostics.json} records

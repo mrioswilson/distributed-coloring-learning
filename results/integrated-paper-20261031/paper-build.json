@@ -1,0 +1,92 @@
+{
+  "engine": "pdflatex-bibtex",
+  "machine": "aarch64",
+  "python": "3.12.3",
+  "source_date_epoch": 1793457514,
+  "commands": [
+    [
+      "pdflatex",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-recorder",
+      "main.tex"
+    ],
+    [
+      "bibtex",
+      "main"
+    ],
+    [
+      "pdflatex",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-recorder",
+      "main.tex"
+    ],
+    [
+      "pdflatex",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-recorder",
+      "main.tex"
+    ]
+  ],
+  "compiler": {
+    "pdflatex": {
+      "path": "/usr/bin/pdftex",
+      "sha256": "6ebc4fde0d8e66104fb23d6ce1d7397b8fc2ae1a8bacc1a99896a439caa50e61",
+      "version": "pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian)"
+    },
+    "bibtex": {
+      "path": "/usr/bin/bibtex.original",
+      "sha256": "c8220108a1b4b1393aa7139a29c4f843cd7b66b5d2d574fee3f3867f7a560e83",
+      "version": "BibTeX 0.99d (TeX Live 2023/Debian)"
+    }
+  },
+  "pages": 34,
+  "pdf_sha256": "22726ee0bd51cfe775d2eb8eef7ff40e2714b23957cc88774263a7b55018e45c",
+  "actual_inputs": {
+    "paper/ucgnn/main.tex": "e93c26aef25124504da2d68c100746a8dd538bfd6b1ac55e2eb34bbbd9177996",
+    "paper/ucgnn/revision-contracts.tex": "4a461b0c05cb20379e616355c410f2c7570eb51956fd8d3c69df4e661b61a5c7",
+    "paper/ucgnn/integration-identification.tex": "f242611f5cf1faa04a55ea7135fc83eea24940c4f068745e2f34e10d34524805",
+    "paper/ucgnn/revision-architecture.tex": "40ea2c93fe167b24b6a908e2e96a08e4062b264bbded6aae7ae67ced6ab4cbf8",
+    "paper/ucgnn/figures/revision-architecture.pdf": "4f4bc50f884f39b8da8dd3b2c1cf16f7996708f9c9fb1e88ba9b77d9d6c39d60",
+    "paper/ucgnn/integration-functional-coverage.tex": "e524f1cecb94e9d15aa4960219e36bb26cc254d3d5b96c7837d5c65c763b73f2",
+    "paper/ucgnn/tables/closure-be-summary.tex": "2604805a9389bceaba3cc83efc9a0723ef139ed5041255e9cca52b1fa18cf9c6",
+    "paper/ucgnn/figures/closure-counterfactual.pdf": "09ff72bebe2c062b50df46182b5c7e9e7682d0521d209738815296c0ca7b893c",
+    "paper/ucgnn/revision-type-analysis.tex": "2d6be3e42675d8c6f32ccf89ef87c54a0dc6d7d6868dc2f46c4c5ee89d11e254",
+    "paper/ucgnn/revision-prospective.tex": "8ff55e1ea847bfb7dd8d77c7f38e2d7898c4efc3b712da549e77e95063005e7a",
+    "paper/ucgnn/revision-prospective-audit.tex": "152b17578db8b218e64370ed5033bdff9bc4d45a0d16bf96c09dcfda3e906797",
+    "paper/ucgnn/revision-prospective-mechanisms.tex": "0cba4bed7e68d4b13ca7ced844f824ff71797237d1e62ac8d43b4419a6bb0c45",
+    "paper/ucgnn/integration-additional-evidence.tex": "c12eb5f0c9753a01f895dfec21b96b7bbcf6f2611ea05d54f52320f64959ee56",
+    "paper/ucgnn/integration-transition-theory.tex": "4e0602dc8ffd6dca6faa97cdf8449233282b3b3ed2388940ed9026335a2972ed",
+    "paper/ucgnn/integration-functional-results.tex": "33900be5f114df3bc8135df7b847f49e5a9b5e7a74e1d16fb2ef9b163258d2ba",
+    "paper/ucgnn/integration-functional-outcomes.tex": "d59a608b08d2205168768362cdc7f1bc1ed995d78f2b709feaba0c3c234e0650",
+    "paper/ucgnn/figures/integration-functional-components.pdf": "471073826cf0f5bb8bdc336a8fbef9f05edea571dd8e5e70674adb8329d5ad7b",
+    "paper/ucgnn/tables/closure-generalization.tex": "229118aa64c42b9a985063160f2ff9dec867963cc9df733062861272665d7cd5",
+    "paper/ucgnn/revision-rescues.tex": "c5358660b7b3b0d9b443ee65bda943339aec2e676c13a0830353bd71e80c2b52",
+    "paper/ucgnn/figures/revision-failure-mechanisms.pdf": "f7081a4dd1c4875d7fef4a35944ad42361766a6f46c1d0ee2119d0f9ec2e0580",
+    "paper/ucgnn/revision-theory.tex": "ab3ae80da7ac66e7a23fac59331c6e5c9373ce1a1c34a3f540c4c123bb708547",
+    "paper/ucgnn/revision-prospective-details.tex": "9200623a416ae0e3a425f2cf4fd42fe9d8681057f8335b78d93536efc7bf6ae8",
+    "paper/ucgnn/revision-prospective-methods.tex": "4facbcbdeadf5b715f179345f5e487a450e8289a830be077c5a8f8ac6e0c014d",
+    "paper/ucgnn/revision-prospective-audit-details.tex": "b655329074289d715b15a54b1df33cbb2620377e3efdcb7d272cf0235b281e2a",
+    "paper/ucgnn/tables/integration-logical-overlap.tex": "dd61463f7d01c04dc16a9be8ee39654ef7bc4b77c3d44375b5352d0d130df6c6",
+    "paper/ucgnn/revision-prospective-mechanism-details.tex": "b82763c0bfd250f0f96282071508fe25d75b7fff6ef14f168a55a95dd461897e",
+    "paper/ucgnn/integration-evidence-details.tex": "6d261fe090bf2e2e7e75f024260da8e16c29f6f672235fd3a7ec64dd36a9bf84",
+    "paper/ucgnn/tables/integration-components.tex": "4b4220544d587577d6b4ee6fe9e07f57e93c906c325cd6783dd9e3aafd272d75",
+    "paper/ucgnn/tables/closure-jp.tex": "99a5580656a85de18489f26d4f73355dcb25b6a0f87152a5b12361a0f17613a7",
+    "paper/ucgnn/tables/closure-native21.tex": "9d06b0b8844ba9f5e85db9c666eddd73491675f78f5977d90fcaa04119ee528c",
+    "paper/ucgnn/tables/closure-baselines.tex": "3083e7233d06836d270ba5b81a5033b55c56dc62907a42aae6a13f81c1f65275",
+    "paper/ucgnn/tables/closure-label-cost.tex": "40492c1f9dbd40b9413b305ac9d2b930b79fc7dfbce73f559876097250713f88",
+    "paper/ucgnn/tables/closure-be-seeds.tex": "7c63590850d09d41eebadd6d83ff8c339ba85998ce90336779dad9a0391d8a9a",
+    "paper/ucgnn/revision-rescue-details.tex": "be5fa33262a1914ad31979516398e37693297be123ade02cf1d8f0b39bb56a41",
+    "paper/ucgnn/multicf-references.bib": "5ad758baf20b800f2b67e00133e8611673bc7638cf3aa25cfda1324c1b0d841c",
+    "paper/ucgnn/closure-references.bib": "3460d6d9929dc78141be7ebbfb3b5c5e1a02e68cc18bdd8c7c2d44b7a9e3d01c",
+    "paper/ucgnn/references.bib": "97d4752f94b4a1e135f8246994a25c1f0a4c9ebeb4133832c98fae305fcb5037",
+    "paper/ucgnn/revision-references.bib": "d1b674390cc2dbce9d4875bd5f21259e4437af372281596f24764ea45e910616",
+    "paper/ucgnn/integration-references.bib": "b0dde0b4b35fa33d48fcc56a93ec2aca39788a4970e5ad4b51fb72454e83f387"
+  },
+  "builder_sha256": "a87d2a593b2327adcc64a65e3c579b2536407ad3dad8a623a99b849254809b90",
+  "unresolved_references": [],
+  "overfull_boxes": [],
+  "visual_review": "Renders generated; inspection recorded separately in INTEGRATED_MANUSCRIPT_REVIEW.md"
+}

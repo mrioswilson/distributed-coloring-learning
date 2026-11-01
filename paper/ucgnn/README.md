@@ -1,86 +1,50 @@
-# Revised scientific manuscript
+# Integrated scientific manuscript
 
-`main.tex` is the English source revised on 30 October 2026, including the
-scientific corrections after the adversarial audit. `main.pdf` is built from
-that source. The current page count, source/PDF hashes,
-compiler version, reference checks and render paths are recorded in
-`results/paper-revision-20261030/paper-build.json`; do not infer the page count from an
-older report. `paper/PAPER_DRAFT.md` and its template are historical drafts,
-not the source of the closure manuscript.
+`main.tex` and `main.pdf` are the English coauthor-review version integrated
+on 31 October 2026 and editorially revised on 1 November. Internal audit and
+delivery notes stay in the working documents. Current page count, compiler, source/PDF hashes and reference
+checks are in `results/integrated-paper-20261031/paper-build.json`.
+Author list/order and target-venue formatting remain coauthor decisions.
 
-From the repository root, with the restored runtime and `.[dev,study,paper]`:
-
-```bash
-PYTHONPATH=src python scripts/build-revision-assets.py
-PYTHONPATH=src python scripts/build-revised-paper.py
-```
-
-The asset script reads existing analysis outputs and final rows, including the
-post-test programmed controls, class/support audit and selected BE failure
-diagnoses. The mechanism diagram also reads two tracked original witness JSONs;
-it checks actual graph fragments and single-candidate interventions. It does
-not train or simulate. The earlier paired-seed and failure-bar plots remain
-preserved assets and are not included in the current article.
-To recompute the scientific diagnostics
-from the restored frozen banks, first run, in series:
+From the repository root, in the Python environment documented in
+`docs/INTEGRATED_PAPER_REPRODUCE.md`:
 
 ```bash
-PYTHONPATH=src python scripts/audit-revision-continuations.py
-PYTHONPATH=src python scripts/probe-revision-be-failures.py
+PYTHONPATH=src python scripts/build-coauthor-assets.py
+PYTHONPATH=src python scripts/build-coauthor-paper.py
+python scripts/verify-coauthor-integration.py
 ```
 
-The second script runs frozen-model queries and observes an unchanged original
-32-case cohort; its participation intervention is a local query, without
-continuing an intervened rollout. These are selected post-test diagnoses.
-The PDF uses native pdfLaTeX/BibTeX and records actual compiler hashes,
-unresolved references, overfull boxes, embedded fonts and every page render.
-Actual visual inspection is recorded separately, never implied by compilation.
+The figure builder reads compact verified results; it neither trains nor
+simulates. The new component figure is based on all selected original cases,
+including ineffective interventions. Original architecture, continuation and
+Johansson/GM mechanism figures remain. The article uses five local bibliography
+files; no bibliography is fetched during a build. The compiler receipt lists
+actual figure/TeX/Bib inputs, references, overfull boxes and embedded fonts.
+Renders and their visual inspection are documented separately.
 
-The preceding closure used pinned Linux x86-64 Tectonic; its historical
-receipt remains in `results/final-closure/paper-build.json`. Reproduce it in
-a checkout of its original source. The historical builder refuses the
-revised manuscript before writing to that receipt or compiling its PDF.
-`main.tex` uses the four local bibliography files, including the new
-`closure-references.bib`; no bibliography is fetched during manuscript writing.
+The six handoff/audit documents are linked from the root README. The integrated
+manifest authenticates current artifacts without changing historical manifests.
+The portable runtimes contain the original 40-model trial plus seven original
+transfer-weight files. Three additional hash-pinned packages now provide all
+105 trainings' banks/weights and the full historical 810,000-row delivery.
+The new [release audit](../../docs/MARTIN_ARTIFACT_DELIVERY_AUDIT.md) distinguishes
+fresh inference, raw terminal reconstruction and trajectory replay. The
+pre-release integrated delivery is preserved as a byte-verified archive.
+The fourth package supplies the240 original files of the additional transfer
+campaign; recovery and audit use `scripts/integrated-transfer-delivery.py`.
+Its delivery is closed in the working documents; the article/PDF are unchanged.
 
-## Evidence and reproduction
+## Historical versions
 
-Start with `docs/PAPER_REVISION_CLAIMS.md`, `docs/PAPER_REVISION_REPORT.md` and
-`docs/PAPER_REVISION_REPRODUCE.md`. The new delivery manifest uses actual bytes
-and lives in `results/paper-revision-20261030/manifest.json`; it does not
-replace original scientific freeze receipts. The retrospective gate,
-coverage and BE failure diagnostics do not change the primary endpoint or original test.
+`archive/pre-integration-5993a5e4.{tex,pdf}` preserves Pedro's immediate previous
+version. `archive/pre-revision-c3affd16.*` preserves its predecessor. Earlier
+archives and scientific results remain untouched. To rebuild an old article,
+use a separate checkout of its source commit and its matching runtime. Do not
+run `build-revised-paper.py` or the historical closure generators against the
+integrated article or use their manifests to validate this version.
 
-For the historical closure, read `docs/FINAL_EVIDENCE_AUDIT.md`, `docs/EVIDENCE_REGISTER.md` and the
-machine-readable `results/final-closure/evidence-register.json` for claim,
-protocol, data and checkpoint provenance. `artifact-manifest.json` authenticates
-the final source/result set, while `verified-inputs.json` lists checked raw
-degree/size files and weights. `native-certifications.json` identifies all
-105 selected native policies and their original final rows.
-
-Large raw JSON, NPZ banks and weights require runtime restoration; they are
-not made available merely by cloning source. The local closure delivery and
-its checksums are described in `results/final-closure/delivery.json`. Historical
-runtime recovery remains documented in `results/multiteacher-counterfactual/README.md`
-and `scripts/fetch-sample-complexity.py`. The revised source, PDF and runtime
-archive are delivered on `codex/paper-revision-20261030`; no separate GitHub
-release is created. The delivery manifest checks their actual bytes.
-
-## Historical builds
-
-The immediately preceding closure is preserved in
-`archive/pre-revision-c3affd16.{tex,pdf}`. The earlier integrated manuscript is preserved byte for byte in
-`archive/pre-closure-71153993.{tex,pdf}`, along with earlier pre-integration,
-pre-sample-complexity and pre-counterfactual copies. Reproduce those studies
-in a separate checkout of their source commit. Their generators
-`build-integrated-paper.py`, `build-multicf-paper.py` and `build-degree-paper.py`
-belong to those historical versions and refuse to overwrite an authoritative
-closure source in this checkout. They are not the commands for the current PDF.
-
-## Editorial status
-
-This is an externally reviewable scientific draft, not a formatted submission.
-Author list/order and attribution require coauthor agreement; target-venue
-style and anonymization remain editorial work. See
-`docs/PAPER_CLOSURE_DECISION.md` for the explicit decision, all fifteen answers,
-remaining items and the distinction between new results and reused history.
+The published Martín branch supplies additional experiments, code and a
+literature review. Its completed rewritten manuscript was not present in the
+published tree; integration therefore uses the actual artifacts, not an
+assumed completed alternative text. See the provenance record for both hashes.

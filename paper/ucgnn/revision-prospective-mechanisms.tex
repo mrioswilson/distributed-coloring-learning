@@ -5,6 +5,11 @@ and 52.094\% on the held-out contexts. Both models visited all auxiliary
 queries. Failure to fit acquired labels alone does not explain these cases:
 the observed COMMIT gap concerns generalization across contexts, without
 identifying its optimization cause or an architectural impossibility.
+All 181 final false negatives are at the eligibility boundary
+$\kappa=\operatorname{sgn}(a_v-q)=0$ and have no participating neighbor.
+They are distinct from the active-neighbor defect in the separate
+follow-up below. On eligible silent queries CF makes 81 false acceptances
+versus 42 for native; these bits alone are masked by participation.
 
 Seed 105010 has a different defect: both arms complete only 204/1,000 runs,
 despite final COMMIT BA 99.451\% native and 99.949\% CF. Their shared

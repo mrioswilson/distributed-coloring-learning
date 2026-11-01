@@ -1,6 +1,9 @@
 *.csv text eol=lf
 *.pdf binary
+*.part[0-9][0-9][0-9] binary
 # Preserve the byte hashes of historical source snapshots (some CSVs use CRLF).
 results/ucgnn/**/*.csv -text !eol
 # Preserve the exact CSV bytes authenticated by the frozen-degree bundle.
 results/multiteacher-degree-generalization/**/*.csv -text !eol whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Delivered metadata retains its original CRLF bytes and authenticated hashes.
+results/martin-artifacts-20261031/package-metadata/**/*.csv -text !eol whitespace=cr-at-eol

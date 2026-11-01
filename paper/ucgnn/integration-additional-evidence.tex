@@ -1,0 +1,61 @@
+\subsection{Label budgets and neighbor-context coverage}\label{sec:additional}
+A separate E1 study uses five paired seeds per teacher (95101--95105),
+4,000 fixed updates and passive, matched and CF procedures at low and high
+acquired-label budgets for BE, GM and ColorTrials: 100 trainings, with
+1,500-update snapshots as a secondary milestone. It uses fresh training,
+continuation and functional namespaces. The high native controls acquire
+additional native trajectories; low-budget CF removes stored continuation
+labels to keep its total fixed. The BE high CF/native totals are
+6,776/6,774, GM high totals differ by at most two labels per seed, and
+ColorTrials uses 70,000/69,999. These small component-group rounding
+differences are recorded, rather than called exact budget equality.
+They remain full acquisition-procedure contrasts: the native controls
+receive no alternative source of informative occupied-option negatives.
+
+\begin{table}[htbp]\centering\small
+\begin{tabular}{lrrcc}
+\toprule & \multicolumn{2}{c}{Continuation BA range (\%)} &
+\multicolumn{2}{c}{Functional successes /5,000} \\
+Teacher & Matched-high & CF-high & Matched-high & CF-high \\
+\midrule
+BE & 53.25--53.30 & 93.81--100 & 5,000 & 4,298 \\
+GM & 50 & 100 & 5,000 & 5,000 \\
+ColorTrials & 99.34--99.39 & 100 & 5,000 & 5,000 \\
+\bottomrule
+\end{tabular}
+\caption{Separate label-budget study: standard-family continuation queries,
+five seeds, 4,000 updates. These are different models, support and endpoints
+from Table~\ref{tab:prospective}, not additional replicas of that study.
+Ranges are between seeds; shared queries are not independent replicas.}
+\label{tab:additional}
+\end{table}
+
+CF improves standard-family BA in each BE/GM pair, including low-budget CF
+against high-budget native supervision. Yet the BE high-CF functional loss
+replicates the separation between continuation metrics and completion.
+Across all eight BE arms only 32/40 checkpoints pass all 1,000 functional
+runs; all adverse arms remain recorded. The new study's own criterion of
+at least 99\% BA on unseen sufficient types fails: only two of five high-CF
+seeds reach it. BE's eligibility/participation diagnostic scores 99.26\%
+occurrence BA. A holdout of occupied queries at late KW bounds tests a
+generator-level combination; it does not by itself establish new effective
+inputs, because queried BE COMMIT does not read the numerical bound.
+Received-neighbor message perturbations, unused in these training banks,
+also expose errors. Thus the stronger standard-family advantage does not
+contradict the input-context holdout result. Its 1,500-update CF snapshots
+already have high standard BA, so update count alone does not explain the
+cross-study difference.
+
+\paragraph{A targeted follow-up with a new battery.}
+After inspecting those results, a separately frozen follow-up perturbs
+neighbor messages in the high-CF BE bank, preserving roots, root queries
+and all labels. BE's oracle ignores those neighbor participation/offering
+messages when occupancy is fixed. Five new paired trainings use a fresh
+continuation and 1,000-run functional battery, together with the frozen
+controls. The perturbed arm accepts all positive active-free-neighbor queries
+in all five seeds and completes 5,000/5,000 runs. The original high-CF
+seed 95105 again rejects those positives and completes 301/1,000, while its
+perturbed counterpart completes 1,000/1,000. This is a positive result for
+that context intervention on the new battery, not a universal CF remedy.
+It addresses a different error from the $\kappa=0$, silent-neighbor
+false negatives in seeds 105001/105008.

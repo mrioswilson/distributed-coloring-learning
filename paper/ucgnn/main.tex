@@ -1,6 +1,6 @@
 % Authoritative closure source; historical paper generators must not overwrite it.
-% Scientific revision dated 30 October 2026; use build-revised-paper.py.
-% Historical assets remain fixed. Revised assets/PDF: scripts/build-revised-paper.py.
+% Integrated scientific draft, 31 October 2026; use build-coauthor-paper.py.
+% Historical sources/results are preserved; integration outputs have their own directory.
 \documentclass[10pt]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -23,93 +23,107 @@
 \makeatother
 \setlength{\emergencystretch}{3em}
 \setlength{\tabcolsep}{4pt}
-\title{Learning Local Coloring Rules:\\Continuation Fidelity, Progress, and Failed Repair}
-\author{Research collaboration\\Author list and order pending coauthor agreement}
-\date{30 October 2026 --- revised research draft}
-\hypersetup{pdftitle={Learning Local Coloring Rules: Continuation Fidelity, Progress, and Failed Repair}}
+\title{Learning Distributed Coloring Rules:\\Functional Success, Continuations, and Transfer}
+\author{Research collaboration}
+\date{31 October 2026}
+\hypersetup{pdftitle={Learning Distributed Coloring Rules: Functional Success, Continuations, and Transfer}}
 \begin{document}
 \maketitle
 \begin{abstract}
-Can perfect agreement on a teacher's observed actions conceal an incorrect
-local rule? In a distributed coloring framework, three BE/E1 training
-procedures agree on every measured native teacher action, yet disagree
-sharply when the proposed color or participation message changes. We define
-these typed continuations explicitly and audit both occurrence-weighted
-accuracy and sufficient local input types. The historical counterfactual
-procedure is more accurate, but uses more labels and mostly familiar types;
-a separate forty-model, budget-matched experiment tests held-out input types.
-GM improves from 50\% to 100\% balanced accuracy when interventions supply
-negative color confirmations absent from the native control; autonomous
-success is unchanged. BE has an uncertain mean gain and fewer autonomous
-successes (7,405 versus 9,204 of 10,000). A post-test eligibility-only
-diagnostic scores 99.71\% BA versus CF's 90.41\%, whereas CF has higher
-equal-type accuracy (86.94\% versus 81.27\%). The held-out input contexts
-mostly reuse logical oracle configurations seen in training.
-Frozen transfer exposes a complementary limitation: correct rejection can
-coexist with stalled proposals or an omitted scheduled repair. On copied
-failure witnesses, one-component interventions distinguish these mechanisms
-from an incorrect collision veto. Conditional arguments explain why
-confirmation fidelity alone guarantees neither progress nor completion.
-Native functional coverage of seven teachers and three architectures supplies
-context under heterogeneous finite protocols; it does not identify a
-universally correct or uniformly superior learned algorithm.
+What does successful execution reveal about a learned distributed algorithm?
+We study local neural decision modules inside explicit coloring interpreters.
+Seven scoped teachers and three architectures yield 21 functionally passing
+combinations, each with five checkpoints and 1,000 successful runs per
+checkpoint under heterogeneous protocols. Frozen transfer/control conditions give
+449,791 successful runs out of 450,000 in the primary cohort, with failures
+in two checkpoint--condition cells. Against this positive functional context,
+we define typed continuation contracts and show how perfect measured native
+agreement can leave responses to alternative messages undetermined.
+Separate paired studies expose the role of acquired support: counterfactual
+supervision improves some continuation measures while sometimes reducing
+autonomous completion. We distinguish occurrence, input-type and
+execution-relevant errors rather than treating one aggregate accuracy as
+algorithm identification. Formal transition statements and component
+interventions rescue 1,799 selected CF failures by replacing COMMIT alone
+and a different 796 failures by replacing participation alone;
+transfer replays distinguish unsafe acceptances from correct vetoes that
+leave progress or scheduled repair unresolved. A neighbor-message follow-up
+provides a separate positive example of correcting a context-coverage defect.
+The contribution is a scoped evaluation of learned local rules and their
+failure mechanisms, not a universal correctness or training-superiority claim.
 \end{abstract}
 
 \section{Introduction}
-Two adjacent pending vertices repeatedly propose the same free color. Their
-learned collision veto correctly rejects both, yet the execution reaches its
-horizon without finishing. In another learned policy, a scheduled repair
-proposes an occupied color; a correct rejection leaves the original conflict
-unrepaired because the schedule does not retry. These are observed frozen
-transfer failures in our coloring framework. They motivate asking which
-local rule a policy learned, beyond whether its usual runs end properly.
+A neural policy can produce valid colorings without reproducing every
+decision rule of its teacher. Conversely, a policy can reject a bad proposal
+correctly and still fail to finish. We study these distinctions in a setting
+where learned local modules are combined with declared communication,
+decoding and scheduling interfaces. The policies work broadly on finite
+benchmarks: all seven teacher variants have passing packages for each of
+three architectures, and sixteen of eighteen extensible combinations pass
+all five selected transfer conditions in all five training seeds.
 
-A second example makes the identification problem sharper. On the observed
-teacher states, passive, matched and counterfactual BE/E1 procedures each
-match every measured native action. On the same states with typed proposal
-interventions, their responses differ dramatically. A successful native
-choice constrains the accepted option but need not determine what happens
-to an occupied option or a silent root. Repeated graph testing alone cannot
-resolve that ambiguity.
+Functional success is therefore the starting point for asking what was
+learned. In one comparison, three BE/E1 procedures match every measured
+native action but respond differently when a participation message or queried
+option changes. The off-native reference is a specified continuation
+contract, not an intention uniquely recoverable from a successful trace.
+In another comparison, equal-type continuation accuracy improves in all ten
+BE seed pairs while autonomous success decreases. The errors have different
+consequences: a confirmation at a silent root cannot write, whereas rejecting
+a mandatory KW recoloring violates the next bound. Under frozen transfer,
+two adjacent vertices can repeatedly propose the same color and correctly
+veto one another; a speculative repair can likewise be correctly vetoed
+without resolving the existing conflict.
 
-We make three concrete contributions. First, we specify continuation targets
-for seven implemented teachers, locating interventions between two learned
-communications and accounting for the supplied interpreter. Second, we
-reconstruct a paired continuation diagnostic, expose its class imbalance and
-local-type overlap, and add a separate prospective comparison with equal
-supervised-target budgets and held-out sufficient COMMIT input types. We
-quantify what that split withholds, class coverage and programmed diagnostic
-controls; it is not a test of new logical conditions. Third, we
-connect frozen proposal/repair failures to their missing progress hypotheses
-using one-component interventions on preserved witness executions. These
-are claims about specified finite experiments and interfaces, not a new
-fastest coloring algorithm, general learning theorem, or architecture ranking.
+Our contribution is an empirical study of these relations with three
+connected parts. First, we give scoped teacher interfaces, explicit learned
+and supplied modules, native functional coverage and frozen transfer.
+Second, we define continuation contracts and compare supervised procedures
+with class, support and type accounting, retaining uncertain and adverse
+outcomes. Third, we connect continuation errors to execution through precise
+transition statements, conditional progress arguments and replayable
+component interventions. The resulting question is which acquired local
+responses matter on reached executions, rather than whether one global
+accuracy identifies an algorithm. Elementary support arguments clarify the
+question; they are not claimed as new general learning lower bounds.
 
 \paragraph{Relation to previous work.}
 Neural graph coloring predates this study \citep{lemos2019coloring}, as do
 graph-algorithm execution with MAX aggregation \citep{velickovic2020execution}
-and trace-based reasoning benchmarks \citep{velickovic2022clrs,velickovic2021nar}.
+and trace-based reasoning benchmarks \citep{velickovic2022clrs} within neural
+algorithmic reasoning \citep{velickovic2021nar}.
 DAgger addresses learner-induced state distributions \citep{ross2011dagger};
 causal confusion in imitation already motivates interventions
 \citep{dehaan2019causal}. Our fixed-bank teacher continuations are not a new
 formulation of these general ideas. GNN/local-computation connections and
 information restrictions are established
-\citep{loukas2020depth,sato2019approximation}. Alignment and schedules affect
-extrapolation \citep{xu2021extrapolate,mathys2023flood}; asynchronous robustness
+\citep{loukas2020depth,sato2019approximation}. SALSA-CLRS already includes
+distributed and randomized algorithms \citep{minder2023salsa}. Alignment and
+schedules affect extrapolation \citep{xu2020reason,xu2021extrapolate,mathys2023flood}; asynchronous robustness
 requires its own assumptions \citep{solodova2025hogwild}, which we do not test.
 Recent coloring methods learn parallel orderings \citep{langedal2025ordering},
 use recursive warm starts \citep{vanderbush2026warm}, or learn contrastive
 coloring geometry with transfer \citep{le2026contrastive}. Recent sufficient
 conditions for provable algorithm learning \citep{wittig2026which} go beyond
-our finite extrapolation evidence. Our specific increment is the combination
-of scoped teacher interfaces, paired continuation diagnostics and replayable
-failure mechanisms, rather than neural coloring or size transfer themselves.
+our finite extrapolation evidence. Exact local-instruction learning under
+bounded-degree and finite-precision assumptions is studied by
+\citet{qharabagh2026exact}; discrete neural reasoning already uses finite
+transition verification \citep{rodionov2025discrete}. Our conditional MAX
+certificate and finite transfer tests do not establish those general guarantees.
 Hint-ReLIC already regularizes algorithmic predictions across input
 augmentations preserving the next trace step \citep{bevilacqua2023causal};
 we instead acquire explicit teacher-continuation labels under alternative
-messages, whose targets can change. No-hint reasoning already separates
+messages, whose targets can change. Interchange-intervention training and
+causal distillation already match high-level counterfactual computations
+\citep{geiger2022inducing,wu2022causal}; our alignment is fixed at a typed
+message interface and is not a new causal-training paradigm. No-hint reasoning already separates
 terminal learning from trajectory imitation \citep{rodionov2023without}.
-We claim neither algorithmic intervention nor that distinction as new.
+Mechanistic gaps between effective and faithful execution are studied in
+\citet{saldyt2025mind}; concurrent work finds failures despite fitting every
+training hint \citep{najafgholizadeh2026premature}. Our specific increment is
+the joint accounting of contract, acquired support, reached error strata and
+safety/progress mechanisms for these distributed coloring modules.
 Appendix~\ref{app:related} compares candidate contributions with precedents.
 
 \section{Interfaces and Continuation Targets}
@@ -120,6 +134,7 @@ $C_v=\{0,\ldots,\Delta\}$ or local initial segments
 $C_v=\{0,\ldots,d(v)\}$. These are not arbitrary list-coloring instances.
 Partial colors satisfy $x_v\in\{-1\}\cup C_v$, where $-1$ is pending.
 Availability is $\A_v=C_v\setminus\{x_u:u\in N(v),x_u\ne-1\}$.
+For a pending vertex, $U_v=N(v)\cap\{u:x_u=-1\}$ and $d_U(v)=|U_v|$.
 
 A teacher is a specified state machine with observations, private inputs,
 phases and an interpreter. The learned policy receives declared observations
@@ -142,10 +157,19 @@ Required IDs are fixed distinct integers in $\{0,\ldots,65535\}$. The
 implementation restricts $1\le n\le65536$, including anonymous experiments
 for convenience; this is not an anonymous-algorithm size lower bound.
 
-\paragraph{Evaluation objects.}
-Functional success means a complete proper in-list coloring within the
-protocol horizon and satisfaction of checked native invariants. A cutoff
-is a benchmark failure, not proof of nontermination. Action fidelity compares
+\paragraph{Functional success, continuation fidelity and transfer.}
+For an input/tape distribution $D$, interpreter $I$ and horizon $H$, let
+$F_\pi(D;I,H)$ be the probability of a complete proper in-list coloring
+within $H$, satisfying the protocol's checked invariants. A cutoff
+is a benchmark failure, not proof of nontermination. For an admissible rooted
+query distribution $Q$, let
+$C_{\pi,T}(Q)=\mathbb E_Q\mathbf1[g_\pi(S,p,c)=O_T(S,p,c)]$, where $g_\pi$
+is the queried confirmation module. Class balancing and equal-type weighting
+define different $Q$ weights and are reported separately. Transfer asks
+whether functional success or continuation fidelity persists under a
+specified change in $D$ or $Q$, with fixed learned tensors and any declared
+input adapter. It is an evaluation axis for either property, not a third
+independent output criterion. Action fidelity compares
 common states/private inputs. Transition fidelity compares updated states;
 different action codes need not yield different transitions. Continuation
 fidelity evaluates a declared oracle $O_T(S,a)$ after a typed message or
@@ -155,6 +179,7 @@ concerns the full terminal vector and status on a fixed labeled graph.
 Terminal validity alone does not imply any of the other properties.
 
 \input{revision-contracts.tex}
+\input{integration-identification.tex}
 
 \section{Teachers and Learned Communication}
 \label{sec:teachers}
@@ -189,9 +214,9 @@ the repeated strict-preference subroutine; GM temporary conflicts are legal.}
 \paragraph{Shared communication.}
 E1 NORMALIZED uses node/color MLPs, learned availability, private-input
 participation, a normalized ordered palette-prefix scorer and learned COMMIT
-after a second MAX exchange. DeepSets replaces mainly the palette scorer by
+after a second MAX exchange. DeepSets \citep{zaheer2017sets} replaces mainly the palette scorer by
 shared color features and mean palette context. LocalPaletteTransformer uses
-two-head attention inside each node's palette. Both retain learned graph
+two-head attention \citep{vaswani2017attention} inside each node's palette. Both retain learned graph
 communication. Functional palette positions are supplied; color-renaming
 equivariance is not assumed. Hidden/message widths are $64/32$. Canonical
 E1/DeepSets/Transformer have 16,035/17,907/16,995 parameters. Native residual
@@ -205,6 +230,14 @@ decision or collision veto in neural inference. GM's queue follows predicted
 marks; an exact teacher never repairs the student's rollout.
 
 \input{revision-architecture.tex}
+
+\paragraph{Identifiers and supplied information.}
+Coherent relative ID comparisons support priority-dependent targets; anonymous
+inputs cannot identify two ID assignments requiring opposite actions.
+Appendix~\ref{app:ids} gives the elementary observation obstruction and a
+five-seed representation control. Failures with numerical ID magnitudes do
+not establish an information-theoretic inability to learn their ordering.
+
 
 \paragraph{Variable-degree representation.}
 The historical serializer fixes four colors and three neighbor positions.
@@ -245,7 +278,7 @@ LINIAL point and GM DETECT phases retain their native losses. These fixed
 teacher-state banks differ from collecting states visited by the learner.
 
 Paired arms share architecture, seed, initialization, native data, minibatch
-order, Adam learning rate $10^{-3}$ and batch size 64; at a fixed milestone
+order, Adam \citep{kingma2015adam} learning rate $10^{-3}$ and batch size 64; at a fixed milestone
 they share updates. CF adds labels and changes the confirmation loss
 distribution. Thus matched versus CF does not identify an intervention-only
 effect or efficiency at equal total label budget. Acquired component labels,
@@ -261,6 +294,23 @@ speculative history and schedule. A typed rooted continuation need not form
 a jointly consistent graph-wide intervention. We claim neither arbitrary
 state robustness nor joint intervention fidelity from root queries.
 
+\paragraph{Historical continuation acquisition.}
+For each color-phase root, four stored variants use option offsets
+$j=0,1,2,3$ modulo four relative to the native candidate. Root participation
+is set to permission, which can activate an ineligible BE root. In variant 3
+only, an independent probability 1/4 draw silences the root. For Luby,
+Johansson and JP, each neighbor candidate is independently resampled from
+the four colors with probability 1/4 and each permitted participation bit
+is flipped with probability 0.15. Variant 1 then overrides those neighbor
+messages: every permitted neighbor participates and offers the root query.
+Other teachers retain native neighbor messages. All participation bits are
+finally masked by permission. The state, private draws/preferences,
+permissions, IDs, phase clock and derived equalities stay fixed; the oracle
+recomputes the label on the actual intervened messages. The prefilter silence
+probability is 1/16 across four equally counted variants, not 1/4 overall.
+The separate prospective study below uses a single query per root and a
+different filter, and is not assigned these historical frequencies.
+
 \paragraph{Selection and replication.}
 The historical sample-budget study has seven budgets $10^3$--$10^6$,
 500 updates and five seeds: 735 policies. New procedures record 500, 1,500
@@ -271,6 +321,8 @@ Failed candidates remain; subsequent follow-ups use new namespaces. Local
 registration is supported by Git/artifact provenance, not independently
 timestamped external preregistration. Appendix~\ref{app:training} supplies
 the budget/provenance table and costs.
+
+\input{integration-functional-coverage.tex}
 
 \section{Native Agreement and Continuation Fidelity}
 \label{sec:cf}
@@ -357,13 +409,16 @@ universally functionally superior, or shown more label efficient. The historical
 experiment below.
 
 \input{revision-prospective.tex}
+\input{integration-additional-evidence.tex}
+\input{integration-transition-theory.tex}
+\input{integration-functional-results.tex}
 
-\section{Frozen Transfer and Failure Mechanisms}\label{sec:generalization}
-The domain-wide totals below are retained from the original closure study.
-Its complete raw delivery is unavailable here, so these totals are not a new
-independent regeneration. All 225 checkpoint identities have been recovered
-by SHA256 from earlier public archives. The new interventions below reconstruct
-two selected first-failure cohorts directly with those original weights.
+\section{Frozen Transfer: Functional Success and Failure Mechanisms}\label{sec:generalization}
+The domain-wide totals below come from the frozen transfer campaign.
+Evaluation checks terminal completeness, palette compliance, edge conflicts
+and teacher-specific invariants. To investigate the failure mechanisms,
+we replay all 15 cells containing failures (15,000 executions) and apply
+the component interventions described below.
 \paragraph{Teacher extensions.}
 The six non-BE rules admit the parameterized definitions in
 Appendix~\ref{app:teachers}. JP's historical cap becomes $n$, preserving its
@@ -415,9 +470,14 @@ combinations pass all selected conditions.}
 \end{table}
 
 \paragraph{Failure mechanisms.}
-The original study reports replays of the complete inference batch containing
-the first failure in each failed cell. All fifteen reported replays reproduce
-final colors, status and steps, preserving the original batch context.
+All 15,000 replayed executions reproduce their cells' success counts,
+failed-case identities, failure classes and proposal/confirmation counters.
+Of the 1,587 failed observations across these cells, 28 Johansson cutoffs
+and 181 CF GM failures are progress failures without an unsafe acceptance;
+the other 1,378 include unsafe acceptances. This classification preserves
+the distinction between an invalid final state and an invalid committed
+proposal. The original first-failure replays additionally match complete
+final vectors, status and steps in their original inference batches.
 Johansson/Transformer 83101 has 28/1,000 degree-ten cutoffs, all on cliques.
 The first leaves two adjacent pending vertices with free colors $\{0,2\}$.
 Both repeatedly propose color 2, correctly vetoed by COMMIT. In the preserved
@@ -444,6 +504,17 @@ cannot explain all of them. Alpha-threshold discrepancies are latent
 calibration diagnostics, not supervised availability errors or causes by
 themselves. The first temporal discrepancy is not automatically sufficient
 to explain a final failure. Appendix~\ref{app:failures} lists every cell.
+
+\paragraph{A separate prospective transfer contrast.}
+A separate fresh transfer campaign evaluates six acquisition arms
+(passive, matched and CF at two label budgets), GM/CT, five seeds and
+the 4,000-update checkpoint across four size 64 degree/palette conditions:
+240,000 executions, all functionally successful.
+The GM policies emit no invalid proposals there, so a proposed advantage
+in rejecting such proposals is uninformative on this battery. CT does emit
+invalid proposals, but all acquisition arms contain them sufficiently to finish.
+This campaign uses separate models
+and cases and is not pooled with the historical 810,000 executions.
 
 \paragraph{Exploratory scope.}
 The separate pilot has 3,526/3,570 successes: two collisions, 42 CT resource
@@ -474,96 +545,79 @@ and private-input scale is identified.
 \input{revision-theory.tex}
 
 \section{Discussion and Limits}
-Continuation tests identify behavior under a declared extension of a rule;
-they do not establish that the native trace uniquely specifies that extension.
-The historical BE comparison shows a procedure difference under unequal
-budgets and reused development queries. The new experiment isolates an
-acquisition-strategy contrast at equal target and conditioning budgets on
-held-out sufficient input types. The class/support audit changes its
-interpretation: native GM color confirmations are all positive, and the
-BE occurrence-level metric rewards an eligibility rule that ignores occupancy.
-CF's stronger BE type accuracy coexists with false negatives and fewer
-autonomous successes. Nearly all test oracle configurations already occur in
-CF training. Neither new-condition extrapolation nor an advantage over other
-informative-negative acquisition strategies is established.
-Paired first-stage tensors, reused states and graph/tape sharing
-are recorded rather than counted as independent training replications.
+Functional success, fidelity to a specified continuation and transfer answer
+different questions. The positive coverage establishes that these local
+policies can execute heterogeneous coloring procedures over substantial
+finite domains. It does not identify how a particular module responds to
+every alternative input. Transfer evaluates whether either property persists
+under a declared domain shift; good functional transfer does not imply
+continuation fidelity on unvisited queries.
 
-Correct confirmation and autonomous completion are distinct outcomes. The
-rescues demonstrate sufficiency of a candidate change in two selected
-witnesses, not a population-wide remedy or a deployable oracle-assisted policy.
-The selected new BE diagnoses distinguish COMMIT generalization failures
-despite acquired-label fit from an upstream participation omission with a
-correct conditional COMMIT response. The latter is localized in one original
-run; a local participation query does not establish a complete-run rescue.
-Degree transfer also changes palettes and, for ColorTrials, preference scale;
-the posthoc scale probe does not identify a degree-only effect. Pilot and
-confirmatory domains differ; size 4,096 and degree 200 are exploratory limits
-at different coordinates, not a jointly tested operating region.
+The paired acquisition studies show that support and weighting determine
+what a continuation score measures. Native GM confirmations contain no
+negative color labels. BE's dominant negative type makes an occupancy-blind
+eligibility rule strong by occurrence BA, while equal-type accuracy rewards
+rarer decisions. Equal target counts do not equalize information. Nearly
+all coarse oracle configurations occur in CF training, despite disjoint
+fine input types. Neither new-logical-condition extrapolation nor an
+advantage over other informative-negative acquisitions is established.
+The wide BE seed-paired interval leaves its mean occurrence advantage
+uncertain; it does not establish a zero effect. These limits constrain the
+estimand, rather than invalidating every measured acquisition difference.
 
-The supplied schedules, algebraic predicates and decoding delimit the learned
-algorithm. Ideal-randomness proofs require explicit conditions not established
-uniformly for these networks. All-pass native packages use heterogeneous
-protocols (Appendix~\ref{app:coverage}), and no architecture ranking follows.
-Output-law studies concern complete vectors/status, not just properness or
-one-node marginals; nonrejection is not equality (Appendix~\ref{app:laws}).
-The forty original Pedro weights are available in this workspace and match
-their inventory hashes; this corrects the earlier local-availability statement
-but does not constitute a new replay of that cohort. The later closure archive
-and its 810,000 raw student rows remain unavailable here. Its reported totals
-are retained with source provenance, not presented as independently regenerated.
-Independent scientific review of this revision remains pending.
+Transition relevance explains why these scores need not track completion.
+A silent root's confirmation cannot write; an active acceptance can also
+be inert when decoding preserves its old value. In contrast, missing a
+mandatory shrinking-bound write immediately breaks a KW invariant.
+The 30,000 fixed-component executions localize all selected CF failures:
+COMMIT-only replacements rescue 1,799, and participation-only replacements
+rescue the other 796. This demonstrates sufficiency of the respective
+component corrections on consumed cases, not a learned remedy or a general
+causal relation between fidelity and success. The new neighbor-context
+follow-up supplies a separate positive training intervention; it does not
+address every possible BE failure mechanism.
+
+Johansson and GM show different limits of correct rejection. A veto cannot
+supply proposal diversity, and a repair veto must be judged against the
+remaining queue. A later endpoint may clear a conflict in some GM executions;
+the reconstructed witness has no such effective later repair. Conditional
+progress proofs state the independence, diffusion and coverage assumptions
+needed for guarantees. They are not certified properties of the networks.
+
+Supplied scheduling, algebraic predicates and decoding delimit what is
+learned. Native packages use heterogeneous protocols, and no architecture
+ranking follows. Graphs, tapes and first-stage tensors are paired, so
+decisions and conditions cannot be counted as independent training replicas.
+Degree transfer changes palettes and CT preference scale as well; the scale
+probe does not identify a degree-only effect. Degree 200 and size 4,096 pilots
+are exploratory and do not define a jointly tested operating region.
+Output-law nonrejection is not equality (Appendix~\ref{app:laws}).
 
 \section{Conclusion}
-Perfect measured native agreement can coexist with wrong continuation
-responses. Auditing the target contract, class balance and local input types
-makes that gap interpretable. A separate prospective comparison addresses a
-narrower equal-budget question. Its gains must be interpreted against label
-coverage, the programmed diagnostic and the limited novelty of held-out
-contexts. In BE, improved type accuracy does not prevent worse autonomous
-completion. Frozen failures and component interventions
-show why correct rejection alone does not supply proposal diversity or a
-required scheduled repair. These distinctions provide testable explanations
-of learned local behavior while keeping finite evidence separate from
-universal guarantees.
+Local neural policies can achieve broad finite functional coverage and
+transfer while leaving specific continuation responses unresolved. Explicit
+contracts, support audits and component replays make those differences
+testable. In these models, better continuation scores sometimes coexist
+with lower completion because errors have different reachability and
+transition consequences. Proposal diversity and scheduled repair provide
+further mechanisms by which correct confirmation can coexist with failure.
+Learning a distributed rule should therefore be evaluated through declared
+functional protocols, continuation targets and transfer conditions together,
+with each result interpreted at its actual level of evidence.
 
 \appendix
 \input{revision-prospective-details.tex}
-\section{Native Functional Coverage}\label{app:coverage}
-The native result is \textbf{21/21 combinations under their respective
-protocols}: five selected checkpoints per combination, each with 1,000/1,000
-proper complete invariant-valid executions. Twelve (Luby, Johansson, JP,
-Greedy across three cores) are historical passive packages, seeds
-83101--83105. Nine (ColorTrials, BE, GM across three cores) are new CF
-packages, seeds 94101--94105. The representative BE/CT weights use 4,000
-updates and GM 500. Matched controls also close all nine; CF is not shown
-necessary for native functional success.
-
-\begin{table}[htbp]\centering\small
-\begin{tabular}{lccc}
-\toprule Teacher & E1 & DeepSets & Transformer \\
-\midrule
-Luby & H: 5/5 & H: 5/5 & H: 5/5 \\
-Johansson & H: 5/5 & H: 5/5 & H: 5/5 \\
-ColorTrials & N: 5/5 & N: 5/5 & N: 5/5 \\
-JP & H: 5/5 & H: 5/5 & H: 5/5 \\
-BE base & N: 5/5 & N: 5/5 & N: 5/5 \\
-GM & N: 5/5 & N: 5/5 & N: 5/5 \\
-Greedy & H: 5/5 & H: 5/5 & H: 5/5 \\
-\bottomrule
-\end{tabular}
-\caption{Native coverage: each passing checkpoint has 1,000/1,000 successes.
-H: historical passive; N: new CF. These protocols do not form a homogeneous
-architecture-ranking experiment.}
-\label{tab:coverage}
-\end{table}
+\input{integration-evidence-details.tex}
+\section{Native Coverage: Protocol and Uncertainty}\label{app:coverage}
+The 21/21 result and its cohort table are in Section~\ref{sec:coverage}.
+The following details delimit its finite statistical interpretation.
 
 Final tests use sizes 32, 48, 64; family weights differ: seven historical
 strata versus ten new strata of 100 runs. The 105 selected policies account
 for 105,000 successful observations, not a success probability of an average
 policy. Five training seeds are the treatment replication units.
 Under independent Bernoulli trials with a common probability, 1,000/1,000
-gives pointwise two-sided 95\% Clopper--Pearson lower limit
+gives pointwise two-sided 95\% Clopper--Pearson lower limit \citep{clopper1934use}
 $0.025^{1/1000}=0.996318$; the one-sided limit is
 $0.05^{1/1000}=0.997009$. For fixed independent nonidentical strata, AM--GM
 makes the zero-failure formula conservative for the weighted average, not
@@ -697,8 +751,9 @@ covered; the unmarked subgraph is proper. Serial repair visits marked vertices
 once in increasing-ID order and avoids all current neighbor colors. The last
 repaired endpoint of any edge avoids the other; edges with no repaired
 endpoint were already proper. Correctness follows in
-$2\lceil n/\min(4,n)\rceil+m$ steps, $m\le n$. Every scheduled write/mark
-must be correct. Missed learned repairs are not retried. This is the
+$2\lceil n/\min(4,n)\rceil+m$ steps, $m\le n$, under these sufficient
+assignment/mark/free-write hypotheses. A missed learned repair receives no
+retry at that vertex; a later endpoint may still clear its edge. This is the
 implemented four-block variant \citep{gebremedhin2000scalable}, including
 supplied barriers/queue, not a guarantee for arbitrary learned marks.
 
@@ -725,29 +780,39 @@ At degree four, $13>4\cdot4$ fails; changing constants changes the variant.
 \section{Conditional Representation and Probability Results}\label{app:math}
 The following elementary arguments are not claimed new general GNN-learning
 theorems. Checkpoints satisfy their hypotheses only where verified.
-\begin{proposition}[Diffuse proposals]
-Assume a proper state, exact rejection, independent node-private draws,
-independence of participation/candidate within nodes,
-$0<p_{\min}\le p_v\le p_{\max}<1$, proposal support in $\A_v$, and
-$\max_cq_v(c)\le\beta/|\A_v|$. Then
-$\Pr(v\text{ commits}\mid S)\ge
-p_v(1-p_{\max})^{\beta d_U(v)/|\A_v|}
+\begin{proposition}[Diffuse proposals and bounded neighbor offers]\label{prop:diffuse}
+Assume a proper partial state, exact confirmation, independent node-private
+participation/candidate pairs, independence within each pair, and proposal
+support in $\A_u$. For a pending root $v$, suppose
+$q_v(c)\le\beta/|\A_v|$ and $p_uq_u(c)\le\theta<1$ for all
+$u\in U_v,c\in\A_v$, with $\theta>0$. Then
+\[
+\Pr(v\text{ commits}\mid S)\ge
+p_v(1-\theta)^{\beta\sum_{u\in U_v}p_u/(\theta|\A_v|)}.
+\]
+If $0<p_{\min}\le p_u\le p_{\max}<1$, setting $\theta=p_{\max}$ gives
+$p_v(1-p_{\max})^{\beta d_U(v)/|\A_v|}
 \ge p_{\min}(1-p_{\max})^\beta$.
-Only $v$ needs the concentration bound for this individual-node statement.
+For always-active uniform Johansson, $\theta=1/2,\beta=1$ gives at least
+$2^{-2d_U(v)/|\A_v|}\ge1/4$.
 \end{proposition}
 \begin{proof}
-The log chord gives $\log(1-x)\ge ax$ for
-$a=\log(1-p_{\max})/p_{\max}<0$, $0\le x\le p_{\max}$.
-Write $\Lambda_c=\sum_{u\in U_v}p_uq_u(c)$.
-Equation~\eqref{eq:progress} is at least
-$p_v\sum_cq_v(c)e^{a\Lambda_c}\ge p_ve^{a\sum_cq_v(c)\Lambda_c}$ by Jensen.
-The weighted load is at most $\beta p_{\max}d_U(v)/|\A_v|$; each neighbor
-has mass at most one on $\A_v$. Multiplication by $a<0$ reverses that
-inequality, and availability gives the last bound. Isolates use the empty
-product.
+The chord bound is $\log(1-x)\ge ax$ for
+$a=\log(1-\theta)/\theta<0$ and $0\le x\le\theta$.
+Set $\Lambda_c=\sum_{u\in U_v}p_uq_u(c)$. Equation~\eqref{eq:progress}
+is at least $p_v\sum_cq_v(c)e^{a\Lambda_c}$, which by Jensen is at least
+$p_ve^{a\sum_cq_v(c)\Lambda_c}$. The weighted load is at most
+$\beta\sum_up_u/|\A_v|$, since each neighbor has at most unit mass on
+$\A_v$. Multiplication by $a<0$ reverses that inequality, proving the first
+bound. Availability and $\sum_up_u\le p_{\max}d_U(v)$ give the second.
+For exact Johansson, a pending neighbor has at least two available colors,
+so $q_u(c)\le1/2$. Isolates use the empty product and write with probability
+$p_v$. These bounds are conditional sufficient conditions, not properties
+established uniformly for learned checkpoints.
 \end{proof}
+
 \begin{corollary}[Diffuse submass]
-If the concentration bound holds only on $S_v\subseteq\A_v$ of mass
+In the $p_{\max}<1$ case, if the concentration bound holds only on $S_v\subseteq\A_v$ of mass
 $\eta_v>0$, the lower bound is
 $p_v\eta_v(1-p_{\max})^{\beta d_U(v)/(\eta_v|\A_v|)}$.
 Uniform $\eta_v\ge\eta>0$ at every reachable state implies uniform progress
@@ -758,7 +823,7 @@ Drop nonnegative terms outside $S_v$, renormalize by $\eta_v$, and repeat.
 $x b^{\beta/x}$ increases for $x>0$, $0<b<1$, since its derivative is
 $b^{\beta/x}(1-\beta\log b/x)>0$.
 \end{proof}
-\begin{example}[Safety without useful progress]
+\begin{example}[Safety without useful progress]\label{ex:stalled}
 On a $K$-clique with $K\ge2$ colors, deterministic color-zero proposals,
 participation $1/2$ and exact rejection progress only with exactly one active
 vertex: probability $K/2^K$, expected first-progress time $2^K/K$.
@@ -1030,14 +1095,15 @@ the 810,000 denominator.
 Neural coloring & \citet{lemos2019coloring,langedal2025ordering,
 vanderbush2026warm,le2026contrastive} & Seven-rule native coverage with
 declared information and complete selected-checkpoint provenance \\
-Trace imitation; MAX & \citet{velickovic2020execution,velickovic2022clrs}
-& Concrete validity/native/continuation comparisons for these teachers \\
-Interactive/CF learning & \citet{ross2011dagger,dehaan2019causal,bevilacqua2023causal} & Specific
+Trace imitation; local rules & \citet{velickovic2020execution,velickovic2022clrs,minder2023salsa,qharabagh2026exact}
+& Seven scoped teachers, learned/supplied accounting and contract-specific
+finite evaluation, not first learned distributed execution \\
+Interactive/CF learning & \citet{ross2011dagger,dehaan2019causal,geiger2022inducing,wu2022causal,bevilacqua2023causal} & Specific
 admissibility contracts and paired continuation gaps, not a new general
 causal method or equal-label advantage \\
-Output versus trajectory & \citet{rodionov2023without,velickovic2022clrs}
-& Quantified separations in these coloring interfaces, not novelty of the
-conceptual distinction \\
+Output versus mechanism & \citet{saldyt2025mind,najafgholizadeh2026premature,rodionov2025discrete}
+& Component-level rescues, contract support and progress/repair mechanisms
+in coloring, not novelty of the distinction or verified general execution \\
 Information/locality & \citet{linial1992locality,loukas2020depth,
 sato2019approximation} & JP representation control and interpreter accounting;
 the elementary observation lemma is not a new lower bound \\
@@ -1048,39 +1114,20 @@ Randomized output laws & \citet{gretton2012kernel,hemerik2018exact,holm1979simpl
 & Matched statistical objects and protocol-specific evidence, not new test theory \\
 \bottomrule
 \end{longtable}
-The focused primary-source search was executed on 26 October 2026, including
-recent 2026 work. It is not proof of absence of every related study.
-\code{docs/NOVELTY_AND_RELATED_WORK.md} records scope and objections.
-\code{docs/FINAL_EVIDENCE_AUDIT.md} and
-\code{results/final-closure/evidence-register.json} link central claims to
-proofs, protocols, data, weights, seeds, hashes, limitations and confidence.
-The preceding records retain their historical scope. The revision's claim
-matrix and portable reproduction commands are separate. To rebuild its
-analyses and article from the repository root:
-\begin{quote}\small\ttfamily
-PYTHONPATH=src python scripts/reanalyse-paper-be.py\\
-PYTHONPATH=src python scripts/probe-paper-rescues.py\\
-PYTHONPATH=src python scripts/summarize-paper-revision.py\\
-PYTHONPATH=src python scripts/audit-revision-continuations.py\\
-PYTHONPATH=src python scripts/probe-revision-be-failures.py\\
-PYTHONPATH=src python scripts/build-revision-assets.py\\
-PYTHONPATH=src python scripts/build-revised-paper.py\\
-PYTHONPATH=src python scripts/verify-paper-revision.py
-\end{quote}
-Checkpoint-based steps require verified public runtimes. The source-only
-checkout rebuilds the PDF from compact revision analysis outputs. The build
-receipt checks references and records the actual compiler/environment,
-PDF text and page renders. Historical closure scripts belong to the archived
-version; they must not overwrite the revised article or its receipt.
-The historical closure packet's local path is not a public download. The
-revision scripts recover published native/CF weights by verified archive and
-checkpoint hashes, preserve historical result files, and write separate new
-analysis outputs. The revised build uses native ARM LaTeX with a separate
-compiler receipt; it does not claim the old x86 Tectonic binary was executed.
-See \code{docs/PAPER_REVISION_REPRODUCE.md} for portable commands and
-\code{results/paper-revision-20261030/manifest.json} for delivered file hashes.
-The pre-revision source/PDF are archived under
-\code{paper/ucgnn/archive/pre-revision-c3affd16.tex/pdf}.
+The contribution combines scoped empirical
+coverage with continuation contracts and replayable functional mechanisms;
+none of trace supervision, distributed neural execution, interventions or
+the distinction between success and fidelity is claimed individually new.
+
+\paragraph{Reproducibility.}
+The accompanying repository provides teacher interfaces, continuation
+oracles, training and evaluation drivers, checkpoint identities and
+evaluation namespaces. Each campaign has a separate protocol and artifact
+index. The drivers reproduce continuation queries, autonomous executions
+and component interventions with frozen models and fixed case generators.
+Code and experimental artifacts are available from the
+\href{https://github.com/mrioswilson/distributed-coloring-learning}{project repository}
+and its linked releases; repository documentation gives the execution commands.
 \bibliographystyle{plainnat}
-\bibliography{references,integration-references,multicf-references,closure-references}
+\bibliography{references,integration-references,multicf-references,closure-references,revision-references}
 \end{document}

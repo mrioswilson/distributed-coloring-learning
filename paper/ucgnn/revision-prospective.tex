@@ -1,4 +1,4 @@
-\section{Prospective Equal-Budget Continuation Experiment}\label{sec:prospective}
+\subsection{A prospective input-context comparison}\label{sec:prospective}
 We test a separate acquisition-strategy contrast with BE/E1 and GM/E1
 (19,396 parameters). Ten fresh paired seeds per teacher give forty models.
 Before training, a fixed SHA256 partition holds out 20\% of sufficient
@@ -29,7 +29,10 @@ specifies the key, serialization, hash and acquisition order.
 
 Adam, batch 64 and 1,500 updates are fixed before test, with 100 matched warmup
 updates and the same subsequent native/auxiliary loss weighting. Paired data,
-initialization, index sequences and first-stage final tensors agree. All forty
+initialization, index sequences and first-stage final tensors agree. In BE,
+the paired learned procedures therefore differ only in the second
+exchange/COMMIT parameters, not in participation or proposal parameters.
+Their states can nevertheless diverge after a changed confirmation. All forty
 weights are frozen before generating 4,000 held-out queries per seed/teacher
 on sizes 28/36 and evaluating 1,000 autonomous runs per model on sizes 32/48/64.
 All exact references pass. Every final continuation has zero intersection
@@ -60,6 +63,11 @@ reflects those identical observed seed differences, not certainty over all
 future types or training replicas. BE's mean difference is +5.77 points, but
 the interval spans zero (\(-13.73,+25.26\)). BE equal-type accuracy increases
 from 51.70\% to 86.94\%, while the two endpoints weight errors differently.
+Equal-type accuracy favors CF in all ten paired seeds, with gains of
+15--55 percentage points. Occurrence BA is heterogeneous: three native seeds
+score near 50\%, two CF seeds near 52\%, and the other paired differences
+are small. The mean is retained as the prespecified endpoint; it does not
+describe a uniform seed effect or establish an effect of zero.
 CF adds false negatives in two BE seeds and reduces autonomous successes from
 9,204 to 7,405; one further seed has identical failures in both arms.
 Mean step counts over \emph{all} final runs (14.53 native versus 13.43 CF)

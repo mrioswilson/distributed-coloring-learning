@@ -4,7 +4,21 @@ recomputed from raw encoded state arrays and agree with stored base, auxiliary
 and final color confirmations. Fine keys are reconstructed from those arrays;
 their training/test unions equal the delivered key files and obey the original
 hash filter. Model predictions are summarized from frozen result records;
-this audit does not rerun neural inference or train another model.
+this original array audit does not rerun neural inference or train another model.
+A separate complete checkpoint re-inference reproduces all final diagnostic
+metrics for all 40 models (160,000 decisions), using the original phase/batch
+context. This verifies the recorded predictions without changing the
+post-test status of these additional endpoints.
+\begin{table}[htbp]\centering\small
+\begin{tabular}{lrr}
+\toprule Teacher & Native logical overlap (\%) & CF logical overlap (\%) \\
+\midrule
+\closureinput tables/integration-logical-overlap.tex
+\bottomrule
+\end{tabular}
+\caption{Both acquisitions' coarse oracle-configuration overlap with the
+same test, range over ten seeds. All fine training/test keys remain disjoint.}
+\end{table}
 {\small
 
 \begin{longtable}{lllrr}

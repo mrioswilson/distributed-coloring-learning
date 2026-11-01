@@ -1,0 +1,70 @@
+\section{Component Replays and Additional Evidence}\label{app:integration}
+\begin{table}[htbp]\centering\small
+\begin{tabular}{llrrrrr}
+\toprule Seed & Arm & Learned & Exact CMT & Exact P & Exact CAND & Exact KW \\
+\midrule
+\closureinput tables/integration-components.tex
+\bottomrule
+\end{tabular}
+\caption{All six selected BE models on their original 1,000-case batteries.
+CMT replaces only confirmation, P only participation, CAND only candidate;
+the dependent learned confirmation is recomputed when messages change.
+Exact KW replaces all three. Linial remains learned. These are 30,000
+diagnostic executions on consumed cases, not 30 training replicas.}
+\label{tab:components-full}
+\end{table}
+
+All baselines reproduce complete stored terminal fields in their original
+cohort 32/inference-batch 1,024 float32 CPU context. The six checkpoints are
+chosen because their three seeds include every functional failure in the
+input-context study; the two nonfailing native arms are paired controls.
+No checkpoint is retrained, no failing case removed and no new primary
+endpoint introduced. Baseline, COMMIT-only, participation-only,
+candidate-only and all-KW modes are fixed before outcomes. All six models
+and all cases remain in the output, including ineffective interventions.
+The selected CF failure count is 2,595, which is also the complete CF
+failure inventory for that study's original 10,000 cases. Rescue is a
+statement about those cases, not a population success probability.
+
+\paragraph{Contract rejection need not mean an invalid write.}
+The baseline diagnostic records 64 and 20 active acceptances rejected by the
+contract in native seeds 105001 and 105010. A subsequent unchanged-policy
+observer reproduces both 1,000-case batteries exactly and checks the actual
+KW decoding. Every one of these 84 writes reproduces its old auxiliary
+color and satisfies the new bound. The contexts $(B,a,c,D)$ are
+$(8,6,2,6)$, $(12,9,1,9)$ and $(14,11,3,11)$, with respective counts
+53/15, 6/1 and 5/4 in the two seeds. They are errors against the specified
+contract but do not alter that transition, as Proposition~\ref{prop:relevance}
+predicts. The frozen counter named \code{learned_unsafe_accepts} in this BE
+diagnostic means active contract-rejected acceptances, not observed
+collisions; it must not be conflated with transfer's forbidden-write counter.
+This observer is posthoc and does not revise the frozen intervention outputs.
+
+\paragraph{Campaigns and label budgets.}
+The historical diagnostic uses five seeds, unequal acquisition budgets and
+development-reused queries. The 40-model input-context study uses ten paired
+seeds, a shared 3,000-target base, 3,600 auxiliary targets per arm,
+1,500 fixed updates and a fine-key hash holdout. The 100-model label-budget
+study uses five paired seeds, 4,000 updates and different intervention
+families, support and endpoints; its 1,500-update snapshots are secondary.
+The five-model neighbor-message follow-up freezes its modified acquisition
+after inspecting that study and uses a fresh v2 evaluation battery. The
+studies are not pooled and their equal-type metrics differ: the former
+averages accuracy equally over types, while the latter also class-balances
+its type endpoint. Numerical bounds used by a generator are not necessarily
+observed by the COMMIT head.
+
+The label-budget study has 32/40 fully passing BE checkpoints; only two of
+five high-CF seeds meet the 99\% unseen-type criterion. All acquisition
+variants are retained, including the no-force and late-bound conditions.
+Complete component-group accounting gives slightly different native/CF label
+totals; neither identical logical support nor equivalent class information
+follows from a matched nominal budget.
+
+\paragraph{What further experiments would identify.}
+Attributing an advantage specifically to counterfactual label generation
+would require a control with informative positive and negative
+labels, matched support/balancing, updates and checkpoint selection.
+Generalization to unseen interventions would require holding out complete
+families and checking novelty at the effective model input, rather than only
+at a generator parameter. Neither stronger claim is made here.

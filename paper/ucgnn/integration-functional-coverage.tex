@@ -1,0 +1,38 @@
+\section{Native Functional Coverage}\label{sec:coverage}
+All seven scoped teachers have passing packages for each of the three
+architectures: \textbf{21/21 combinations}, five selected checkpoints per
+combination and 1,000/1,000 proper complete invariant-valid executions per
+checkpoint. The 105 policies account for 105,000 successful observations.
+This establishes broad finite functionality within supplied interpreters;
+it does not establish universal correctness or equivalence of architectures.
+
+\begin{table}[htbp]\centering\small
+\begin{tabular}{lccc}
+\toprule Teacher & E1 & DeepSets & Transformer \\
+\midrule
+Luby & H: 5/5 & H: 5/5 & H: 5/5 \\
+Johansson & H: 5/5 & H: 5/5 & H: 5/5 \\
+ColorTrials & N: 5/5 & N: 5/5 & N: 5/5 \\
+JP & H: 5/5 & H: 5/5 & H: 5/5 \\
+BE base & N: 5/5 & N: 5/5 & N: 5/5 \\
+GM & N: 5/5 & N: 5/5 & N: 5/5 \\
+Greedy & H: 5/5 & H: 5/5 & H: 5/5 \\
+\bottomrule
+\end{tabular}
+\caption{Native functional coverage. Each passing checkpoint completes all
+1,000 runs. H: twelve historical passive packages; N: nine later CF packages.
+The cohorts have different training and final-test protocols and do not
+constitute a homogeneous architecture-ranking experiment.}
+\label{tab:coverage}
+\end{table}
+
+Historical packages use seeds 83101--83105; later ColorTrials/BE/GM packages
+use 94101--94105. Representative BE/ColorTrials policies use 4,000 updates,
+GM 500, while acquired-label budgets vary by package. Matched controls also
+pass all nine later combinations: CF is not necessary for native functional
+success in these tests. Final sizes are 32,48,64; seven historical versus
+ten later graph strata have different weights. Appendix~\ref{app:coverage}
+retains confidence-limit assumptions, unsuccessful candidates and the full
+budget/provenance table. The following continuation analyses concern
+separate historical or prospectively frozen cohorts; the 21/21 result is
+not attributed to every model in those analyses.

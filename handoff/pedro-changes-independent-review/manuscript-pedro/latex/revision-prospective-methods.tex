@@ -1,0 +1,68 @@
+\subsection{Prospective acquisition and sufficient key}\label{app:prospective-method}
+This specifies the already executed acquisition, not a revised protocol.
+Color queries use four option indices, $q=c_v\in\{0,1,2,3\}$, degree at
+most three, and legal teacher-prefix states. Auxiliary and diagnostic graph
+streams use separate namespaces; their sizes are respectively 8/12/16/24
+and 28/36. The frozen configuration and graph generators identify the streams.
+
+For each queried color, let $w_j$ be permission and $u_j$ the supplied
+pending-or-permitted bit in GM. In BE the queried-stage adapter sets $u_j=1$.
+Let $b_j$ be the current-own-color indicator for $q$ in GM and zero in BE.
+Let $o_{vj}$ be the neighbor's occupancy of the receiver's queried KW option
+in BE and $b_j$ in GM. Set $\kappa_v=\operatorname{sgn}(a_v-q_{\rm KW})$
+in KW, where $q_{\rm KW}=\lceil4B/5\rceil$, and zero in GM. Here $a_v$
+is the auxiliary color; it is distinct from the queried option index $q$.
+GM also supplies $\sigma_{vj}=\operatorname{sgn}(ID_j-ID_v)$ and the
+same-slot indicator $\tau_{vj}$; both are zero in BE's queried-stage adapter.
+With the actual supplied messages $p_j,c_j$, define
+\[
+ r_v=(u_v,b_v,p_v,\mathbf1[u_v>1/2]),\qquad
+ m_{vj}=(u_j,o_{vj},p_j,\mathbf1[u_j>1/2\ \land\ c_j=q],
+             \sigma_{vj},\tau_{vj}),
+\]
+\[
+ K=(T,\phi,w_v,\kappa_v,r_v,
+       \operatorname{sort}\{m_{vj}:j\in N(v)\}).
+\]
+The neighbor collection is a set: identical message types occur once.
+This is sufficient for the fixed-weight queried-slot MAX computation, not a
+minimal oracle quotient, a proposal key or a classifier of LINIAL/DETECT.
+The original code represents the BE offset as the signed encoded offset;
+its sign is exactly $\operatorname{sgn}(a_v-q_{\rm KW})$.
+
+For the hash, all bits are integers 0/1 and signs are $-1,0,1$; $T$ is the
+string \code{BE_BASE_D3} or \code{SPECULATIVE_GM}. The phase integer $\phi$
+is 5 for KW, 1 for ASSIGN and 3 for REPAIR. Tuples/sets are serialized as
+JSON lists, with neighbor tuples in lexicographic order and separators
+\code{,} and \code{:} with no spaces. Prefix the UTF-8 JSON by the literal
+salt \code{revision-20261030-commit-types-v1}, with no separator. Interpret
+the first eight SHA256 bytes as a big-endian unsigned integer. Residue zero
+modulo five denotes held-out types. This reserves 20\% of hash buckets;
+it need not reserve exactly 20\% of observed types or occurrences.
+
+Acquisition proceeds as follows.
+\begin{enumerate}
+\item Retain native base targets until the 3,000-component budget is filled.
+Color-phase base queries must have training keys; LINIAL/DETECT use their
+separate native targets and do not receive this COMMIT filter.
+\item In each auxiliary color-phase batch with an unfilled quota, enumerate candidate roots with
+a running cursor $i$ before any filtering. Set $k=i\bmod4$ and
+$c'_v=(c_v+k)\bmod4$. Draw an independent uniform value for every considered
+root. Set $p'_v=w_v$, except that $k=3$ and a draw below 1/4 set $p'_v=0$.
+All real-neighbor P/C values stay native.
+Advance the cursor for all considered roots, including rejected roots.
+\item Training retains a root only when both $K(S,p,c)$ and $K(S,p',c')$
+are training types, subject to the 3,600 KW or 1,800 ASSIGN/1,800 REPAIR
+quotas. Compute its labels only after this filter. The native arm receives
+one native confirmation and CF one intervened confirmation on the same state.
+\item After freezing all forty models, the diagnostic stream applies the
+same intervention, but retains a root if its intervened key is held out.
+The native key is unrestricted at test. Retain exactly 4,000 KW or 2,000
+ASSIGN/2,000 REPAIR queries per seed, without filtering on truth labels.
+\end{enumerate}
+The intervention RNG is seeded by the frozen namespace, teacher, training
+seed, acquisition kind and the literal \code{intervention}. Native graph/tape
+streams have their separate base/auxiliary/diagnostic suffixes. Filtering can
+change offset and silence frequencies; the pre-filter silence probability is
+not a claim about the retained distribution. No phase quota balances the
+positive and negative truth labels within that phase.

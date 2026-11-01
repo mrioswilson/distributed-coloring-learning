@@ -1,0 +1,1713 @@
+Learning Distributed Coloring Rules:
+Functional Success, Continuations, and Transfer
+Research collaboration
+31 October 2026
+Abstract
+What does successful execution reveal about a learned distributed algorithm? We study local neural
+decision modules inside explicit coloring interpreters. Seven scoped teachers and three architectures
+yield 21 functionally passing combinations, each with five checkpoints and 1,000 successful runs per
+checkpoint under heterogeneous protocols. Frozen transfer/control conditions give 449,791 successful
+runs out of 450,000 in the primary cohort, with failures in two checkpoint–condition cells. Against this
+positive functional context, we define typed continuation contracts and show how perfect measured native
+agreement can leave responses to alternative messages undetermined. Separate paired studies expose the
+role of acquired support: counterfactual supervision improves some continuation measures while sometimes
+reducing autonomous completion. We distinguish occurrence, input-type and execution-relevant errors
+rather than treating one aggregate accuracy as algorithm identification. Formal transition statements and
+component interventions rescue 1,799 selected CF failures by replacing COMMIT alone and a different
+796 failures by replacing participation alone; transfer replays distinguish unsafe acceptances from correct
+vetoes that leave progress or scheduled repair unresolved. A neighbor-message follow-up provides a
+separate positive example of correcting a context-coverage defect. The contribution is a scoped evaluation
+of learned local rules and their failure mechanisms, not a universal correctness or training-superiority
+claim.
+1 Introduction
+A neural policy can produce valid colorings without reproducing every decision rule of its teacher. Conversely,
+a policy can reject a bad proposal correctly and still fail to finish. We study these distinctions in a setting
+where learned local modules are combined with declared communication, decoding and scheduling interfaces.
+The policies work broadly on finite benchmarks: all seven teacher variants have passing packages for each of
+three architectures, and sixteen of eighteen extensible combinations pass all five selected transfer conditions
+in all five training seeds.
+Functional success is therefore the starting point for asking what was learned. In one comparison, three
+BE/E1 procedures match every measured native action but respond differently when a participation message
+or queried option changes. The off-native reference is a specified continuation contract, not an intention
+uniquely recoverable from a successful trace. In another comparison, equal-type continuation accuracy
+improves in all ten BE seed pairs while autonomous success decreases. The errors have different consequences:
+a confirmation at a silent root cannot write, whereas rejecting a mandatory KW recoloring violates the next
+bound. Under frozen transfer, two adjacent vertices can repeatedly propose the same color and correctly veto
+one another; a speculative repair can likewise be correctly vetoed without resolving the existing conflict.
+Our contribution is an empirical study of these relations with three connected parts. First, we give scoped
+teacher interfaces, explicit learned and supplied modules, native functional coverage and frozen transfer.
+Second, we define continuation contracts and compare supervised procedures with class, support and type
+accounting, retaining uncertain and adverse outcomes. Third, we connect continuation errors to execution
+through precise transition statements, conditional progress arguments and replayable component interventions.
+The resulting question is which acquired local responses matter on reached executions, rather than whether
+one global accuracy identifies an algorithm. Elementary support arguments clarify the question; they are not
+claimed as new general learning lower bounds.
+1
+Relation to previous work. Neural graph coloring predates this study (Lemos et al., 2019), as do graph￾algorithm execution with MAX aggregation (Veličković et al., 2020) and trace-based reasoning benchmarks
+(Veličković et al., 2022) within neural algorithmic reasoning (Veličković and Blundell, 2021). DAgger addresses
+learner-induced state distributions (Ross et al., 2011); causal confusion in imitation already motivates
+interventions (de Haan et al., 2019). Our fixed-bank teacher continuations are not a new formulation
+of these general ideas. GNN/local-computation connections and information restrictions are established
+(Loukas, 2020; Sato et al., 2019). SALSA-CLRS already includes distributed and randomized algorithms
+(Minder et al., 2023). Alignment and schedules affect extrapolation (Xu et al., 2020, 2021; Mathys et al.,
+2023); asynchronous robustness requires its own assumptions (Solodova et al., 2025), which we do not test.
+Recent coloring methods learn parallel orderings (Langedal and Manne, 2025), use recursive warm starts
+(Vanderbush and Weber, 2026), or learn contrastive coloring geometry with transfer (Le et al., 2026). Recent
+sufficient conditions for provable algorithm learning (Wittig et al., 2026) go beyond our finite extrapolation
+evidence. Exact local-instruction learning under bounded-degree and finite-precision assumptions is studied
+by Qharabagh et al. (2026); discrete neural reasoning already uses finite transition verification (Rodionov and
+Prokhorenkova, 2025). Our conditional MAX certificate and finite transfer tests do not establish those general
+guarantees. Hint-ReLIC already regularizes algorithmic predictions across input augmentations preserving
+the next trace step (Bevilacqua et al., 2023); we instead acquire explicit teacher-continuation labels under
+alternative messages, whose targets can change. Interchange-intervention training and causal distillation
+already match high-level counterfactual computations (Geiger et al., 2022; Wu et al., 2022); our alignment is
+fixed at a typed message interface and is not a new causal-training paradigm. No-hint reasoning already
+separates terminal learning from trajectory imitation (Rodionov and Prokhorenkova, 2023). Mechanistic gaps
+between effective and faithful execution are studied in Saldyt and Kambhampati (2025); concurrent work
+finds failures despite fitting every training hint (Najafgholizadeh and Afsharchi, 2026). Our specific increment
+is the joint accounting of contract, acquired support, reached error strata and safety/progress mechanisms for
+these distributed coloring modules. Appendix K compares candidate contributions with precedents.
+2 Interfaces and Continuation Targets
+We use finite simple undirected labeled graphs G = (V, E), n = |V |, d(v) = |N(v)| and maximum degree ∆.
+Native training uses ∆ ≤ 3 and Cv = {0, 1, 2, 3}. Transfer uses either the global list Cv = {0, . . . , ∆} or local
+initial segments Cv = {0, . . . , d(v)}. These are not arbitrary list-coloring instances. Partial colors satisfy
+xv ∈ {−1} ∪ Cv, where −1 is pending. Availability is Av = Cv \ {xu : u ∈ N(v), xu ≠ −1}. For a pending
+vertex, Uv = N(v) ∩ {u : xu = −1} and dU (v) = |Uv|.
+A teacher is a specified state machine with observations, private inputs, phases and an interpreter. The
+learned policy receives declared observations and emits decisions; the interpreter applies them. Anonymous
+trials use two neighbor exchanges; ColorTrials communicates availability-dependent preferences in the second.
+JP and Greedy need one exchange mathematically, but their neural decomposition retains two. GM has
+supplied blocks, barriers and a serial repair queue; BE supplies algebraic predicates and a reduction clock.
+These are distinct computational regimes, not equal-cost anonymous LOCAL algorithms. Message length
+and palette computation grow with palette size; we make no CONGEST complexity claim. Recorded native
+steps count state-machine applications. BE has two point-reduction steps and thirteen KW steps; neural
+point decisions use the first exchange, whereas KW evaluates the second stage as well. Fifteen native steps
+are not a fifteen-round learned communication complexity bound.
+Mathematical random statements use fresh independent ideal draws. Implementation uses namespaced
+PCG64 streams and float32 observations. Required IDs are fixed distinct integers in {0, . . . , 65535}. The
+implementation restricts 1 ≤ n ≤ 65536, including anonymous experiments for convenience; this is not an
+anonymous-algorithm size lower bound.
+Functional success, continuation fidelity and transfer. For an input/tape distribution D, interpreter
+I and horizon H, let Fπ(D; I, H) be the probability of a complete proper in-list coloring within H, satisfying
+the protocol’s checked invariants. A cutoff is a benchmark failure, not proof of nontermination. For an
+admissible rooted query distribution Q, let Cπ,T (Q) = EQ1[gπ(S, p, c) = OT (S, p, c)], where gπ is the queried
+confirmation module. Class balancing and equal-type weighting define different Q weights and are reported
+2
+separately. Transfer asks whether functional success or continuation fidelity persists under a specified change in
+D or Q, with fixed learned tensors and any declared input adapter. It is an evaluation axis for either property,
+not a third independent output criterion. Action fidelity compares common states/private inputs. Transition
+fidelity compares updated states; different action codes need not yield different transitions. Continuation
+fidelity evaluates a declared oracle OT (S, a) after a typed message or color-query intervention. Such messages
+need not be sampled by the native teacher. Execution costs use teacher-specific units. Distributional fidelity
+concerns the full terminal vector and status on a fixed labeled graph. Terminal validity alone does not imply
+any of the other properties.
+A continuation is a specified target, not an inferred intention. Fix a legal teacher-prefix state
+S, including its phase, permissions w, IDs, slots, private inputs and derived algebraic data. After the first
+exchange, a rooted query supplies typed messages (pu, cu) at the root and its neighbors: pu ∈ {0, 1}, pu ≤ wu,
+and a color query cu ∈ Cu (four option indices for KW). The acquired continuation oracles implemented
+here use the four-color native domain; the transfer evaluator separately extends the six non-BE rules to the
+declared palette lists. Let Fv(c) mean that the queried color, or the decoded receiver-relative KW option, is
+unoccupied. Define
+Ev =
+
+
+
+wv 1[no pending neighbor has a larger ID], T = JP,
+wv 1[av ≥ q], T = BE in KW,
+wv, otherwise.
+The binary confirmation oracle is
+OT (S, p, c) = EvpvFv(cv) RT (S, p, c), (1)
+where RT is the rule-specific condition below. It returns a confirmation bit; it does not select a new color,
+repair an invalid proposal, or promise progress. Its agreement with the native decision is checked when p, c
+are the native messages. Off-policy targets are defined by this extension of the rule, rather than uniquely
+identified by the original native trace.
+Rule RT and separate targets Legal state and permitted intervention
+Luby, Johansson No active neighbor offers cv Proper partial state; replace typed par￾ticipation/candidate messages after first
+exchange
+JP No active neighbor offers cv Proper partial state; fixed coherent dis￾tinct IDs. New ID assignments precede
+replay, not independent edge edits
+ColorTrials Root preference for cv strictly exceeds ev￾ery writable neighbor’s preference when that
+color is free there
+Proper partial state; preferences and their
+availability-dependent messages stay co￾herent. Silencing pu does not remove that
+neighbor’s preference message
+BE RT = 1 in KW. LINIAL has a separate legal￾point target
+Proper auxiliary coloring from validated
+reduction prefix; change participation or
+option query, not polynomial evaluations,
+equalities, clock or bounds
+GM, Greedy RT = 1 in color phases. GM DETECT sepa￾rately marks the smaller-ID endpoint of each
+equal-color/equal-slot edge
+Scheduled prefix; GM allows legal tem￾porary same-slot conflicts. Repair queue
+follows marks. Replace P/C without in￾dependently editing marks or queue
+Table 1: Self-contained continuation contracts. The main experiments use rooted message queries, not arbitrary
+edited global states. Alternative prefixes must satisfy the teacher’s native safety/schedule constraints.
+For ColorTrials the competing preference is −1 when the neighbor is not writable or its queried color is
+occupied; strict comparison includes ties as rejection. For GM, Fv is computed against actual speculative
+3
+colors, including during repair. DETECT does not use a P/C continuation label. For BE, a queried index
+c decodes to (B − 1 − av)4 + c at a high auxiliary color, with q = ⌈4B/5⌉. The contract rejects low-color
+recoloring; this is learned, not enforced by the interpreter. LINIAL’s native target is the first unblocked
+evaluation point; the interpreter computes the corresponding polynomial value. This supplied arithmetic
+is not learned. JP’s equal-offer veto is part of the chosen continuation extension: adjacent native eligible
+maxima cannot occur, so this additional veto is redundant on native messages and is not an extra rule
+attributed to the original JP algorithm.
+The continuation-query banks use exact teacher-prefix states. The component replays below declare an
+additional diagnostic domain: the same KW predicate is evaluated on currently reached proper auxiliary states
+with the actual reduction clock and bounds. Such states need not follow the exact teacher’s earlier choices.
+This extension is explicit; its rollout distribution is separate from the teacher-prefix query distribution.
+Worked KW continuation. A replayed training witness has B = 7, q = 6, root auxiliary color av = 6
+and neighbor auxiliary colors 3, 0, 1. Its four decoded options are 0, 1, 2, 3, so only option index 2 is free.
+With wv = pv = 1, OBE(S, p, cv = 2) = 1 and OBE(S, p, cv = 3) = 0; setting pv = 0 also gives zero. The state,
+clock and neighbor equalities are identical in the three queries. Native imitation sees the successful choice 2;
+it need not constrain rejection of choice 3 or silence. The source is seed 94101, root 0, immediately before
+native transition 13 (zero-based frame 12), tape 14094519662940050106. The stored reduction snapshots
+support replay from the second Linial stage through KW; reconstructing the first Linial stage additionally
+requires the original ID assignment.
+Native support and a chosen extension. Let XT be the admissible rooted COMMIT inputs for a fixed
+interface, NT ⊆ XT its native-message support, and H a class of binary local rules. A finite observed bank
+NbT ⊆ NT is a different object.
+Proposition 1 (Native-support underdetermination). If g0, g1 ∈ H agree on NT and differ at an admissible
+x
+⋆ ∈ N/ T , even complete native input/label observations cannot uniquely identify their extension to XT . For
+the implemented BE KW, GM color and Greedy rules, native messages satisfy OT = pv. Thus, whenever
+H contains both g0 = pv and g1 = EvpvFv(cv) and a legal active occupied query exists, the stated ambiguity
+occurs.
+Proof. Both rules induce identical labels on every possible native input, hence identical native observation
+laws. Their different answers at x
+⋆
+cannot be selected from those observations alone. For the named teachers,
+each native participating color root is eligible and chooses a free option; a nonparticipating root has target
+zero. Therefore OT = pv natively. In the worked KW state, active option 3 is occupied: g0 = 1 and g1 = 0.
+A full exact prefix also reaches these values on a star with legal IDs (6, 3, 0, 1): both point reductions choose
+point 0 and preserve these constant-polynomial values; all KW steps before bound 7 leave them unchanged. A
+scheduled GM/Greedy root adjacent to an already colored vertex similarly admits the query of that occupied
+color. These queries are allowed by the contract but are not native proposals.
+This is an elementary support argument, not a new impossibility theorem for restricted hypothesis classes
+or learning algorithms. A restrictive prior can select an extension. We specify OT as our reference contract;
+we do not infer a teacher’s unique off-support intention. The empirical agreement results concern NbT , not
+exhaustive native support.
+3 Teachers and Learned Communication
+Names identify the implemented variants. Bibliographic names identify source families, not guarantees
+imported without checking the variant. Appendix E specifies rules and conditional guarantees.
+Shared communication. E1 NORMALIZED uses node/color MLPs, learned availability, private-input
+participation, a normalized ordered palette-prefix scorer and learned COMMIT after a second MAX ex￾change. DeepSets (Zaheer et al., 2017) replaces mainly the palette scorer by shared color features and mean
+palette context. LocalPaletteTransformer uses two-head attention (Vaswani et al., 2017) inside each node’s
+4
+Teacher Exact rule Supplied information/computation
+Luby Participate with probability 1/2, propose uni￾formly available, veto equal active offers
+Pending/fixed colors, two private draws;
+anonymous
+Johansson variant Always active, uniform available proposal,
+equal-offer veto
+Anonymous observations; no imported
+triangle-free theorem
+ColorTrials Minimum strictly winning available color, else
+wait
+Four private preferences in {0, . . . , 3} na￾tively; two exchanges
+JP Pending strict ID maximum writes first-fit Coherent relative ID comparisons; fixed
+IDs
+BE_BASE_D3 Two polynomial reductions, thirteen KW reduc￾tions
+Bounded IDs, fields 13, 7, point/option
+equalities, bound/target and phase inter￾preter
+Speculative GM Four-block first-fit, same-slot marks, serial re￾pair
+IDs, slots, permissions, phases, queue
+built from predicted marks
+Greedy First-fit in increasing-ID permutation One externally scheduled write permission
+per step
+Table 2: Native teachers and distinct information regimes. ColorTrials is the repeated strict-preference
+subroutine; GM temporary conflicts are legal.
+palette. Both retain learned graph communication. Functional palette positions are supplied; color-renaming
+equivariance is not assumed. Hidden/message widths are 64/32. Canonical E1/DeepSets/Transformer have
+16,035/17,907/16,995 parameters. Native residual adapters give 19,396/21,268/20,356 where required.
+Learned components include participation, proposal scores and confirmation, BE point/option decisions,
+and GM marks. Polynomial evaluation, schedule construction, decoding, list-membership masks and fixed￾order argmax are supplied. There is no exact availability mask, winning flag, eligibility decision or collision
+veto in neural inference. GM’s queue follows predicted marks; an exact teacher never repairs the student’s
+rollout.
+Raw local inputs
+phase, private draws,
+permissions, predicates
+Exchange 1
+learned messages
++ MAX aggregation
+Learned participation
+and palette proposal
+P / C messages
+Exchange 2
+learned messages
++ MAX aggregation
+Learned COMMIT
+queried-slot decision
+Supplied interpreter
+schedule, decoding,
+state update
+Typed continuation query enters here
+Training only: native P/C targets and continuation COMMIT labels
+Figure 1: Two learned neighbor exchanges inside a supplied state machine. Each color slot shares parameters;
+graph messages use MAX. Dashed arrows locate supplied training targets and diagnostic queries. No
+continuation oracle or exact availability filter participates in an autonomous learned rollout.
+The first exchange consumes raw pending/own-color predicates and declared phase, permission, relative￾order or algebraic-equality context. Learned features feed participation and palette scores. The second
+exchange consumes typed P/C messages and raw color predicates, then reads the queried slot’s COMMIT logit.
+ColorTrials instead exchanges per-color preference/features and selects its candidate after that exchange. GM
+DETECT queries the current color to predict a mark. Hidden-state transformations and message functions
+are learned; the interpreter supplies scheduling, list positions, action decoding, program color/auxiliary
+updates and phase/queue advancement. This decomposition locates the continuation query precisely and
+separates learned decisions from the externally provided computation.
+5
+Identifiers and supplied information. Coherent relative ID comparisons support priority-dependent
+targets; anonymous inputs cannot identify two ID assignments requiring opposite actions. Appendix D gives
+the elementary observation obstruction and a five-seed representation control. Failures with numerical ID
+magnitudes do not establish an information-theoretic inability to learn their ordering.
+Variable-degree representation. The historical serializer fixes four colors and three neighbor positions.
+Frozen transfer evaluates the same shared tensors with a sparse structural adapter. Native parity controls
+cover 21,630 decisions for 150 extensible selected/control checkpoints: no hard-action differences were
+observed, maximum absolute logit discrepancy 1.526 × 10−5
+. Separately, 1,170 native executions cover all
+195 original selected/control checkpoints. These are finite checks, not bitwise-equivalence proofs for every
+kernel. ColorTrials uses preference/∆ in transfer, agreeing with preference/3 natively; the out-of-domain
+scaling choice matters. For native-context teachers, participation averages first-stage features over each
+receiver’s valid palette slots in the structural adapter. Fixed tensors therefore still use an explicitly adapted
+computation outside the historical serializer; palette membership is not the only adaptation.
+4 Supervision and Experimental Comparisons
+Native training samples sizes 8, 12, 16, 24 at degree at most three and global K = 4. Historical banks use six
+graph families; new banks add edgeless, mixed-component and clique/isolate examples. States, observations
+and optimization are part of each cohort’s identity.
+Let P, C denote participation/candidate messages. Passive training supervises native components on
+teacher prefixes. Its COMMIT loss evaluates the model’s current messages against a stored native label,
+which may be inconsistent with the correct continuation for those messages. Matched training evaluates
+stored teacher P, C with their concordant native label, without acquiring new labels. Counterfactual training
+uses the same native bank plus four stored COMMIT labels per color root: it cycles the queried root through
+four colors with teacher-specific message interventions and a silence case. After matched warmup, its loss is
+L = LP + LC +
+1
+2
+Lnative,matched +
+1
+2
+Lcontinuation.
+LINIAL point and GM DETECT phases retain their native losses. These fixed teacher-state banks differ
+from collecting states visited by the learner.
+Paired arms share architecture, seed, initialization, native data, minibatch order, Adam (Kingma and
+Ba, 2015) learning rate 10−3 and batch size 64; at a fixed milestone they share updates. CF adds labels and
+changes the confirmation loss distribution. Thus matched versus CF does not identify an intervention-only
+effect or efficiency at equal total label budget. Acquired component labels, model access, presentations,
+updates, bytes and CPU time are separate costs. Replaying a stored label is optimization, not new supervision.
+Shared banks are charged once for physical acquisition, separately for each model’s access.
+Admissibility. Anonymous queries require proper partial prefixes. JP signs derive from a coherent fixed ID
+order. BE states come from legal polynomial/KW replay; derived predicates cannot be edited independently.
+GM requires legal speculative history and schedule. A typed rooted continuation need not form a jointly
+consistent graph-wide intervention. We claim neither arbitrary state robustness nor joint intervention fidelity
+from root queries.
+Historical continuation acquisition. For each color-phase root, four stored variants use option offsets
+j = 0, 1, 2, 3 modulo four relative to the native candidate. Root participation is set to permission, which
+can activate an ineligible BE root. In variant 3 only, an independent probability 1/4 draw silences the root.
+For Luby, Johansson and JP, each neighbor candidate is independently resampled from the four colors with
+probability 1/4 and each permitted participation bit is flipped with probability 0.15. Variant 1 then overrides
+those neighbor messages: every permitted neighbor participates and offers the root query. Other teachers
+retain native neighbor messages. All participation bits are finally masked by permission. The state, private
+draws/preferences, permissions, IDs, phase clock and derived equalities stay fixed; the oracle recomputes the
+label on the actual intervened messages. The prefilter silence probability is 1/16 across four equally counted
+6
+variants, not 1/4 overall. The separate prospective study below uses a single query per root and a different
+filter, and is not assigned these historical frequencies.
+Selection and replication. The historical sample-budget study has seven budgets 103–106
+, 500 updates
+and five seeds: 735 policies. New procedures record 500, 1,500 and 4,000-update milestones. A prospective
+amendment expands development from 60 to 300 runs before new confirmation. Five candidate hashes and
+a final namespace are frozen before a once-only 1,000-run battery per policy. Failed candidates remain;
+subsequent follow-ups use new namespaces. Local registration is supported by Git/artifact provenance, not
+independently timestamped external preregistration. Appendix G supplies the budget/provenance table and
+costs.
+5 Native Functional Coverage
+All seven scoped teachers have passing packages for each of the three architectures: 21/21 combinations,
+five selected checkpoints per combination and 1,000/1,000 proper complete invariant-valid executions per
+checkpoint. The 105 policies account for 105,000 successful observations. This establishes broad finite
+functionality within supplied interpreters; it does not establish universal correctness or equivalence of
+architectures.
+Teacher E1 DeepSets Transformer
+Luby H: 5/5 H: 5/5 H: 5/5
+Johansson H: 5/5 H: 5/5 H: 5/5
+ColorTrials N: 5/5 N: 5/5 N: 5/5
+JP H: 5/5 H: 5/5 H: 5/5
+BE base N: 5/5 N: 5/5 N: 5/5
+GM N: 5/5 N: 5/5 N: 5/5
+Greedy H: 5/5 H: 5/5 H: 5/5
+Table 3: Native functional coverage. Each passing checkpoint completes all 1,000 runs. H: twelve historical
+passive packages; N: nine later CF packages. The cohorts have different training and final-test protocols and
+do not constitute a homogeneous architecture-ranking experiment.
+Historical packages use seeds 83101–83105; later ColorTrials/BE/GM packages use 94101–94105. Repre￾sentative BE/ColorTrials policies use 4,000 updates, GM 500, while acquired-label budgets vary by package.
+Matched controls also pass all nine later combinations: CF is not necessary for native functional success
+in these tests. Final sizes are 32,48,64; seven historical versus ten later graph strata have different weights.
+Appendix C retains confidence-limit assumptions, unsuccessful candidates and the full budget/provenance
+table. The following continuation analyses concern separate historical or prospectively frozen cohorts; the
+21/21 result is not attributed to every model in those analyses.
+6 Native Agreement and Continuation Fidelity
+We reconstruct the existing paired 4,000-update diagnostics on 60 exact teacher trajectories at sizes 28 and
+36 per seed. Their graph/tape namespaces are disjoint from training. They belong to the repeatedly used
+development split, not an untouched final fidelity battery. BE/E1 gives 28,800/28,800 native permitted-root
+action agreements in every arm and seed, but very different continuation responses: The paired initial hashes,
+native arrays, visit counts and final minibatch RNG states agree. CF adds 3,776 labels, changes COMMIT
+contexts and splits its confirmation loss. This supports a difference between the full procedures, not an
+intervention-only effect, sample efficiency, or universal functional improvement. Only 2.7774–3.1200% of
+queries are positive. Every arm has zero false negatives; CF has 34 false positives, all on eligible but silent
+roots. Most of the raw gap concerns rejection of ineligible KW continuations. Among eligible active queries
+(4,150–4,598 occurrences per seed), CF is 100% correct in all seeds, whereas passive and matched accept every
+option, including occupied ones: mean accuracy 67.8117%, BA 50%. Thus the effect also includes learning
+7
+Procedure Labels Mean acc. (%) Seed range (%) Mean BA (%)
+Passive 3,000 22.6404 9.1607–42.3297 60.1413
+Matched 3,000 9.2686 9.0905–9.3970 53.2536
+Counterfactual 6,776 99.9932 99.9780–100.0000 99.9965
+Always reject – 97.0465 96.8800–97.2226 50.0000
+Eligibility only – 98.5990 98.5146–98.6208 99.2781
+Table 4: BE/E1, 4,000 updates. Each seed has 99,840 continuation queries. Means describe five paired
+training seeds; 499,200 queries per arm are correlated within states/trajectories, not independent training
+replicas. BA averages sensitivity and specificity within seed, then over seeds. Eligibility-only accepts iff the
+root is KW-eligible and participating; these semantic baselines are diagnostics, not trained competitors.
+to reject occupied options, not only a redundant eligibility gate. Always rejecting is accurate overall but
+destroys progress.
+Novelty of the evaluation queries. Reconstructing the original query RNG reproduces every numerator.
+Only 91 of 499,200 occurrences exactly match a complete serialized training query. However, BE COMMIT
+discards many serialized fields. Its queried-slot logit depends on phase, permission, signed KW offset, root
+participation, and the MAX-set of occupied/participating/offering neighbor types. Between 99.277% and
+99.540% of diagnostic occurrences have one of these sufficient input types already in training. The four
+queried colors and intervention families are not held out. Among the 549, 459, 717, 522, 722 occurrences with
+unseen sufficient types, CF correctness is 549, 437, 717, 510, 722, versus matched 158, 342, 229, 182, 246. This
+posthoc restricted result preserves a seed-wise advantage. Its correlated small subsets and development reuse
+do not support broad new-intervention-distribution generalization. Appendix H defines the sufficient-input
+key and gives per-seed numerators. These unseen-type subsets include 52,108,90,56,60 positives and both
+classes in every seed. All three arms accept all positives; CF’s advantage is again specificity on negative
+continuations. The mean unseen-subset BA is 99.1157% CF versus 66.5299% matched and 50% always-reject.
+Passive Matched CF
+0
+20
+40
+60
+80
+100
+Balanced continuation accuracy (%)
+All existing queries
+Passive Matched CF
+Unseen sufficient COMMIT types (posthoc)
+Paired seed / diagnostic baseline
+94101
+94102
+94103
+94104
+94105
+Eligibility-only (range/mean)
+Always reject
+BE / E1, 4,000 updates; 3,000 / 3,000 / 6,776 acquired labels
+Figure 2: BE/E1 balanced accuracy across paired seeds, with constant-reject and eligibility-only diagnostic
+baselines. Right: posthoc unseen sufficient COMMIT types. Curves connect treatments within each paired
+seed; label budgets differ by arm.
+Equal weight per sufficient local type. Occurrence-weighted accuracy gives frequent local configurations
+more weight. We additionally average accuracy within each sufficient COMMIT input type and then over
+distinct types, separately within each training seed. This measures the tested type set, not a natural input
+distribution or a new training replica. Reconstruction with the original RNG and 256-root chunks reproduces
+every historical numerator before this reweighting.
+8
+Procedure Occurrence acc. (%) BA (%) Equal-type acc. (%)
+passive 22.640 60.141 50.784
+matched 9.269 53.254 46.350
+counterfactual 99.993 99.996 99.488
+always reject 97.046 50.000 82.317
+eligibility only 98.599 99.278 78.973
+Table 5: Same historical BE queries, three different estimands. Entries average five paired seeds. Equal-type
+accuracy weights the 115–132 distinct tested types equally within seed, rather than their 99,840 occurrences.
+These estimates retain both the strong rejection difference and the limits of the familiar-type diagnostic.
+Per-seed seen/unseen, eligibility, silence and occupied/free strata, including all confusion counts, accompany
+the type-level occurrence counts in the revision evidence. The split uses the union of native and stored CF
+training types in all historical arms, making its novelty criterion common rather than treatment-dependent.
+Other teachers and dependent architecture comparisons. At the same milestone GM/E1 has mean
+continuation accuracy 75.3632% for passive/matched versus 100% CF; CT has 96.6570%, 97.2439%, 99.7452%.
+Their denominators vary by seed. These are supporting diagnostics. Paired BE/GM CF COMMIT tensors
+are identical across the three palette cores at audited milestones: fixed-proposal second-stage losses do not
+involve their palette scorer. These are five paired confirmation replicas per milestone, not fifteen independent
+architecture replicas. CT couples second-stage gradients to proposal scoring and lacks that tensor identity.
+The scoped answer is positive: this CF procedure better reproduces these typed teacher continuations,
+including some unseen local types, even when passive native agreement is already perfect. It is not always
+necessary, universally functionally superior, or shown more label efficient. The historical comparison remains
+separate from the new budget-matched experiment below.
+6.1 A prospective input-context comparison
+We test a separate acquisition-strategy contrast with BE/E1 and GM/E1 (19,396 parameters). Ten fresh
+paired seeds per teacher give forty models. Before training, a fixed SHA256 partition holds out 20% of
+sufficient queried-slot COMMIT type buckets, common across seeds. Phase, root/context features and distinct
+neighbor message types determine this key; MAX removes multiplicity. Neither training arm supervises a
+held-out continuation type. LINIAL and DETECT remain separate native targets. This is a split of input
+contexts within the same intervention templates. It does not withhold all coarser oracle-relevant configurations
+(quantified below).
+Each pair shares 3,000 native component targets and 3,600 fresh auxiliary rooted states. On each auxiliary
+state the native arm acquires one native COMMIT target and CF one prespecified intervened COMMIT
+target. Both queries must pass the training-type filter to retain that state. GM auxiliary quotas are 1,800
+ASSIGN and 1,800 REPAIR; BE uses KW only. Each model therefore accesses 6,600 optimization targets.
+Native P/C conditioning is supplied to both arms equally and charged separately: 7,200 root values plus
+retained neighbor values. Simulator computation, rejected states and duplicate queries are also recorded; this
+does not equate all teacher-computation costs. The root option cycles through native-option offsets 0,1,2,3
+modulo four. Participation is the root permission, except that offset three independently silences it with
+probability 1/4; neighbor messages remain native. The cursor advances before filtering, including discarded
+roots. Test queries use the same intervention and retain held-out CF types; their phase quotas are 4,000 KW
+or 2,000 each ASSIGN/REPAIR. This single-query design differs from the historical four-query diagnostic.
+Appendix A.1 specifies the key, serialization, hash and acquisition order.
+Adam, batch 64 and 1,500 updates are fixed before test, with 100 matched warmup updates and the same
+subsequent native/auxiliary loss weighting. Paired data, initialization, index sequences and first-stage final
+tensors agree. In BE, the paired learned procedures therefore differ only in the second exchange/COMMIT
+parameters, not in participation or proposal parameters. Their states can nevertheless diverge after a changed
+confirmation. All forty weights are frozen before generating 4,000 held-out queries per seed/teacher on sizes
+28/36 and evaluating 1,000 autonomous runs per model on sizes 32/48/64. All exact references pass. Every
+9
+final continuation has zero intersection with its training sufficient-type set; both truth classes occur in every
+seed.
+Teacher Native BA CF BA Paired difference [95% interval] Successes N / CF
+BE 84.64 90.41 +5.77 [-13.73,+25.26] 9,204 / 7,405
+GM 50.00 100.00 +50.00 [+50.00,+50.00] 10,000 / 10,000
+Table 6: New final experiment. BA is a percentage; differences and intervals are percentage points, averaged
+over ten paired training seeds. Intervals bootstrap paired seeds (10,000 resamples), conditional on this
+fixed split/protocol; individual queries are not independent replications. Success totals are out of 10,000
+autonomous runs per teacher/arm. No checkpoint selection uses these tests.
+GM equal-type accuracy is 35.44% native and 100.00% CF; both arms average 26.01 native steps.
+GM gains 50 percentage points in every paired seed without changing any autonomous outcome or mean
+step count. Its degenerate bootstrap interval reflects those identical observed seed differences, not certainty
+over all future types or training replicas. BE’s mean difference is +5.77 points, but the interval spans zero
+(−13.73, +25.26). BE equal-type accuracy increases from 51.70% to 86.94%, while the two endpoints weight
+errors differently. Equal-type accuracy favors CF in all ten paired seeds, with gains of 15–55 percentage
+points. Occurrence BA is heterogeneous: three native seeds score near 50%, two CF seeds near 52%, and the
+other paired differences are small. The mean is retained as the prespecified endpoint; it does not describe
+a uniform seed effect or establish an effect of zero. CF adds false negatives in two BE seeds and reduces
+autonomous successes from 9,204 to 7,405; one further seed has identical failures in both arms. Mean step
+counts over all final runs (14.53 native versus 13.43 CF) include early exits on failure. Every successful BE
+run takes 15 native steps in both arms; the lower overall mean is not a successful-run speedup. These are
+substantive negative results for a uniform-benefit claim.
+Post-test diagnostic controls. The primary endpoint and all original outcomes above are retained. The
+following controls and support audit were added after inspecting the test; they are descriptive checks, not a
+revised primary analysis. The programmed rule Gv = Evpv uses supplied eligibility and root participation and
+ignores query occupancy. It requires no training and is a diagnostic, not a learned label-efficiency competitor.
+Teacher Procedure BA (%) Equal-type acc. (%)
+BE Native 84.64 51.70
+BE CF 90.41 86.94
+BE Eligibility/participation 99.71 81.27
+GM Native 50.00 35.44
+GM CF 100.00 100.00
+GM Eligibility/participation 53.03 62.34
+Table 7: Same final queries and sufficient-type key; means over ten seeds. The programmed diagnostic ignores
+occupancy. BA averages sensitivity and specificity; equal-type accuracy first averages within each distinct
+type, then across types within seed. The diagnostic is post-test.
+For BE, the programmed rule scores 99.71% BA, above CF’s 90.41%, whereas CF scores 86.94% equal-type
+accuracy versus 81.27%. A single negative type accounts for 95.05–96.30% of each 4,000-query bank. Class
+balancing therefore leaves the negative subtypes highly imbalanced; high occurrence-level BA alone does not
+identify the occupancy condition. Among eligible active BE queries, native and the programmed rule accept
+995/995 free options but reject 0/228 occupied options. CF rejects 228/228 occupied options but accepts
+only 814/995 free options. These are pooled descriptive counts over ten banks, not independent training
+replications. Appendix A.2 reports the full confusion strata.
+GM’s native control receives 4,344–4,354 positive COMMIT labels and zero negative COMMIT labels in
+ASSIGN/REPAIR per seed, while CF receives 1,038–1,098 negatives and the test has 2,420–2,491 negatives
+per seed. The native model accepts all test queries, giving BA 50%; the contrast therefore demonstrates
+learning rejections absent from native color supervision. DETECT has separate positive/negative conflict
+10
+supervision and is excluded from these color-label counts. This result does not compare CF with another
+acquisition strategy supplying informative negative confirmations.
+Support of the held-out queries. There are 17–23 distinct sufficient test types per BE seed and 82–92
+per GM seed, despite 4,000 occurrences. For these color oracles OT = Evpv(1−ov), with ov the queried-option
+occupancy. A coarser configuration (phase, Ev, pv, ov) is therefore oracle-sufficient. CF training has already
+seen configurations covering 99.475–100.000% of BE test occurrences and 100% of GM test occurrences.
+Native training covers only 2.125–2.900% in BE and 37.725–39.500% in GM. The same test thus has different
+logical-support novelty for the two acquisitions. Equal target counts do not imply equal information or
+equal support coverage. The original fine-key holdout remains disjoint: novelty is defined by contextual
+combinations rather than by this coarser configuration. There is no separate evaluation restricted to novel
+logical conditions. These tests do not establish extrapolation to new logical conditions. Per-seed support
+counts and logical overlap are in Appendix A.2; no split, label or model was changed.
+Two distinct BE failure diagnoses (post-test). In the two deteriorated CF seeds, 105001 and 105008,
+COMMIT BA on the 3,600 acquired auxiliary queries is 99.510% and 100.000%, versus 52.756% and 52.094%
+on the held-out contexts. Both models visited all auxiliary queries. Failure to fit acquired labels alone does not
+explain these cases: the observed COMMIT gap concerns generalization across contexts, without identifying
+its optimization cause or an architectural impossibility. All 181 final false negatives are at the eligibility
+boundary κ = sgn(av − q) = 0 and have no participating neighbor. They are distinct from the active-neighbor
+defect in the separate follow-up below. On eligible silent queries CF makes 81 false acceptances versus 42 for
+native; these bits alone are masked by participation.
+Seed 105010 has a different defect: both arms complete only 204/1,000 runs, despite final COMMIT BA
+99.451% native and 99.949% CF. Their shared first stage omits participation on 13/118 eligible test roots. A
+replay of the original 32-case cohort localizes the first invariant violation in one selected run: at KW step 7,
+vertex 31 must recolor as the bound drops from 21 to 17, but remains at 17 because participation is false.
+Its proposed value 12 is free; changing only root participation makes COMMIT accept it. Thus this state
+exposes an upstream omission, rather than an incorrect veto of the actual silent message. These are selected
+post-test diagnostics, without retuning, a continued rescue rollout or an estimate of causes across all failed
+runs (Appendix A.3).
+The primary endpoint concerns held-out continuation types; autonomous success is secondary. This
+finite comparison concerns the specified acquisitions at equal target/context access. It supports neither
+extrapolation to new logical conditions nor an advantage over alternative informative-negative acquisition
+strategies. BE’s occurrence-level endpoint must be read with its diagnostic baseline and type weighting;
+GM’s control lacks negative color confirmations. No universal CF superiority, minimum sample complexity or
+all-source teacher efficiency follows. The protocol, forty checkpoints, all seed outcomes, per-component costs
+and freeze receipts accompany the new results (Appendix A).
+6.2 Label budgets and neighbor-context coverage
+A separate E1 study uses five paired seeds per teacher (95101–95105), 4,000 fixed updates and passive, matched
+and CF procedures at low and high acquired-label budgets for BE, GM and ColorTrials: 100 trainings,
+with 1,500-update snapshots as a secondary milestone. It uses fresh training, continuation and functional
+namespaces. The high native controls acquire additional native trajectories; low-budget CF removes stored
+continuation labels to keep its total fixed. The BE high CF/native totals are 6,776/6,774, GM high totals differ
+by at most two labels per seed, and ColorTrials uses 70,000/69,999. These small component-group rounding
+differences are recorded, rather than called exact budget equality. They remain full acquisition-procedure
+contrasts: the native controls receive no alternative source of informative occupied-option negatives.
+CF improves standard-family BA in each BE/GM pair, including low-budget CF against high-budget
+native supervision. Yet the BE high-CF functional loss replicates the separation between continuation metrics
+and completion. Across all eight BE arms only 32/40 checkpoints pass all 1,000 functional runs; all adverse
+arms remain recorded. The new study’s own criterion of at least 99% BA on unseen sufficient types fails:
+only two of five high-CF seeds reach it. BE’s eligibility/participation diagnostic scores 99.26% occurrence
+BA. A holdout of occupied queries at late KW bounds tests a generator-level combination; it does not
+11
+Continuation BA range (%) Functional successes /5,000
+Teacher Matched-high CF-high Matched-high CF-high
+BE 53.25–53.30 93.81–100 5,000 4,298
+GM 50 100 5,000 5,000
+ColorTrials 99.34–99.39 100 5,000 5,000
+Table 8: Separate label-budget study: standard-family continuation queries, five seeds, 4,000 updates. These
+are different models, support and endpoints from Table 6, not additional replicas of that study. Ranges are
+between seeds; shared queries are not independent replicas.
+by itself establish new effective inputs, because queried BE COMMIT does not read the numerical bound.
+Received-neighbor message perturbations, unused in these training banks, also expose errors. Thus the
+stronger standard-family advantage does not contradict the input-context holdout result. Its 1,500-update CF
+snapshots already have high standard BA, so update count alone does not explain the cross-study difference.
+A targeted follow-up with a new battery. After inspecting those results, a separately frozen follow-up
+perturbs neighbor messages in the high-CF BE bank, preserving roots, root queries and all labels. BE’s oracle
+ignores those neighbor participation/offering messages when occupancy is fixed. Five new paired trainings use
+a fresh continuation and 1,000-run functional battery, together with the frozen controls. The perturbed arm
+accepts all positive active-free-neighbor queries in all five seeds and completes 5,000/5,000 runs. The original
+high-CF seed 95105 again rejects those positives and completes 301/1,000, while its perturbed counterpart
+completes 1,000/1,000. This is a positive result for that context intervention on the new battery, not a
+universal CF remedy. It addresses a different error from the κ = 0, silent-neighbor false negatives in seeds
+105001/105008.
+7 Which Continuation Errors Affect Execution?
+Continuation error weights queries in an evaluation distribution. Functional error depends additionally on
+whether those queries are reached and how the interpreter uses the answer. In color phases, let zv be the
+confirmation bit and Dv(S, cv) the supplied decoding of a proposed color or KW option. DETECT marks
+and LINIAL point reductions are separate interfaces.
+Proposition 2 (Gated transition relevance). Fix a legal color-phase state S, permissions w, participation
+p and candidates c. Let yv be the current persistent color (auxiliary color in KW). For the implemented
+interpreters,
+y
+′
+v =
+(
+Dv(S, cv), wvpvzv = 1,
+yv, otherwise.
+Changing z only where wvpv = 0 leaves this transition unchanged. Changing zv where wvpv = 1 changes the
+stored value precisely when Dv(S, cv) ̸= yv. In a KW transition with new bound q, a root with av ≥ q that
+does not write retains a value outside [0, q) and violates the checked bound invariant immediately.
+Proof. The neural action decoder writes only when participation and COMMIT are true; the interpreter
+additionally enforces permission. It performs no eligibility or availability check. Each vertex updates its own
+stored value from the common old state. The displayed formula and the first two claims follow by substitution.
+KW lowers the bound to q regardless of whether a vertex wrote. An unchanged av ≥ q therefore violates the
+new bound, independently of neighbor writes. The benchmark checks that invariant after each transition and
+stops on violation.
+Thus a false acceptance at a silent root has no direct write effect, whereas a false rejection of an eligible
+active free KW option is immediately consequential. An ineligible active acceptance can change execution if
+an upstream participation error makes it reachable and decoding changes the stored value; eligibility alone is
+not an interpreter shield. These are fixed-state statements, not claims that every off-policy error is harmless
+or every local error causes failure in every protocol.
+12
+GM repair is a suffix property. Correct marks covering every speculative conflict edge, followed by a
+currently free write at every queued vertex, are sufficient for proper completion. For any initially conflicting
+edge, the last repaired endpoint avoids the other; an edge with no repaired endpoint was already proper.
+These conditions are not individually necessary. If a failed repair leaves an edge monochromatic and neither
+endpoint changes color later, that edge remains a final conflict. If another queued endpoint later writes
+a free color, it may resolve the edge. For example, three one-vertex blocks on a path with increasing IDs
+1, 2, 3 simultaneously assign color 0. DETECT marks vertices 1 and 2. Skipping repair 1 and repairing 2 to
+color 1 still gives (0, 1, 0). This is a legal execution of the supplied schedule. A repair veto must therefore be
+interpreted with the remaining queue, rather than treated as a universal implication of failure.
+7.1 Frozen-component interventions on reached BE states
+We select all three BE seeds with any functional failure in the 40-model study, retain both arms and all
+1,000 original cases per model, and compare five fixed modes: unchanged policy; exact KW confirmation on
+actual learned messages; exact KW participation with learned proposal/COMMIT recomputed; first-free
+KW candidates with learned participation/COMMIT recomputed; and all three exact KW components.
+Learned Linial decisions remain unchanged. This is a retrospective diagnostic on consumed cases, selected
+by known failures, not a new training-method test. Its protocol and source/weight hashes are frozen before
+replay outcomes. All baseline terminal vectors, statuses, steps and invariant flags must reproduce before
+interpreting interventions. The other learned modules retain their weights; their later outputs are recomputed
+after trajectories diverge. The exact KW predicate uses each reached state’s valid auxiliary coloring, clock
+and bounds; it is the diagnostic state-domain extension specified with the contracts, not an assumption that
+every rollout state is an exact teacher prefix.
+All six unchanged baselines reproduce the original 6,000 terminal vectors, statuses, step counts and
+invariant flags exactly. Across the 30,000 executions there are no technical errors and no newly failed cases
+under an intervention. In CF seeds 105001 and 105008, exact COMMIT alone raises successes from 100 and
+101 to 1,000 each, rescuing all 900 and 899 failures. Changing only participation or candidates rescues none.
+All 1,312 and 1,322 missed valid writes reached by their unchanged policies occur at κ = 0; unlike the 181
+teacher-prefix false negatives, some have participating neighbors (358 and 406). These are visit counts, not
+independent errors or new training replicas.
+In seed 105010, both arms complete 204/1,000. Exact COMMIT or candidates alone leave all 796 failures
+unchanged. Exact participation alone rescues all 796 in each arm; the unchanged policy is silent on 983
+eligible reached queries. All-exact KW modules yield 1,000/1,000 for each of the six models, while learned
+Linial modules remain fixed. Thus COMMIT-only rescues 1,799 of the 2,595 CF failures on this original
+battery, and participation-only rescues the remaining 796. Counts across arms share cases and first-stage
+tensors; they are not independent intervention replications.
+Learned
++ exact
+COMMIT
++ exact
+PARTICIPATE
++ exact
+CANDIDATE
++ all exact
+KW modules
+0
+200
+400
+600
+800
+1000
+Successful original cases / 1,000
+100
+1000
+100 100
+1000
+CF seed 105001
+Learned
++ exact
+COMMIT
++ exact
+PARTICIPATE
++ exact
+CANDIDATE
++ all exact
+KW modules
+101
+1000
+101 101
+1000
+CF seed 105008
+Learned
++ exact
+COMMIT
++ exact
+PARTICIPATE
++ exact
+CANDIDATE
++ all exact
+KW modules
+204 204
+1000
+204
+1000
+CF seed 105010
+Figure 3: Component interventions on the three selected CF seeds, using all original cases. Each replacement
+changes one KW component and recomputes dependent learned outputs on the ensuing trajectory. All-exact
+replaces three KW components. These retrospective diagnostic successes do not establish a learned repair or
+general intervention success rate. Native arms and case-level outputs are retained in Appendix B.
+13
+The interventions use oracle decisions and are diagnostic tools, not deployable learned policies. Their
+fixed-battery rescue counts localize mechanisms in the selected models; they do not estimate a population
+remedy. Errors on teacher-prefix continuation queries and errors reached during autonomous rollouts have
+different denominators and are reported separately.
+8 Frozen Transfer: Functional Success and Failure Mechanisms
+The domain-wide totals below come from the frozen transfer campaign. Evaluation checks terminal complete￾ness, palette compliance, edge conflicts and teacher-specific invariants. To investigate the failure mechanisms,
+we replay all 15 cells containing failures (15,000 executions) and apply the component interventions described
+below.
+Teacher extensions. The six non-BE rules admit the parameterized definitions in Appendix E. JP’s
+historical cap becomes n, preserving its priority rule. GM retains four blocks/detection/serial repair; Greedy
+retains its schedule. Palette lists extend the domain. CT also changes its preference alphabet to {0, . . . , ∆};
+it is a declared parameterized variant, not identical fixed-K4 private inputs. BE is excluded because fixed
+fields and four-option blocks lack a higher-degree existence proof. Changing those constants would define
+another mathematical variant and interface.
+Confirmatory design. After a separate pilot, weights, conditions, namespaces and horizons are frozen.
+All 150,000 exact-reference executions pass before students run. Ninety primary extensible checkpoints
+receive 1,000 executions at each of five conditions: global n = 64, ∆ = 3, 4, 10; local n = 64, ∆ = 4; global
+n = 256, ∆ = 4. Sixty native-certified matched/passive controls and thirty pre-existing CT 4,000-update
+controls receive the four n = 64 conditions. The thirty are not assumed certified. Weights stay frozen, inference
+uses float32 CPU. Each graph has maximum degree exactly requested. Conditions use a uniform mixture
+of regular, capped random, bipartite, tree, irregular, hub, disconnected, isolate-containing, heterogeneous
+and clique families. Capped random is not an Erdős–Rényi law. Instances/tapes are shared across policies,
+teachers and cores. There are 4,000 distinct labeled graphs, 20,000 tape seeds and 25,000 case–palette pairs
+in the 810,000 policy observations. Observation, graph and training-replica counts differ.
+Raw-color reconstruction gives 808,413/810,000 correct: 1,559 collisions and 28 cutoffs in fifteen of 810
+cells. This is accounting across policies, not the success rate of a mean algorithm. Primary policies give
+449,791/450,000: 209 failures in two cells, with 90,000/90,000 degree-three controls. The other 448 primary
+cells have zero observed failures. Secondary controls give 358,622/360,000. Pointwise checkpoint intervals
+describe the declared mixture, not 1,000 executions per graph family. Table 9 preserves seed ranges.
+Teacher Core 64, 3, G 64, 4, G 64, 10, G 64, 4, L 256, 4, G
+Luby E1 5/5 5/5 5/5 5/5 5/5
+Luby DeepSets 5/5 5/5 5/5 5/5 5/5
+Luby Transformer 5/5 5/5 5/5 5/5 5/5
+Johansson E1 5/5 5/5 5/5 5/5 5/5
+Johansson DeepSets 5/5 5/5 5/5 5/5 5/5
+Johansson Transformer 5/5 5/5 4/5 (972–1000) 5/5 5/5
+ColorTrials E1 5/5 5/5 5/5 5/5 5/5
+ColorTrials DeepSets 5/5 5/5 5/5 5/5 5/5
+ColorTrials Transformer 5/5 5/5 5/5 5/5 5/5
+JP E1 5/5 5/5 5/5 5/5 5/5
+JP DeepSets 5/5 5/5 5/5 5/5 5/5
+JP Transformer 5/5 5/5 5/5 5/5 5/5
+GM E1 5/5 5/5 5/5 5/5 5/5
+GM DeepSets 5/5 5/5 5/5 5/5 5/5
+GM Transformer 5/5 5/5 5/5 4/5 (819–1000) 5/5
+Greedy E1 5/5 5/5 5/5 5/5 5/5
+Greedy DeepSets 5/5 5/5 5/5 5/5 5/5
+Greedy Transformer 5/5 5/5 5/5 5/5 5/5
+Table 9: Primary checkpoints with 1,000/1,000 successes out of five. Nonperfect cells also give the per￾checkpoint success range. Columns are (n, ∆, palette), G global and L local. Sixteen of eighteen combinations
+pass all selected conditions.
+14
+Failure mechanisms. All 15,000 replayed executions reproduce their cells’ success counts, failed-case
+identities, failure classes and proposal/confirmation counters. Of the 1,587 failed observations across these
+cells, 28 Johansson cutoffs and 181 CF GM failures are progress failures without an unsafe acceptance; the
+other 1,378 include unsafe acceptances. This classification preserves the distinction between an invalid final
+state and an invalid committed proposal. The original first-failure replays additionally match complete final
+vectors, status and steps in their original inference batches. Johansson/Transformer 83101 has 28/1,000
+degree-ten cutoffs, all on cliques. The first leaves two adjacent pending vertices with free colors {0, 2}. Both
+repeatedly propose color 2, correctly vetoed by COMMIT. In the preserved conditional probe each proposes
+2 on all 8,192 new draws. This identifies missing observed proposal diversity in that state, not an incorrect
+veto or exactly zero mass for the other color.
+GM/Transformer 94102 has 181/1,000 local degree-four failures in each of CF, matched and passive. In the
+first primary CF witness, exact assignment and detection precede a wrong repair proposal: correct rejection
+omits a scheduled repair and leaves a conflict. Matched/passive first witnesses include a forbidden write.
+Equal failure counts therefore do not imply identical local mechanisms. A separate exact-prefix control fixes
+∆ = 3, IDs and endpoint colors but changes a degree-one endpoint’s list from four to two; the Transformer
+misses the exact repair. This isolates palette-context sensitivity in that constructed state, not universal
+capacity versus optimization explanations.
+One-component interventions on copied witnesses. We reconstruct each original full inference cohort
+from its case/tape seeds and recovered checkpoint SHA. The unchanged execution matches its stored terminal
+colors, steps and status, and all actions match through the selected intervention frame. At that frame only
+one candidate is replaced by a free alternative; all other messages and first-stage tensors stay fixed and the
+learned second exchange/COMMIT is recomputed. A separate control substitutes exact confirmation on the
+unchanged proposals once. Neither intervention changes a training run or any reported autonomous test.
+These controls separate a proposal defect from an incorrect veto in the selected states. Exact-COMMIT
+substitution is an identity at these already correct vetoes, not an all-state oracle replacement or an audit
+of COMMIT everywhere. The controls do not establish that changing the proposal module would fix every
+failed execution, or that the first latent calibration discrepancy caused the observed terminal failure.
+Eleven other failed cells involve three matched E1 CT checkpoints, including degree-three failures and
+incorrect simultaneous confirmations. Higher degree cannot explain all of them. Alpha-threshold discrepancies
+are latent calibration diagnostics, not supervised availability errors or causes by themselves. The first temporal
+discrepancy is not automatically sufficient to explain a final failure. Appendix I lists every cell.
+A separate prospective transfer contrast. A separate fresh transfer campaign evaluates six acquisition
+arms (passive, matched and CF at two label budgets), GM/CT, five seeds and the 4,000-update checkpoint
+across four size 64 degree/palette conditions: 240,000 executions, all functionally successful. The GM policies
+emit no invalid proposals there, so a proposed advantage in rejecting such proposals is uninformative on this
+battery. CT does emit invalid proposals, but all acquisition arms contain them sufficiently to finish. This
+campaign uses separate models and cases and is not pooled with the historical 810,000 executions.
+Exploratory scope. The separate pilot has 3,526/3,570 successes: two collisions, 42 CT resource cutoffs.
+It spans regular n = 256, degrees 2,3,4,5,10,20,50,100,200, sizes through 1,024 at degree 3 or 10, plus
+heterogeneous/local cases. A ten-second cap was applied only to unfinished dense CT cells after some longer
+degree-50 successes existed. These unequal resource horizons do not permit homogeneous success-rate ranking.
+One run per checkpoint/cell is exploratory. The later size pilot gives 240/240 for sixty Luby/Johansson/CT/JP
+checkpoints on regular n = 2048, 4096, degrees 3,10, one run per point. It contains four labeled graphs and
+twenty tapes, separately from confirmation. GM/Greedy size pilots stop at 1,024; BE stays outside this
+extension. Confirmation therefore reaches degree ten at size 64, and size 256 at degree four, not their full
+cross-product, degree 200, or size 4,096.
+Scale witness and confounding. Degree changes global K and CT preferences simultaneously. A posthoc
+typed probe keeps an edge endpoint’s degree one and local list {0, 1} fixed, while a separate star raises global
+∆. Preferences ∆ and ∆ − 1 make it the strict color-zero winner. All fifteen primary CF CT policies reject
+15
+A Johansson: a correct veto leaves both vertices pending
+Global palette; n=64, max degree 10
+Original proposals
+–
+v28
+–
+v54
+Proposals (2, 2) → COMMIT (0, 0)
+2 pending at cutoff 128
+Change only c28: 2 → 0
+0
+v28
+2
+v54
+Proposals (0, 2) → COMMIT (1, 1)
+Complete at step 11
+B GM: a correct veto skips a required repair
+Local lists; n=64, max degree 4
+Original proposals
+0
+v11
+0
+v40
+Propose 0 → COMMIT 0 → keep 0
+1 conflict after queue, step 34
+Change only c11: 0 → 1
+1
+v11
+0
+v40
+Propose 1 → COMMIT 1 → write 1
+Proper after repair queue, step 34
+Circle = current color after the queried step; – = pending. Other vertices omitted.
+Figure 4: Two selected copied witness executions, showing local fragments after one queried application. A:
+Johansson steps 10 to 11, with free colors {0, 2} at both vertices. B: GM steps 32 to 33, with list {0, 1} at the
+scheduled vertex 11; the dashed edge is an existing conflict. Changing one proposal and recomputing learned
+COMMIT completes each copied run. Exact-COMMIT substitution on unchanged proposals preserves both
+failures. All other messages and first-stage tensors stay fixed at the intervention; these cases do not estimate
+a population rescue rate. Full outcomes are in Table 24.
+16
+its queried COMMIT from degree ten in the main embedding. Legacy preference/3 units alter responses but
+do not fix all tested cases. Both encodings preserve order. This is scale sensitivity of fixed policies, not an
+information obstruction, a demonstrated rounding cause or a random functional failure rate. No degree-only
+causal effect independent of K and private-input scale is identified.
+8.1 Progress beyond correct confirmation
+For fresh independent private draws, Equation (2) describes the exact anonymous rule’s probability of writing.
+Proposition 5 makes the missing hypotheses explicit, including a bound on each neighbor’s per-color offer
+probability. This covers the exact always-active Johansson variant, whereas coincident deterministic proposals
+can make progress zero (Counterexample 7). A finite draw probe demonstrates observed concentration, not
+exactly zero probability of an alternative color.
+The GM suffix condition in Section 7 explains why a correct veto can leave an unresolved conflict without
+implying that every omitted repair must fail. The two candidate interventions distinguish these mechanisms
+in specific copied executions. The broader classification extends their observed scope without converting a
+retrospective replay into a guarantee over new graphs.
+The finite-type MAX condition in Appendix F certifies one canonical COMMIT predicate when all 64 type
+subsets satisfy its sign inequalities. It does not certify candidate diversity, scheduled repair or palette-context
+invariance. All 45 selected canonical transfer cores fail that sufficient condition; five different historical E1
+weights pass conditional certificates. Successful finite runs do not establish its hypotheses, and failure of a
+sufficient certificate is not itself a reachable failure. The identifier obstruction and representation controls
+remain separate from numerical sensitivity (Appendix D).
+9 Discussion and Limits
+Functional success, fidelity to a specified continuation and transfer answer different questions. The positive
+coverage establishes that these local policies can execute heterogeneous coloring procedures over substantial
+finite domains. It does not identify how a particular module responds to every alternative input. Transfer
+evaluates whether either property persists under a declared domain shift; good functional transfer does not
+imply continuation fidelity on unvisited queries.
+The paired acquisition studies show that support and weighting determine what a continuation score
+measures. Native GM confirmations contain no negative color labels. BE’s dominant negative type makes an
+occupancy-blind eligibility rule strong by occurrence BA, while equal-type accuracy rewards rarer decisions.
+Equal target counts do not equalize information. Nearly all coarse oracle configurations occur in CF training,
+despite disjoint fine input types. Neither new-logical-condition extrapolation nor an advantage over other
+informative-negative acquisitions is established. The wide BE seed-paired interval leaves its mean occurrence
+advantage uncertain; it does not establish a zero effect. These limits constrain the estimand, rather than
+invalidating every measured acquisition difference.
+Transition relevance explains why these scores need not track completion. A silent root’s confirmation
+cannot write; an active acceptance can also be inert when decoding preserves its old value. In contrast,
+missing a mandatory shrinking-bound write immediately breaks a KW invariant. The 30,000 fixed-component
+executions localize all selected CF failures: COMMIT-only replacements rescue 1,799, and participation-only
+replacements rescue the other 796. This demonstrates sufficiency of the respective component corrections
+on consumed cases, not a learned remedy or a general causal relation between fidelity and success. The
+new neighbor-context follow-up supplies a separate positive training intervention; it does not address every
+possible BE failure mechanism.
+Johansson and GM show different limits of correct rejection. A veto cannot supply proposal diversity, and
+a repair veto must be judged against the remaining queue. A later endpoint may clear a conflict in some GM
+executions; the reconstructed witness has no such effective later repair. Conditional progress proofs state the
+independence, diffusion and coverage assumptions needed for guarantees. They are not certified properties of
+the networks.
+Supplied scheduling, algebraic predicates and decoding delimit what is learned. Native packages use
+heterogeneous protocols, and no architecture ranking follows. Graphs, tapes and first-stage tensors are paired,
+17
+so decisions and conditions cannot be counted as independent training replicas. Degree transfer changes
+palettes and CT preference scale as well; the scale probe does not identify a degree-only effect. Degree
+200 and size 4,096 pilots are exploratory and do not define a jointly tested operating region. Output-law
+nonrejection is not equality (Appendix J).
+10 Conclusion
+Local neural policies can achieve broad finite functional coverage and transfer while leaving specific continuation
+responses unresolved. Explicit contracts, support audits and component replays make those differences
+testable. In these models, better continuation scores sometimes coexist with lower completion because errors
+have different reachability and transition consequences. Proposal diversity and scheduled repair provide
+further mechanisms by which correct confirmation can coexist with failure. Learning a distributed rule should
+therefore be evaluated through declared functional protocols, continuation targets and transfer conditions
+together, with each result interpreted at its actual level of evidence.
+A Paired Input-Context Study: Replicas and Costs
+Table 10: All 40-model final seed outcomes. BA is a percentage;
+differences are percentage points. Successes are out of 1,000 per
+model. N expands native confirmations.
+Teacher Seed N BA CF BA Difference N success CF success
+BE 105001 99.435 52.756 -46.679 1000 100
+BE 105002 99.334 99.872 +0.538 1000 1000
+BE 105003 99.539 99.987 +0.448 1000 1000
+BE 105004 50.193 99.923 +49.730 1000 1000
+BE 105005 50.320 99.885 +49.565 1000 1000
+BE 105006 99.152 99.897 +0.746 1000 1000
+BE 105007 50.348 99.923 +49.575 1000 1000
+BE 105008 99.195 52.094 -47.101 1000 101
+BE 105009 99.462 99.859 +0.397 1000 1000
+BE 105010 99.451 99.949 +0.498 204 204
+GM 105001 50.000 100.000 +50.000 1000 1000
+GM 105002 50.000 100.000 +50.000 1000 1000
+GM 105003 50.000 100.000 +50.000 1000 1000
+GM 105004 50.000 100.000 +50.000 1000 1000
+GM 105005 50.000 100.000 +50.000 1000 1000
+GM 105006 50.000 100.000 +50.000 1000 1000
+GM 105007 50.000 100.000 +50.000 1000 1000
+GM 105008 50.000 100.000 +50.000 1000 1000
+GM 105009 50.000 100.000 +50.000 1000 1000
+GM 105010 50.000 100.000 +50.000 1000 1000
+Each pair physically acquires 10,200 optimization targets: one shared 3,000-target base and two 3,600-
+target auxiliary banks. Each model accesses 6,600 targets, so shared physical acquisition and summed
+model access differ. The shared auxiliary P/C context contains 7,200 root scalar occurrences and additional
+real-neighbor occurrences. Base root P/C context overlaps base target labels; its neighbor conditioning values
+are also recorded separately. These are scalar occurrences, not claims about distinct simulator calls.
+results/paper-revision-20261030/prospective-summary.json records the per-seed component
+counts, complete-query duplicates, phase quotas, contexts considered/rejected, observed simulator states,
+acquisition CPU/wall time and paired bootstrap outputs. Training records separately retain presentations,
+18
+Teacher Base target component Count range across ten banks
+BE confirmation 944–944
+BE linial point 168–168
+BE participation 944–944
+BE proposal 944–944
+GM confirmation 744–754
+GM conflict mark 738–768
+GM participation 744–754
+GM proposal 744–754
+Table 11: Base supervision sums to exactly 3,000 per seed. Both arms add 3,600 auxiliary COMMIT targets.
+Context values and simulator costs are reported separately, not absorbed into a free-label assumption.
+visited targets, source/data hashes and optimizer CPU/wall time. One run’s wall time includes a shared-host
+memory stall; wall time is not a FLOP or teacher-sample-efficiency estimate. All training remains at update
+1,500. The original source/config freeze predates scientific training; the complete forty-weight freeze is dated
+30 October 2026, 10:11:58 UTC, before any new final diagnostic generation. No final outcome selects a
+milestone, protocol change, seed exclusion or replacement model.
+The recorded source freeze covers the enumerated files, not a complete transitive dependency or environment
+lock. In particular, graph generation, storage and sample-complexity data helpers outside that list are not
+sealed by this receipt. Their stability is not independently timestamped here. The original freeze is preserved;
+this limitation is not repaired by retrospectively adding hashes to it.
+A.1 Prospective acquisition and sufficient key
+This specifies the already executed acquisition, not a revised protocol. Color queries use four option indices,
+q = cv ∈ {0, 1, 2, 3}, degree at most three, and legal teacher-prefix states. Auxiliary and diagnostic graph
+streams use separate namespaces; their sizes are respectively 8/12/16/24 and 28/36. The frozen configuration
+and graph generators identify the streams.
+For each queried color, let wj be permission and uj the supplied pending-or-permitted bit in GM. In
+BE the queried-stage adapter sets uj = 1. Let bj be the current-own-color indicator for q in GM and zero
+in BE. Let ovj be the neighbor’s occupancy of the receiver’s queried KW option in BE and bj in GM. Set
+κv = sgn(av − qKW) in KW, where qKW = ⌈4B/5⌉, and zero in GM. Here av is the auxiliary color; it is
+distinct from the queried option index q. GM also supplies σvj = sgn(IDj − IDv) and the same-slot indicator
+τvj ; both are zero in BE’s queried-stage adapter. With the actual supplied messages pj , cj , define
+rv = (uv, bv, pv, 1[uv > 1/2]), mvj = (uj , ovj , pj , 1[uj > 1/2 ∧ cj = q], σvj , τvj ),
+K = (T, ϕ, wv, κv, rv,sort{mvj : j ∈ N(v)}).
+The neighbor collection is a set: identical message types occur once. This is sufficient for the fixed￾weight queried-slot MAX computation, not a minimal oracle quotient, a proposal key or a classifier of
+LINIAL/DETECT. The original code represents the BE offset as the signed encoded offset; its sign is exactly
+sgn(av − qKW).
+For the hash, all bits are integers 0/1 and signs are −1, 0, 1; T is the string BE_BASE_D3 or SPECULATIVE_GM.
+The phase integer ϕ is 5 for KW, 1 for ASSIGN and 3 for REPAIR. Tuples/sets are serialized as JSON
+lists, with neighbor tuples in lexicographic order and separators , and : with no spaces. Prefix the UTF-8
+JSON by the literal salt revision-20261030-commit-types-v1, with no separator. Interpret the first eight
+SHA256 bytes as a big-endian unsigned integer. Residue zero modulo five denotes held-out types. This
+reserves 20% of hash buckets; it need not reserve exactly 20% of observed types or occurrences.
+Acquisition proceeds as follows.
+1. Retain native base targets until the 3,000-component budget is filled. Color-phase base queries must
+have training keys; LINIAL/DETECT use their separate native targets and do not receive this COMMIT
+filter.
+19
+2. In each auxiliary color-phase batch with an unfilled quota, enumerate candidate roots with a running
+cursor i before any filtering. Set k = i mod 4 and c
+′
+v = (cv + k) mod 4. Draw an independent uniform
+value for every considered root. Set p
+′
+v = wv, except that k = 3 and a draw below 1/4 set p
+′
+v = 0. All
+real-neighbor P/C values stay native. Advance the cursor for all considered roots, including rejected
+roots.
+3. Training retains a root only when both K(S, p, c) and K(S, p′
+, c′
+) are training types, subject to the
+3,600 KW or 1,800 ASSIGN/1,800 REPAIR quotas. Compute its labels only after this filter. The native
+arm receives one native confirmation and CF one intervened confirmation on the same state.
+4. After freezing all forty models, the diagnostic stream applies the same intervention, but retains a root if
+its intervened key is held out. The native key is unrestricted at test. Retain exactly 4,000 KW or 2,000
+ASSIGN/2,000 REPAIR queries per seed, without filtering on truth labels.
+The intervention RNG is seeded by the frozen namespace, teacher, training seed, acquisition kind and the
+literal intervention. Native graph/tape streams have their separate base/auxiliary/diagnostic suffixes.
+Filtering can change offset and silence frequencies; the pre-filter silence probability is not a claim about the
+retained distribution. No phase quota balances the positive and negative truth labels within that phase.
+A.2 Post-test coverage and confusion audit
+All tables here are descriptive additions after the final test. Labels are recomputed from raw encoded state
+arrays and agree with stored base, auxiliary and final color confirmations. Fine keys are reconstructed from
+those arrays; their training/test unions equal the delivered key files and obey the original hash filter. Model
+predictions are summarized from frozen result records; this original array audit does not rerun neural inference
+or train another model. A separate complete checkpoint re-inference reproduces all final diagnostic metrics
+for all 40 models (160,000 decisions), using the original phase/batch context. This verifies the recorded
+predictions without changing the post-test status of these additional endpoints.
+Teacher Native logical overlap (%) CF logical overlap (%)
+BE 2.125–2.900 99.475–100.000
+GM 37.725–39.500 100.000–100.000
+Table 12: Both acquisitions’ coarse oracle-configuration overlap with the same test, range over ten seeds. All
+fine training/test keys remain disjoint.
+Table 13: Ranges over ten seeds of base plus auxiliary color-COMMIT
+targets. LINIAL and DETECT have different targets and are excluded.
+Minima and maxima in separate columns need not occur at the same
+seed.
+Teacher Phase Arm Positive labels Negative labels
+BE KW native 152–189 4,355–4,392
+BE KW cf 113–147 4,397–4,431
+GM ASSIGN native 2,417–2,440 0
+GM ASSIGN cf 2,108–2,153 277–326
+GM REPAIR native 1,904–1,932 0
+GM REPAIR cf 1,119–1,171 749–793
+20
+Table 14: Final support and programmed diagnostic by seed. Types
+are distinct fine sufficient keys; mass is the largest key’s fraction of
+4,000 queries. Overlap is the fraction of occurrences whose coarser
+oracle configuration was seen by CF training. Mass, overlap, BA
+and type accuracy are percentages.
+Rule Seed Types Max mass Overlap Gate BA Gate type acc.
+BE 105001 20 95.38 99.750 99.679 80.000
+BE 105002 23 96.03 99.475 99.770 78.261
+BE 105003 17 96.30 99.825 99.770 82.353
+BE 105004 20 95.17 99.750 99.614 80.000
+BE 105005 18 95.62 100.000 99.731 83.333
+BE 105006 20 95.05 99.800 99.589 80.000
+BE 105007 21 95.15 99.725 99.704 80.952
+BE 105008 20 95.53 100.000 99.706 85.000
+BE 105009 22 95.67 99.725 99.756 86.364
+BE 105010 17 96.23 99.775 99.757 76.471
+GM 105001 89 23.80 100.000 53.055 61.798
+GM 105002 84 23.62 100.000 52.910 63.095
+GM 105003 92 23.82 100.000 53.204 63.043
+GM 105004 86 24.60 100.000 53.182 62.791
+GM 105005 91 23.88 100.000 52.686 63.736
+GM 105006 83 24.10 100.000 52.921 60.241
+GM 105007 86 24.52 100.000 53.193 62.791
+GM 105008 87 23.85 100.000 53.111 60.920
+GM 105009 89 23.80 100.000 53.065 64.045
+GM 105010 82 24.60 100.000 53.005 60.976
+Table 15: Confusion counts summed over ten final banks, 40,000 queries
+per teacher/procedure. Within eligible active queries, positives are free
+options and negatives occupied options. Silent and ineligible queries are
+negative. No GM query is ineligible. These are accounting totals, not
+IID replications.
+Rule Stratum Procedure TP TN FP FN
+BE eligible active native 995 0 228 0
+BE eligible active cf 814 228 0 181
+BE eligible active gate 995 0 228 0
+BE eligible silent native 0 91 42 0
+BE eligible silent cf 0 52 81 0
+BE eligible silent gate 0 133 0 0
+BE ineligible native 0 26,956 11,688 0
+BE ineligible cf 0 38,644 0 0
+BE ineligible gate 0 38,644 0 0
+GM eligible active native 15,554 0 22,963 0
+GM eligible active cf 15,554 22,963 0 0
+GM eligible active gate 15,554 0 22,963 0
+GM eligible silent native 0 0 1,483 0
+GM eligible silent cf 0 1,483 0 0
+GM eligible silent gate 0 1,483 0 0
+The reproducible analysis and input hashes are scripts/audit-revision-continuations.py and
+results/paper-revision-20261030/continuation-audit.json.
+21
+A.3 Selected BE failure diagnoses after the test
+Frozen-model inference covers both arms of BE seeds 105001, 105002, 105004, 105008 and 105010, plus both
+GM arms in 105001. This deliberately selected set includes good and bad outcomes; it does not estimate
+their prevalence. There are 102,128 COMMIT predictions on existing native-color, auxiliary-training and
+final banks. All 48,000 final predictions reproduce the original confusion counts; no weights, split or primary
+results are changed. This diagnosis uses neural inference, separately from the preceding array-only coverage
+audit.
+CF seed Aux. BA Final BA Aux. FN Final FN Final FP
+105001 99.510 52.756 1 98 10
+105008 100.000 52.094 0 83 16
+Table 16: Selected BE COMMIT generalization failures. BA is a percentage. Each row evaluates the arm’s
+3,600 acquired auxiliary queries and the 4,000 held-out final queries. All auxiliary targets were visited during
+training; neither selected model has an auxiliary false positive. The contexts differ, so this is a descriptive
+fit/test contrast, not a new randomized comparison.
+The two CF models also classify all 944 native-color base queries correctly. Their held-out-context errors
+coexist with near-perfect acquired-label fit; this does not identify a unique shortcut, optimization cause or
+limitation of representational capacity.
+For seed 105010, native and CF first-stage tensors are identical. On 4,000 teacher-prefix test states their
+participation head omits 13 of 118 eligible roots, with no false activation. On 3,600 auxiliary states it omits 4
+of 128 eligible roots and falsely activates 1 ineligible root. Auxiliary P/C values condition the COMMIT loss;
+they are not direct participation-loss targets. These first-stage scores on auxiliary states are evaluations, not
+evidence of failure to fit a participation training objective there. Candidate options equal the native ones
+throughout both banks, with no occupied proposals at eligible roots.
+The witness is final-s105010-0000, a 32-node path in the native arm. Replay preserves the first 32
+original cases in their original order, cohort size 32 and root batch size 1,024. All 32 terminal color vectors,
+step counts, failures, invariant flags and correctness flags match the original records. In the selected case the
+state before step 7 is a proper auxiliary coloring bounded by 21. Vertex 31 has value 17 and must recolor
+when the interpreter lowers the bound to 17. Its participation logit is -0.420059, so it waits, leaving 17 outside
+[0, 17). Its option 0 decodes to the free value 12, also chosen by the exact native rule. The actual COMMIT
+logit -11.225789 correctly rejects silence. Setting only this root’s participation bit to true, with identical
+first-stage tensors, candidates and all other messages, gives logit +4.629150 and the correct positive oracle
+label. The observer’s re-evaluated actions match the original actions at this frame. The intervention is only a
+local query; unchanged actions drive the replay. It locates the first violation in this case, without showing
+that all 796 failed runs share this mechanism or that the intervened run would complete. The subsequent
+full-battery interventions in Section 7.1 separately establish that participation-only correction rescues all 796
+failures in each paired arm; that stronger result is not inferred from this earlier local query alone.
+scripts/probe-revision-be-failures.py reproduces the diagnosis; results/paper-revision-2
+0261030/be-failure-diagnostics.json records input hashes, counts, graph/tape seeds and the local
+intervention. This is post-test explanatory evidence, not independent scientific review.
+B Component Replays and Additional Evidence
+All baselines reproduce complete stored terminal fields in their original cohort 32/inference-batch 1,024 float32
+CPU context. The six checkpoints are chosen because their three seeds include every functional failure in
+the input-context study; the two nonfailing native arms are paired controls. No checkpoint is retrained, no
+failing case removed and no new primary endpoint introduced. Baseline, COMMIT-only, participation-only,
+candidate-only and all-KW modes are fixed before outcomes. All six models and all cases remain in the
+output, including ineffective interventions. The selected CF failure count is 2,595, which is also the complete
+CF failure inventory for that study’s original 10,000 cases. Rescue is a statement about those cases, not a
+population success probability.
+22
+Seed Arm Learned Exact CMT Exact P Exact CAND Exact KW
+105001 Native 1000 1000 1000 1000 1000
+105001 CF 100 1000 100 100 1000
+105008 Native 1000 1000 1000 1000 1000
+105008 CF 101 1000 101 101 1000
+105010 Native 204 204 1000 204 1000
+105010 CF 204 204 1000 204 1000
+Table 17: All six selected BE models on their original 1,000-case batteries. CMT replaces only confirmation, P
+only participation, CAND only candidate; the dependent learned confirmation is recomputed when messages
+change. Exact KW replaces all three. Linial remains learned. These are 30,000 diagnostic executions on
+consumed cases, not 30 training replicas.
+Contract rejection need not mean an invalid write. The baseline diagnostic records 64 and 20 active
+acceptances rejected by the contract in native seeds 105001 and 105010. A subsequent unchanged-policy
+observer reproduces both 1,000-case batteries exactly and checks the actual KW decoding. Every one of
+these 84 writes reproduces its old auxiliary color and satisfies the new bound. The contexts (B, a, c, D) are
+(8, 6, 2, 6), (12, 9, 1, 9) and (14, 11, 3, 11), with respective counts 53/15, 6/1 and 5/4 in the two seeds. They are
+errors against the specified contract but do not alter that transition, as Proposition 2 predicts. The frozen
+counter named learned_unsafe_accepts in this BE diagnostic means active contract-rejected acceptances,
+not observed collisions; it must not be conflated with transfer’s forbidden-write counter. This observer is
+posthoc and does not revise the frozen intervention outputs.
+Campaigns and label budgets. The historical diagnostic uses five seeds, unequal acquisition budgets and
+development-reused queries. The 40-model input-context study uses ten paired seeds, a shared 3,000-target
+base, 3,600 auxiliary targets per arm, 1,500 fixed updates and a fine-key hash holdout. The 100-model
+label-budget study uses five paired seeds, 4,000 updates and different intervention families, support and
+endpoints; its 1,500-update snapshots are secondary. The five-model neighbor-message follow-up freezes its
+modified acquisition after inspecting that study and uses a fresh v2 evaluation battery. The studies are not
+pooled and their equal-type metrics differ: the former averages accuracy equally over types, while the latter
+also class-balances its type endpoint. Numerical bounds used by a generator are not necessarily observed by
+the COMMIT head.
+The label-budget study has 32/40 fully passing BE checkpoints; only two of five high-CF seeds meet
+the 99% unseen-type criterion. All acquisition variants are retained, including the no-force and late-bound
+conditions. Complete component-group accounting gives slightly different native/CF label totals; neither
+identical logical support nor equivalent class information follows from a matched nominal budget.
+What further experiments would identify. Attributing an advantage specifically to counterfactual label
+generation would require a control with informative positive and negative labels, matched support/balancing,
+updates and checkpoint selection. Generalization to unseen interventions would require holding out complete
+families and checking novelty at the effective model input, rather than only at a generator parameter. Neither
+stronger claim is made here.
+C Native Coverage: Protocol and Uncertainty
+The 21/21 result and its cohort table are in Section 5. The following details delimit its finite statistical
+interpretation.
+Final tests use sizes 32, 48, 64; family weights differ: seven historical strata versus ten new strata of 100
+runs. The 105 selected policies account for 105,000 successful observations, not a success probability of an
+average policy. Five training seeds are the treatment replication units. Under independent Bernoulli trials
+with a common probability, 1,000/1,000 gives pointwise two-sided 95% Clopper–Pearson lower limit (Clopper
+and Pearson, 1934) 0.0251/1000 = 0.996318; the one-sided limit is 0.051/1000 = 0.997009. For fixed independent
+23
+nonidentical strata, AM–GM makes the zero-failure formula conservative for the weighted average, not each
+stratum. No simultaneous all-policy guarantee or universal correctness follows. A selected successful budget
+is not a theoretical minimum. The run-level interpretation also assumes semantically neutral batching.
+Real-arithmetic message separation supports that premise; universal numerical neutrality across floating-point
+batch contexts has not been certified.
+Preserved negative results. The historical study’s nine noncertifications under 500 updates are not
+impossibility results. The pre-revision native-certification study retains 21 failed executions among 195,000
+final observations across 39 packages and 170 distinct checkpoints; some weights receive new batteries. All
+failures remain separate from the selected all-pass set. Independent fixed-bank E1 controls compare 500
+versus 1,500 updates along the same seed/checkpoint lineage, holding labels fixed and using fresh final tapes.
+This is a more narrowly identified optimizer contrast than matched versus CF; it does not establish a CF
+effect or monotone benefit from more updates (Appendix G).
+D Information and Identifiers
+Consider an initial two-node JP graph with identical anonymous observations and fixed private inputs.
+Swapping the distinct IDs changes the required root action from write to wait without changing the
+anonymous observation.
+Proposition 3 (Observation indistinguishability). If two admissible contexts have the same observation
+and different deterministic target actions, no deterministic function of that observation is correct on both. A
+randomized function cannot be almost surely correct on both.
+Proof. Equal inputs give equal outputs or equal conditional output laws. Different point-mass targets cannot
+both be realized. For equiprobable binary contexts, average correctness is at most 1/2.
+This elementary interface obstruction is not a new distributed lower bound. It requires indistinguishability,
+not numerical closeness, and does not preclude solving coloring by a different rule. Historical integrated
+JP/GM already had numeric ID differences; their failures were not ID blindness.
+JP representation 94101 94102 94103 94104 94105
+Without ids 6/60 6/60 6/60 6/60 6/60
+Numeric ids 13/60 11/60 6/60 26/60 15/60
+Numeric differences 16/60 15/60 19/60 31/60 20/60
+Relative comparisons 60/60 60/60 60/60 60/60 60/60
+Table 18: Exploratory E1 JP control: same dimensions, initialization, 3,000 labels and 500 updates. Entries
+are development successes out of 60, not final 1,000-run certifications.
+Relative comparisons achieve 60/60 in all five seeds. This supports representation sensitivity under this
+budget. Numeric IDs/differences retain order information, so finite failures do not prove inability to learn it.
+Signs remove the need to resolve gaps as small as 1/65536; they must arise from one coherent order. BE uses
+actual ID arithmetic: increasing numeric transformations need not preserve its polynomial trajectory.
+E Exact Rules and Conditional Guarantees
+Assume finite simple graphs, proper partial states where required, declared lists of size at least d(v)+1, coherent
+observations and the specified synchronous exchanges/schedules. Code domain guards and independent scalar
+tests complement these arguments.
+Lemma 4 (Availability). For a pending vertex, |Av| ≥ |Cv| − (d(v) − dU (v)) ≥ dU (v) + 1.
+Proof. At most one distinct color per fixed neighbor is forbidden. Counting duplicates only weakens the
+bound; differing local lists cause no problem.
+24
+Luby/Johansson. Proposals avoid fixed colors, and exact equal-active-offer rejection prevents simultaneous
+collisions. Permanent colors persist, giving safety by induction. Condition on history/state before new private
+inputs, not a snapshot already containing those inputs. If qv(c) is the proposal law, pv its independent
+participation, with independent pairs across nodes, then
+Pr(v commits | S) = pv
+X
+c∈Av
+qv(c)
+Y
+u∈Uv
+(1 − puqu(c)). (2)
+For uniform proposals and pu = 1/2, the chord bound log(1 − x) ≥ −2 log(2)x on [0, 1/2] and Jensen yield
+1
+2
+2
+−dU (v)/|Av| ≥ 1/4. For always-active Johansson, each pending neighbor of v has at least two free colors, so
+qu(c) ≤ 1/2. The same argument yields 2
+−2dU (v)/|Av| ≥ 1/4. These prove the specified variants’ bounds; they
+do not import a different algorithm’s theorem (Luby, 1993; Johansson, 1999).
+ColorTrials. Let D ≥ ∆ be the common preference bound: D = 3 natively, even on lower-degree graphs,
+and D = ∆ in the extension. Pending nodes draw independent preferences for each color in {0, . . . , D}.
+Only pending neighbors for which the color is available compete. The minimum strictly winning available
+color is chosen; otherwise wait. Adjacent vertices cannot both strictly win one color. For any c ∈ Av, the
+event of preference D at v and smaller preferences at all at most ∆ competitors has probability at least
+ρCT = (D + 1)−1
+(D/(D + 1))∆ > 0 for D > 0. It guarantees some write at v, perhaps a lower winning
+color. Isolates at ∆ = 0 finish in one step. The common global preference alphabet matters; different local
+alphabets need another analysis. This is a repeated subroutine inspired by symmetry breaking (Schneider
+and Wattenhofer, 2010), not a full multi-phase complexity claim.
+Random termination. If each pending vertex has conditional progress at least ρ > 0 at every reachable
+state, iterated conditioning gives Pr(Tv > t) ≤ (1 − ρ)
+t and Pr(T > t) ≤ min{1, n(1 − ρ)
+t}. Thus ideal exact
+rules terminate almost surely. Transfer uses at least 128 steps, enlarged for CT until this ideal tail bound is
+at most 10−9
+. Neither arbitrary learned policies nor finite PRNG orbits inherit the result automatically.
+JP and Greedy. JP’s pending strict maxima of coherent distinct IDs form an independent set. First-fit
+exists by availability, and the remaining global maximum writes each step, giving safety and at most n steps.
+This synchronous variant is inspired by Jones and Plassmann (1993). Greedy permits exactly one vertex in
+increasing-ID order per step; first-fit avoids prior colors and completes in n writes. Global scheduling cost is
+supplied, not a free LOCAL operation.
+Speculative GM. Split increasing-ID order into min(4, n) balanced blocks. ASSIGN visits one position
+per block simultaneously. A later assignment avoids all earlier neighbor colors, so only equal-slot vertices
+can conflict. DETECT marks the smaller-ID endpoint of each equal-color/equal-slot edge. Every conflict is
+covered; the unmarked subgraph is proper. Serial repair visits marked vertices once in increasing-ID order
+and avoids all current neighbor colors. The last repaired endpoint of any edge avoids the other; edges with
+no repaired endpoint were already proper. Correctness follows in 2⌈n/ min(4, n)⌉ + m steps, m ≤ n, under
+these sufficient assignment/mark/free-write hypotheses. A missed learned repair receives no retry at that
+vertex; a later endpoint may still clear its edge. This is the implemented four-block variant (Gebremedhin
+and Manne, 2000), including supplied barriers/queue, not a guarantee for arbitrary learned marks.
+BE degree-three base case. Distinct IDs are initial proper auxiliary colors. Degree-at-most-four poly￾nomials over F13 encode them. A different neighboring polynomial agrees at at most four points, so three
+neighbors block at most twelve and 13 > 3 · 4 leaves a point. Encode selected point/value below 132 = 169.
+A second degree-at-most-two reduction over F7 has a point because 7 > 3 · 2, yielding bound 49. Different
+chosen points give different pairs; equal points have different unblocked values, proving properness (Linial,
+1992). For bound B > 4 set q = ⌈4B/5⌉. Colors below q remain; each high old color owns a disjoint
+four-option block in [0, q), possible since 4(B − q) ≤ q. Three neighbors forbid at most three options.
+High–high neighbors have disjoint blocks; high–low collisions are excluded by free options. The sequence
+49 → 40 → 32 → 26 → 21 → 17 → 14 → 12 → 10 → 8 → 7 → 6 → 5 → 4 has thirteen KW reductions (Kuhn
+and Wattenhofer, 2006). Decoding does not search for a good point/option. This is only the degree-three
+25
+base construction associated with Barenboim and Elkin (2008), not the general recursion. At degree four,
+13 > 4 · 4 fails; changing constants changes the variant.
+F Conditional Representation and Probability Results
+The following elementary arguments are not claimed new general GNN-learning theorems. Checkpoints
+satisfy their hypotheses only where verified.
+Proposition 5 (Diffuse proposals and bounded neighbor offers). Assume a proper partial state, exact
+confirmation, independent node-private participation/candidate pairs, independence within each pair, and
+proposal support in Au. For a pending root v, suppose qv(c) ≤ β/|Av| and puqu(c) ≤ θ < 1 for all
+u ∈ Uv, c ∈ Av, with θ > 0. Then
+Pr(v commits | S) ≥ pv(1 − θ)
+β
+P
+u∈Uv
+pu/(θ|Av|)
+.
+If 0 < pmin ≤ pu ≤ pmax < 1, setting θ = pmax gives pv(1 − pmax)
+βdU (v)/|Av| ≥ pmin(1 − pmax)
+β
+. For
+always-active uniform Johansson, θ = 1/2, β = 1 gives at least 2
+−2dU (v)/|Av| ≥ 1/4.
+Proof. The chord bound is log(1 − x) ≥ ax for a = log(1 − θ)/θ < 0 and 0 ≤ x ≤ θ. Set Λc =
+P
+u∈Uv
+puqu(c).
+Equation (2) is at least pv
+P
+c
+qv(c)e
+aΛc
+, which by Jensen is at least pve
+a
+P
+c
+qv(c)Λc
+. The weighted load is
+at most β
+P
+u
+pu/|Av|, since each neighbor has at most unit mass on Av. Multiplication by a < 0 reverses
+that inequality, proving the first bound. Availability and P
+u
+pu ≤ pmaxdU (v) give the second. For exact
+Johansson, a pending neighbor has at least two available colors, so qu(c) ≤ 1/2. Isolates use the empty
+product and write with probability pv. These bounds are conditional sufficient conditions, not properties
+established uniformly for learned checkpoints.
+Corollary 6 (Diffuse submass). In the pmax < 1 case, if the concentration bound holds only on Sv ⊆ Av of
+mass ηv > 0, the lower bound is pvηv(1 − pmax)
+βdU (v)/(ηv|Av|)
+. Uniform ηv ≥ η > 0 at every reachable state
+implies uniform progress pminη(1 − pmax)
+β/η
+.
+Proof. Drop nonnegative terms outside Sv, renormalize by ηv, and repeat. xbβ/x increases for x > 0, 0 < b < 1,
+since its derivative is b
+β/x(1 − β log b/x) > 0.
+Counterexample 7 (Safety without useful progress). On a K-clique with K ≥ 2 colors, deterministic color￾zero proposals, participation 1/2 and exact rejection progress only with exactly one active vertex: probability
+K/2
+K, expected first-progress time 2
+K/K. Always-active vertices never progress. A shared uniform candidate
+draw has uniform individual marginals and the same slow law; independence in (2) cannot be replaced by
+marginal uniformity.
+Proposition 8 (Canonical finite-type MAX COMMIT). Assume legal canonical per-color inputs/gating,
+nonnegative shared second messages, componentwise MAX with zero empty aggregate, and exact
+proposed-slot gather. The pending active center’s queried-slot vector is (1, 0, 1, 1); neighbor vectors
+(pending, ownsc, participates, offersc
+) are among
+(0, 0, 0, 0),(0, 1, 0, 0),(1, 0, 0, 0),(1, 0, 0, 1),(1, 0, 1, 0),(1, 0, 1, 1).
+If all 64 type-subset COMMIT signs accept precisely subsets without the fixed-color or active-equal-offer
+conflict types, the rule is exact at any legal degree/palette in real arithmetic and preserves properness.
+Proof. MAX is associative, commutative and idempotent; multiplicities disappear. Nonnegative messages
+admit zero identity. Gathering the proposed slot removes other slots. The 64 subsets therefore enumerate all
+aggregates. Excluding the two conflict types prevents old/simultaneous collisions. Induction gives safety,
+with no progress conclusion.
+This does not cover continuous preference or native residual contexts, multiple offers, SUM or MEAN.
+Outward-rounded float64 intervals enclose float32-stored weights as real coefficients. A separate mode adds
+γm+2 float32 affine error and a subnormal allowance, conditional on IEEE rounding, no overflow and no
+26
+TF32/lower precision. It is not a proof for arbitrary GPU kernels. Five historical E1 weights pass; all 45
+selected Luby/Johansson/Greedy transfer cores fail the sufficient all-types condition. Failure of a sufficient
+certificate alone does not prove a reachable failure.
+Proposition 9 (MEAN dilution; SUM construction). Fix degree/palette-independent messages mo, mf and
+a continuous classifier F for a fixed active center. If F(mo) > 0, a MEAN interface accepts a conflicting
+star with sufficiently many ordinary neighbors. A SUM interface can represent exact conflict presence in real
+arithmetic.
+Proof. A star with d ordinary leaves and one fixed neighbor owning the candidate has mean (dmo + mf )/(d +
+1) → mo. Continuity and strict acceptance imply false acceptance at some finite d. If F is L-Lipschitz, it
+suffices that d + 1 > L∥mf − mo∥∞/F(mo). For SUM, use the legal-type conflict bit b = o + ReLU(p + a − 1)
+and head 1/2 −
+P
+u
+bu.
+The MEAN statement assumes no separate degree/palette input and says nothing about reachability of
+the constructed state. SUM’s observed failure is not impossibility of representing this predicate. An order-free
+equivariant slot scorer with identical available-slot inputs and invariant pooled context gives tied scores for
+fixed private input; it cannot select distinct ordered ranks without order features or external tie-breaking.
+Main scorers have positions, so this obstruction does not explain their errors automatically.
+G Training, Certification and Historical Provenance
+Table 19: Selected native packages: actual acquired labels per seed
+(ranges where necessary), updates and total parameters. Every row
+has five policies and 1,000/1,000 successes each. Historical seeds
+83101–83105, new 94101–94105.
+Teacher Core Cohort Labels Updates Parameters Pass
+Luby E1 Historical 999 500 16035 5/5
+Luby DeepSets Historical 3000 500 17907 5/5
+Luby Transformer Historical 999 500 16995 5/5
+Johansson E1 Historical 999 500 16035 5/5
+Johansson DeepSets Historical 999 500 17907 5/5
+Johansson Transformer Historical 999 500 16995 5/5
+ColorTrials E1 New CF 70000 4000 19396 5/5
+ColorTrials DeepSets New CF 70000 4000 21268 5/5
+ColorTrials Transformer New CF 70000 4000 20356 5/5
+JP E1 Historical 999 500 19396 5/5
+JP DeepSets Historical 999 500 21268 5/5
+JP Transformer Historical 999 500 20356 5/5
+BE base E1 New CF 6776 4000 19396 5/5
+BE base DeepSets New CF 6776 4000 21268 5/5
+BE base Transformer New CF 6776 4000 20356 5/5
+GM E1 New CF 6104–6120 500 19396 5/5
+GM DeepSets New CF 6104–6120 500 21268 5/5
+GM Transformer New CF 6104–6120 500 20356 5/5
+Greedy E1 Historical 999 500 16035 5/5
+Greedy DeepSets Historical 999 500 17907 5/5
+Greedy Transformer Historical 999 500 16995 5/5
+Historical sources are results/sample-complexity/certification.json, frozen candidates and raw
+final rows. New sources are results/multiteacher-counterfactual/plans/successful-policies.json
+and confirmation freezes/rows. Prefix budgets reuse labels and seeds; they are not independent replications
+27
+or theoretical sample-complexity scaling. The new packages do not rewrite historical noncertifications as
+successes.
+Source commits include Pedro audit 6836d855, paper study b5427faf, integration a54a18e3, sample
+complexity 61f39760, counterfactual 291d4b82, degree 71153993. These are branches/worktrees in shared
+history, not independent copies of every experiment. Old rows/protocols remain immutable; the previous
+manuscript is archived under paper/ucgnn/archive/pre-closure-71153993.tex/pdf.
+Optimizer controls and costs. Independent E1 confirmation compares 500/1,500 updates at
+nominal 3,000 native labels for Luby, JP and BE, five paired seeds and new final tapes. Only op￾timizer effort differs along the same training lineage. Six arms and all seed outcomes remain in
+results/sample-complexity/optimization-confirmation/results.json. It identifies additional￾optimization effects for those bank/seed conditions, not CF effects or optimal/monotone update counts.
+Luby and JP complete 1,000/1,000 per seed at both milestones. BE moves from 72,90,84,92,42 successes
+per 1,000 to 1,000 in every seed; these are the strongest resource-controlled optimizer results in the present
+evidence. The small-width and no-communication baselines below share native prefixes, 500 updates and
+paired seed conventions with E1. They are development controls, not optimized competitors or proof that
+every coloring rule needs communication. No-communication erases received states, relations and masks
+while retaining local inputs and external permissions. Small uses widths 8/4. Dataset manifests record
+Teacher E1 Small No communication
+Luby 28, 28, 28, 28, 28 0, 0, 28, 1, 0 0, 0, 0, 0, 0
+JP 28, 28, 28, 28, 28 10, 0, 15, 0, 0 0, 0, 0, 0, 0
+BE base 8, 5, 5, 6, 3 0, 0, 0, 0, 0 0, 0, 0, 0, 0
+Table 20: Native development controls at nominal 3,000 labels and 500 updates. Each entry lists successes
+out of 28 for seeds 83101–83105 individually.
+simulation steps, native/added labels, generation CPU/wall time and bytes. In the historical CF acquisition,
+four labels per color root are charged even if queries coincide: these are conservative acquisition counts,
+not distinct input counts. Checkpoints retain Adam, all RNG states, visitation and query caches. The
+archived closure step itself trained no scientific models; the separate forty-model prospective trial has its own
+training/freeze receipts. Disposable technical gradient tests produce no weights used in results. The evidence
+ledger identifies all selected hashes and full label-generation costs.
+Teacher Native labels Added CF labels Bank CPU seconds Stored MB
+BE base 3000 3776 0.435–0.592 0.874–0.876
+ColorTrials 30000 40000 2.153–2.215 1.172–1.186
+GM 3000 3104–3120 0.857–0.929 2.002–2.091
+Table 21: Acquisition cost of the complete shared native/CF bank, range over five seeds. CPU time includes
+simulation, encoding and both label types; it is not the isolated marginal CF cost. Decimal MB includes
+replay witnesses. Training costs are separate.
+H Continuation Diagnostics and Dependence
+The sufficient key comes from actual BE second-stage inputs, not its label. Real centers have pending bit
+one and own-slot bits zero; ID/slot residuals are zero. KW substitutes receiver-relative option equality for
+neighbor own bits. QueryPolicy signs the offset. The root queried slot has offer bit one; other slots vanish
+under gather. Each valid neighbor contributes occupied query bit, participation and offer/query equality;
+MAX removes duplicates. With phase, root permission, signed offset and root participation, this determines
+the real queried-slot logit at fixed weights. It is not a sufficient key for proposals. Train keys include native
+and all stored CF queries. There are 58–65 distinct training keys and 115–132 diagnostic keys per seed, with
+28
+Correct / 99,840 Unseen-type correct
+Seed Passive Matched CF Subset size Passive Matched CF
+94101 41,591 9,343 99,840 549 229 158 549
+94102 9,157 9,322 99,818 459 270 342 437
+94103 9,146 9,146 99,840 717 229 229 717
+94104 42,262 9,076 99,828 522 288 182 510
+94105 10,865 9,382 99,840 722 356 246 722
+Table 22: Exact BE/E1 original numerators and posthoc novelty subsets. Subset sizes count correlated query
+occurrences, not distinct types.
+highly unequal occurrence counts. Complete serialized input hashes retain irrelevant fields and measure a
+different novelty notion.
+The diagnostic reconstruction is scripts/final-counterfactual-audit.py. It reuses the orig￾inal queries/RNG, reproduces all numerators, and records each checkpoint and bank hash. Stored
+label checks find zero inconsistencies; they validate the stated oracle, not graph-wide realizability
+of every query. We use five paired seed ranges, not decision-level significance. Even five same-sign
+pairs give exact two-sided sign-test p = 2/2
+5 = 0.0625 under an exchangeable-sign null, before mul￾tiplicity. Shared BE/GM heads and repeated states cannot increase the independent training sample
+size. Positive counts across seeds are 3,070,2,895,2,891,2,773,3,115; full confusion/eligibility strata
+are in results/final-closure/review-ml-be-strata.json. For unseen-type subsets positives are
+52,108,90,56,60 and negatives 497,351,627,466,662. All arms have zero false negatives. The distinction
+concerns rejecting negative continuations under the explicitly chosen oracle; native traces alone do not
+uniquely specify off-policy semantics.
+I Failure Inventory and Statistical Units
+The complete table is results/final-closure/generalization-cells.csv. The factor table separates
+teacher, architecture, checkpoint, seed, size, degree, palette, family and cohort within stage. The fol￾lowing lists all failed confirmatory cells, each with 1,000 runs and n = 64. failed-cells.json and
+Teacher/core Cohort Seed ∆ Successes Palette
+Johansson/Transformer Historical primary 83101 10 972 Global
+GM/Transformer CF primary 94102 4 819 Local
+CT/E1 Native matched 94101 3 999 Global
+CT/E1 Native matched 94101 4 999 Global
+CT/E1 Native matched 94101 4 999 Local
+CT/E1 Native matched 94105 3 994 Global
+CT/E1 Native matched 94105 4 987 Global
+CT/E1 Native matched 94105 10 912 Global
+CT/E1 Native matched 94105 4 993 Local
+GM/Transformer Native matched 94102 4 819 Local
+GM/Transformer Native passive 94102 4 819 Local
+CT/E1 Equal-update matched 94104 3 864 Global
+CT/E1 Equal-update matched 94104 4 855 Global
+CT/E1 Equal-update matched 94104 10 547 Global
+CT/E1 Equal-update matched 94104 4 835 Local
+Table 23: All fifteen failed cells. CT denotes ColorTrials; equal-update controls are not retrospectively
+assumed native certified.
+failure-replay-audit.json give full checkpoint/row hashes, graph/tape seeds, first relevant differences
+and trace paths. All fifteen first failures reproduce with original batch context. Terminal auditing reconstructs
+29
+graphs/fingerprints, conflicts, incompleteness and palette violations and checks stored invariant/failure fields.
+It does not pretend to reconstruct unrecorded intermediate states for all runs.
+Graphs/tapes repeat across cores, teachers, arms and global/local lists. Each checkpoint’s instance-index
+battery supports its own pointwise inference; pooling dependent observations across policies does not. Realized
+family counts vary under iid uniform family selection. No aggregate defines a sampled population of trained
+algorithms.
+I.1 Complete outcomes of the selected component interventions
+Witness Intervention Steps Terminal outcome
+Johansson baseline 128 cutoff
+Johansson candidate once 11 complete/proper
+Johansson exact commit once 128 cutoff
+GM baseline 34 collision
+GM candidate once 34 complete/proper
+GM exact commit once 34 collision
+Table 24: Posthoc component interventions in two selected first-failure witnesses, not new population success
+rates. Baselines preserve the original 16-case inference cohort. Exact confirmation is evaluated on the actual
+learned messages.
+The source is results/paper-revision-20261030/component-rescues.json. Figure 4 extracts actual
+vertices, colors and proposals from those records and the original witness frames. The full 64-node graphs,
+case/tape identities and unchanged 16-case cohort remain part of the diagnosis; the two-node drawing omits
+the rest of each graph.
+J Output Laws and Preserved Distribution Studies
+For fixed labeled G, let µπ,G be the full terminal-vector/status law including failures/cutoffs. Labels, palette,
+interpreter, cutoff, conditioning and color-name quotient must agree before comparing studies. Equal vertex
+marginals do not determine a joint law: equally weighted (0, 0)/(1, 1) versus (0, 1)/(1, 0) have equal marginals
+and disjoint support. This logical example is not a proper-coloring counterexample on an edge.
+Proposition 10 (Symmetry and coupling). On a complete graph with exactly n colors, a vertex-equivariant
+stochastic protocol with exchangeable private inputs is uniform over proper labeled colorings conditional on
+successful termination of positive probability. Any coupling (X, Y ) satisfies dTV(L(X),L(Y )) ≤ Pr(X ̸= Y ).
+Proof. Vertex permutations act transitively on the n! proper coloring bijections; equivariance and the invariant
+success event make their conditional masses equal. For any event A, the difference in probabilities of X, Y ∈ A
+is at most Pr(X ̸= Y ); take the supremum.
+Anonymity alone does not establish the symmetry premises. Untransformed IDs, non-equivariant schedules
+and numerical ordering require care. With more than n colors, vertex symmetry need not equate different
+color subsets. For r independent paired runs of one graph/policy protocol with zero disagreements, the
+one-sided upper limit 1 − α
+1/r bounds disagreement and hence TV under that coupling. It says nothing
+universal about other graphs/checkpoints. Uniform conditional full-transition coupling error ϵ for H common
+pre-divergence steps gives dTV ≤ Hϵ; per-node error would also require a node union bound. Native accuracy
+is not this uniform premise.
+Global-law, local-palette, robust-statistics and factorial studies remain in their historical directories with
+schemas, fixed banks and testing families. Complete runs are observations, permutations act on rows rather
+than independently on vertices, and witness selection needs an independent split or valid joint permutation
+scheme (Gretton et al., 2012; Hemerik and Goeman, 2018; Phipson and Smyth, 2010; Holm, 1979). Reused
+banks are historical reanalysis, not independent new confirmation. Nonrejection does not establish equal
+laws or tolerance equivalence; power against localized alternatives matters. These studies support scoped
+distributional distinctions, not new MMD/permutation theory, and are outside the 810,000 denominator.
+30
+K Novelty Comparison and Reproduction Map
+Candidate Established precedent Defensible increment
+Neural coloring Lemos et al. (2019); Langedal and
+Manne (2025); Vanderbush and We￾ber (2026); Le et al. (2026)
+Seven-rule native coverage with
+declared information and complete
+selected-checkpoint provenance
+Trace imitation; local
+rules
+Veličković et al. (2020, 2022); Minder
+et al. (2023); Qharabagh et al. (2026)
+Seven scoped teachers, learned/supplied
+accounting and contract-specific finite
+evaluation, not first learned distributed
+execution
+Interactive/CF learn￾ing
+Ross et al. (2011); de Haan et al.
+(2019); Geiger et al. (2022); Wu et al.
+(2022); Bevilacqua et al. (2023)
+Specific admissibility contracts and
+paired continuation gaps, not a new
+general causal method or equal-label
+advantage
+Output versus mecha￾nism
+Saldyt and Kambhampati (2025); Na￾jafgholizadeh and Afsharchi (2026);
+Rodionov and Prokhorenkova (2025)
+Component-level rescues, contract sup￾port and progress/repair mechanisms in
+coloring, not novelty of the distinction
+or verified general execution
+Information/locality Linial (1992); Loukas (2020); Sato
+et al. (2019)
+JP representation control and inter￾preter accounting; the elementary obser￾vation lemma is not a new lower bound
+Algorithm extrapola￾tion
+Xu et al. (2021); Mathys et al. (2023);
+Wittig et al. (2026)
+Frozen selected-condition outcomes and
+replayable palette/preference failures,
+not a general extrapolation theorem
+Randomized output
+laws
+Gretton et al. (2012); Hemerik and
+Goeman (2018); Holm (1979)
+Matched statistical objects and
+protocol-specific evidence, not new test
+theory
+The contribution combines scoped empirical coverage with continuation contracts and replayable functional
+mechanisms; none of trace supervision, distributed neural execution, interventions or the distinction between
+success and fidelity is claimed individually new.
+Reproducibility. The accompanying repository provides teacher interfaces, continuation oracles, training
+and evaluation drivers, checkpoint identities and evaluation namespaces. Each campaign has a separate
+protocol and artifact index. The drivers reproduce continuation queries, autonomous executions and component
+interventions with frozen models and fixed case generators. Code and experimental artifacts are available
+from the project repository and its linked releases; repository documentation gives the execution commands.
+References
+Leonid Barenboim and Michael Elkin. Distributed (∆ + 1)-coloring in linear (in ∆) time, 2008. URL
+https://arxiv.org/pdf/0812.1379v2. Version 2; the implemented teacher uses only the degree-three
+base case.
+Beatrice Bevilacqua, Kyriacos Nikiforou, Borja Ibarz, Ioana Bica, Michela Paganini, Charles Blundell, Jovana
+Mitrovic, and Petar Veličković. Neural algorithmic reasoning with causal regularisation. In Proceedings of
+the 40th International Conference on Machine Learning, volume 202 of Proceedings of Machine Learning
+Research, pages 2272–2288, 2023. URL https://proceedings.mlr.press/v202/bevilacqua23a.html.
+C. J. Clopper and E. S. Pearson. The use of confidence or fiducial limits illustrated in the case of the binomial.
+Biometrika, 26(4):404–413, 1934. doi: 10.1093/biomet/26.4.404.
+31
+Pim de Haan, Dinesh Jayaraman, and Sergey Levine. Causal confusion in imitation learning. In Advances in
+Neural Information Processing Systems, volume 32, 2019. URL https://proceedings.neurips.cc/pap
+er_files/paper/2019/hash/947018640bf36a2bb609d3557a285329-Abstract.html.
+Assefaw Hadish Gebremedhin and Fredrik Manne. Scalable parallel graph coloring algorithms. Concurrency:
+Practice and Experience, 12:1131–1146, 2000. URL https://eecs.wsu.edu/~assefaw/publications/Co
+ncurrency12-2000.pdf.
+Atticus Geiger, Zhengxuan Wu, Hanson Lu, Josh Rozner, Elisa Kreiss, Thomas Icard, Noah Goodman, and
+Christopher Potts. Inducing causal structure for interpretable neural networks. In Proceedings of the 39th
+International Conference on Machine Learning, volume 162 of Proceedings of Machine Learning Research,
+pages 7324–7338, 2022. URL https://proceedings.mlr.press/v162/geiger22a.html.
+Arthur Gretton, Karsten M. Borgwardt, Malte J. Rasch, Bernhard Schölkopf, and Alexander Smola. A
+kernel two-sample test. Journal of Machine Learning Research, 13(25):723–773, 2012. URL https:
+//www.jmlr.org/papers/v13/gretton12a.html.
+Jesse Hemerik and Jelle Goeman. Exact testing with random permutations. TEST, 27:811–825, 2018. doi:
+10.1007/s11749-017-0571-1.
+Sture Holm. A simple sequentially rejective multiple test procedure. Scandinavian Journal of Statistics, 6:
+65–70, 1979. URL https://www.ime.usp.br/~abe/lista/pdf4R8xPVzCnX.pdf.
+Öjvind Johansson. Simple distributed ∆+ 1-coloring of graphs. Information Processing Letters, 70(5):229–232,
+1999. doi: 10.1016/S0020-0190(99)00064-2. URL https://www.sciencedirect.com/science/article/
+abs/pii/S0020019099000642.
+Mark T. Jones and Paul E. Plassmann. A parallel graph coloring heuristic. SIAM Journal on Scientific
+Computing, 14(3):654–669, 1993. doi: 10.1137/0914041. URL https://doi.org/10.1137/0914041.
+Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In International Conference
+on Learning Representations, 2015. URL https://arxiv.org/abs/1412.6980.
+Fabian Kuhn and Roger Wattenhofer. On the complexity of distributed graph coloring. In Proceedings of the
+ACM Symposium on Principles of Distributed Computing, 2006. URL https://ac.informatik.uni-fre
+iburg.de/publications/publications/podc06.pdf.
+Kenneth Langedal and Fredrik Manne. Graph neural networks as ordering heuristics for parallel graph
+coloring. In 2025 Proceedings of the Symposium on Algorithm Engineering and Experiments (ALENEX),
+pages 56–67. SIAM, 2025. doi: 10.1137/1.9781611978339.5.
+Thien Le, Tianyu Zhao, and Melanie Weber. Contrastive neural algorithmic reasoning for graph coloring,
+2026. URL https://arxiv.org/abs/2606.03923.
+Henrique Lemos, Marcelo Prates, Pedro Avelar, and Luis Lamb. Graph colouring meets deep learning: Effective
+graph neural network models for combinatorial problems. In 2019 IEEE 31st International Conference on
+Tools with Artificial Intelligence (ICTAI), pages 879–885, 2019. doi: 10.1109/ICTAI.2019.00125.
+Nathan Linial. Locality in distributed graph algorithms. SIAM Journal on Computing, 21(1):193–201, 1992.
+URL https://courses.csail.mit.edu/6.852/08/papers/Linial.pdf.
+Andreas Loukas. What graph neural networks cannot learn: Depth vs width. In International Conference on
+Learning Representations, 2020. URL https://openreview.net/pdf?id=B1l2bp4YwS.
+Michael Luby. Removing randomness in parallel computation without a processor penalty. Journal of
+Computer and System Sciences, 47(2):250–286, 1993. doi: 10.1016/0022- 0000(93)90033-S. URL
+https://www.sciencedirect.com/science/article/pii/002200009390033S.
+Joël Mathys, Florian Grötschla, Kalyan Varma Nadimpalli, and Roger Wattenhofer. Flood and echo net:
+Algorithmically aligned GNNs that generalize, 2023. URL https://arxiv.org/abs/2310.06970.
+32
+Julian Minder, Florian Grötschla, Joël Mathys, and Roger Wattenhofer. SALSA-CLRS: A sparse and scalable
+benchmark for algorithmic reasoning, 2023. URL https://arxiv.org/abs/2309.12253. Extended
+abstract presented at the Second Learning on Graphs Conference (LoG 2023).
+Amin Najafgholizadeh and Mohsen Afsharchi. Fitting every hint is not enough: Premature floods in recurrent
+algorithmic reasoners, 2026. URL https://arxiv.org/abs/2610.14982. Concurrent work, 10 October
+2026.
+Belinda Phipson and Gordon K. Smyth. Permutation p-values should never be zero: calculating exact p-values
+when permutations are randomly drawn. Statistical Applications in Genetics and Molecular Biology, 9(1):
+Article 39, 2010. doi: 10.2202/1544-6115.1585.
+Muhammad Fetrat Qharabagh, Artur Back de Luca, George Giapitzakis, and Kimon Fountoulakis. Learning
+to execute graph algorithms exactly with graph neural networks, 2026. URL https://arxiv.org/abs/26
+01.23207. Version 2, 5 June 2026.
+Gleb Rodionov and Liudmila Prokhorenkova. Neural algorithmic reasoning without intermediate supervision.
+In Advances in Neural Information Processing Systems, volume 36, pages 51663–51674, 2023. URL
+https://papers.nips.cc/paper_files/paper/2023/file/a2370db7c99791ad5d9f3ef48ad6d464-Pap
+er-Conference.pdf.
+Gleb Rodionov and Liudmila Prokhorenkova. Discrete neural algorithmic reasoning. In Proceedings of the
+42nd International Conference on Machine Learning, volume 267 of Proceedings of Machine Learning
+Research, pages 51851–51865, 2025. URL https://proceedings.mlr.press/v267/rodionov25a.html.
+Stephane Ross, Geoffrey Gordon, and Drew Bagnell. A reduction of imitation learning and structured
+prediction to no-regret online learning. In Proceedings of the Fourteenth International Conference on
+Artificial Intelligence and Statistics, volume 15 of Proceedings of Machine Learning Research, pages 627–635,
+2011. URL https://proceedings.mlr.press/v15/ross11a.html.
+Lucas Saldyt and Subbarao Kambhampati. Mind the gap: Quantifying mechanistic gaps in algorithmic
+reasoning via neural compilation, 2025. URL https://arxiv.org/abs/2505.18623.
+Ryoma Sato, Makoto Yamada, and Hisashi Kashima. Approximation ratios of graph neural networks for
+combinatorial problems. In Advances in Neural Information Processing Systems, volume 32, 2019. URL
+https://arxiv.org/abs/1905.10261.
+Johannes Schneider and Roger Wattenhofer. A new technique for distributed symmetry breaking. In
+Proceedings of the ACM Symposium on Principles of Distributed Computing, 2010. URL https://tik-o
+ld.ee.ethz.ch/file/22a700b74fc2f37acb56d690e62c86cf/podcfp107_schneider_188.pdf.
+Olga Solodova, Nick Richardson, Deniz Oktay, and Ryan P. Adams. Graph neural networks gone hogwild. In
+International Conference on Learning Representations, 2025. URL https://arxiv.org/abs/2407.00494.
+Knut Vanderbush and Melanie Weber. Neural algorithmic reasoning for approximate k-coloring with recursive
+warm starts, 2026. URL https://arxiv.org/abs/2601.05137.
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser,
+and Illia Polosukhin. Attention is all you need, 2017. URL https://arxiv.org/abs/1706.03762.
+Petar Veličković and Charles Blundell. Neural algorithmic reasoning. Patterns, 2(7):100273, 2021. doi:
+10.1016/j.patter.2021.100273.
+Petar Veličković, Rex Ying, Matilde Padovano, Raia Hadsell, and Charles Blundell. Neural execution
+of graph algorithms. In International Conference on Learning Representations, 2020. URL https:
+//openreview.net/pdf?id=SkgKO0EtvS.
+Petar Veličković, Adrià Puigdomènech Badia, David Budden, Razvan Pascanu, Andrea Banino, Misha
+Dashevskiy, Raia Hadsell, and Charles Blundell. The CLRS algorithmic reasoning benchmark. In Proceedings
+of the 39th International Conference on Machine Learning, volume 162 of Proceedings of Machine Learning
+Research, pages 22084–22102, 2022. URL https://proceedings.mlr.press/v162/velickovic22a.html.
+33
+Solveig Wittig, Antonis Vasileiou, Robert R. Nerem, Timo Stoll, Floris Geerts, Yusu Wang, and Christopher
+Morris. Which algorithms can graph neural networks learn?, 2026. URL https://arxiv.org/abs/2602.1
+3106v2. Version 2, 23 August 2026.
+Zhengxuan Wu, Atticus Geiger, Joshua Rozner, Elisa Kreiss, Hanson Lu, Thomas Icard, Christopher Potts,
+and Noah Goodman. Causal distillation for language models. In Proceedings of the 2022 Conference of the
+North American Chapter of the Association for Computational Linguistics: Human Language Technologies,
+pages 4288–4295, 2022. doi: 10.18653/v1/2022.naacl-main.318.
+Keyulu Xu, Jingling Li, Mozhi Zhang, Simon S. Du, Ken-ichi Kawarabayashi, and Stefanie Jegelka. What
+can neural networks reason about? In International Conference on Learning Representations, 2020. URL
+https://arxiv.org/abs/1905.13211.
+Keyulu Xu, Mozhi Zhang, Jingling Li, Simon S. Du, Ken-ichi Kawarabayashi, and Stefanie Jegelka. How
+neural networks extrapolate: From feedforward to graph neural networks. In International Conference on
+Learning Representations, 2021. URL https://openreview.net/forum?id=UH-cmocLJC.
+Manzil Zaheer, Satwik Kottur, Siamak Ravanbakhsh, Barnabas Poczos, Ruslan Salakhutdinov, and Alexan￾der J. Smola. Deep sets. In Advances in Neural Information Processing Systems, volume 30, 2017. URL
+https://proceedings.neurips.cc/paper_files/paper/2017/hash/f22e4747da1aa27e363d86d40ff
+442fe-Abstract.html.
+34
