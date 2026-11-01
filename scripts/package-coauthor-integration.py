@@ -67,7 +67,8 @@ def manifest():
                  and "fresh-replay" not in str(p.relative_to(OUT))}
     release=ROOT/"results/martin-artifacts-20261031"
     selected |= {p for p in release.rglob("*") if p.is_file()
-                 and "fresh-replay" not in str(p.relative_to(release))
+                 and ("fresh-replay" not in str(p.relative_to(release))
+                      or p == release/"fresh-replay-checks.json")
                  and not (p.parent==release/"downloads" and p.name.endswith(".tar.gz"))}
     selected |= {p for p in (ROOT/"results/paper-editorial-cleanup-20261101").rglob("*") if p.is_file()}
     selected |= {p for p in (ROOT/"results/martin-transfer-rows-20261101").rglob("*") if p.is_file()}
