@@ -1,5 +1,13 @@
 # Handoff de la versión integrada para Pedro y Martín
 
+Actualización del 2 de noviembre de 2026: `main` es la línea de trabajo vigente,
+con la versión integrada publicada ayer y esta actualización documental.
+Las cabeceras de las ramas anteriores se conservan como etiquetas `archive/`;
+el inventario `results/integrated-paper-20261031/branch-archive-20261102.json`
+registra sus nombres y commits originales. El artículo, PDF y resultados
+científicos permanecen idénticos. Los estados de ramas de los relevos fechados
+anteriormente se refieren a sus respectivas entregas históricas.
+
 Entrega Git autorizada el 1 de noviembre de 2026: artículo, PDF y evidencia
 de esta versión en la rama `codex/integrated-paper-20261031`, separada de
 `main`. Las dos instantáneas históricas se transportan en partes menores de

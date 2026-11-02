@@ -79,7 +79,7 @@ def manifest():
         rows.append(dict(path=str(p.relative_to(ROOT)),bytes=p.stat().st_size,sha256=sha(p)))
     record=dict(created_utc=datetime.now(timezone.utc).isoformat(),version="integrated-paper-20261031",
         pedro_commit=sources["pedro_commit"],martin_commit=sources["martin_commit"],common_base=sources["common_base"],
-        scope="Coauthor-review delivery on codex/integrated-paper-20261031; no main-branch merge or journal submission",files=rows,
+        scope="Coauthor-review delivery on main; previous branch heads preserved as archive/ tags; no journal submission",files=rows,
         deliberate_import_edits={"paper/ucgnn/closure-references.bib":"Retain verified arXiv version; unconfirmed ICML oral metadata removed"},
         external_runtime="The original three large archives are pinned in results/martin-artifacts-20261031/download-receipt.json and their1988 members in member-index.json. The fourth archive, pedrorev-transfer-rows.tar.gz, is included with its245-member index under results/martin-transfer-rows-20261101/. Restored payloads are authenticated by those indexes without duplicating them in the compact manifest.",
         exclusions="Fresh optional replay directories; verification.json authenticates this manifest separately. Earlier deliveries/records are preserved in their respective archives and snapshots. No outstanding member of the four published artifact packages was found.")

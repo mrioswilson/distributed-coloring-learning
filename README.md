@@ -45,9 +45,11 @@ and page count are in `results/integrated-paper-20261031/paper-build.json`.
 Use the matching manifest for this version. Historical builders/receipts belong
 to their original checkout and must not be used to regenerate this article.
 
-This coauthor-review draft is on
-[`codex/integrated-paper-20261031`](https://github.com/mrioswilson/distributed-coloring-learning/tree/codex/integrated-paper-20261031).
-It is separate from `main`; journal submission and coauthor approval remain pending. The original
+This coauthor-review draft is the current version on
+[`main`](https://github.com/mrioswilson/distributed-coloring-learning/tree/main).
+Earlier branch heads are preserved as `archive/` tags; the
+[archive inventory](results/integrated-paper-20261031/branch-archive-20261102.json)
+records their original names and exact commits. Journal submission and coauthor approval remain pending. The original
 workspaces and uncommitted changes remain intact. Source provenance is recorded
 in `results/integrated-paper-20261031/sources.json`.
 
